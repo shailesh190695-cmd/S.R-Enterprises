@@ -1,8 +1,8 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>S.R ENTERPRISES | Professional Service Invoice</title>
+    <title>S.R ENTERPRISES | Auto-Bill</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; padding: 15px; background: #f4f7f6; }
         .invoice-box { max-width: 850px; margin: auto; background: white; padding: 30px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
@@ -16,53 +16,47 @@
         .calc-table { width: 45%; margin-left: auto; margin-top: 15px; }
         .calc-table td { border: none; padding: 5px; text-align: right; }
         .grand-total { font-size: 20px; font-weight: bold; color: #001f3f; border-top: 2px solid #001f3f !important; }
-        .bank-details { background: #fdfdfd; border: 1px solid #eee; padding: 15px; margin-top: 20px; font-size: 13px; line-height: 1.6; }
         .no-print { text-align: center; margin-bottom: 20px; }
-        .print-btn { background: #ff8c00; color: white; border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; }
-        [contenteditable="true"] { border-bottom: 1px dashed #bbb; outline: none; padding: 2px; }
+        .print-btn { background: #ff8c00; color: white; border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        [contenteditable="true"] { border-bottom: 1px dashed #bbb; outline: none; background: #fffdf0; }
         @media print { .no-print { display: none; } .invoice-box { border: none; box-shadow: none; width: 100%; padding: 0; } }
     </style>
 </head>
 <body>
     <div class="no-print">
         <button class="print-btn" onclick="window.print()">📥 Print / Save PDF Bill</button>
-        <p style="color: #666; font-size: 12px; margin-top: 10px;">Note: Niche diye gaye kisi bhi text par click karke aap use badal sakte hain.</p>
+        <p style="color: red; font-weight: bold; margin-top: 10px;">Note: Rate ya Qty likhne ke baad Total apne aap badal jayega!</p>
     </div>
 
     <div class="invoice-box">
         <div class="header">
             <div>
                 <h1 class="company-name">S.R ENTERPRISES</h1>
-                <div style="font-size: 13px; margin-top: 5px;">
-                    Mubarakpur, I.C. Colony, Dahisar (West), Mumbai - 400103<br>
-                    <strong>Mob:</strong> +91 9326113988 / 9867513988
-                </div>
+                <div style="font-size: 13px;">Mubarakpur, I.C. Colony, Dahisar (W), Mumbai - 103<br>Mob: +91 9326113988</div>
             </div>
             <div style="text-align: right;">
-                <h2 style="margin:0; color:#001f3f; letter-spacing: 2px;">INVOICE</h2>
-                <p><strong>Inv No:</strong> <span contenteditable="true">#039</span><br>
-                <strong>Date:</strong> <span id="currentDate" contenteditable="true"></span></p>
+                <h2 style="margin:0; color:#001f3f;">INVOICE</h2>
+                <p>Inv No: <span contenteditable="true">#039</span><br>Date: <span id="currentDate"></span></p>
             </div>
         </div>
 
         <div class="info-section">
             <div class="info-box">
-                <strong>BILL TO (Customer Details):</strong><br>
-                Name: <span contenteditable="true" style="display:inline-block; width:80%;">Click to enter Name</span><br>
-                Contact: <span contenteditable="true" style="display:inline-block; width:75%;">+91 </span><br>
-                Address: <span contenteditable="true" style="display:inline-block; width:75%;">Factory Address</span>
+                <strong>BILL TO:</strong><br>
+                Name: <span contenteditable="true">Customer Name</span><br>
+                Contact: <span contenteditable="true">+91 </span>
             </div>
             <div class="info-box">
                 <strong>WORK DETAILS:</strong><br>
-                Machine Type: <span contenteditable="true" style="display:inline-block; width:60%;">Hashima / Oshima</span><br>
-                Work Done: <span contenteditable="true" style="display:inline-block; width:60%;">Full Servicing / Repairing</span>
+                Machine: <span contenteditable="true">Hashima / Oshima</span><br>
+                Work: <span contenteditable="true">Repairing</span>
             </div>
         </div>
 
-        <table>
+        <table id="itemsTable">
             <thead>
                 <tr>
-                    <th style="width: 55%;">Description of Spare Parts / Service</th>
+                    <th style="width: 50%;">Description</th>
                     <th>Qty</th>
                     <th>Rate</th>
                     <th>Total</th>
@@ -70,16 +64,16 @@
             </thead>
             <tbody>
                 <tr>
-                    <td contenteditable="true">Machine Maintenance & Labor Charges</td>
-                    <td contenteditable="true" style="text-align:center;">1</td>
-                    <td contenteditable="true">0.00</td>
-                    <td contenteditable="true" style="text-align:right;">0.00</td>
+                    <td contenteditable="true">Machine Servicing</td>
+                    <td contenteditable="true" class="qty" oninput="calculate()">1</td>
+                    <td contenteditable="true" class="rate" oninput="calculate()">0</td>
+                    <td class="row-total">0.00</td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Spare Parts: Moving Knife / Pressure Pin</td>
-                    <td contenteditable="true" style="text-align:center;">1</td>
-                    <td contenteditable="true">0.00</td>
-                    <td contenteditable="true" style="text-align:right;">0.00</td>
+                    <td contenteditable="true">Spare Parts</td>
+                    <td contenteditable="true" class="qty" oninput="calculate()">0</td>
+                    <td contenteditable="true" class="rate" oninput="calculate()">0</td>
+                    <td class="row-total">0.00</td>
                 </tr>
             </tbody>
         </table>
@@ -87,45 +81,55 @@
         <table class="calc-table">
             <tr>
                 <td>Sub-Total:</td>
-                <td>₹ <span contenteditable="true">0.00</span></td>
+                <td>₹ <span id="subTotal">0.00</span></td>
             </tr>
-            <tr style="color: red;">
-                <td>Discount (-):</td>
-                <td>₹ <span contenteditable="true">0.00</span></td>
+            <tr>
+                <td style="color: red;">Discount (-):</td>
+                <td>₹ <span id="discount" contenteditable="true" oninput="calculate()">0</span></td>
             </tr>
-            <tr style="color: blue;">
-                <td>GST (18% / Other):</td>
-                <td>₹ <span contenteditable="true">0.00</span></td>
+            <tr>
+                <td style="color: blue;">GST (%): <span contenteditable="true" id="gstRate" oninput="calculate()">0</span>%</td>
+                <td>₹ <span id="gstAmount">0.00</span></td>
             </tr>
             <tr class="grand-total">
                 <td>Grand Total:</td>
-                <td>₹ <span contenteditable="true">0.00</span></td>
+                <td>₹ <span id="grandTotal">0.00</span></td>
             </tr>
         </table>
 
-        <div class="bank-details">
-            <strong>🏦 BANK ACCOUNT DETAILS (FOR NEFT/IMPS):</strong><br>
-            <strong>A/c Name:</strong> SANJAY HARIRAM RAJBHAR<br>
-            <strong>Bank:</strong> BANK OF BARODA | <strong>A/c No:</strong> 99400100010427<br>
-            <strong>IFSC Code:</strong> BARB0VADAHI (5th digit is zero)
-        </div>
-
-        <div style="display:flex; justify-content:space-between; margin-top:50px;">
-            <div style="font-size:11px; color:#777; line-height:1.5;">
-                <strong>Terms & Conditions:</strong><br>
-                1. Goods once sold not taken back.<br>
-                2. Subject to Mumbai Jurisdiction.
-            </div>
-            <div style="text-align:center;">
-                <p style="margin:0; font-size:14px;">For <strong>S.R ENTERPRISES</strong></p>
-                <div style="border-top:1.5px solid #000; width:180px; margin-top:50px; font-weight:bold; font-size:14px;">Authorized Signatory</div>
-            </div>
+        <div style="margin-top: 30px; font-size: 12px; border: 1px solid #eee; padding: 10px;">
+            <strong>BANK: BANK OF BARODA</strong> | A/c Name: SANJAY HARIRAM RAJBHAR<br>
+            A/c No: 99400100010427 | IFSC: BARB0VADAHI
         </div>
     </div>
 
     <script>
         document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-GB');
+
+        function calculate() {
+            let rows = document.querySelectorAll('#itemsTable tbody tr');
+            let subTotal = 0;
+
+            rows.forEach(row => {
+                let qty = parseFloat(row.querySelector('.qty').innerText) || 0;
+                let rate = parseFloat(row.querySelector('.rate').innerText) || 0;
+                let total = qty * rate;
+                row.querySelector('.row-total').innerText = total.toFixed(2);
+                subTotal += total;
+            });
+
+            document.getElementById('subTotal').innerText = subTotal.toFixed(2);
+
+            let disc = parseFloat(document.getElementById('discount').innerText) || 0;
+            let gstPer = parseFloat(document.getElementById('gstRate').innerText) || 0;
+            
+            let afterDisc = subTotal - disc;
+            let gstAmt = (afterDisc * gstPer) / 100;
+            let finalTotal = afterDisc + gstAmt;
+
+            document.getElementById('gstAmount').innerText = gstAmt.toFixed(2);
+            document.getElementById('grandTotal').innerText = finalTotal.toFixed(2);
+        }
     </script>
 </body>
 </html>
-  
