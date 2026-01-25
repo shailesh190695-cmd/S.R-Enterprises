@@ -1,47 +1,64 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R Enterprises Portal</title>
+    <title>S.R Enterprises | Industrial Service</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --main-blue: #003366; --gold: #ffcc00; }
-        body { font-family: Arial, sans-serif; background: #f0f2f5; text-align: center; margin: 0; padding: 0; }
-        header { background: var(--main-blue); color: white; padding: 25px; border-bottom: 5px solid var(--gold); }
-        .container { padding: 20px; max-width: 500px; margin: auto; }
-        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        h2 { color: var(--main-blue); margin-top: 0; font-size: 20px; }
-        .btn { display: block; width: 100%; margin: 15px 0; padding: 18px 0; text-decoration: none; color: white; border-radius: 12px; font-weight: bold; font-size: 18px; box-sizing: border-box; transition: 0.3s; }
-        .btn-fill { background: #007bff; box-shadow: 0 4px #0056b3; }
-        .btn-fill:active { box-shadow: 0 0; transform: translateY(4px); }
-        .btn-view { background: #6c757d; font-size: 14px; padding: 10px 0; }
-        .btn-wa { background: #25D366; box-shadow: 0 4px #1a9e4d; }
-        .btn-wa:active { box-shadow: 0 0; transform: translateY(4px); }
-        .footer { font-size: 12px; color: #777; margin-top: 30px; }
+        :root { --primary: #001f3f; --accent: #ffd700; --text: #ffffff; }
+        body { font-family: 'Poppins', sans-serif; background: #eef2f7; margin: 0; padding: 0; }
+        
+        header { 
+            background: #001f3f; color: var(--text); padding: 35px 20px; text-align: center; border-bottom: 5px solid var(--accent); 
+        }
+        .logo { font-size: 26px; font-weight: 700; letter-spacing: 2px; }
+        
+        .container { max-width: 450px; margin: 15px auto; padding: 0 15px; }
+
+        /* Photo Gallery Section */
+        .machine-gallery { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding: 5px; }
+        .machine-card { min-width: 160px; background: white; border-radius: 12px; padding: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .machine-card img { width: 100%; border-radius: 8px; height: 110px; object-fit: cover; border: 1px solid #ddd; }
+        .machine-card p { font-size: 11px; font-weight: 700; margin: 8px 0 0 0; text-align: center; color: #001f3f; }
+
+        .action-card { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; }
+        
+        .btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 18px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 15px; margin-bottom: 15px; box-sizing: border-box; }
+        .btn-entry { background: #1a73e8; color: white; box-shadow: 0 4px #0d47a1; }
+        .btn-db { background: #374151; color: white; box-shadow: 0 4px #1a202c; }
+        .btn-wa { background: #25D366; color: white; box-shadow: 0 4px #128c7e; }
+
+        .footer { text-align: center; font-size: 10px; color: #94a3b8; margin-top: 25px; }
     </style>
 </head>
 <body>
+
     <header>
-        <div style="font-size: 28px; font-weight: bold;">S.R ENTERPRISES</div>
-        <div style="color: var(--gold); font-size: 14px; margin-top: 5px;">EXPERT FUSING MACHINE SERVICE</div>
+        <div class="logo">S.R ENTERPRISES</div>
+        <div style="color:var(--accent); font-size:11px; margin-top:5px; font-weight:600; letter-spacing:1px;">HASHIMA | OSHIMA | HOSHIMA</div>
     </header>
-    
+
     <div class="container">
-        <div class="card">
-            <h2>🛠️ Work Management</h2>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScy2pGv0D9oO6r-pX9Z7mX_L0wY-K6B7M-X5Q/viewform?embedded=true" class="btn btn-fill">📝 Naya Kaam Bharein</a>
-            
-            <a href="https://docs.google.com/spreadsheets/d/1TLJCW1PziPwTYaFsuT9wX9A5Auf4gysx9Lo5tuKxwco/edit#gid=0" class="btn btn-view">🔒 Excel Report Dekhein</a>
+        <div class="machine-gallery">
+            <div class="machine-card">
+                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400" alt="Hashima">
+                <p>HASHIMA EXPERT</p>
+            </div>
+            <div class="machine-card">
+                <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64718?w=400" alt="Oshima">
+                <p>OSHIMA SERVICE</p>
+            </div>
         </div>
 
-        <div class="card">
-            <h2>📞 Contact Support</h2>
-            <a href="https://wa.me/919326113988" class="btn btn-wa">WhatsApp Support</a>
+        <div class="action-card">
+            <h3 style="font-size: 12px; color: #888; margin-bottom: 20px; letter-spacing: 1px;">MANAGEMENT DASHBOARD</h3>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScy2pGv0D9oO6r-pX9Z7mX_L0wY-K6B7M-X5Q/viewform" class="btn btn-entry">👤 NEW CUSTOMER DETAILS</a>
+            <a href="https://docs.google.com/spreadsheets/d/1TLJCW1PziPwTYaFsuT9wX9A5Auf4gysx9Lo5tuKxwco/edit#gid=0" class="btn btn-db">🔒 ADMIN SECURE LOGIN</a>
+            <a href="https://wa.me/919326113988" class="btn btn-wa">💬 WHATSAPP SUPPORT</a>
         </div>
     </div>
 
-    <div class="footer">
-        &copy; 2026 S.R Enterprises Mumbai
-    </div>
+    <div class="footer">© 2026 S.R ENTERPRISES MUMBAI</div>
 </body>
 </html>
