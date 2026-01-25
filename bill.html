@@ -6,153 +6,29 @@
     <title>S.R ENTERPRISES | Pro Bill</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; padding: 5px; background: #f4f7f6; margin: 0; }
-        .invoice-box { max-width: 800px; margin: auto; background: white; padding: 15px; border: 1px solid #ccc; border-radius: 4px; }
+        .invoice-box { max-width: 800px; margin: auto; background: white; padding: 15px; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         .header { display: flex; justify-content: space-between; border-bottom: 2px solid #333; padding-bottom: 8px; margin-bottom: 15px; }
         .company-name { color: #001f3f; margin: 0; font-size: 22px; font-weight: bold; }
-        
         .inv-date-box { text-align: right; line-height: 1.4; font-size: 12px; }
         .inv-no-text { font-weight: bold; color: #d32f2f; border: 1px solid #ddd; padding: 2px 8px; background: #fffcfc; display: inline-block; }
 
         .info-section { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 12px; }
-        .info-box { border: 1px solid #eee; padding: 8px; border-radius: 4px; background: #fafafa; min-height: 60px; }
+        .info-box { border: 1px solid #eee; padding: 8px; border-radius: 4px; background: #fafafa; min-height: 50px; }
         
-        /* Table Layout Fix */
-        table { width: 100%; border-collapse: collapse; margin-top: 5px; }
-        table th { background: #333; color: white; padding: 8px; font-size: 11px; text-transform: uppercase; }
-        table td { border: 1px solid #eee; padding: 8px; font-size: 13px; vertical-align: middle; }
+        /* Table Layout Fix - Sab kuch ek line mein rakhne ke liye */
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 5px; }
+        table th { background: #333; color: white; padding: 6px; font-size: 11px; text-transform: uppercase; text-align: left; }
+        table td { border: 1px solid #eee; padding: 5px; font-size: 12px; vertical-align: middle; }
         
-        /* Width Adjustments */
-        .col-item { width: 40%; }
+        /* Columns ki chaudai fix kar di hai */
+        .col-item { width: 45%; }
         .col-qty { width: 15%; text-align: center; }
         .col-rate { width: 20%; text-align: right; }
-        .col-total { width: 25%; text-align: right; font-weight: bold; }
+        .col-total { width: 20%; text-align: right; font-weight: bold; }
 
         .footer-container { display: flex; justify-content: space-between; margin-top: 20px; align-items: flex-start; flex-wrap: wrap; }
-        .bank-details { font-size: 10px; border: 1px solid #ddd; padding: 8px; background: #f9f9f9; width: 50%; line-height: 1.5; border-radius: 4px; }
+        .bank-details { font-size: 10px; border: 1px solid #ddd; padding: 6px; background: #f9f9f9; width: 55%; line-height: 1.4; }
         
-        .calc-table { width: 45%; font-size: 14px; }
-        .calc-table td { padding: 4px; text-align: right; border: none; }
-        .grand-total { font-size: 18px; font-weight: bold; color: #001f3f; border-top: 2px solid #333 !important; }
-        
-        .no-print { text-align: center; margin-bottom: 10px; padding: 10px; }
-        .print-btn { background: #ff8c00; color: white; border: none; padding: 15px; border-radius: 4px; font-weight: bold; width: 100%; max-width: 250px; cursor: pointer; }
-        .add-btn { background: #28a745; color: white; border: none; padding: 10px; border-radius: 4px; width: 100%; margin-top: 10px; font-weight: bold; cursor: pointer; }
-        
-        /* Mobile par likhne ke liye clear space */
-        [contenteditable="true"] { outline: none; border-bottom: 1px dashed #bbb; background: #fffdf0; min-height: 18px; display: inline-block; width: 90%; }
-        .sign-area { margin-top: 40px; text-align: right; font-size: 12px; width: 100%; }
-
-        @media print { .no-print, .add-btn { display: none !important; } .invoice-box { border: none; width: 100%; padding: 0; } }
-        @media (max-width: 500px) { .bank-details, .calc-table { width: 100%; margin-bottom: 10px; } }
-    </style>
-</head>
-<body>
-    <div class="no-print">
-        <button class="print-btn" onclick="generateInvoice()">📥 PRINT BILL & SAVE NEXT #</button>
-    </div>
-
-    <div class="invoice-box">
-        <div class="header">
-            <div>
-                <h1 class="company-name">S.R ENTERPRISES</h1>
-                <div style="font-size: 11px;">Malad, Mumbai, Maharashtra, 400097<br>Mob: +91 8850813765</div>
-            </div>
-            <div class="inv-date-box">
-                <div class="inv-no-text">#<span id="invNo" contenteditable="true">001</span></div><br>
-                <strong>Date: <span id="currentDate"></span></strong>
-            </div>
-        </div>
-
-        <div class="info-section">
-            <div class="info-box">
-                <strong>BILL TO:</strong><br>
-                <span contenteditable="true" style="width:100%">Customer Name</span><br>
-                <span contenteditable="true" style="width:100%">Address</span>
-            </div>
-            <div class="info-box">
-                <strong>WORK DETAILS:</strong><br>
-                M/c: <span contenteditable="true">Hashima</span><br>
-                Job: <span contenteditable="true">Servicing</span>
-            </div>
-        </div>
-
-        <table>
-            <thead>
-                <tr>
-                    <th class="col-item">Item / Service</th>
-                    <th class="col-qty">Qty</th>
-                    <th class="col-rate">Rate</th>
-                    <th class="col-total">Total</th>
-                </tr>
-            </thead>
-            <tbody id="billBody">
-                <tr>
-                    <td class="col-item"><span contenteditable="true">Servicing Charge</span></td>
-                    <td class="col-qty"><span contenteditable="true" class="qty" oninput="calculate()">1</span></td>
-                    <td class="col-rate"><span contenteditable="true" class="rate" oninput="calculate()">0</span></td>
-                    <td class="col-total row-total">0.00</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <button class="add-btn" onclick="addRow()">➕ Add More Item / Service</button>
-
-        <div class="footer-container">
-            <div class="bank-details">
-                <strong>🏦 BANK DETAILS:</strong><br>
-                A/c: SANJAY HARIRAM RAJBHAR<br>
-                No: 99400100010427 (BOB)<br>
-                IFSC: BARB0VADAHI
-            </div>
-
-            <table class="calc-table">
-                <tr><td>Sub-Total:</td><td>₹ <span id="subTotal">0.00</span></td></tr>
-                <tr><td style="color: red;">Disc:</td><td>- ₹ <span id="discount" contenteditable="true" oninput="calculate()">0</span></td></tr>
-                <tr class="grand-total"><td>Total:</td><td>₹ <span id="grandTotal">0.00</span></td></tr>
-            </table>
-        </div>
-        
-        <div class="sign-area">
-            <p>___________________</p>
-            <strong>Authorised Signatory</strong>
-        </div>
-    </div>
-
-    <script>
-        document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-GB');
-        let savedInv = localStorage.getItem('lastInvNum') || "001";
-        document.getElementById('invNo').innerText = savedInv;
-
-        function addRow() {
-            let tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="col-item"><span contenteditable="true">Item / Service</span></td>
-                <td class="col-qty"><span contenteditable="true" class="qty" oninput="calculate()">1</span></td>
-                <td class="col-rate"><span contenteditable="true" class="rate" oninput="calculate()">0</span></td>
-                <td class="col-total row-total">0.00</td>`;
-            document.getElementById('billBody').appendChild(tr);
-        }
-
-        function calculate() {
-            let sub = 0;
-            document.querySelectorAll('#billBody tr').forEach(tr => {
-                let q = parseFloat(tr.querySelector('.qty').innerText) || 0;
-                let r = parseFloat(tr.querySelector('.rate').innerText) || 0;
-                let t = q * r;
-                tr.querySelector('.row-total').innerText = t.toFixed(2);
-                sub += t;
-            });
-            document.getElementById('subTotal').innerText = sub.toFixed(2);
-            let d = parseFloat(document.getElementById('discount').innerText) || 0;
-            document.getElementById('grandTotal').innerText = (sub - d).toFixed(2);
-        }
-
-        function generateInvoice() {
-            let n = (parseInt(document.getElementById('invNo').innerText) + 1).toString().padStart(3, '0');
-            localStorage.setItem('lastInvNum', n);
-            window.print();
-            setTimeout(() => { document.getElementById('invNo').innerText = n; }, 1000);
-        }
-    </script>
-</body>
-</html>
+        .calc-table { width: 40%; font-size: 13px; }
+        .calc-table td { padding: 3px; text-align: right; border: none; }
+        .grand-total { font-size: 16px; font-weight: bold; color: #001f3f; border-top: 2px solid #3
