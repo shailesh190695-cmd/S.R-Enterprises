@@ -6,30 +6,46 @@
     <title>S.R ENTERPRISES | Pro Bill</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; padding: 10px; background: #f4f7f6; margin: 0; }
-        .invoice-box { max-width: 850px; margin: auto; background: white; padding: 20px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 8px; }
-        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #001f3f; padding-bottom: 10px; margin-bottom: 15px; flex-wrap: wrap; }
-        .company-name { color: #001f3f; margin: 0; font-size: 24px; font-weight: bold; width: 100%; }
-        .info-section { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 15px; font-size: 13px; }
-        @media (min-width: 600px) { .info-section { grid-template-columns: 1fr 1fr; } .company-name { width: auto; } }
-        .info-box { border: 1px solid #eee; padding: 10px; border-radius: 5px; background: #fafafa; }
-        .table-wrapper { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 500px; }
-        table th { background: #001f3f; color: white; padding: 8px; text-align: left; font-size: 13px; }
-        table td { border: 1px solid #eee; padding: 8px; font-size: 13px; }
-        .calc-table { width: 100%; max-width: 300px; margin-left: auto; margin-top: 15px; }
-        .calc-table td { border: none; padding: 4px; text-align: right; }
-        .grand-total { font-size: 18px; font-weight: bold; color: #001f3f; border-top: 2px solid #001f3f !important; }
-        .no-print { text-align: center; margin-bottom: 15px; }
-        .print-btn { background: #ff8c00; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .add-btn { background: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; width: 100%; }
+        .invoice-box { max-width: 850px; margin: auto; background: white; padding: 25px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 8px; position: relative; }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #001f3f; padding-bottom: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .company-name { color: #001f3f; margin: 0; font-size: 26px; font-weight: bold; width: 100%; }
+        
+        .inv-date-box { text-align: right; background: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 5px; min-width: 140px; }
+        .inv-no-big { font-size: 20px; color: #d32f2f; font-weight: bold; }
+        .date-bold { font-size: 14px; font-weight: 600; color: #333; }
+
+        .info-section { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 20px; font-size: 14px; }
+        @media (min-width: 600px) { .info-section { grid-template-columns: 1fr 1fr; } }
+        .info-box { border: 1px solid #eee; padding: 12px; border-radius: 5px; background: #fafafa; }
+        
+        .table-wrapper { overflow-x: auto; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        table th { background: #001f3f; color: white; padding: 10px; text-align: left; }
+        table td { border: 1px solid #eee; padding: 10px; }
+        
+        .footer-section { display: flex; justify-content: space-between; align-items: flex-start; margin-top: 30px; flex-wrap: wrap; }
+        
+        /* Bank Details Kone mein karne ke liye style */
+        .bank-details { font-size: 11px; border: 1px solid #eee; padding: 10px; background: #fdfdfd; width: 250px; line-height: 1.5; border-radius: 5px; }
+        
+        .calc-table { width: 100%; max-width: 300px; font-size: 15px; }
+        .calc-table td { border: none; padding: 5px; text-align: right; }
+        .grand-total { font-size: 22px; font-weight: bold; color: #001f3f; border-top: 2px solid #001f3f !important; background: #fffdf0; }
+        
+        .no-print { text-align: center; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .print-btn { background: #ff8c00; color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; max-width: 300px; font-size: 16px; }
+        .add-btn { background: #28a745; color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; width: 100%; font-size: 16px; }
+        .reset-btn { background: #6c757d; color: white; border: none; padding: 6px 12px; border-radius: 5px; font-size: 11px; cursor: pointer; margin-top: 5px; }
+        
         [contenteditable="true"] { border-bottom: 1px dashed #bbb; outline: none; background: #fffdf0; padding: 2px; }
-        .bank-details { margin-top: 20px; font-size: 11px; border: 1px solid #eee; padding: 10px; background: #fdfdfd; line-height: 1.5; }
-        @media print { .no-print, .add-btn { display: none; } .invoice-box { border: none; box-shadow: none; width: 100%; padding: 0; } }
+        
+        @media print { .no-print, .add-btn, .reset-btn { display: none !important; } .invoice-box { border: none; box-shadow: none; width: 100%; padding: 0; } }
     </style>
 </head>
 <body>
     <div class="no-print">
-        <button class="print-btn" onclick="window.print()">📥 Print / WhatsApp PDF</button>
+        <button class="print-btn" onclick="generateInvoice()">📥 Print & Save Next #</button>
+        <button class="reset-btn" onclick="resetInv()">Reset Number to 001</button>
     </div>
 
     <div class="invoice-box">
@@ -38,17 +54,20 @@
                 <h1 class="company-name">S.R ENTERPRISES</h1>
                 <div style="font-size: 12px;">Malad, Mumbai, Maharashtra, 400097<br>Mob: +91 8850813765</div>
             </div>
-            <div style="text-align: right; margin-top: 10px;">
-                <h3 style="margin:0; color:#001f3f;">INVOICE</h3>
-                <p style="font-size: 12px; margin: 5px 0;">Inv No: <span contenteditable="true">#001</span><br>Date: <span id="currentDate"></span></p>
+            <div class="inv-date-box">
+                <span style="font-size: 11px; color: #666;">INVOICE NO</span><br>
+                <span class="inv-no-big">#<span id="invNo" contenteditable="true">001</span></span><br>
+                <div style="margin-top: 5px; border-top: 1px solid #ddd; padding-top: 5px;">
+                    <span id="currentDate" class="date-bold"></span>
+                </div>
             </div>
         </div>
 
         <div class="info-section">
             <div class="info-box">
                 <strong>BILL TO:</strong><br>
-                Name: <span contenteditable="true" style="display: inline-block; min-width: 100px;">Customer Name</span><br>
-                Address: <span contenteditable="true" style="display: inline-block; min-width: 100px;">Factory Address</span><br>
+                Name: <span contenteditable="true" style="min-width: 150px;">Customer Name</span><br>
+                Address: <span contenteditable="true" style="min-width: 150px;">Address</span><br>
                 Contact: <span contenteditable="true">+91 </span>
             </div>
             <div class="info-box">
@@ -62,7 +81,7 @@
             <table id="itemsTable">
                 <thead>
                     <tr>
-                        <th style="width: 50%;">Service / Item Description</th>
+                        <th style="width: 55%;">Service / Item Description</th>
                         <th>Qty</th>
                         <th>Rate</th>
                         <th>Total</th>
@@ -79,41 +98,56 @@
             </table>
         </div>
         
-        <button class="add-btn" onclick="addRow()">➕ Add More Service / Item</button>
+        <button type="button" class="add-btn" onclick="addRow()">➕ Add More Service / Item</button>
 
-        <table class="calc-table">
-            <tr><td>Sub-Total:</td><td>₹ <span id="subTotal">0.00</span></td></tr>
-            <tr><td style="color: red;">Discount (-):</td><td>₹ <span id="discount" contenteditable="true" oninput="calculate()">0</span></td></tr>
-            <tr><td style="color: blue;">GST (%): <span contenteditable="true" id="gstRate" oninput="calculate()">0</span>%</td><td>₹ <span id="gstAmount">0.00</span></td></tr>
-            <tr class="grand-total"><td>Grand Total:</td><td>₹ <span id="grandTotal">0.00</span></td></tr>
-        </table>
+        <div class="footer-section">
+            <div class="bank-details">
+                <strong>🏦 BANK DETAILS:</strong><br>
+                BANK: <strong>BANK OF BARODA</strong><br>
+                A/c: <strong>SANJAY HARIRAM RAJBHAR</strong><br>
+                A/c No: <strong>99400100010427</strong><br>
+                IFSC: <strong>BARB0VADAHI</strong>
+            </div>
 
-        <div class="bank-details">
-            <strong>🏦 BANK DETAILS:</strong> BANK OF BARODA | <strong>A/c Name:</strong> SANJAY HARIRAM RAJBHAR<br>
-            <strong>A/c No:</strong> 99400100010427 | <strong>IFSC:</strong> BARB0VADAHI
+            <table class="calc-table">
+                <tr><td>Sub-Total:</td><td>₹ <span id="subTotal">0.00</span></td></tr>
+                <tr><td style="color: red;">Discount (-):</td><td>₹ <span id="discount" contenteditable="true" oninput="calculate()">0</span></td></tr>
+                <tr><td style="color: blue;">GST (%): <span contenteditable="true" id="gstRate" oninput="calculate()">0</span>%</td><td>₹ <span id="gstAmount">0.00</span></td></tr>
+                <tr class="grand-total"><td>Grand Total:</td><td>₹ <span id="grandTotal">0.00</span></td></tr>
+            </table>
+        </div>
+        
+        <div style="margin-top: 40px; text-align: right; font-size: 14px;">
+            <p>_______________________</p>
+            <strong>Authorised Signatory</strong>
         </div>
     </div>
 
     <script>
         document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-GB');
+
+        let savedInv = localStorage.getItem('lastInvNum') || "001";
+        document.getElementById('invNo').innerText = savedInv;
+
         function addRow() {
-            let table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
-            let newRow = table.insertRow();
+            const tableBody = document.querySelector('#itemsTable tbody');
+            const newRow = document.createElement('tr');
             newRow.innerHTML = `
-                <td contenteditable="true">Service / Spare Part</td>
+                <td contenteditable="true">Spare Part / Service</td>
                 <td contenteditable="true" class="qty" oninput="calculate()">0</td>
                 <td contenteditable="true" class="rate" oninput="calculate()">0</td>
                 <td class="row-total">0.00</td>
             `;
+            tableBody.appendChild(newRow);
+            calculate();
         }
+
         function calculate() {
             let rows = document.querySelectorAll('#itemsTable tbody tr');
             let subTotal = 0;
             rows.forEach(row => {
-                let qtyText = row.querySelector('.qty').innerText.replace(/[^0-9.]/g, '') || "0";
-                let rateText = row.querySelector('.rate').innerText.replace(/[^0-9.]/g, '') || "0";
-                let qty = parseFloat(qtyText);
-                let rate = parseFloat(rateText);
+                let qty = parseFloat(row.querySelector('.qty').innerText) || 0;
+                let rate = parseFloat(row.querySelector('.rate').innerText) || 0;
                 let total = qty * rate;
                 row.querySelector('.row-total').innerText = total.toFixed(2);
                 subTotal += total;
@@ -121,8 +155,27 @@
             document.getElementById('subTotal').innerText = subTotal.toFixed(2);
             let disc = parseFloat(document.getElementById('discount').innerText) || 0;
             let gstPer = parseFloat(document.getElementById('gstRate').innerText) || 0;
-            let afterDisc = subTotal - disc;
-            let gstAmt = (afterDisc * gstPer) / 100;
-            let finalTotal = afterDisc + gstAmt;
-            document.getElementById('gstAmount').innerText = gstAmt.toFixed(
-        
+            let netAmount = subTotal - disc;
+            let gstAmt = (netAmount * gstPer) / 100;
+            let finalTotal = netAmount + gstAmt;
+            document.getElementById('gstAmount').innerText = gstAmt.toFixed(2);
+            document.getElementById('grandTotal').innerText = finalTotal.toFixed(2);
+        }
+
+        function generateInvoice() {
+            let currentInv = parseInt(document.getElementById('invNo').innerText);
+            let nextInv = (currentInv + 1).toString().padStart(3, '0');
+            localStorage.setItem('lastInvNum', nextInv);
+            window.print();
+            setTimeout(() => { document.getElementById('invNo').innerText = nextInv; }, 1000);
+        }
+
+        function resetInv() {
+            if(confirm("Wapas 001 karein?")) {
+                localStorage.setItem('lastInvNum', "001");
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
