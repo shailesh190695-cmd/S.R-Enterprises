@@ -2,47 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>S.R ENTERPRISES | Pro Bill</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.R ENTERPRISES | Pro GST Bill</title>
     <style>
-        :root { --blue: #0056b3; }
-        body { font-family: Arial, sans-serif; padding: 10px; background: #f4f7f6; margin: 0; }
-        .invoice-box { max-width: 800px; margin: auto; background: white; padding: 15px; border-radius: 8px; border-top: 10px solid var(--blue); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        :root { --blue: #0056b3; --dark: #001f3f; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; padding: 10px; background: #f4f7f6; margin: 0; }
+        .invoice-box { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; border-top: 8px solid var(--blue); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
-        /* Table Layout - Mobile Touch Fix */
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        table th { background: var(--blue); color: white; padding: 10px; font-size: 12px; text-align: left; }
-        table td { border: 1px solid #ddd; padding: 5px; position: relative; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .company-name { color: var(--blue); margin: 0; font-size: 24px; font-weight: bold; }
+
+        .details-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .detail-box { background: #f9f9f9; padding: 12px; border-radius: 6px; border: 1px solid #ddd; }
+        .detail-box h4 { margin: 0 0 8px 0; color: var(--blue); font-size: 13px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         
-        /* Bade Input Boxes taaki Touch asani se ho */
-        input { 
-            width: 100%; 
-            padding: 12px 5px; 
-            border: 2px solid #eee; 
-            border-radius: 4px; 
-            font-size: 16px; /* 16px se zoom nahi hota mobile par */
-            box-sizing: border-box; 
-            display: block;
-            background: #fffdf0;
-            color: #000;
-            -webkit-appearance: none;
-            z-index: 10;
-        }
-        input:focus { border: 2px solid var(--blue); background: #fff; outline: none; }
+        .edit-input { width: 100%; border: none; background: transparent; font-size: 14px; padding: 4px 0; outline: none; border-bottom: 1px dashed #ccc; margin-bottom: 5px; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; table-layout: fixed; }
+        table th { background: var(--blue); color: white; padding: 10px; font-size: 12px; text-align: left; text-transform: uppercase; }
+        table td { border: 1px solid #eee; padding: 8px; vertical-align: middle; }
+        
+        input.cell-input { width: 100%; padding: 8px 5px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-size: 14px; background: #fffdf0; }
 
         .footer-flex { display: flex; justify-content: space-between; margin-top: 25px; flex-wrap: wrap; }
-        .total-container { width: 100%; max-width: 300px; background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-left: auto; }
+        .bank-details { width: 50%; font-size: 12px; line-height: 1.6; }
         
-        .grand-total-box { 
-            background: var(--blue); color: white; padding: 15px; border-radius: 5px; 
-            margin: 10px 0; display: flex; justify-content: space-between; font-weight: bold; font-size: 20px;
+        /* Totals Layout */
+        .totals-section { width: 45%; font-size: 14px; }
+        .total-row { display: flex; justify-content: space-between; padding: 5px 0; }
+        .grand-total-row { 
+            background: var(--blue); color: white; padding: 12px; border-radius: 6px; 
+            font-weight: bold; font-size: 18px; margin-top: 10px;
         }
 
         .no-print { text-align: center; margin-bottom: 15px; }
-        .print-btn { background: #ff8c00; color: white; border: none; padding: 18px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 18px; }
-        .add-btn { background: #28a745; color: white; border: none; padding: 15px; border-radius: 8px; width: 100%; margin-top: 10px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .print-btn { background: #ff8c00; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; max-width: 350px; font-size: 18px; }
+        .add-btn { background: #28a745; color: white; border: none; padding: 12px; border-radius: 6px; width: 100%; margin-top: 15px; cursor: pointer; font-weight: bold; }
 
-        @media print { .no-print, .add-btn { display: none !important; } input { border: none; background: none; padding: 0; font-weight: bold; } }
+        @media print { .no-print, .add-btn { display: none !important; } input, .edit-input { border: none !important; background: transparent !important; padding: 0 !important; } .invoice-box { box-shadow: none; border: none; width: 100%; } }
+        @media (max-width: 600px) { .details-container { grid-template-columns: 1fr; } .bank-details, .totals-section { width: 100%; } }
     </style>
 </head>
 <body>
@@ -52,31 +50,46 @@
     </div>
 
     <div class="invoice-box">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+        <div class="header">
             <div>
-                <h1 style="color:var(--blue); margin:0;">S.R ENTERPRISES</h1>
-                <p style="font-size:12px; margin:5px 0;">Malad, Mumbai | Mob: 8850813765</p>
+                <h1 class="company-name">S.R ENTERPRISES</h1>
+                <div style="font-size:12px; margin-top:5px;">Malad, Mumbai, Maharashtra, 400097<br><b>Mob:</b> 8850813765</div>
             </div>
             <div style="text-align:right; font-size:14px;">
-                <b>INVOICE #039</b><br>
+                <b style="font-size: 20px;">INVOICE</b><br>
+                No: #<span contenteditable="true">039</span><br>
                 Date: 26/01/2026
+            </div>
+        </div>
+
+        <div class="details-container">
+            <div class="detail-box">
+                <h4>BILL TO (Customer)</h4>
+                <input type="text" class="edit-input" placeholder="Customer Name">
+                <input type="text" class="edit-input" placeholder="Address">
+                <input type="text" class="edit-input" placeholder="Contact No.">
+            </div>
+            <div class="detail-box">
+                <h4>WORK DETAILS</h4>
+                <input type="text" class="edit-input" placeholder="Machine: Hashima / Oshima">
+                <input type="text" class="edit-input" placeholder="Job: Repairing & Service">
             </div>
         </div>
 
         <table>
             <thead>
                 <tr>
-                    <th style="width: 40%;">Item/Service</th>
-                    <th style="width: 20%;">Qty</th>
-                    <th style="width: 20%;">Rate</th>
-                    <th style="width: 20%;">Total</th>
+                    <th style="width: 50%;">Item/Service</th>
+                    <th style="width: 10%; text-align: center;">Qty</th>
+                    <th style="width: 20%; text-align: center;">Rate</th>
+                    <th style="width: 20%; text-align: right;">Total</th>
                 </tr>
             </thead>
             <tbody id="billBody">
                 <tr>
-                    <td><input type="text" value="Servicing Charge"></td>
-                    <td><input type="number" class="qty" value="1" oninput="calculate()"></td>
-                    <td><input type="number" class="rate" value="0" oninput="calculate()"></td>
+                    <td><input type="text" class="cell-input" value="Servicing Charge"></td>
+                    <td><input type="number" class="cell-input qty" value="1" oninput="calculate()"></td>
+                    <td><input type="number" class="cell-input rate" value="0" oninput="calculate()"></td>
                     <td style="text-align: right; font-weight: bold;">₹<span class="row-total">0.00</span></td>
                 </tr>
             </tbody>
@@ -85,17 +98,24 @@
         <button class="add-btn" onclick="addRow()">+ LINE ADD KAREIN</button>
 
         <div class="footer-flex">
-            <div style="font-size: 12px; margin-bottom: 15px;">
-                <h4 style="color:var(--blue); margin-bottom:5px;">BANK DETAILS</h4>
+            <div class="bank-details">
+                <h4 style="color:var(--blue); margin-bottom:8px; border-bottom: 1px solid #eee;">BANK DETAILS</h4>
                 <b>Sanjay Hariram Rajbhar</b><br>
                 A/c: 12478100013378<br>
-                BOB, Malad-East | BARB0MALEAS
+                BOB, Malad-East | IFSC: BARB0MALEAS
             </div>
 
-            <div class="total-container">
-                <div class="grand-total-box">
-                    <span>Total:</span>
+            <div class="totals-section">
+                <div class="total-row"><span>Sub-Total:</span> <b>₹<span id="subTotal">0.00</span></b></div>
+                <div class="total-row" style="color: red;"><span>Discount (-):</span> <b>₹<input type="number" id="discount" value="0" style="width: 60px; border:1px solid #ccc; text-align:right;" oninput="calculate()"></b></div>
+                <div class="total-row" style="color: blue;"><span>GST (%): <input type="number" id="gstRate" value="0" style="width: 40px; border:1px solid #ccc; text-align:center;" oninput="calculate()"> %</span> <b>₹<span id="gstAmt">0.00</span></b></div>
+                
+                <div class="grand-total-row">
+                    <span>Grand Total:</span>
                     <span id="grandTotal">₹0.00</span>
+                </div>
+                <div style="font-size: 11px; margin-top: 8px; font-style: italic; color: #555;">
+                    <b>Total in Words:</b> <span id="totalWords">Zero Rupees Only</span>
                 </div>
             </div>
         </div>
@@ -105,25 +125,44 @@
         function addRow() {
             let tr = document.createElement('tr');
             tr.innerHTML = `
-                <td><input type="text" placeholder="Item Name"></td>
-                <td><input type="number" class="qty" value="1" oninput="calculate()"></td>
-                <td><input type="number" class="rate" value="0" oninput="calculate()"></td>
+                <td><input type="text" class="cell-input" placeholder="Item Name"></td>
+                <td><input type="number" class="cell-input qty" value="1" oninput="calculate()"></td>
+                <td><input type="number" class="cell-input rate" value="0" oninput="calculate()"></td>
                 <td style="text-align: right; font-weight: bold;">₹<span class="row-total">0.00</span></td>
             `;
             document.getElementById('billBody').appendChild(tr);
         }
 
         function calculate() {
-            let grandTotal = 0;
+            let sub = 0;
             document.querySelectorAll('#billBody tr').forEach(tr => {
                 let q = parseFloat(tr.querySelector('.qty').value) || 0;
                 let r = parseFloat(tr.querySelector('.rate').value) || 0;
                 let t = q * r;
                 tr.querySelector('.row-total').innerText = t.toFixed(2);
-                grandTotal += t;
+                sub += t;
             });
-            document.getElementById('grandTotal').innerText = "₹" + grandTotal.toFixed(2);
+            
+            document.getElementById('subTotal').innerText = sub.toFixed(2);
+            let disc = parseFloat(document.getElementById('discount').value) || 0;
+            let gstPer = parseFloat(document.getElementById('gstRate').value) || 0;
+            
+            let afterDisc = sub - disc;
+            let gstAmount = (afterDisc * gstPer) / 100;
+            let finalTotal = afterDisc + gstAmount;
+
+            document.getElementById('gstAmt').innerText = gstAmount.toFixed(2);
+            document.getElementById('grandTotal').innerText = "₹" + finalTotal.toFixed(2);
+            
+            // Words conversion (Simple version)
+            document.getElementById('totalWords').innerText = numberToWords(Math.floor(finalTotal)) + " Rupees Only";
         }
-    </script>
-</body>
-</html>
+
+        function numberToWords(num) {
+            const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+            const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+            if (num === 0) return 'Zero';
+            function convert(n) {
+                if (n < 20) return ones[n];
+                if (n < 100
+        
