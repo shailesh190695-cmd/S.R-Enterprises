@@ -3,40 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R Enterprises | Fusing Machine Expert</title>
+    <title>S.R Enterprises Portal</title>
     <style>
-        :root { --main-blue: #003366; --gold: #ffcc00; --light-bg: #f8f9fa; }
-        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background: var(--light-bg); color: #333; }
-        header { background: var(--main-blue); color: white; padding: 40px 20px; text-align: center; border-bottom: 5px solid var(--gold); }
-        .logo { font-size: 32px; font-weight: bold; letter-spacing: 2px; margin: 0; }
-        .tagline { font-size: 14px; color: var(--gold); margin-top: 5px; text-transform: uppercase; }
-        .container { max-width: 800px; margin: 20px auto; padding: 20px; }
-        .card { background: white; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
-        h2 { color: var(--main-blue); border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .btn-wa { background: #25D366; color: white; padding: 15px; text-decoration: none; border-radius: 8px; display: block; text-align: center; font-weight: bold; font-size: 18px; margin-top: 20px; }
-        .btn-admin { display: inline-block; margin-top: 40px; color: #777; text-decoration: none; font-size: 13px; border: 1px solid #ddd; padding: 5px 10px; border-radius: 4px; }
-        footer { text-align: center; padding: 20px; font-size: 12px; color: #777; }
+        :root { --main-blue: #003366; --gold: #ffcc00; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; text-align: center; margin: 0; padding: 0; }
+        header { background: var(--main-blue); color: white; padding: 25px; border-bottom: 5px solid var(--gold); }
+        .container { padding: 20px; max-width: 500px; margin: auto; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        h2 { color: var(--main-blue); margin-top: 0; font-size: 20px; }
+        .btn { display: block; width: 100%; margin: 15px 0; padding: 18px 0; text-decoration: none; color: white; border-radius: 12px; font-weight: bold; font-size: 18px; box-sizing: border-box; transition: 0.3s; }
+        .btn-fill { background: #007bff; box-shadow: 0 4px #0056b3; }
+        .btn-fill:active { box-shadow: 0 0; transform: translateY(4px); }
+        .btn-view { background: #6c757d; font-size: 14px; padding: 10px 0; }
+        .btn-wa { background: #25D366; box-shadow: 0 4px #1a9e4d; }
+        .btn-wa:active { box-shadow: 0 0; transform: translateY(4px); }
+        .footer { font-size: 12px; color: #777; margin-top: 30px; }
     </style>
 </head>
 <body>
     <header>
-        <h1 class="logo">S.R ENTERPRISES</h1>
-        <p class="tagline">Expert Fusing Machine Repairing & Maintenance</p>
+        <div style="font-size: 28px; font-weight: bold;">S.R ENTERPRISES</div>
+        <div style="color: var(--gold); font-size: 14px; margin-top: 5px;">EXPERT FUSING MACHINE SERVICE</div>
     </header>
+    
     <div class="container">
         <div class="card">
-            <h2>Humaari Services</h2>
-            <p>✅ Har tarah ki Fusing Machine ki Repairing</p>
-            <p>✅ Original Spare Parts Replacement</p>
-            <p>✅ Monthly Maintenance Service</p>
-            <a href="https://wa.me/919326113988" class="btn-wa">WhatsApp Par Sampark Karein</a>
+            <h2>🛠️ Work Management</h2>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScy2pGv0D9oO6r-pX9Z7mX_L0wY-K6B7M-X5Q/viewform?embedded=true" class="btn btn-fill">📝 Naya Kaam Bharein</a>
+            
+            <a href="https://docs.google.com/spreadsheets/d/1TLJCW1PziPwTYaFsuT9wX9A5Auf4gysx9Lo5tuKxwco/edit#gid=0" class="btn btn-view">🔒 Excel Report Dekhein</a>
         </div>
-        <div style="text-align: center;">
-            <a href="https://docs.google.com/spreadsheets/d/1TLJCW1PziPwTYaFsuT9wX9A5Auf4gysx9Lo5tuKxwco/edit#gid=0" target="_blank" class="btn-admin">🔒 Admin Login</a>
+
+        <div class="card">
+            <h2>📞 Contact Support</h2>
+            <a href="https://wa.me/919326113988" class="btn btn-wa">WhatsApp Support</a>
         </div>
     </div>
-    <footer>
-        <p>&copy; 2026 S.R Enterprises Mumbai | Reliable & Professional</p>
-    </footer>
+
+    <div class="footer">
+        &copy; 2026 S.R Enterprises Mumbai
+    </div>
 </body>
 </html>
