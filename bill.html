@@ -2,34 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Official Bill</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>S.R ENTERPRISES | Pro Bill</title>
     <style>
         :root { --blue: #0056b3; }
-        body { font-family: 'Segoe UI', sans-serif; padding: 10px; background: #f4f7f6; margin: 0; }
-        .invoice-box { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; border-top: 8px solid var(--blue); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        body { font-family: Arial, sans-serif; padding: 10px; background: #f4f7f6; margin: 0; }
+        .invoice-box { max-width: 800px; margin: auto; background: white; padding: 15px; border-radius: 8px; border-top: 10px solid var(--blue); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
-        /* Table Layout Fix */
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; table-layout: fixed; }
+        /* Table Layout - Mobile Touch Fix */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         table th { background: var(--blue); color: white; padding: 10px; font-size: 12px; text-align: left; }
-        table td { border: 1px solid #eee; padding: 8px; vertical-align: middle; }
+        table td { border: 1px solid #ddd; padding: 5px; position: relative; }
         
-        /* Clear Input Boxes */
+        /* Bade Input Boxes taaki Touch asani se ho */
         input { 
             width: 100%; 
-            padding: 10px 5px; 
-            border: 1px solid #ccc; 
+            padding: 12px 5px; 
+            border: 2px solid #eee; 
             border-radius: 4px; 
+            font-size: 16px; /* 16px se zoom nahi hota mobile par */
             box-sizing: border-box; 
-            font-size: 14px;
+            display: block;
             background: #fffdf0;
+            color: #000;
             -webkit-appearance: none;
+            z-index: 10;
         }
+        input:focus { border: 2px solid var(--blue); background: #fff; outline: none; }
 
         .footer-flex { display: flex; justify-content: space-between; margin-top: 25px; flex-wrap: wrap; }
-        .bank-details { width: 55%; font-size: 12px; line-height: 1.6; }
-        .total-container { width: 40%; background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd; }
+        .total-container { width: 100%; max-width: 300px; background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-left: auto; }
         
         .grand-total-box { 
             background: var(--blue); color: white; padding: 15px; border-radius: 5px; 
@@ -37,11 +39,10 @@
         }
 
         .no-print { text-align: center; margin-bottom: 15px; }
-        .print-btn { background: #ff8c00; color: white; border: none; padding: 15px 30px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 100%; max-width: 300px; font-size: 16px; }
-        .add-btn { background: #28a745; color: white; border: none; padding: 12px; border-radius: 4px; width: 100%; margin-top: 10px; cursor: pointer; font-weight: bold; }
+        .print-btn { background: #ff8c00; color: white; border: none; padding: 18px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 18px; }
+        .add-btn { background: #28a745; color: white; border: none; padding: 15px; border-radius: 8px; width: 100%; margin-top: 10px; cursor: pointer; font-weight: bold; font-size: 16px; }
 
-        @media print { .no-print, .add-btn { display: none !important; } input { border: none; background: none; padding: 0; font-weight: bold; } .invoice-box { box-shadow: none; border-top: none; } }
-        @media (max-width: 600px) { .bank-details, .total-container { width: 100%; } .header { flex-direction: column; text-align: center; } .header div { margin-bottom: 10px; } }
+        @media print { .no-print, .add-btn { display: none !important; } input { border: none; background: none; padding: 0; font-weight: bold; } }
     </style>
 </head>
 <body>
@@ -51,14 +52,13 @@
     </div>
 
     <div class="invoice-box">
-        <div class="header">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
             <div>
-                <h1 style="color:var(--blue); margin:0; font-size: 26px;">S.R ENTERPRISES</h1>
-                <div style="font-size:13px; margin-top: 5px;">Malad, Mumbai, Maharashtra, 400097<br><b>Mobile:</b> 8850813765</div>
+                <h1 style="color:var(--blue); margin:0;">S.R ENTERPRISES</h1>
+                <p style="font-size:12px; margin:5px 0;">Malad, Mumbai | Mob: 8850813765</p>
             </div>
-            <div style="text-align:right;">
-                <b style="font-size: 20px;">INVOICE</b><br>
-                No: #<span contenteditable="true">039</span><br>
+            <div style="text-align:right; font-size:14px;">
+                <b>INVOICE #039</b><br>
                 Date: 26/01/2026
             </div>
         </div>
@@ -66,10 +66,10 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width: 40%;">Items / Services</th>
-                    <th style="width: 15%; text-align: center;">QTY</th>
-                    <th style="width: 20%; text-align: center;">RATE</th>
-                    <th style="width: 25%; text-align: right;">TOTAL</th>
+                    <th style="width: 40%;">Item/Service</th>
+                    <th style="width: 20%;">Qty</th>
+                    <th style="width: 20%;">Rate</th>
+                    <th style="width: 20%;">Total</th>
                 </tr>
             </thead>
             <tbody id="billBody">
@@ -82,34 +82,22 @@
             </tbody>
         </table>
 
-        <button class="add-btn" onclick="addRow()">+ Add New Item / Spare Part</button>
+        <button class="add-btn" onclick="addRow()">+ LINE ADD KAREIN</button>
 
         <div class="footer-flex">
-            <div class="bank-details">
-                <h4 style="color:var(--blue); margin-bottom:8px; border-bottom: 1px solid #eee;">BANK DETAILS</h4>
-                <b>Name:</b> Sanjay Hariram Rajbhar.<br>
-                <b>Bank:</b> Bank of Baroda, MALAD-EAST BRANCH<br>
-                <b>A/c No:</b> 12478100013378<br>
-                <b>IFSC:</b> BARB0MALEAS
+            <div style="font-size: 12px; margin-bottom: 15px;">
+                <h4 style="color:var(--blue); margin-bottom:5px;">BANK DETAILS</h4>
+                <b>Sanjay Hariram Rajbhar</b><br>
+                A/c: 12478100013378<br>
+                BOB, Malad-East | BARB0MALEAS
             </div>
 
             <div class="total-container">
-                <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 5px;">
-                    <span>Subtotal:</span> <b>₹<span id="subTotal">0.00</span></b>
-                </div>
                 <div class="grand-total-box">
                     <span>Total:</span>
                     <span id="grandTotal">₹0.00</span>
                 </div>
-                <div style="font-size:12px; color:#d32f2f; text-align:right; font-weight: bold; border-top: 1px dashed #ccc; padding-top: 5px;">
-                    Balance Due: ₹<span id="balance">0.00</span>
-                </div>
             </div>
-        </div>
-
-        <div style="margin-top: 50px; text-align: right; font-size: 13px;">
-            <p>_______________________</p>
-            <b>Authorised Signatory</b>
         </div>
     </div>
 
@@ -117,7 +105,7 @@
         function addRow() {
             let tr = document.createElement('tr');
             tr.innerHTML = `
-                <td><input type="text" placeholder="Enter service or part name"></td>
+                <td><input type="text" placeholder="Item Name"></td>
                 <td><input type="number" class="qty" value="1" oninput="calculate()"></td>
                 <td><input type="number" class="rate" value="0" oninput="calculate()"></td>
                 <td style="text-align: right; font-weight: bold;">₹<span class="row-total">0.00</span></td>
@@ -134,4 +122,8 @@
                 tr.querySelector('.row-total').innerText = t.toFixed(2);
                 grandTotal += t;
             });
-    
+            document.getElementById('grandTotal').innerText = "₹" + grandTotal.toFixed(2);
+        }
+    </script>
+</body>
+</html>
