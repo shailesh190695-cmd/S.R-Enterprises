@@ -3,62 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R Enterprises | Industrial Service</title>
+    <title>S.R Enterprises | Service Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #001f3f; --accent: #ffd700; --text: #ffffff; }
+        :root { --primary: #001f3f; --accent: #ffd700; --orange: #ff8c00; --text: #ffffff; }
         body { font-family: 'Poppins', sans-serif; background: #eef2f7; margin: 0; padding: 0; }
-        
-        header { 
-            background: #001f3f; color: var(--text); padding: 35px 20px; text-align: center; border-bottom: 5px solid var(--accent); 
-        }
+        header { background: #001f3f; color: var(--text); padding: 30px 20px; text-align: center; border-bottom: 5px solid var(--accent); }
         .logo { font-size: 26px; font-weight: 700; letter-spacing: 2px; }
-        
         .container { max-width: 450px; margin: 15px auto; padding: 0 15px; }
-
-        /* Photo Gallery Section */
         .machine-gallery { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding: 5px; }
-        .machine-card { min-width: 160px; background: white; border-radius: 12px; padding: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .machine-card img { width: 100%; border-radius: 8px; height: 110px; object-fit: cover; border: 1px solid #ddd; }
-        .machine-card p { font-size: 11px; font-weight: 700; margin: 8px 0 0 0; text-align: center; color: #001f3f; }
-
+        .machine-card { min-width: 160px; background: white; border-radius: 12px; padding: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; }
+        .machine-card img { width: 100%; border-radius: 8px; height: 110px; object-fit: cover; }
         .action-card { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; }
-        
         .btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 18px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 15px; margin-bottom: 15px; box-sizing: border-box; }
-        .btn-entry { background: #1a73e8; color: white; box-shadow: 0 4px #0d47a1; }
-        .btn-db { background: #374151; color: white; box-shadow: 0 4px #1a202c; }
-        .btn-wa { background: #25D366; color: white; box-shadow: 0 4px #128c7e; }
-
-        .footer { text-align: center; font-size: 10px; color: #94a3b8; margin-top: 25px; }
+        .btn-entry { background: #1a73e8; color: white; }
+        .btn-bill { background: var(--orange); color: white; border-bottom: 4px solid #cc7000; }
+        .btn-db { background: #374151; color: white; }
+        .btn-wa { background: #25D366; color: white; }
     </style>
 </head>
 <body>
-
     <header>
         <div class="logo">S.R ENTERPRISES</div>
-        <div style="color:var(--accent); font-size:11px; margin-top:5px; font-weight:600; letter-spacing:1px;">HASHIMA | OSHIMA | HOSHIMA</div>
+        <div style="color:var(--accent); font-size:11px; margin-top:5px; font-weight:600;">HASHIMA | OSHIMA | HOSHIMA</div>
     </header>
-
     <div class="container">
         <div class="machine-gallery">
-            <div class="machine-card">
-                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400" alt="Hashima">
-                <p>HASHIMA EXPERT</p>
-            </div>
-            <div class="machine-card">
-                <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64718?w=400" alt="Oshima">
-                <p>OSHIMA SERVICE</p>
-            </div>
+            <div class="machine-card"><img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400"><p style="font-size:11px; margin-top:5px;">HASHIMA SERVICE</p></div>
+            <div class="machine-card"><img src="https://images.unsplash.com/photo-1581092162384-8987c1d64718?w=400"><p style="font-size:11px; margin-top:5px;">OSHIMA EXPERT</p></div>
         </div>
-
         <div class="action-card">
-            <h3 style="font-size: 12px; color: #888; margin-bottom: 20px; letter-spacing: 1px;">MANAGEMENT DASHBOARD</h3>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScy2pGv0D9oO6r-pX9Z7mX_L0wY-K6B7M-X5Q/viewform" class="btn btn-entry">👤 NEW CUSTOMER DETAILS</a>
-            <a href="https://docs.google.com/spreadsheets/d/1TLJCW1PziPwTYaFsuT9wX9A5Auf4gysx9Lo5tuKxwco/edit#gid=0" class="btn btn-db">🔒 ADMIN SECURE LOGIN</a>
+            <a href="HREF_YAHAN_DALEIN" class="btn btn-entry">👤 NEW CUSTOMER DETAILS</a>
+            <a href="https://web.mybillbook.in/" class="btn btn-bill">📄 GENERATE PRO BILL</a>
+            <a href="https://docs.google.com/spreadsheets/d/1TLJCW1PziPwTYaFsuT9wX9A5Auf4gysx9Lo5tuKxwco/edit" class="btn btn-db">🔒 ADMIN SECURE LOGIN</a>
             <a href="https://wa.me/919326113988" class="btn btn-wa">💬 WHATSAPP SUPPORT</a>
         </div>
     </div>
-
-    <div class="footer">© 2026 S.R ENTERPRISES MUMBAI</div>
+    <div style="text-align:center; font-size:10px; color:#94a3b8; margin-top:20px;">© 2026 S.R ENTERPRISES MUMBAI</div>
 </body>
 </html>
