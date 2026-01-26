@@ -3,38 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Official Bill</title>
+    <title>S.R ENTERPRISES | GST Billing</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; }
         body { font-family: 'Poppins', sans-serif; background-color: var(--dark-bg); margin: 0; color: white; padding: 15px; }
-        .bill-card { background: var(--card-bg); border-radius: 15px; padding: 20px; border: 1px solid rgba(251,191,36,0.2); max-width: 500px; margin: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .bill-card { background: var(--card-bg); border-radius: 15px; padding: 20px; border: 1px solid rgba(251,191,36,0.2); max-width: 500px; margin: auto; }
         .header { text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
-        .header h2 { color: var(--gold); margin: 0; font-size: 22px; }
-        label { display: block; font-size: 11px; color: var(--gold); margin-bottom: 5px; font-weight: 600; text-transform: uppercase; }
-        input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; font-size: 14px; margin-bottom: 10px; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .header h2 { color: var(--gold); margin: 0; }
+        
+        .box-input { width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #334155; background: #0f172a; color: white; box-sizing: border-box; font-size: 14px; margin-bottom: 12px; }
+        label { display: block; font-size: 11px; color: var(--gold); margin-bottom: 4px; font-weight: 600; }
+        
         .work-row { display: grid; grid-template-columns: 2.5fr 1fr; gap: 8px; margin-bottom: 10px; }
-        .btn-add { background: rgba(251,191,36,0.05); color: var(--gold); border: 1px dashed var(--gold); padding: 10px; width: 100%; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; margin-bottom: 20px; }
-        .summary-box { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px solid #334155; }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+        .btn-add { background: rgba(251,191,36,0.05); color: var(--gold); border: 1px dashed var(--gold); padding: 10px; width: 100%; border-radius: 8px; cursor: pointer; margin-bottom: 15px; font-weight: 700; }
+        
+        .gst-area { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin: 10px 0; border: 1px solid #334155; }
         .total-box { background: rgba(251, 191, 36, 0.1); padding: 15px; border-radius: 10px; text-align: center; border: 2px solid var(--gold); margin: 15px 0; }
+        
         .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn-wa { background: #25D366; color: white; padding: 15px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; }
         .btn-pdf { background: #fff; color: #000; padding: 15px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; }
-        
-        /* Bank Details - Only for Print */
-        .bank-info-print { display: none; margin-top: 20px; border-top: 2px solid #000; padding-top: 15px; font-size: 13px; color: #000; }
 
-        @media print { 
-            .btn-group, .btn-add, .btn-back, label { display: none !important; } 
-            body { background: white; color: black; } 
-            .bill-card { border: none; box-shadow: none; background: white; color: black; max-width: 100%; } 
-            input { border: none !important; color: black !important; background: transparent !important; padding: 5px !important; } 
-            .header h2 { color: black; } 
-            .total-box { border: 2px solid black; color: black; } 
-            .bank-info-print { display: block !important; } 
-        }
+        @media print { .btn-group, .btn-add, .btn-back, label, .gst-check { display: none !important; } body { background: white; color: black; } .bill-card { border: none; box-shadow: none; background: white; color: black; width: 100%; max-width: 100%; } .box-input { border: 1px solid #ccc !important; color: black !important; background: transparent !important; } .header h2 { color: black; } .total-box { border: 2px solid black; } }
     </style>
 </head>
 <body>
@@ -42,32 +33,41 @@
     <div class="bill-card">
         <div class="header">
             <h2>S.R ENTERPRISES</h2>
-            <p style="font-size: 10px; color: #94a3b8;">FUSING MACHINE SPECIALIST | 8850813765</p>
+            <p style="font-size: 10px; color: #94a3b8;">GST INVOICE SYSTEM</p>
         </div>
 
-        <label>Customer Details</label>
-        <input type="text" id="custName" placeholder="Customer Name">
-        <div class="form-grid">
-            <input type="number" id="custMobile" placeholder="Mobile Number">
-            <input type="text" id="invNo" value="SR-101">
-        </div>
-        <input type="text" id="custAddr" placeholder="Customer Address">
+        <label>Customer Name</label>
+        <input type="text" id="custName" class="box-input" placeholder="Yahan Naam Likhein">
+        
+        <label>Mobile Number</label>
+        <input type="number" id="custMobile" class="box-input" placeholder="Customer ka Mobile No">
 
-        <label>Work & Item Details (₹)</label>
+        <label>Address</label>
+        <input type="text" id="custAddr" class="box-input" placeholder="Customer ka Address">
+
+        <label>Work & Price (₹)</label>
         <div id="workContainer">
             <div class="work-row">
-                <input type="text" class="work-desc" placeholder="Detail (e.g. Belt Change)">
-                <input type="number" class="work-price" placeholder="Rate" oninput="calculateTotal()">
+                <input type="text" class="work-desc box-input" style="margin-bottom:0" placeholder="Kaam ki Detail">
+                <input type="number" class="work-price box-input" style="margin-bottom:0" placeholder="Rate" oninput="calculateTotal()">
             </div>
         </div>
         <button class="btn-add" onclick="addRow()">+ ADD MORE WORK</button>
 
-        <div class="summary-box">
-            <div class="summary-row"><span>Gross Total:</span><span id="grossTotal">₹ 0</span></div>
-            <div class="summary-row" style="color: #ef4444; align-items: center;">
-                <span>Discount (₹):</span>
-                <input type="number" id="discount" placeholder="0" oninput="calculateTotal()" style="width: 80px; margin: 0; padding: 5px; font-size: 12px;">
+        <div class="gst-area">
+            <div style="display:flex; justify-content: space-between; align-items:center;">
+                <span style="font-size: 13px;">Include GST?</span>
+                <input type="checkbox" id="gstApply" onchange="calculateTotal()" class="gst-check" style="width:20px; height:20px;">
             </div>
+            <div id="gstFields" style="display:none; margin-top:10px;">
+                <label>GST Percentage (%)</label>
+                <input type="number" id="gstRate" value="18" class="box-input" oninput="calculateTotal()">
+            </div>
+        </div>
+
+        <div style="font-size: 13px; padding: 5px;">
+            <div style="display:flex; justify-content:space-between;"><span>Sub Total:</span><span id="subTotalDisplay">₹ 0</span></div>
+            <div id="gstAmtRow" style="display:none; justify-content:space-between; color: var(--gold);"><span>GST Amount:</span><span id="gstAmountDisplay">₹ 0</span></div>
         </div>
 
         <div class="total-box">
@@ -75,25 +75,11 @@
             <h2 id="grandTotal" style="margin:5px 0 0 0; color:var(--gold); font-size: 28px;">₹ 0</h2>
         </div>
 
-        <div class="bank-info-print">
-            <div style="background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                <strong style="color: #1e293b; font-size: 14px;">🏦 BANK ACCOUNT DETAILS:</strong><br>
-                <div style="margin-top: 5px; line-height: 1.6;">
-                    <strong>Name:</strong> Shailesh Rajbhar<br>
-                    <strong>Bank:</strong> Bank of Baroda<br>
-                    <strong>A/C No:</strong> 27810100021319<br>
-                    <strong>IFSC:</strong> BARB0MALADV (Fifth digit is Zero)<br>
-                    <strong>G-Pay/PhonePe:</strong> 8850813765
-                </div>
-            </div>
-        </div>
-
         <div class="btn-group">
             <button class="btn-wa" onclick="sendWhatsApp()">📲 WHATSAPP</button>
             <button class="btn-pdf" onclick="window.print()">📄 SAVE PDF</button>
         </div>
-        
-        <a href="index.html" style="display:block; text-align:center; margin-top:20px; color:#94a3b8; font-size:11px; text-decoration:none;">← Back to Dashboard</a>
+        <a href="index.html" style="display:block; text-align:center; margin-top:20px; color:#94a3b8; font-size:11px; text-decoration:none;">← Dashboard</a>
     </div>
 
     <script>
@@ -101,36 +87,56 @@
             let container = document.getElementById('workContainer');
             let div = document.createElement('div');
             div.className = 'work-row';
-            div.innerHTML = `<input type="text" class="work-desc" placeholder="Next Detail">
-                             <input type="number" class="work-price" placeholder="Rate" oninput="calculateTotal()">`;
+            div.innerHTML = `<input type="text" class="work-desc box-input" style="margin-bottom:0" placeholder="Next Detail">
+                             <input type="number" class="work-price box-input" style="margin-bottom:0" placeholder="Rate" oninput="calculateTotal()">`;
             container.appendChild(div);
         }
 
         function calculateTotal() {
             let prices = document.getElementsByClassName('work-price');
-            let gross = 0;
-            for(let p of prices) { gross += Number(p.value) || 0; }
-            let disc = Number(document.getElementById('discount').value) || 0;
-            let final = gross - disc;
-            document.getElementById('grossTotal').innerText = "₹ " + gross.toLocaleString('en-IN');
+            let subtotal = 0;
+            for(let p of prices) { subtotal += Number(p.value) || 0; }
+            
+            let isGst = document.getElementById('gstApply').checked;
+            let gstDisplay = document.getElementById('gstFields');
+            let gstAmtRow = document.getElementById('gstAmtRow');
+            let final = subtotal;
+            let gstAmt = 0;
+
+            if(isGst) {
+                gstDisplay.style.display = 'block';
+                gstAmtRow.style.display = 'flex';
+                let gstPerc = Number(document.getElementById('gstRate').value) || 0;
+                gstAmt = (subtotal * gstPerc) / 100;
+                final = subtotal + gstAmt;
+            } else {
+                gstDisplay.style.display = 'none';
+                gstAmtRow.style.display = 'none';
+            }
+
+            document.getElementById('subTotalDisplay').innerText = "₹ " + subtotal.toLocaleString('en-IN');
+            document.getElementById('gstAmountDisplay').innerText = "₹ " + gstAmt.toLocaleString('en-IN');
             document.getElementById('grandTotal').innerText = "₹ " + final.toLocaleString('en-IN');
         }
 
         function sendWhatsApp() {
             let name = document.getElementById('custName').value || 'Customer';
-            let mobile = document.getElementById('custMobile').value || 'N/A';
             let final = document.getElementById('grandTotal').innerText;
+            let isGst = document.getElementById('gstApply').checked;
+            let gstAmt = document.getElementById('gstAmountDisplay').innerText;
+            
             let descs = document.getElementsByClassName('work-desc');
             let prices = document.getElementsByClassName('work-price');
-            
-            let billItems = "";
+            let items = "";
             for(let i=0; i < descs.length; i++) {
-                if(descs[i].value) { billItems += `${i+1}. ${descs[i].value}: ₹${prices[i].value}%0A`; }
+                if(descs[i].value) { items += `${i+1}. ${descs[i].value}: ₹${prices[i].value}%0A`; }
             }
 
-            let msg = `*S.R ENTERPRISES - BILL*%0A*Customer:* ${name}%0A*Mob:* ${mobile}%0A--------------------------%0A*Work Details:*%0A${billItems}--------------------------%0A*GRAND TOTAL: ${final}*%0A--------------------------%0A*BANK DETAILS:*%0ABank: Bank of Baroda%0AA/C: 27810100021319%0AIFSC: BARB0MALADV%0AG-Pay: 8850813765%0A--------------------------%0A_Thank you!_`;
+            let gstText = isGst ? `*GST Amount:* ${gstAmt}%0A` : "";
+            let msg = `*S.R ENTERPRISES - GST BILL*%0A*Customer:* ${name}%0A--------------------------%0A*Work Details:*%0A${items}--------------------------%0A${gstText}*GRAND TOTAL: ${final}*%0A--------------------------%0A*Bank Details:*%0ABank of Baroda | 27810100021319%0AIFSC: BARB0MALADV%0A--------------------------%0A_Thank you!_`;
             window.open(`https://wa.me/?text=${msg}`, '_blank');
         }
     </script>
 </body>
-</html>
+                </html>
+                
