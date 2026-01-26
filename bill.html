@@ -7,45 +7,46 @@
     <style>
         :root { --dark-bg: #0b1120; --card-bg: #1e293b; --gold: #facc15; --white: #ffffff; }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--dark-bg); color: var(--white); margin: 0; padding: 0; }
-        .invoice-card { background: var(--card-bg); width: 100%; margin: auto; padding: 20px; box-sizing: border-box; min-height: 100vh; max-width: 600px; }
+        .invoice-card { background: var(--card-bg); width: 100%; margin: 0; padding: 15px; box-sizing: border-box; min-height: 100vh; }
 
         .header { border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; text-align: center; }
         .header h1 { color: var(--gold); margin: 0; font-size: 24px; text-transform: uppercase; }
+        .header-info { font-size: 11px; color: #94a3b8; margin-top: 5px; font-weight: bold; letter-spacing: 1px; }
         
-        .box-in, .table-in, .top-in { width: 100%; background: var(--white); border: none; padding: 10px; color: #000; border-radius: 5px; font-weight: 600; box-sizing: border-box; }
+        .top-stats { display: flex; justify-content: space-between; margin-top: 15px; padding: 0 5px; }
+        .top-in { background: var(--white); border: none; padding: 6px; color: #000; border-radius: 4px; font-size: 13px; font-weight: bold; width: 85px; text-align: right; }
 
-        /* Table Style */
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; border-radius: 5px; overflow: hidden; }
-        th { background: #1c2539; color: var(--gold); padding: 10px; text-align: left; border-bottom: 2px solid var(--gold); }
-        td { padding: 5px; color: black; border-bottom: 1px solid #eee; }
+        .input-row { display: flex; flex-direction: column; margin-bottom: 15px; padding: 0 5px; }
+        .input-row label { font-size: 12px; color: var(--gold); font-weight: bold; text-transform: uppercase; margin-bottom: 6px; }
+        .box-in { width: 100%; background: var(--white); border: none; padding: 12px; color: #000; border-radius: 6px; font-size: 15px; font-weight: 600; box-sizing: border-box; outline: none; }
 
-        /* Calculation area */
-        .calc-area { margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px; }
-        .total-display { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 10px; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { background: #1c2539; color: var(--gold); font-size: 12px; text-align: left; padding: 12px 5px; border-bottom: 2px solid var(--gold); }
+        .table-in { width: 100%; background: var(--white); border: none; padding: 12px; border-radius: 5px; font-size: 14px; font-weight: bold; box-sizing: border-box; color: #000; }
 
-        /* Buttons - SCREEN PAR DIKHENGE */
-        .btn-grp { display: flex; gap: 10px; margin-top: 20px; }
-        .btn { flex: 1; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .calc-area { margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid #334155; }
+        .total-display { font-size: 24px; font-weight: bold; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 15px; margin-top: 10px; }
+
+        .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 5px; }
+        .btn { padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; text-transform: uppercase; }
         .btn-p { background: var(--gold); color: #000; }
-        .btn-w { background: #16a34a; color: #fff; }
-        .add-btn { width: 100%; padding: 10px; margin-top: 10px; background: transparent; color: var(--gold); border: 2px dashed var(--gold); cursor: pointer; border-radius: 8px; }
+        .btn-w { background: #16a34a; color: var(--white); }
+        .add-btn { background: transparent; color: var(--gold); border: 2px dashed var(--gold); width: calc(100% - 10px); margin: 10px 5px; padding: 12px; font-weight: bold; border-radius: 8px; }
 
-        /* Payment Section for Print */
-        .print-only-section { display: none; }
-
-        /* 🖨️ PRINT SETTINGS - ISSE BILL BHARA DIKHEGA */
+        /* 🖨️ PRINT SETTINGS (Sab Purana Rahega + Watermark) */
         @media print {
-            body { background: white !important; color: black !important; }
-            .invoice-card { border: 2px solid black; background: white; padding: 30px; max-width: 100%; }
-            .btn-grp, .add-btn, .no-print { display: none !important; } /* Buttons hide ho jayenge */
-            
-            .box-in, .table-in { border: 1px solid black !important; background: transparent !important; }
-            table { border: 2px solid black; margin-bottom: 20px; }
-            th, td { border: 1px solid black !important; padding: 10px !important; }
-
-            .print-only-section { display: block !important; margin-top: 30px; }
-            .bank-box { border: 2px solid black; padding: 15px; display: flex; align-items: center; gap: 20px; border-radius: 10px; }
-            .qr-code { width: 100px; height: 100px; border: 1px solid #000; }
+            body { background: white !important; color: black !important; padding: 20px; }
+            .invoice-card { border: 2px solid #000; background: white; padding: 30px; position: relative; max-width: 100%; }
+            .invoice-card::before {
+                content: "S.R ENTERPRISES";
+                position: absolute; top: 45%; left: 10%; font-size: 70px;
+                color: rgba(0,0,0,0.03); transform: rotate(-35deg); z-index: 0; font-weight: 900;
+            }
+            .no-print, .btn-grp, .add-btn, hr { display: none !important; }
+            .box-in, .table-in, .top-in { background: #f0f0f0 !important; border: 1px solid #000 !important; color: black !important; }
+            table, th, td { border: 1px solid black !important; color: black !important; }
+            th { background: #ddd !important; }
+            .calc-area { background: #f9f9f9 !important; border: 1px solid #000 !important; }
         }
     </style>
 </head>
@@ -54,55 +55,38 @@
 <div class="invoice-card">
     <div class="header">
         <h1>S.R ENTERPRISES</h1>
-        <p style="color:var(--gold); font-size:12px; margin:5px 0;">FUSING MACHINE SPECIALIST | MUMBAI</p>
+        <div class="header-info">FUSING MACHINE SPECIALIST | MUMBAI</div>
+        <div class="top-stats">
+            <div><span style="font-size:11px; color:var(--gold);">NO:</span><input type="text" value="033" class="top-in"></div>
+            <div><span style="font-size:11px; color:var(--gold);">DATE:</span><input type="text" id="invDate" class="top-in"></div>
+        </div>
     </div>
 
-    <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
-        <div style="width:45%"><label style="font-size:10px; color:var(--gold);">DATE:</label><input type="text" id="invDate" class="top-in"></div>
-        <div style="width:45%"><label style="font-size:10px; color:var(--gold);">INV NO:</label><input type="text" value="033" class="top-in"></div>
+    <div class="input-row"><label>Customer Name:</label><input type="text" id="cName" class="box-in"></div>
+    <div class="input-row"><label>Address:</label><input type="text" class="box-in"></div>
+    <div class="input-row">
+        <label>Mobile No:</label>
+        <div style="display:flex; gap:8px;"><input type="text" id="cMob" class="box-in"> <button onclick="getContact()" class="no-print" style="background:var(--gold); border:none; border-radius:6px; padding:0 10px; font-weight:bold;">GET</button></div>
     </div>
-
-    <div style="margin-bottom:10px;"><label style="font-size:12px; color:var(--gold);">Customer Name:</label><input type="text" id="cName" class="box-in"></div>
-    <div style="margin-bottom:10px;"><label style="font-size:12px; color:var(--gold);">Address:</label><input type="text" class="box-in"></div>
 
     <table>
-        <thead>
-            <tr>
-                <th style="width:50%">Description</th>
-                <th style="width:20%">Rate</th>
-                <th style="width:10%">Qty</th>
-                <th style="width:20%; text-align:right;">Total</th>
-            </tr>
-        </thead>
+        <thead><tr><th style="width:50%">Description</th><th style="width:15%">Rate</th><th style="width:10%">Qty</th><th style="width:25%; text-align:right;">Total</th></tr></thead>
         <tbody id="bBody">
             <tr>
-                <td><input type="text" class="table-in" placeholder="Item"></td>
+                <td><input type="text" class="table-in"></td>
                 <td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td>
                 <td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td>
-                <td style="text-align:right; font-weight:bold; color:black;" class="l-total">₹0.00</td>
+                <td style="text-align:right;" class="l-total">₹0.00</td>
             </tr>
         </tbody>
     </table>
     <button class="add-btn no-print" onclick="addItem()">+ ADD ITEM</button>
 
     <div class="calc-area">
-        <div style="display:flex; justify-content:space-between;"><span>Sub-Total:</span><span id="subT">₹0.00</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Sub-Total:</span><span id="subT">₹0.00</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Discount:</span><input type="number" id="discIn" class="top-in" value="0" oninput="clc()"></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>GST (18%):</span><input type="checkbox" id="gstCheck" onchange="clc()"></div>
         <div class="total-display" style="display:flex; justify-content:space-between;"><span>GRAND TOTAL:</span><span id="gTotal">₹0.00</span></div>
-    </div>
-
-    <div class="print-only-section">
-        <div class="bank-box">
-            <div class="qr-code"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=9326113988@sbi" style="width:100%"></div>
-            <div style="font-size:12px;">
-                <strong>BANK DETAILS:</strong><br>
-                A/C Name: S.R ENTERPRISES<br>
-                Bank: SBI | A/c No: 44695199584<br>
-                IFSC: SBIN0008373 | Mobile: 9326113988
-            </div>
-        </div>
-        <div style="margin-top:50px; text-align:right;">
-            <p style="border-top:2px solid black; display:inline-block; padding-top:5px; width:200px; text-align:center;">Authorized Signature</p>
-        </div>
     </div>
 
     <div class="btn-grp no-print">
@@ -115,19 +99,25 @@
     window.onload = function() { document.getElementById('invDate').value = new Date().toLocaleDateString('en-GB'); };
     function addItem() {
         let tr = document.createElement('tr');
-        tr.innerHTML = `<td><input type="text" class="table-in"></td><td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td><td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td><td style="text-align:right; color:black;" class="l-total">₹0.00</td>`;
+        tr.innerHTML = `<td><input type="text" class="table-in"></td><td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td><td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td><td style="text-align:right;" class="l-total">₹0.00</td>`;
         document.getElementById('bBody').appendChild(tr);
     }
     function clc() {
         let rs = document.getElementsByClassName('r-val'), qs = document.getElementsByClassName('q-val'), ts = document.getElementsByClassName('l-total'), sub = 0;
         for(let i=0; i<rs.length; i++) { let line = rs[i].value * qs[i].value; ts[i].innerText = "₹" + line.toFixed(2); sub += line; }
+        let d = parseFloat(document.getElementById('discIn').value) || 0;
+        let final = sub - d;
+        if(document.getElementById('gstCheck').checked) final += final * 0.18;
         document.getElementById('subT').innerText = "₹" + sub.toFixed(2);
-        document.getElementById('gTotal').innerText = "₹" + sub.toFixed(2);
+        document.getElementById('gTotal').innerText = "₹" + final.toFixed(2);
     }
     function wa() {
         let n = document.getElementById('cName').value || "Customer";
         let t = document.getElementById('gTotal').innerText;
         window.open(`https://wa.me/919326113988?text=*S.R ENTERPRISES*%0A*Customer:* ${n}%0A*Total:* ${t}`, '_blank');
+    }
+    async function getContact() {
+        try { const contact = await navigator.contacts.select(['name', 'tel'], { multiple: false }); if (contact.length > 0) { document.getElementById('cName').value = contact[0].name[0]; document.getElementById('cMob').value = contact[0].tel[0]; } } catch (e) {}
     }
 </script>
 </body>
