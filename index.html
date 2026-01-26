@@ -3,90 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>S.R ENTERPRISES | Premium Dashboard</title>
     <style>
-        :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--dark-bg); margin: 0; color: white; overflow-x: hidden; }
+        /* 🖤 Premium Black & Gold Theme */
+        :root { --bg: #0b1120; --card: #1e293b; --gold: #facc15; --white: #ffffff; }
         
-        header { background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); padding: 25px; text-align: center; border-bottom: 3px solid var(--gold); }
-        .brand-name { font-size: 26px; font-weight: 700; color: var(--gold); letter-spacing: 1px; cursor: pointer; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
+        .container { max-width: 900px; margin: auto; padding: 15px; }
 
-        .section-title { padding: 20px; color: var(--gold); font-size: 14px; font-weight: 600; display: flex; align-items: center; }
-        .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(251,191,36,0.2); margin-left: 10px; }
+        /* Header */
+        .header { text-align: center; border-bottom: 2px solid var(--gold); padding: 30px 0; margin-bottom: 25px; background: linear-gradient(180deg, #1e293b 0%, #0b1120 100%); }
+        .header h1 { margin: 0; color: var(--gold); font-size: 28px; letter-spacing: 2px; text-transform: uppercase; }
+        .header p { margin: 8px 0; color: #94a3b8; font-weight: bold; font-size: 12px; letter-spacing: 1px; }
 
-        .machine-gallery { display: flex; overflow-x: auto; gap: 15px; padding: 0 20px 20px; scrollbar-width: none; }
-        .product-card { background: var(--card-bg); min-width: 200px; border-radius: 18px; padding: 15px; border: 1px solid rgba(255,255,255,0.05); position: relative; }
+        /* Navigation Buttons */
+        .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; padding: 0 5px; }
+        .nav-btn { background: var(--card); border: 1px solid #334155; padding: 25px; border-radius: 15px; text-align: center; text-decoration: none; color: white; font-weight: bold; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .nav-btn:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(250, 204, 21, 0.1); }
+        .nav-btn span { font-size: 32px; display: block; margin-bottom: 10px; }
+
+        /* Private Lock Screen */
+        #lockScreen { text-align: center; margin: 20px 5px; padding: 40px 20px; background: var(--card); border-radius: 20px; border: 1px solid #334155; }
+        .btn-gold { background: var(--gold); color: #000; border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; width: 100%; max-width: 320px; text-transform: uppercase; transition: 0.3s; }
+        .btn-gold:active { transform: scale(0.95); }
+
+        /* Admin Panel Section */
+        #adminPanel { display: none; padding: 0 5px; }
+        .data-card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #334155; margin-bottom: 25px; }
         
-        .icon-box { background: rgba(255,255,255,0.03); height: 100px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 50px; margin-bottom: 12px; }
-        .product-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-        .price-tag { color: #4ade80; font-size: 18px; font-weight: 700; display: block; margin-bottom: 15px; }
+        input, textarea { background: #0f172a; border: 1px solid #334155; color: white; padding: 12px; border-radius: 8px; margin-bottom: 12px; width: 100%; box-sizing: border-box; outline: none; }
+        input:focus, textarea:focus { border-color: var(--gold); }
+        textarea { height: 100px; resize: none; }
 
-        .buy-btn { background: linear-gradient(180deg, #fcd34d 0%, #fbbf24 100%); color: #000; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700; display: block; box-shadow: 0 4px 0 #b45309; }
-
-        .action-card { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 15px; padding: 20px; text-decoration: none; color: white; text-align: center; border: 1px solid rgba(255,255,255,0.1); display: block; margin-bottom: 10px; }
-        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 20px 20px; }
-
-        #admin-office { display: none; }
-        .admin-price { margin-top: 10px; font-size: 11px; color: var(--gold); display: none; padding-top: 8px; border-top: 1px dashed #444; }
+        /* Service History Table */
+        .table-container { width: 100%; overflow-x: auto; background: var(--card); border-radius: 15px; border: 1px solid #334155; }
+        table { width: 100%; border-collapse: collapse; min-width: 750px; }
+        th { background: #1e293b; color: var(--gold); padding: 15px; text-align: left; font-size: 11px; text-transform: uppercase; border-bottom: 2px solid #0f172a; }
+        td { padding: 15px; border-bottom: 1px solid #0f172a; font-size: 13px; vertical-align: top; }
         
-        footer { text-align: center; padding: 30px; font-size: 10px; color: #64748b; }
+        .work-log { font-size: 11px; color: #cbd5e1; line-height: 1.6; white-space: pre-line; background: #0f172a; padding: 12px; border-radius: 8px; margin-top: 8px; border: 1px solid #334155; }
+        .status-tag { padding: 5px 10px; border-radius: 6px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
+        .pending { background: #7f1d1d; color: #fecaca; border: 1px solid #dc2626; }
+        .ok { background: #064e3b; color: #d1fae5; border: 1px solid #10b981; }
+
+        @media (max-width: 600px) {
+            .nav-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 22px; }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand-name" onclick="unlockAdmin()">S.R ENTERPRISES</div>
-        <div style="font-size: 10px; color: #94a3b8; margin-top: 5px;">MUMBAI'S FUSING MACHINE EXPERT</div>
-    </header>
-
-    <div class="section-title">⭐ FEATURED PRODUCTS</div>
-    <div class="machine-gallery">
-        <div class="product-card">
-            <div class="icon-box">🏗️</div>
-            <div class="product-name">HASHIMA HP-450</div>
-            <span class="price-tag">₹1,55,000</span>
-            <a href="https://wa.me/918850813765?text=Hi+Shailesh+ji,+I+want+Hashima+HP-450" class="buy-btn">🛒 BUY NOW</a>
-            <div class="admin-price">Secret Cost: ₹1,40,000</div>
-        </div>
-        <div class="product-card">
-            <div class="icon-box">⚙️</div>
-            <div class="product-name">GEARED MOTOR</div>
-            <span class="price-tag">₹3,500</span>
-            <a href="https://wa.me/918850813765?text=Hi+Shailesh+ji,+I+want+Geared+Motor" class="buy-btn">🛒 BUY NOW</a>
-            <div class="admin-price">Cost: ₹2200</div>
-        </div>
+<div class="container">
+    <div class="header">
+        <h1>S.R ENTERPRISES</h1>
+        <p>FUSING MACHINE SPECIALIST | MUMBAI</p>
     </div>
 
-    <div class="section-title">💬 CONTACT SUPPORT</div>
-    <div style="padding: 0 20px;">
-        <a href="https://wa.me/918850813765" class="action-card" style="border: 1px solid #25D366; background: rgba(37, 211, 102, 0.1);">
-            <strong style="font-size: 16px;">📲 WHATSAPP CHAT</strong><br>
-            <span style="font-size: 10px; color: #94a3b8;">Click to chat with Shailesh Ji</span>
+    <div class="nav-grid">
+        <a href="bill.html" class="nav-btn">
+            <span>📄</span> GENERATE NEW BILL
+        </a>
+        <a href="https://wa.me/917021733860" class="nav-btn">
+            <span>💬</span> WHATSAPP CONTACT
         </a>
     </div>
 
-    <div id="admin-office">
-        <div class="section-title">💼 MY PRIVATE OFFICE</div>
-        <div class="grid-container">
-            <a href="bill.html" class="action-card">📝 BILLING</a>
-            <a href="https://docs.google.com/spreadsheets/d/1Xy_Jp9E9gS1A_nU0Y0X6_K3yU9P-L6oX-m-E-rX9Xw/edit" class="action-card">📊 REPORTS</a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScyB-Yv6865X0zG_C9hWpX_I-oQvNl6t9K-X1P8u5UoY-yL0A/viewform" class="action-card">📥 ENTRY</a>
-        </div>
+    <div id="lockScreen">
+        <div style="font-size: 40px; margin-bottom: 15px;">🔒</div>
+        <h3 style="color:var(--gold); margin:0;">PRIVATE ADMIN LOG</h3>
+        <p style="font-size:12px; color:#94a3b8; margin: 10px 0 25px 0;">Service history aur spare parts ka hisaab dekhne ke liye unlock karein.</p>
+        <button class="btn-gold" onclick="unlockAdmin()">🔓 UNLOCK OWNER DASHBOARD</button>
     </div>
 
-    <footer>S.R ENTERPRISES | MALAD, MUMBAI | 8850813765</footer>
+    <div id="adminPanel">
+        <div class="data-card">
+            <h3 style="color:var(--gold); margin-top:0; font-size:18px;">📝 Nayi Visit Entry</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;" id="formGrid">
+                <input type="text" id="cName" placeholder="Customer Name">
+                <input type="text" id="cMob" placeholder="Mobile Number">
+                <input type="text" id="cMach" placeholder="Machine (e.g. Hashima)">
+                <input type="date" id="nDate" title="Next Service Date">
+            </div>
+            <textarea id="wDetails" placeholder="Details: Kya kaam kiya? Kaunsa part dala? Kitne paise liye?"></textarea>
+            <input type="number" id="tBill" placeholder="Total Bill (₹)">
+            <button class="btn-gold" style="width:100%;" onclick="saveData()">SAVE RECORD</button>
+        </div>
 
-    <script>
-        function unlockAdmin() {
-            let p = prompt("Shailesh ji, Enter Secret Password:");
-            if(p === "1234") { 
-                document.getElementById('admin-office').style.display = 'block';
-                document.querySelectorAll('.admin-price').forEach(d => d.style.display='block');
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-                alert("Office Unlocked!");
-            }
+        <input type="text" id="search" onkeyup="filterData()" placeholder="🔍 Search Customer, Machine or Date..." style="border: 1px solid var(--gold); padding: 15px;">
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer & Machine</th>
+                        <th>Service History / Spare Parts</th>
+                        <th>Amount</th>
+                        <th>Next Due</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="masterTableBody"></tbody>
+            </table>
+        </div>
+        
+        <div style="text-align:center; margin-top:40px; padding-bottom: 40px;">
+            <button onclick="location.reload()" style="background:none; border:none; color:#475569; cursor:pointer; font-size:12px; font-weight:bold;">🔒 LOGOUT & LOCK DATA</button>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function unlockAdmin() {
+        let pin = prompt("Owner PIN daalein:");
+        if (pin === "7860") {
+            document.getElementById('lockScreen').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            loadData();
+        } else {
+            alert("Galat PIN!");
         }
-    </script>
+    }
+
+    function saveData() {
+        const entry = {
+            name: document.getElementById('cName').value,
+            mob: document.getElementById('cMob').value,
+            mach: document.getElementById('cMach').value,
+            work: document.getElementById('wDetails').value,
+            bill: document.getElementById('tBill').value,
+            next: document.getElementById('nDate').value,
+            date: new Date().toLocaleDateString('en-GB')
+        };
+
+        if(!entry.name || !entry.next) return alert("Name aur Next Date zaroori hai!");
+
+        let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
+        db.push(entry);
+        localStorage.setItem('srMasterDB', JSON.stringify(db));
+        
+        alert("Entry Saved Successfully!");
+        loadData();
+        
+        // Reset inputs
+        document.getElementById('cName').value = '';
+        document.getElementById('cMob').value = '';
+        document.getElementById('wDetails').value = '';
+        document.getElementById('tBill').value = '';
+    }
+
+    function loadData() {
+        let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
+        let html = '';
+        let today = new Date().toISOString().split('T')[0];
+
+        db.reverse().forEach((item, index) => {
+            let statusClass = (item.next < today) ? 'pending' : 'ok';
+            let statusText = (item.next < today) ? '⚠️ OVERDUE' : '✅ ON TRACK';
+
+            html += `
+                <tr>
+                    <td>
+                        <b style="color:var(--gold); font-size:14px;">${item.name}</b><br>
+                        <small style="color:#94a3b8;">${item.mach}</small><br>
+                        <small>${item.mob}</small>
+                    </td>
+                    <td>
+                        <div style="font-size:10px; color:var(--gold); font-weight:bold;">Visit: ${item.date}</div>
+                        <div class="work-log">${item.work || 'Details not added.'}</div>
+                    </td>
+                    <td style="font-weight:bold; color:var(--white); font-size:15px;">₹${item.bill || '0'}</td>
+                    <td>
+                        <span class="status-tag ${statusClass}">${item.next}</span><br>
+                        <small style="font-size:9px; display:block; margin-top:5px; color:#94a3b8;">${statusText}</small>
+                    </td>
+                    <td>
+                        <button onclick="deleteEntry(${index})" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:20px;">🗑️</button>
+                    </td>
+                </tr>
+            `;
+        });
+        document.getElementById('masterTableBody').innerHTML = html;
+    }
+
+    function filterData() {
+        let val = document.getElementById('search').value.toLowerCase();
+        let rows = document.getElementById('masterTableBody').getElementsByTagName('tr');
+        for (let row of rows) {
+            row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none';
+        }
+    }
+
+    function deleteEntry(i) {
+        if(confirm("Record delete karein?")) {
+            let db = JSON.parse(localStorage.getItem('srMasterDB'));
+            db.splice(db.length - 1 - i, 1);
+            localStorage.setItem('srMasterDB', JSON.stringify(db));
+            loadData();
+        }
+    }
+</script>
 </body>
 </html>
