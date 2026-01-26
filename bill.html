@@ -3,43 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Official Bill</title>
+    <title>S.R ENTERPRISES | Official Invoice</title>
     <style>
-        :root { --bg: #0f172a; --card: #1e293b; --gold: #fbbf24; --text: #ffffff; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 15px; }
-        .invoice-card { background: var(--card); max-width: 850px; margin: auto; padding: 25px; border-radius: 12px; border: 1px solid #334155; }
+        :root { --bg: #0f172a; --card: #1e293b; --gold: #fbbf24; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg); color: white; margin: 0; padding: 15px; }
+        .invoice-card { background: var(--card); max-width: 850px; margin: auto; padding: 25px; border-radius: 12px; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 
         /* Header */
-        .header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; }
+        .header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--gold); padding-bottom: 15px; margin-bottom: 20px; }
         .header h1 { color: var(--gold); margin: 0; font-size: 26px; }
         
-        /* 📦 Entry Section (Labels + Clean Boxes) */
+        /* 📦 Entry Section (Labels + White Boxes) */
         .entry-group { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 10px; border: 1px solid #334155; margin-bottom: 20px; }
-        .row { display: flex; align-items: center; margin-bottom: 15px; gap: 10px; }
-        .row label { width: 140px; font-size: 13px; color: var(--gold); font-weight: bold; text-transform: uppercase; }
-        .input-box { flex: 1; background: #ffffff; border: 2px solid #cbd5e1; padding: 10px; color: #000000; border-radius: 6px; font-size: 14px; outline: none; font-weight: 600; }
-        .input-box:focus { border-color: var(--gold); background: #f8fafc; }
+        .row { display: flex; align-items: center; margin-bottom: 12px; gap: 10px; }
+        .row label { width: 150px; font-size: 13px; color: var(--gold); font-weight: bold; text-transform: uppercase; }
+        .input-box { flex: 1; background: #ffffff; border: 2px solid #cbd5e1; padding: 10px; color: #000; border-radius: 6px; font-size: 14px; outline: none; font-weight: 600; }
 
         /* Table Section */
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th { background: #334155; color: var(--gold); padding: 12px; text-align: left; border: 1px solid #444; }
         td { padding: 8px; border: 1px solid #334155; }
-        .table-input { width: 100%; background: #fff; color: #000; border: 1px solid #ccc; padding: 8px; border-radius: 4px; box-sizing: border-box; }
+        .table-input { width: 100%; background: #fff; color: #000; border: 1px solid #ccc; padding: 8px; border-radius: 4px; box-sizing: border-box; font-weight: 600; }
 
-        .add-item-btn { background: transparent; color: var(--gold); border: 1px dashed var(--gold); padding: 10px; cursor: pointer; width: 100%; border-radius: 6px; font-weight: bold; margin-top: 10px; }
+        .add-btn { background: transparent; color: var(--gold); border: 1px dashed var(--gold); padding: 10px; cursor: pointer; width: 100%; border-radius: 6px; font-weight: bold; margin-top: 10px; }
 
-        /* Calculation Section */
-        .calc-area { display: flex; flex-direction: column; align-items: flex-end; margin-top: 20px; }
-        .total-box { width: 280px; text-align: right; }
-        .final-row { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 2px solid #444; padding-top: 10px; margin-top: 10px; }
+        /* Calculations */
+        .calc-area { display: flex; justify-content: flex-end; margin-top: 20px; }
+        .total-table { width: 320px; }
+        .total-table td { border: none; padding: 5px; text-align: right; }
+        .final-row { font-size: 20px; font-weight: bold; color: var(--gold); border-top: 2px solid #444 !important; }
 
-        /* Hidden on Entry Screen */
-        .print-only { display: none; }
+        /* Buttons */
+        .btn-footer { margin-top: 30px; display: flex; gap: 10px; justify-content: center; }
+        .btn { padding: 15px 30px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; font-size: 15px; }
+        .btn-p { background: var(--gold); color: black; }
+        .btn-w { background: #25D366; color: white; }
 
-        .btn-footer { margin-top: 30px; text-align: center; }
-        .btn-print { padding: 15px 50px; background: var(--gold); color: black; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        /* Hidden on Screen */
+        .print-only, .sig-section, .words-print { display: none; }
 
-        /* 🖨️ PRINT STYLE (Professional PDF Look) */
+        /* 🖨️ PRINT STYLE */
         @media print {
             body { background: white !important; color: black !important; padding: 0; }
             .invoice-card { border: none; box-shadow: none; background: white; max-width: 100%; padding: 0; }
@@ -49,19 +52,15 @@
             .entry-group { border: none; background: transparent; padding: 0; }
             th { background: #f2f2f2 !important; color: black !important; border: 1px solid #ddd; }
             td { border: 1px solid #ddd; color: black; }
-            
             .print-only { display: flex !important; margin-top: 30px; border: 1px solid black; padding: 15px; gap: 20px; align-items: center; }
             .qr-code { border: 1px solid #ddd; padding: 5px; width: 100px; height: 100px; }
-            .bank-info { font-size: 13px; line-height: 1.6; text-align: left; }
-            
+            .qr-code img { width: 100%; }
             .sig-section { display: block !important; margin-top: 50px; text-align: right; }
             .sig-line { border-top: 2px solid black; display: inline-block; width: 200px; text-align: center; padding-top: 5px; font-weight: bold; }
-            .words-display { display: block !important; margin-top: 15px; font-size: 13px; text-align: left; }
-            
-            .no-print { display: none !important; }
+            .words-print { display: block !important; margin-top: 15px; font-size: 13px; text-align: left; }
+            .no-print, label { display: none !important; }
             .final-row { color: black !important; border-top: 2px solid black !important; }
         }
-        .sig-section, .words-display { display: none; }
     </style>
 </head>
 <body>
@@ -77,37 +76,22 @@
             <h2 style="color: #94a3b8; margin:0;">INVOICE</h2>
             <div class="row" style="justify-content: flex-end; margin:0;">
                 <label style="width:auto;">No: #</label>
-                <input type="text" class="input-box" value="039" style="width:60px; text-align:right;">
+                <input type="text" id="invNo" class="input-box" value="039" style="width:60px; text-align:right;">
             </div>
             <div class="row" style="justify-content: flex-end; margin:5px 0 0 0;">
                 <label style="width:auto;">Date:</label>
-                <input type="text" id="dateInput" class="input-box" style="width:110px; text-align:right;">
+                <input type="text" id="invDate" class="input-box" style="width:110px; text-align:right;">
             </div>
         </div>
     </div>
 
     <div class="entry-group">
-        <div class="row">
-            <label>Customer Name:</label>
-            <input type="text" class="input-box" placeholder="Write Name Here">
-        </div>
-        <div class="row">
-            <label>Address:</label>
-            <input type="text" class="input-box" placeholder="Write Address Here">
-        </div>
-        <div class="row">
-            <label>Mobile Number:</label>
-            <input type="text" class="input-box" placeholder="Write Mobile No.">
-        </div>
+        <div class="row"><label>Customer Name:</label><input type="text" id="cName" class="input-box" placeholder="Name"></div>
+        <div class="row"><label>Address:</label><input type="text" id="cAddr" class="input-box" placeholder="Address"></div>
+        <div class="row"><label>Mobile No:</label><input type="text" id="cMob" class="input-box" placeholder="Mobile"></div>
         <hr style="border:0; border-top:1px solid #334155; margin:15px 0;">
-        <div class="row">
-            <label>Machine Name:</label>
-            <input type="text" class="input-box" placeholder="e.g. Hashima / Oshima">
-        </div>
-        <div class="row">
-            <label>Job / Work:</label>
-            <input type="text" class="input-box" placeholder="e.g. Servicing / Repairing">
-        </div>
+        <div class="row"><label>Machine Name:</label><input type="text" id="mName" class="input-box" placeholder="Machine Name"></div>
+        <div class="row"><label>Job / Work:</label><input type="text" id="jType" class="input-box" placeholder="Job Type"></div>
     </div>
 
     <table>
@@ -122,83 +106,76 @@
         <tbody id="billBody">
             <tr>
                 <td><input type="text" class="table-input" placeholder="Work Detail"></td>
-                <td><input type="number" class="rate-val table-input" value="0" oninput="doCalc()"></td>
-                <td><input type="number" class="qty-val table-input" value="1" oninput="doCalc()"></td>
+                <td><input type="number" class="r-val table-input" value="0" oninput="doCalc()"></td>
+                <td><input type="number" class="q-val table-input" value="1" oninput="doCalc()"></td>
                 <td style="text-align: right; font-weight: bold;" class="row-total">₹0.00</td>
             </tr>
         </tbody>
     </table>
-    <button class="add-item-btn no-print" onclick="addNewRow()">+ ADD MORE WORK</button>
+    <button class="add-btn no-print" onclick="addRow()">+ ADD MORE WORK</button>
 
     <div class="calc-area">
-        <div class="row total-box">
-            <label>Sub-Total:</label>
-            <span id="subTotalDisplay" style="flex:1; text-align:right;">₹0.00</span>
-        </div>
-        <div class="row total-box">
-            <label>Discount:</label>
-            <input type="number" id="discountInput" class="input-box" value="0" oninput="doCalc()" style="width:100px; text-align:right;">
-        </div>
-        <div class="final-row total-box" style="display:flex;">
-            <span style="flex:1; text-align:left;">TOTAL:</span>
-            <span id="grandTotalDisplay">₹0.00</span>
-        </div>
+        <table class="total-table">
+            <tr><td>Sub-Total:</td><td id="subT">₹0.00</td></tr>
+            <tr><td>Discount:</td><td><input type="number" id="disc" class="table-input" value="0" oninput="doCalc()" style="width:80px; text-align:right;"></td></tr>
+            <tr class="no-print"><td>GST (18%)?</td><td style="text-align:right;"><input type="checkbox" id="gstCheck" onchange="doCalc()" style="width:18px; height:18px;"></td></tr>
+            <tr id="gstRow" style="display:none;"><td>GST (18%):</td><td id="gstAmt">₹0.00</td></tr>
+            <tr class="final-row"><td>TOTAL:</td><td id="grandT">₹0.00</td></tr>
+        </table>
     </div>
 
-    <div class="words-display">
-        <strong>Total in Words:</strong> <span id="wordsText">Zero Rupees Only</span>
-    </div>
+    <div class="words-print"><strong>Total in Words:</strong> <span id="words">Zero Rupees Only</span></div>
 
     <div class="print-only">
         <div class="qr-code">
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=7021733860@sbi&pn=Hariram%20Sitaram%20Rajbhar" alt="Scanner">
         </div>
         <div class="bank-info">
-            <strong>BANK ACCOUNT DETAILS:</strong><br>
+            <strong>PAYMENT DETAILS:</strong><br>
             Name: Mr. Hariram Sitaram Rajbhar<br>
-            Bank: State Bank of India (SBI)<br>
+            Bank: SBI (State Bank of India)<br>
             A/c No: 44695199584 | IFSC: SBIN0008373<br>
             UPI ID: 7021733860@sbi
         </div>
     </div>
 
-    <div class="sig-section">
-        <div class="sig-line">
-            <p style="margin:0;">S.R ENTERPRISES</p>
-            <p style="margin:40px 0 0 0; font-size:10px;">Authorized Signature</p>
-        </div>
-    </div>
+    <div class="sig-section"><div class="sig-line">S.R ENTERPRISES<br><span style="font-size:10px; font-weight:normal;">Authorized Signature</span></div></div>
 
     <div class="btn-footer no-print">
-        <button class="btn-print" onclick="window.print()">PRINT / SAVE PDF</button>
+        <button class="btn btn-p" onclick="window.print()">PRINT / SAVE PDF</button>
+        <button class="btn btn-w" onclick="wa()">WHATSAPP BILL</button>
     </div>
 </div>
 
 <script>
-    document.getElementById('dateInput').value = new Date().toLocaleDateString('en-GB');
-
-    function addNewRow() {
+    document.getElementById('invDate').value = new Date().toLocaleDateString('en-GB');
+    function addRow() {
         let tr = document.createElement('tr');
         tr.innerHTML = `<td><input type="text" class="table-input" placeholder="Next Item"></td>
-                        <td><input type="number" class="rate-val table-input" value="0" oninput="doCalc()"></td>
-                        <td><input type="number" class="qty-val table-input" value="1" oninput="doCalc()"></td>
+                        <td><input type="number" class="r-val table-input" value="0" oninput="doCalc()"></td>
+                        <td><input type="number" class="q-val table-input" value="1" oninput="doCalc()"></td>
                         <td style="text-align: right; font-weight: bold;" class="row-total">₹0.00</td>`;
         document.getElementById('billBody').appendChild(tr);
     }
-
     function doCalc() {
-        let rates = document.getElementsByClassName('rate-val'), qtys = document.getElementsByClassName('qty-val'), totals = document.getElementsByClassName('row-total'), sub = 0;
-        for(let i=0; i<rates.length; i++) {
-            let rowTotal = rates[i].value * qtys[i].value;
-            totals[i].innerText = "₹" + rowTotal.toFixed(2);
-            sub += rowTotal;
-        }
-        let disc = document.getElementById('discountInput').value;
-        let final = sub - disc;
-        document.getElementById('subTotalDisplay').innerText = "₹" + sub.toFixed(2);
-        document.getElementById('grandTotalDisplay').innerText = "₹" + final.toFixed(2);
-        document.getElementById('wordsText').innerText = Math.round(final) + " Rupees Only";
+        let rs = document.getElementsByClassName('r-val'), qs = document.getElementsByClassName('q-val'), ts = document.getElementsByClassName('row-total'), sub = 0;
+        for(let i=0; i<rs.length; i++) { let line = rs[i].value * qs[i].value; ts[i].innerText = "₹" + line.toFixed(2); sub += line; }
+        let d = document.getElementById('disc').value;
+        let isGst = document.getElementById('gstCheck').checked;
+        let gst = isGst ? (sub - d) * 0.18 : 0;
+        document.getElementById('gstRow').style.display = isGst ? 'table-row' : 'none';
+        let final = (sub - d) + gst;
+        document.getElementById('subT').innerText = "₹" + sub.toFixed(2);
+        document.getElementById('gstAmt').innerText = "₹" + gst.toFixed(2);
+        document.getElementById('grandT').innerText = "₹" + final.toFixed(2);
+        document.getElementById('words').innerText = Math.round(final) + " Rupees Only";
+    }
+    function wa() {
+        let n = document.getElementById('cName').value || "Customer";
+        let f = document.getElementById('grandT').innerText;
+        window.open(`https://wa.me/?text=*S.R ENTERPRISES*%0A*Customer:* ${n}%0A*Total:* ${f}%0A_PDF Invoice is ready._`, '_blank');
     }
 </script>
 </body>
-</html>
+    </html>
+    
