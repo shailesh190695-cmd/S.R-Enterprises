@@ -11,23 +11,30 @@
         .bill-card { background: var(--card-bg); border-radius: 15px; padding: 20px; border: 1px solid rgba(251,191,36,0.2); max-width: 500px; margin: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
         .header { text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
         .header h2 { color: var(--gold); margin: 0; font-size: 22px; }
-        
         label { display: block; font-size: 11px; color: var(--gold); margin-bottom: 5px; font-weight: 600; text-transform: uppercase; }
         input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; font-size: 14px; margin-bottom: 10px; }
-        
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .work-row { display: grid; grid-template-columns: 2.5fr 1fr; gap: 8px; margin-bottom: 10px; }
         .btn-add { background: rgba(251,191,36,0.05); color: var(--gold); border: 1px dashed var(--gold); padding: 10px; width: 100%; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; margin-bottom: 20px; }
-        
         .summary-box { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px solid #334155; }
         .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
-        
         .total-box { background: rgba(251, 191, 36, 0.1); padding: 15px; border-radius: 10px; text-align: center; border: 2px solid var(--gold); margin: 15px 0; }
         .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn-wa { background: #25D366; color: white; padding: 15px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; }
         .btn-pdf { background: #fff; color: #000; padding: 15px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; }
+        
+        /* Bank Info - Normal screen pe nahi dikhega */
+        .bank-info-print { display: none; margin-top: 20px; border-top: 1px solid #000; padding-top: 10px; font-size: 12px; color: #000; }
 
-        @media print { .btn-group, .btn-add, .btn-back, label { display: none; } body { background: white; color: black; } .bill-card { border: none; box-shadow: none; background: white; color: black; } input { border: none; color: black; background: transparent; padding: 5px; } .header h2 { color: black; } .total-box { border: 2px solid black; } }
+        @media print { 
+            .btn-group, .btn-add, .btn-back, label { display: none !important; } 
+            body { background: white; color: black; } 
+            .bill-card { border: none; box-shadow: none; background: white; color: black; max-width: 100%; } 
+            input { border: none !important; color: black !important; background: transparent !important; padding: 5px !important; } 
+            .header h2 { color: black; } 
+            .total-box { border: 2px solid black; color: black; } 
+            .bank-info-print { display: block !important; } /* Print me dikhega */
+        }
     </style>
 </head>
 <body>
@@ -35,17 +42,15 @@
     <div class="bill-card">
         <div class="header">
             <h2>S.R ENTERPRISES</h2>
-            <p style="font-size: 10px; color: #94a3b8;">OFFICIAL DIGITAL INVOICE</p>
+            <p style="font-size: 10px; color: #94a3b8;">FUSING MACHINE EXPERT | 8850813765</p>
         </div>
 
         <label>Customer Details</label>
         <input type="text" id="custName" placeholder="Customer Name">
-        
         <div class="form-grid">
             <input type="number" id="custMobile" placeholder="Mobile Number">
             <input type="text" id="invNo" value="SR-101">
         </div>
-        
         <input type="text" id="custAddr" placeholder="Customer Address">
 
         <label>Work & Item Details (₹)</label>
@@ -70,12 +75,20 @@
             <h2 id="grandTotal" style="margin:5px 0 0 0; color:var(--gold); font-size: 28px;">₹ 0</h2>
         </div>
 
+        <div class="bank-info-print">
+            <strong>🏦 BANK DETAILS:</strong><br>
+            Name: Shailesh Rajbhar<br>
+            A/C: (Aapka Account No yahan likhein)<br>
+            IFSC: (Aapka IFSC yahan likhein)<br>
+            G-Pay/PhonePe: 8850813765
+        </div>
+
         <div class="btn-group">
             <button class="btn-wa" onclick="sendWhatsApp()">📲 WHATSAPP</button>
             <button class="btn-pdf" onclick="window.print()">📄 SAVE PDF</button>
         </div>
         
-        <a href="index.html" style="display:block; text-align:center; margin-top:20px; color:#94a3b8; font-size:11px; text-decoration:none;">← Back to Dashboard</a>
+        <a href="index.html" style="display:block; text-align:center; margin-top:20px; color:#94a3b8; font-size:11px; text-decoration:none;">← Dashboard</a>
     </div>
 
     <script>
@@ -101,12 +114,8 @@
         function sendWhatsApp() {
             let name = document.getElementById('custName').value || 'Customer';
             let mobile = document.getElementById('custMobile').value || 'N/A';
-            let addr = document.getElementById('custAddr').value || 'N/A';
-            let inv = document.getElementById('invNo').value;
             let descs = document.getElementsByClassName('work-desc');
             let prices = document.getElementsByClassName('work-price');
-            let gross = document.getElementById('grossTotal').innerText;
-            let disc = document.getElementById('discount').value || 0;
             let final = document.getElementById('grandTotal').innerText;
             
             let billItems = "";
@@ -114,7 +123,7 @@
                 if(descs[i].value) { billItems += `${i+1}. ${descs[i].value}: ₹${prices[i].value}%0A`; }
             }
 
-            let msg = `*S.R ENTERPRISES - BILL*%0A*Inv No:* ${inv}%0A--------------------------%0A*Customer:* ${name}%0A*Mob:* ${mobile}%0A*Addr:* ${addr}%0A--------------------------%0A*Work Details:*%0A${billItems}--------------------------%0A*Gross Total:* ${gross}%0A*Discount:* ₹${disc}%0A*GRAND TOTAL: ${final}*%0A--------------------------%0A_Thank you!_`;
+            let msg = `*S.R ENTERPRISES - BILL*%0A*Customer:* ${name}%0A*Mob:* ${mobile}%0A--------------------------%0A*Work Details:*%0A${billItems}--------------------------%0A*GRAND TOTAL: ${final}*%0A--------------------------%0A*PAYMENT DETAILS:*%0AG-Pay/PhonePe: 8850813765%0A--------------------------%0A_Thank you!_`;
             window.open(`https://wa.me/?text=${msg}`, '_blank');
         }
     </script>
