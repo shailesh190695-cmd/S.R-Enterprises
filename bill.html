@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Professional Bill</title>
+    <title>S.R ENTERPRISES | Master Bill</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; }
         body { font-family: 'Poppins', sans-serif; background-color: var(--dark-bg); margin: 0; color: white; padding: 15px; }
-        .bill-card { background: var(--card-bg); border-radius: 15px; padding: 20px; border: 1px solid rgba(251,191,36,0.2); max-width: 500px; margin: auto; }
+        .bill-card { background: var(--card-bg); border-radius: 15px; padding: 20px; border: 1px solid rgba(251,191,36,0.2); max-width: 500px; margin: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
         .header { text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
         .header h2 { color: var(--gold); margin: 0; font-size: 22px; }
         
         label { display: block; font-size: 11px; color: var(--gold); margin-bottom: 5px; font-weight: 600; text-transform: uppercase; }
         input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; font-size: 14px; margin-bottom: 10px; }
         
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .work-row { display: grid; grid-template-columns: 2.5fr 1fr; gap: 8px; margin-bottom: 10px; }
         .btn-add { background: rgba(251,191,36,0.05); color: var(--gold); border: 1px dashed var(--gold); padding: 10px; width: 100%; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; margin-bottom: 20px; }
         
@@ -34,26 +35,30 @@
     <div class="bill-card">
         <div class="header">
             <h2>S.R ENTERPRISES</h2>
-            <p style="font-size: 10px; color: #94a3b8;">BILLING SYSTEM</p>
+            <p style="font-size: 10px; color: #94a3b8;">OFFICIAL DIGITAL INVOICE</p>
         </div>
 
-        <label>Customer Name</label>
+        <label>Customer Details</label>
         <input type="text" id="custName" placeholder="Customer Name">
+        
+        <div class="form-grid">
+            <input type="number" id="custMobile" placeholder="Mobile Number">
+            <input type="text" id="invNo" value="SR-101">
+        </div>
+        
+        <input type="text" id="custAddr" placeholder="Customer Address">
 
-        <label>Work & Price (₹)</label>
+        <label>Work & Item Details (₹)</label>
         <div id="workContainer">
             <div class="work-row">
                 <input type="text" class="work-desc" placeholder="Detail (e.g. Belt Change)">
                 <input type="number" class="work-price" placeholder="Rate" oninput="calculateTotal()">
             </div>
         </div>
-        <button class="btn-add" onclick="addRow()">+ ADD ANOTHER WORK</button>
+        <button class="btn-add" onclick="addRow()">+ ADD MORE WORK</button>
 
         <div class="summary-box">
-            <div class="summary-row">
-                <span>Gross Total:</span>
-                <span id="grossTotal">₹ 0</span>
-            </div>
+            <div class="summary-row"><span>Gross Total:</span><span id="grossTotal">₹ 0</span></div>
             <div class="summary-row" style="color: #ef4444; align-items: center;">
                 <span>Discount (₹):</span>
                 <input type="number" id="discount" placeholder="0" oninput="calculateTotal()" style="width: 80px; margin: 0; padding: 5px; font-size: 12px;">
@@ -87,16 +92,17 @@
             let prices = document.getElementsByClassName('work-price');
             let gross = 0;
             for(let p of prices) { gross += Number(p.value) || 0; }
-            
             let disc = Number(document.getElementById('discount').value) || 0;
             let final = gross - disc;
-
             document.getElementById('grossTotal').innerText = "₹ " + gross.toLocaleString('en-IN');
             document.getElementById('grandTotal').innerText = "₹ " + final.toLocaleString('en-IN');
         }
 
         function sendWhatsApp() {
             let name = document.getElementById('custName').value || 'Customer';
+            let mobile = document.getElementById('custMobile').value || 'N/A';
+            let addr = document.getElementById('custAddr').value || 'N/A';
+            let inv = document.getElementById('invNo').value;
             let descs = document.getElementsByClassName('work-desc');
             let prices = document.getElementsByClassName('work-price');
             let gross = document.getElementById('grossTotal').innerText;
@@ -105,12 +111,10 @@
             
             let billItems = "";
             for(let i=0; i < descs.length; i++) {
-                if(descs[i].value) {
-                    billItems += `${i+1}. ${descs[i].value}: ₹${prices[i].value}%0A`;
-                }
+                if(descs[i].value) { billItems += `${i+1}. ${descs[i].value}: ₹${prices[i].value}%0A`; }
             }
 
-            let msg = `*S.R ENTERPRISES - BILL*%0A*Customer:* ${name}%0A--------------------------%0A*Work Details:*%0A${billItems}--------------------------%0A*Gross Total:* ${gross}%0A*Discount:* ₹${disc}%0A*GRAND TOTAL: ${final}*%0A--------------------------%0A_Thank you for your business!_`;
+            let msg = `*S.R ENTERPRISES - BILL*%0A*Inv No:* ${inv}%0A--------------------------%0A*Customer:* ${name}%0A*Mob:* ${mobile}%0A*Addr:* ${addr}%0A--------------------------%0A*Work Details:*%0A${billItems}--------------------------%0A*Gross Total:* ${gross}%0A*Discount:* ₹${disc}%0A*GRAND TOTAL: ${final}*%0A--------------------------%0A_Thank you!_`;
             window.open(`https://wa.me/?text=${msg}`, '_blank');
         }
     </script>
