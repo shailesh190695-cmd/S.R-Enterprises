@@ -17,7 +17,6 @@
 
         .top-stats { display: flex; justify-content: space-between; margin: 10px 10px; align-items: center; }
 
-        /* 🛠️ CUSTOMER SECTION: Samne-Samne (Aamne-Saamne) Alignment */
         .input-row { display: flex; align-items: center; margin-bottom: 10px; padding: 0 10px; gap: 10px; }
         .input-row label { flex: 0 0 130px; font-size: 11px; color: var(--gold); font-weight: bold; text-transform: uppercase; text-align: left; }
         .box-in { flex: 1; background: var(--white); border: 1px solid #444; padding: 10px; color: #000; border-radius: 5px; font-size: 14px; font-weight: 700; outline: none; }
@@ -26,7 +25,7 @@
         
         table { width: calc(100% - 20px); margin: 10px auto; border-collapse: collapse; }
         th { background: #1c2539; color: var(--gold); padding: 10px 5px; text-align: left; font-size: 11px; }
-        .table-in { width: 100%; background: var(--white); border: 1px solid #ddd; padding: 8px; font-size: 13px; font-weight: bold; color: #000; border-radius: 4px; margin-bottom: 4px; }
+        .table-in { width: 100%; background: var(--white); border: 1px solid #ddd; padding: 8px; font-size: 13px; font-weight: bold; color: #000; border-radius: 4px; margin-bottom: 4px; box-sizing: border-box; }
 
         .calc-area { margin: 15px 15px; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid #334155; }
         .total-display { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 10px; margin-top: 5px; }
@@ -42,7 +41,7 @@
             body { background: white !important; color: black !important; zoom: 0.95; }
             .invoice-card { border: 2px solid #000; background: white; padding: 20px; height: 98vh; display: flex; flex-direction: column; }
             .no-print, .btn-grp, .add-btn, .gst-box, button { display: none !important; }
-            .box-in { border: 1px solid black !important; background: transparent !important; }
+            .box-in, .table-in { border: 1px solid black !important; background: transparent !important; }
             table, th, td { border: 1px solid black !important; color: black !important; }
             .print-footer { display: block !important; margin-top: auto; }
             .bank-details { border: 1.5px solid black; padding: 10px; display: flex; justify-content: space-between; align-items: center; border-radius: 5px; }
@@ -84,13 +83,7 @@
         </thead>
         <tbody id="bBody">
             <tr>
-                <td><input type="text" class="table-in" placeholder="Item Name"></td>
-                <td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td>
-                <td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td>
-                <td style="text-align:right; font-weight:bold;" class="l-total">₹0</td>
-            </tr>
-            <tr>
-                <td><input type="text" class="table-in" placeholder="Spare Part Detail"></td>
+                <td><input type="text" class="table-in" placeholder="Item/Spare detail..."></td>
                 <td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td>
                 <td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td>
                 <td style="text-align:right; font-weight:bold;" class="l-total">₹0</td>
@@ -127,7 +120,7 @@
     window.onload = function() { document.getElementById('invDate').value = new Date().toLocaleDateString('en-GB'); };
     function addItem() {
         let tr = document.createElement('tr');
-        tr.innerHTML = `<td><input type="text" class="table-in" placeholder="Detail..."><input type="text" class="table-in" placeholder="More detail..."></td><td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td><td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td><td style="text-align:right;" class="l-total">₹0</td>`;
+        tr.innerHTML = `<td><input type="text" class="table-in" placeholder="Detail..."></td><td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td><td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td><td style="text-align:right;" class="l-total">₹0</td>`;
         document.getElementById('bBody').appendChild(tr);
     }
     function clc() {
