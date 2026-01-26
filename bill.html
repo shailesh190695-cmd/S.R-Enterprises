@@ -3,23 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Official Bill</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>S.R ENTERPRISES | Professional Bill</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; }
         body { font-family: 'Poppins', sans-serif; background-color: var(--dark-bg); margin: 0; color: white; padding: 15px; }
-        .bill-card { background: var(--card-bg); border-radius: 15px; padding: 20px; border: 1px solid rgba(251,191,36,0.2); max-width: 500px; margin: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .bill-card { background: var(--card-bg); border-radius: 15px; padding: 20px; border: 1px solid rgba(251,191,36,0.2); max-width: 500px; margin: auto; }
         .header { text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
         .header h2 { color: var(--gold); margin: 0; font-size: 22px; }
-        .input-group { margin-bottom: 15px; }
+        
         label { display: block; font-size: 11px; color: var(--gold); margin-bottom: 5px; font-weight: 600; text-transform: uppercase; }
-        input, select, textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; font-size: 14px; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .type-selector { display: flex; gap: 10px; margin-bottom: 20px; }
-        .type-btn { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--gold); color: var(--gold); background: transparent; cursor: pointer; font-size: 12px; font-weight: 700; }
-        .type-btn.active { background: var(--gold); color: #000; }
-        .total-box { background: rgba(251,191,36,0.1); padding: 15px; border-radius: 10px; text-align: center; border: 1px dashed var(--gold); margin: 20px 0; }
-        .btn-whatsapp { background: #25D366; color: white; width: 100%; padding: 15px; border-radius: 10px; border: none; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 4px 0 #128C7E; }
+        input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; font-size: 14px; margin-bottom: 10px; }
+        
+        .work-row { display: grid; grid-template-columns: 2.5fr 1fr; gap: 8px; margin-bottom: 10px; }
+        .btn-add { background: rgba(251,191,36,0.05); color: var(--gold); border: 1px dashed var(--gold); padding: 10px; width: 100%; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; margin-bottom: 20px; }
+        
+        .summary-box { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px solid #334155; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+        
+        .total-box { background: rgba(251, 191, 36, 0.1); padding: 15px; border-radius: 10px; text-align: center; border: 2px solid var(--gold); margin: 15px 0; }
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn-wa { background: #25D366; color: white; padding: 15px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; }
+        .btn-pdf { background: #fff; color: #000; padding: 15px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; }
+
+        @media print { .btn-group, .btn-add, .btn-back, label { display: none; } body { background: white; color: black; } .bill-card { border: none; box-shadow: none; background: white; color: black; } input { border: none; color: black; background: transparent; padding: 5px; } .header h2 { color: black; } .total-box { border: 2px solid black; } }
     </style>
 </head>
 <body>
@@ -27,91 +34,83 @@
     <div class="bill-card">
         <div class="header">
             <h2>S.R ENTERPRISES</h2>
-            <p style="font-size: 10px; color: #94a3b8;">FUSING MACHINE SALES & SERVICE</p>
+            <p style="font-size: 10px; color: #94a3b8;">BILLING SYSTEM</p>
         </div>
 
-        <div class="type-selector">
-            <button class="type-btn active" id="saleBtn" onclick="setType('SALE')">🛒 MACHINE SALE</button>
-            <button class="type-btn" id="serviceBtn" onclick="setType('SERVICE')">🛠️ SERVICE/REPAIR</button>
-        </div>
+        <label>Customer Name</label>
+        <input type="text" id="custName" placeholder="Customer Name">
 
-        <div class="input-group">
-            <label>Customer Name</label>
-            <input type="text" id="custName" placeholder="Customer ka naam">
-        </div>
-
-        <div class="form-grid">
-            <div class="input-group">
-                <label>Mobile No.</label>
-                <input type="number" id="custMobile" placeholder="98XXXXXXXX">
-            </div>
-            <div class="input-group">
-                <label>Invoice No.</label>
-                <input type="text" id="invNo" value="SR-101">
+        <label>Work & Price (₹)</label>
+        <div id="workContainer">
+            <div class="work-row">
+                <input type="text" class="work-desc" placeholder="Detail (e.g. Belt Change)">
+                <input type="number" class="work-price" placeholder="Rate" oninput="calculateTotal()">
             </div>
         </div>
+        <button class="btn-add" onclick="addRow()">+ ADD ANOTHER WORK</button>
 
-        <div class="input-group">
-            <label>Customer Address</label>
-            <input type="text" id="custAddr" placeholder="Customer ka pata">
-        </div>
-
-        <div class="input-group">
-            <label>Machine / Item Detail</label>
-            <input type="text" id="itemDesc" placeholder="e.g. Hashima HP-450">
-        </div>
-
-        <div class="input-group">
-            <label>Work Details (Service/Parts Description)</label>
-            <textarea id="workDetails" rows="3" placeholder="Kya kaam hua? (e.g. Belt change, Motor repair)"></textarea>
-        </div>
-
-        <div class="form-grid">
-            <div class="input-group">
-                <label>Rate (₹)</label>
-                <input type="number" id="rate" oninput="calculate()">
+        <div class="summary-box">
+            <div class="summary-row">
+                <span>Gross Total:</span>
+                <span id="grossTotal">₹ 0</span>
             </div>
-            <div class="input-group">
-                <label>Qty</label>
-                <input type="number" id="qty" value="1" oninput="calculate()">
+            <div class="summary-row" style="color: #ef4444; align-items: center;">
+                <span>Discount (₹):</span>
+                <input type="number" id="discount" placeholder="0" oninput="calculateTotal()" style="width: 80px; margin: 0; padding: 5px; font-size: 12px;">
             </div>
         </div>
 
         <div class="total-box">
-            <p style="margin:0; font-size:12px;">Final Amount</p>
-            <h2 id="grandTotal">₹ 0</h2>
+            <span style="font-size: 12px; font-weight: 600;">GRAND TOTAL</span>
+            <h2 id="grandTotal" style="margin:5px 0 0 0; color:var(--gold); font-size: 28px;">₹ 0</h2>
         </div>
 
-        <button class="btn-whatsapp" onclick="sendWhatsApp()">📲 SEND BILL ON WHATSAPP</button>
-        <a href="index.html" style="display:block; text-align:center; margin-top:20px; color:#94a3b8; font-size:12px; text-decoration:none;">← Dashboard</a>
+        <div class="btn-group">
+            <button class="btn-wa" onclick="sendWhatsApp()">📲 WHATSAPP</button>
+            <button class="btn-pdf" onclick="window.print()">📄 SAVE PDF</button>
+        </div>
+        
+        <a href="index.html" style="display:block; text-align:center; margin-top:20px; color:#94a3b8; font-size:11px; text-decoration:none;">← Back to Dashboard</a>
     </div>
 
     <script>
-        let billType = 'SALE';
-        function setType(t) {
-            billType = t;
-            document.getElementById('saleBtn').classList.toggle('active', t === 'SALE');
-            document.getElementById('serviceBtn').classList.toggle('active', t === 'SERVICE');
+        function addRow() {
+            let container = document.getElementById('workContainer');
+            let div = document.createElement('div');
+            div.className = 'work-row';
+            div.innerHTML = `<input type="text" class="work-desc" placeholder="Next Work Detail">
+                             <input type="number" class="work-price" placeholder="Rate" oninput="calculateTotal()">`;
+            container.appendChild(div);
         }
-        function calculate() {
-            let r = document.getElementById('rate').value || 0;
-            let q = document.getElementById('qty').value || 0;
-            document.getElementById('grandTotal').innerText = "₹ " + (r * q).toLocaleString('en-IN');
+
+        function calculateTotal() {
+            let prices = document.getElementsByClassName('work-price');
+            let gross = 0;
+            for(let p of prices) { gross += Number(p.value) || 0; }
+            
+            let disc = Number(document.getElementById('discount').value) || 0;
+            let final = gross - disc;
+
+            document.getElementById('grossTotal').innerText = "₹ " + gross.toLocaleString('en-IN');
+            document.getElementById('grandTotal').innerText = "₹ " + final.toLocaleString('en-IN');
         }
+
         function sendWhatsApp() {
-            let name = document.getElementById('custName').value;
-            let mobile = document.getElementById('custMobile').value;
-            let addr = document.getElementById('custAddr').value;
-            let inv = document.getElementById('invNo').value;
-            let item = document.getElementById('itemDesc').value;
-            let work = document.getElementById('workDetails').value;
-            let rate = document.getElementById('rate').value;
-            let qty = document.getElementById('qty').value;
-            let total = rate * qty;
+            let name = document.getElementById('custName').value || 'Customer';
+            let descs = document.getElementsByClassName('work-desc');
+            let prices = document.getElementsByClassName('work-price');
+            let gross = document.getElementById('grossTotal').innerText;
+            let disc = document.getElementById('discount').value || 0;
+            let final = document.getElementById('grandTotal').innerText;
+            
+            let billItems = "";
+            for(let i=0; i < descs.length; i++) {
+                if(descs[i].value) {
+                    billItems += `${i+1}. ${descs[i].value}: ₹${prices[i].value}%0A`;
+                }
+            }
 
-            if(!name || !rate) { alert("Please fill name and rate!"); return; }
-
-            let msg = `*S.R ENTERPRISES - BILL*%0A------------------------------%0A*Type:* ${billType}%0A*Inv No:* ${inv}%0A------------------------------%0A*CUSTOMER*%0A*Name:* ${name}%0A*Mob:* ${mobile}%0A*Addr:* ${addr}%0A------------------------------%0A*ITEM:* ${item}%0A*WORK:* ${work}%0A*RATE:* ₹${rate}%0A*QTY:* ${qty}%0A------------------------------%0A*TOTAL: ₹${total}*%0A------------------------------%0A_Thank you!_`;
+            let msg = `*S.R ENTERPRISES - BILL*%0A*Customer:* ${name}%0A--------------------------%0A*Work Details:*%0A${billItems}--------------------------%0A*Gross Total:* ${gross}%0A*Discount:* ₹${disc}%0A*GRAND TOTAL: ${final}*%0A--------------------------%0A_Thank you for your business!_`;
             window.open(`https://wa.me/?text=${msg}`, '_blank');
         }
     </script>
