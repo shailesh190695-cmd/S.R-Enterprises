@@ -3,70 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Official Invoice</title>
+    <title>S.R ENTERPRISES | Professional Master Bill</title>
     <style>
-        :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; --text-color: #f8fafc; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--dark-bg); color: var(--text-color); margin: 0; padding: 20px; }
-        .invoice-card { background: var(--card-bg); max-width: 800px; margin: auto; padding: 30px; border-radius: 15px; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--dark-bg); color: white; margin: 0; padding: 20px; }
+        .invoice-card { background: var(--card-bg); max-width: 850px; margin: auto; padding: 30px; border-radius: 15px; border: 1px solid #334155; }
         
-        /* Header */
         .header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; }
         .header h1 { color: var(--gold); margin: 0; font-size: 28px; }
         
-        input { width: 100%; background: #0f172a; border: 1px solid #334155; padding: 10px; color: white; border-radius: 6px; box-sizing: border-box; font-size: 14px; margin-bottom: 5px; }
-        input:focus { border-color: var(--gold); outline: none; }
+        /* 📦 YAHAN HAIN AAPKE BOXES */
+        .box-input { width: 100%; background: #0f172a; border: 2px solid #334155; padding: 12px; color: white; border-radius: 8px; box-sizing: border-box; font-size: 14px; margin-bottom: 10px; outline: none; }
+        .box-input:focus { border-color: var(--gold); background: #1e293b; }
+        
         label { display: block; font-size: 11px; color: var(--gold); margin-bottom: 5px; text-transform: uppercase; font-weight: bold; }
         
         .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-        
-        /* Table */
+        .input-section { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px; border: 1px solid #334155; }
+
         table { width: 100%; border-collapse: collapse; margin: 20px 0; }
         th { background: #334155; color: var(--gold); padding: 12px; text-align: left; border: 1px solid #444; }
-        td { padding: 10px; border: 1px solid #334155; }
+        td { padding: 8px; border: 1px solid #334155; }
 
-        /* Bank Section - Hidden on Screen */
-        .print-only-section { display: none; }
+        .print-footer { display: none; } /* Screen par chhupa rahega */
 
-        .totals-box { text-align: right; margin-top: 20px; }
-        .total-row { font-size: 20px; font-weight: bold; color: var(--gold); margin-top: 10px; padding-top: 10px; border-top: 1px solid #444; }
+        .totals-area { text-align: right; margin-top: 20px; }
+        .total-row { font-size: 22px; font-weight: bold; color: var(--gold); margin-top: 10px; border-top: 2px solid #444; padding-top: 10px; }
 
-        .sig-section { display: none; margin-top: 50px; text-align: right; }
+        .sig-box { display: none; margin-top: 60px; text-align: right; }
         .sig-line { border-top: 2px solid black; display: inline-block; width: 200px; padding-top: 5px; text-align: center; }
 
-        .btn-group { margin-top: 30px; display: flex; gap: 15px; justify-content: center; }
-        .btn { padding: 15px 35px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 16px; }
-        .btn-print { background: var(--gold); color: #000; }
-
-        /* PRINT SETTINGS (OFFICIAL LOOK) */
+        /* 🖨️ PRINT SETTINGS (Professional Look) */
         @media print {
             body { background: white; color: black; padding: 0; }
             .invoice-card { border: none; box-shadow: none; background: white; max-width: 100%; padding: 0; }
             .header h1 { color: black; border-bottom: 2px solid black; }
-            input { background: transparent !important; border: none !important; color: black !important; padding: 0 !important; font-weight: bold; }
-            input::placeholder { color: transparent; }
+            .box-input { border: none !important; color: black !important; background: transparent !important; padding: 2px 0 !important; font-weight: bold; }
+            .input-section { border: none; background: transparent; padding: 0; }
             th { background: #f2f2f2 !important; color: black !important; border: 1px solid #ddd; }
             td { border: 1px solid #ddd; color: black; }
             
-            /* Show Bank & Scanner only on Print */
-            .print-only-section { 
+            .print-footer { 
                 display: flex !important; 
-                margin-top: 20px;
-                border: 1px solid black;
-                padding: 10px;
-                gap: 20px;
-                align-items: center;
-                border-radius: 5px;
+                margin-top: 30px; 
+                border: 1px solid black; 
+                padding: 15px; 
+                gap: 20px; 
+                align-items: center; 
+                background: white; 
             }
-            .qr-box { border: 1px solid #ddd; padding: 5px; width: 100px; height: 100px; }
-            .qr-box img { max-width: 100%; height: auto; }
-            .bank-info { font-size: 12px; line-height: 1.5; text-align: left; flex: 1; }
+            .qr-code { border: 1px solid #ddd; padding: 5px; width: 100px; height: 100px; }
+            .qr-code img { width: 100%; }
+            .bank-text { font-size: 13px; line-height: 1.6; text-align: left; color: black; }
             
-            .sig-section { display: block !important; }
-            .btn-group, .add-row, .no-print, label { display: none !important; }
+            .sig-box { display: block !important; }
+            .btn-group, .add-btn, .no-print, label { display: none !important; }
             .total-row { color: black; border-top: 2px solid black; }
-            .word-total-area { display: block !important; text-align: left; margin-top: 10px; font-size: 12px; }
+            .words { display: block !important; margin-top: 15px; font-size: 13px; text-align: left; font-weight: bold; }
         }
-        .word-total-area { display: none; }
+        .words { display: none; }
     </style>
 </head>
 <body>
@@ -75,113 +70,5 @@
     <div class="header">
         <div>
             <h1>S.R ENTERPRISES</h1>
-            <p style="margin:5px 0; font-size:12px;">FUSING MACHINE SPECIALIST | MUMBAI</p>
-            <p style="margin:0; font-size:12px;">Mob: 8850813765</p>
-        </div>
-        <div style="text-align:right">
-            <h2 style="margin:0; color:#94a3b8">INVOICE</h2>
-            <p>No: #<input type="text" id="invN" value="039" style="width:45px; text-align:right; font-weight:bold;"></p>
-            <p>Date: <input type="text" id="invD" style="width:95px; text-align:right;"></p>
-        </div>
-    </div>
-
-    <div class="details-grid">
-        <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
-            <label class="no-print">Bill To (Customer)</label>
-            <input type="text" id="cn" placeholder="Customer Name">
-            <input type="text" id="ca" placeholder="Address">
-            <input type="text" id="cm" placeholder="Mobile Number">
-        </div>
-        <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
-            <label class="no-print">Work Details</label>
-            <input type="text" id="mn" placeholder="Machine Name">
-            <input type="text" id="jt" placeholder="Job Type (Repair/Service)">
-        </div>
-    </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th style="width:60%">Item Description</th>
-                <th style="width:15%">Rate</th>
-                <th style="width:10%">Qty</th>
-                <th style="width:15%; text-align:right;">Total</th>
-            </tr>
-        </thead>
-        <tbody id="tBody">
-            <tr>
-                <td><input type="text" placeholder="Service Charge / Part Name"></td>
-                <td><input type="number" class="r" value="0" oninput="calc()"></td>
-                <td><input type="number" class="q" value="1" oninput="calc()"></td>
-                <td style="text-align:right;" class="rt">₹0.00</td>
-            </tr>
-        </tbody>
-    </table>
-    <button class="add-row no-print" onclick="addR()" style="background:transparent; color:var(--gold); border:1px dashed var(--gold); padding:10px; cursor:pointer; width:100%; border-radius:8px; font-weight:bold;">+ ADD ITEM</button>
-
-    <div class="footer-area">
-        <div class="print-only-section">
-            <div class="qr-box">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=7021733860@sbi&pn=Hariram%20Sitaram%20Rajbhar" alt="QR">
-            </div>
-            <div class="bank-info">
-                <strong>BANK ACCOUNT DETAILS:</strong><br>
-                Name: Mr. Hariram Sitaram Rajbhar<br>
-                Bank: SBI (State Bank of India)<br>
-                A/c No: 44695199584 | IFSC: SBIN0008373<br>
-                UPI ID: 7021733860@sbi
-            </div>
-        </div>
-
-        <div class="totals-box">
-            <p style="font-size:14px;">Sub-Total: <span id="st">₹0.00</span></p>
-            <p style="font-size:14px;">Discount: <input type="number" id="ds" value="0" oninput="calc()" style="width:60px; text-align:right; border:none; border-bottom:1px solid #444; color:white;"></p>
-            <div class="total-row">TOTAL: <span id="ft">₹0.00</span></div>
-        </div>
-    </div>
-
-    <div class="word-total-area">
-        <strong>Total in Words:</strong> <span id="words">Zero Rupees Only</span>
-    </div>
-
-    <div class="sig-section">
-        <div class="sig-line">
-            <p style="margin:0; font-weight:bold;">S.R ENTERPRISES</p>
-            <p style="margin:30px 0 0 0; font-size:10px;">Authorized Signature</p>
-        </div>
-    </div>
-
-    <div class="btn-group no-print">
-        <button class="btn btn-print" onclick="window.print()">PRINT / SAVE PDF</button>
-    </div>
-</div>
-
-<script>
-    document.getElementById('invD').value = new Date().toLocaleDateString('en-GB');
-
-    function addR() {
-        let tr = document.createElement('tr');
-        tr.innerHTML = `<td><input type="text" placeholder="Item Name"></td>
-                        <td><input type="number" class="r" value="0" oninput="calc()"></td>
-                        <td><input type="number" class="q" value="1" oninput="calc()"></td>
-                        <td style="text-align:right;" class="rt">₹0.00</td>`;
-        document.getElementById('tBody').appendChild(tr);
-    }
-
-    function calc() {
-        let rs = document.getElementsByClassName('r'), qs = document.getElementsByClassName('q'), rts = document.getElementsByClassName('rt'), sub = 0;
-        for(let i=0; i<rs.length; i++) {
-            let t = rs[i].value * qs[i].value;
-            rts[i].innerText = "₹" + t.toFixed(2);
-            sub += t;
-        }
-        let d = document.getElementById('ds').value;
-        let final = sub - d;
-        document.getElementById('st').innerText = "₹" + sub.toFixed(2);
-        document.getElementById('ft').innerText = "₹" + final.toFixed(2);
-        document.getElementById('words').innerText = Math.round(final) + " Rupees Only";
-    }
-</script>
-</body>
-                </html>
+            <p style="margin:5px 0; font-size:12px; color: #94a3b8;">FUSING MACHINE SPECIALIST
                 
