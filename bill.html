@@ -28,12 +28,15 @@
 
         .total-display { text-align: right; margin-top: 15px; font-size: 18px; font-weight: bold; color: var(--gold); }
 
-        /* QR, Bank & Signature Section */
-        .print-footer { display: none; }
+        /* Buttons */
         .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
         .btn { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
         .btn-p { background: var(--gold); color: black; }
         .btn-w { background: #25D366; color: white; }
+        .add-btn { background: transparent; color: var(--gold); border: 1px dashed var(--gold); width: 100%; margin-top: 10px; padding: 8px; font-weight: bold; cursor: pointer; border-radius: 6px; }
+
+        /* Footer Section */
+        .print-footer { display: none; }
 
         @media print {
             body { background: white; color: black; padding: 0; }
@@ -93,14 +96,13 @@
             </tr>
         </tbody>
     </table>
+    <button class="add-btn no-print" onclick="addItem()">+ ADD ITEM</button>
 
     <div class="total-display">GRAND TOTAL: <span id="gTotal">₹0.00</span></div>
 
     <div class="print-footer">
         <div class="bank-qr-row">
-            <div class="qr">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=7021733860@sbi&pn=Hariram%20Sitaram%20Rajbhar" style="width:100%;">
-            </div>
+            <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=7021733860@sbi&pn=Hariram%20Sitaram%20Rajbhar" style="width:100%;"></div>
             <div class="bank-text">
                 <strong>PAYMENT DETAILS:</strong><br>
                 Name: Mr. Hariram Sitaram Rajbhar<br>
@@ -108,13 +110,7 @@
                 IFSC: SBIN0008373 | UPI: 7021733860@sbi
             </div>
         </div>
-        
-        <div class="sig-area">
-            <div class="sig-line">
-                S.R ENTERPRISES<br>
-                <span style="font-size:9px; font-weight:normal;">Authorized Signature</span>
-            </div>
-        </div>
+        <div class="sig-area"><div class="sig-line">S.R ENTERPRISES<br><span style="font-size:9px; font-weight:normal;">Authorized Signature</span></div></div>
     </div>
 
     <div class="btn-grp no-print">
@@ -125,16 +121,28 @@
 
 <script>
     window.onload = function() { document.getElementById('invDate').value = new Date().toLocaleDateString('en-GB'); };
+    
+    function addItem() {
+        let tr = document.createElement('tr');
+        tr.innerHTML = `<td><input type="text" class="table-in" placeholder="Next Item"></td>
+                        <td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td>
+                        <td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td>
+                        <td style="text-align: right; font-weight: bold;" class="l-total">₹0.00</td>`;
+        document.getElementById('bBody').appendChild(tr);
+    }
+
     function clc() {
         let rs = document.getElementsByClassName('r-val'), qs = document.getElementsByClassName('q-val'), ts = document.getElementsByClassName('l-total'), sub = 0;
         for(let i=0; i<rs.length; i++) { let line = rs[i].value * qs[i].value; ts[i].innerText = "₹" + line.toFixed(2); sub += line; }
         document.getElementById('gTotal').innerText = "₹" + sub.toFixed(2);
     }
+
     function wa() {
         let n = document.getElementById('cName').value || "Customer";
         let t = document.getElementById('gTotal').innerText;
         window.open(`https://wa.me/?text=*S.R ENTERPRISES*%0A*Customer:* ${n}%0A*Total:* ${t}`, '_blank');
     }
+
     async function getContact() {
         try {
             const contact = await navigator.contacts.select(['name', 'tel'], { multiple: false });
