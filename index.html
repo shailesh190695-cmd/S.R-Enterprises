@@ -3,53 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>S.R ENTERPRISES | Master Control</title>
+    <title>S.R ENTERPRISES | Master System</title>
     <style>
         :root { --bg: #0b0f1a; --card: #161d2f; --gold: #facc15; --white: #ffffff; --border: #2d3748; }
-        
-        /* Poore page ka gap aur side overflow theek karne ke liye */
         * { box-sizing: border-box; }
         body { font-family: sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; overflow-x: hidden; width: 100%; }
-        
-        .container { width: 100%; max-width: 600px; margin: auto; padding: 12px; overflow-hidden; }
+        .container { width: 100%; max-width: 600px; margin: auto; padding: 12px; }
 
         /* Header */
-        .header { text-align: center; padding: 30px 10px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; width: 100%; }
+        .header { text-align: center; padding: 30px 10px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
         .header h1 { color: var(--gold); margin: 0; font-size: 22px; text-transform: uppercase; }
 
         .section-title { color: var(--gold); margin: 25px 0 10px 0; font-size: 18px; border-left: 4px solid var(--gold); padding-left: 10px; }
         
-        /* Catalog Grid Fix */
-        .catalog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
-        .product-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 15px; text-align: center; width: 100%; }
+        /* Catalog */
+        .catalog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .product-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 15px; text-align: center; }
         .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 12px; border:none; width:100%; cursor:pointer; }
 
-        /* Service Request Box */
-        .service-box { background: var(--card); padding: 15px; border-radius: 12px; border: 2px solid var(--gold); margin-top: 15px; width: 100%; }
+        /* Customer Service Enquiry */
+        .service-box { background: var(--card); padding: 15px; border-radius: 12px; border: 2px solid var(--gold); margin-top: 15px; }
         .service-box input, .service-box textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 8px; width: 100%; margin-bottom: 10px; font-size: 14px; }
 
         /* Admin Area */
-        #adminArea { display: none; margin-top: 30px; border-top: 2px dashed var(--gold); padding-top: 20px; width: 100%; }
-        .admin-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; font-size: 12px; }
-        
-        /* 🛠️ Parts Row Fix - Isse side ka gap chala jayega */
-        .admin-section { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; width: 100%; }
-        .part-row { display: flex; gap: 8px; margin-bottom: 10px; width: 100%; align-items: center; }
+        #adminArea { display: none; margin-top: 30px; border-top: 2px dashed var(--gold); padding-top: 20px; }
+        .admin-menu { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 20px; }
+        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; font-size: 14px; text-decoration: none; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+        /* Form Entry */
+        .admin-section { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; }
+        .part-row { display: flex; gap: 8px; margin-bottom: 10px; width: 100%; }
         .p-name { flex: 2; min-width: 0; } 
         .p-price { flex: 1; min-width: 0; } 
-        
-        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 8px; width: 100%; font-size: 14px; }
-        
+        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 8px; width: 100%; font-size: 14px; outline: none; }
         .total-display { font-size: 18px; color: var(--gold); text-align: right; margin: 15px 0; font-weight: bold; border-top: 1px solid var(--border); padding-top: 10px; }
 
-        /* History Table */
-        .table-container { overflow-x: auto; background: var(--card); border-radius: 10px; width: 100%; }
+        /* History Tracker */
+        .table-container { overflow-x: auto; background: var(--card); border-radius: 10px; }
         table { width: 100%; border-collapse: collapse; min-width: 500px; }
         th { background: #1c2539; color: var(--gold); padding: 10px; text-align: left; font-size: 11px; }
-        td { padding: 10px; border-bottom: 1px solid #1c2539; font-size: 11px; }
-        .due-row { background: rgba(239, 68, 68, 0.1) !important; }
-        .due-alert { background: #ef4444; color: white; padding: 2px 5px; border-radius: 4px; font-size: 8px; font-weight: bold; }
+        td { padding: 10px; border-bottom: 1px solid #1c2539; font-size: 11px; vertical-align: top; }
+        .due-row { background: rgba(239, 68, 68, 0.15) !important; border-left: 4px solid #ef4444; }
+        .due-alert { background: #ef4444; color: white; padding: 2px 5px; border-radius: 4px; font-size: 9px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -61,21 +57,24 @@
 <div class="container">
     <div class="section-title">🏗️ Our Machines</div>
     <div class="catalog-grid">
-        <div class="product-card"><h3>Hashima</h3><button class="wa-btn" onclick="window.open('https://wa.me/917021733860')">ENQUIRY</button></div>
-        <div class="product-card"><h3>Oshima</h3><button class="wa-btn" onclick="window.open('https://wa.me/917021733860')">ENQUIRY</button></div>
+        <div class="product-card"><h3>Hashima</h3><button class="wa-btn" onclick="window.open('https://wa.me/917021733860?text=Hashima Enquiry')">ENQUIRY</button></div>
+        <div class="product-card"><h3>Oshima</h3><button class="wa-btn" onclick="window.open('https://wa.me/917021733860?text=Oshima Enquiry')">ENQUIRY</button></div>
     </div>
 
     <div class="section-title">🛠️ Service Request</div>
     <div class="service-box">
         <input type="text" id="custName" placeholder="Aapka Naam">
-        <textarea id="custProblem" placeholder="Machine mein kya problem hai?"></textarea>
+        <textarea id="custProblem" placeholder="Machine problem..."></textarea>
         <button class="wa-btn" onclick="sendServiceWA()">SEND ON WHATSAPP</button>
     </div>
 
     <div id="adminArea">
         <div class="admin-menu">
-            <div class="menu-btn" onclick="openEntry()">🛠️ NEW ENTRY</div>
-            <div class="menu-btn" onclick="showSec('history')">🔍 HISTORY</div>
+            <a href="bill.html" class="menu-btn" style="background: var(--gold); color: #000; padding: 15px;">📄 CREATE NEW BILL</a>
+            <div class="menu-grid">
+                <div class="menu-btn" onclick="openEntry()">🛠️ NEW LOG</div>
+                <div class="menu-btn" onclick="showSec('history')">🔍 HISTORY</div>
+            </div>
         </div>
 
         <div id="entryForm" class="admin-section" style="display:none;">
@@ -86,19 +85,21 @@
             <label style="color:var(--gold); font-size: 12px; margin-bottom:5px; display:block;">Spare Parts & Price:</label>
             <div id="partsList">
                 <div class="part-row">
-                    <input type="text" class="p-name" placeholder="Part Name" oninput="sumTotal()">
+                    <input type="text" class="p-name" placeholder="Item Name" oninput="sumTotal()">
                     <input type="number" class="p-price" placeholder="Price" oninput="sumTotal()">
                 </div>
             </div>
-            <button onclick="addPartRow()" style="width:100%; margin-top:5px; margin-bottom:15px; background:#1e293b; color:var(--gold); border:1px solid var(--gold); padding:8px; border-radius:5px; font-size:12px; cursor:pointer;">+ Add Item</button>
+            <button onclick="addPartRow()" style="width:100%; margin-top:5px; margin-bottom:15px; background:#1e293b; color:var(--gold); border:1px solid var(--gold); padding:8px; border-radius:5px; font-size:12px; cursor:pointer;">+ Add More Item</button>
 
-            <textarea id="wDetails" placeholder="Work Details" style="margin-bottom:10px;"></textarea>
-            <div class="total-display">Total: ₹<span id="fTotal">0</span></div>
+            <textarea id="wDetails" placeholder="Work Done Details" style="margin-bottom:10px;"></textarea>
+            <div class="total-display">Total Bill: ₹<span id="fTotal">0</span></div>
+            <label style="color:var(--gold); font-size: 12px;">Next Service (6 Months Auto):</label>
             <input type="date" id="nDate" style="margin-bottom:10px;">
             <button class="wa-btn" style="background:var(--gold); color:black;" onclick="saveRecord()">SAVE RECORD</button>
         </div>
 
         <div id="history" style="display:none;">
+            <input type="text" id="search" onkeyup="filter()" placeholder="🔍 Search Customer..." style="width:100%; padding:10px; margin-bottom:10px; border:1px solid var(--gold); background:none; color:white; border-radius:5px;">
             <div class="table-container">
                 <table>
                     <thead><tr><th>Client</th><th>Work/Parts</th><th>Due Date</th><th>Action</th></tr></thead>
@@ -133,7 +134,7 @@
 
     function addPartRow() {
         let div = document.createElement('div'); div.className = 'part-row';
-        div.innerHTML = `<input type="text" class="p-name" placeholder="Part" oninput="sumTotal()"><input type="number" class="p-price" placeholder="₹" oninput="sumTotal()">`;
+        div.innerHTML = `<input type="text" class="p-name" placeholder="Item" oninput="sumTotal()"><input type="number" class="p-price" placeholder="₹" oninput="sumTotal()">`;
         document.getElementById('partsList').appendChild(div);
     }
 
@@ -172,11 +173,17 @@
             let due = (item.next <= today);
             html += `<tr class="${due ? 'due-row' : ''}">
                 <td><b>${item.name}</b><br><small>${item.mob}</small></td>
-                <td><small>${item.parts}</small><br>Total: ₹${item.total}</td>
-                <td style="${due?'color:red':''}">${item.next}${due?'<br><span class="due-alert">DUE</span>':''}</td>
+                <td><small>${item.parts}</small><br><b>Total: ₹${item.total}</b></td>
+                <td style="${due?'color:#ef4444;font-weight:bold':''}">${item.next}${due?'<br><span class="due-alert">DUE</span>':''}</td>
                 <td><button onclick="del(${index})" style="color:red;border:none;background:none;cursor:pointer;">🗑️</button></td></tr>`;
         });
         document.getElementById('histBody').innerHTML = html;
+    }
+
+    function filter() {
+        let val = document.getElementById('search').value.toLowerCase();
+        let rows = document.getElementById('histBody').getElementsByTagName('tr');
+        for (let row of rows) { row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none'; }
     }
 
     function del(i) {
