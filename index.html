@@ -6,24 +6,13 @@
     <title>S.R ENTERPRISES | Home</title>
     <style>
         :root { --bg: #0b0f1a; --card: #161d2f; --gold: #facc15; --white: #ffffff; --border: #2d3748; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
-        .container { max-width: 1100px; margin: auto; padding: 15px; }
-
-        /* Header - Click on "S.R ENTERPRISES" to Login */
-        .header { text-align: center; padding: 30px 10px; background: linear-gradient(to bottom, #1c2539, #0b0f1a); border-bottom: 3px solid var(--gold); }
-        .header h1 { color: var(--gold); margin: 0; font-size: 26px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; }
-        .header p { color: #94a3b8; font-size: 11px; margin-top: 5px; }
-
-        /* Public Sections */
-        .section-title { color: var(--gold); margin: 30px 0 15px 0; font-size: 20px; border-left: 5px solid var(--gold); padding-left: 12px; }
-        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .product-card { background: var(--card); border-radius: 15px; border: 1px solid var(--border); padding: 20px; text-align: center; transition: 0.3s; }
-        .product-card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .img-box { font-size: 50px; margin-bottom: 10px; background: #000; padding: 15px; border-radius: 10px; }
-        .wa-link { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: bold; margin-top: 10px; }
-
-        /* 📊 Private Admin Panel (Hidden by Default) */
-        #adminArea { display: none; margin-top: 30px; border-top: 2px dashed var(--gold); padding: 20px 0; }
-        .billing-btn { display: block; background: var(--gold); color: #000; text-align: center; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-bottom: 25px; }
-        
-        .data-form { background: var(--card); padding: 20px; border-radius
+        body { font-family: sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
+        .container { max-width: 1000px; margin: auto; padding: 15px; }
+        .header { text-align: center; padding: 30px; background: #1c2539; border-bottom: 3px solid var(--gold); position: relative; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 24px; text-transform: uppercase; }
+        .secret-trigger { position: absolute; top: 0; right: 0; width: 50px; height: 50px; cursor: pointer; opacity: 0.01; }
+        .section-title { color: var(--gold); margin: 25px 0 15px 0; font-size: 18px; border-left: 4px solid var(--gold); padding-left: 10px; }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+        .product-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 15px; text-align: center; }
+        .wa-btn { display: block; background:
+            
