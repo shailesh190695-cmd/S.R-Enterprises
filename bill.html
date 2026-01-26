@@ -9,45 +9,44 @@
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--dark-bg); color: var(--white); margin: 0; padding: 0; }
         .invoice-card { background: var(--card-bg); width: 100%; margin: 0; padding: 15px; box-sizing: border-box; min-height: 100vh; }
 
-        .header { border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; text-align: center; }
+        .header { border-bottom: 2px solid var(--gold); padding-bottom: 8px; margin-bottom: 15px; text-align: center; }
         .header h1 { color: var(--gold); margin: 0; font-size: 24px; text-transform: uppercase; }
         
-        /* 🛠️ SIRF INKO BOLD KIYA HAI */
-        .bold-label { font-size: 16px !important; font-weight: 900 !important; color: var(--gold) !important; }
-        .bold-stats { font-size: 20px !important; font-weight: 900 !important; color: #000 !important; width: 120px !important; background: #fff !important; padding: 5px !important; }
+        /* INV NO aur DATE Heavy Bold */
+        .bold-label { font-size: 14px !important; font-weight: 900 !important; color: var(--gold) !important; }
+        .bold-stats { font-size: 18px !important; font-weight: 900 !important; color: #000 !important; width: 105px !important; background: #fff !important; padding: 5px !important; border-radius: 4px; border:none; text-align:right; }
 
-        .top-stats { display: flex; justify-content: space-between; margin: 10px 5px; align-items: center; }
-        .top-in { border: none; text-align: right; border-radius: 4px; }
+        .top-stats { display: flex; justify-content: space-between; margin: 10px 15px; align-items: center; }
 
-        .input-row { display: flex; flex-direction: column; margin-bottom: 10px; padding: 0 5px; }
-        .box-in { width: 100%; background: var(--white); border: none; padding: 10px; color: #000; border-radius: 5px; font-size: 14px; font-weight: 600; }
+        /* 🛠️ CUSTOMER SECTION: Label Left, Box Right with Proper Gaps */
+        .input-row { display: flex; align-items: center; margin-bottom: 10px; padding: 0 20px; } /* 20px Side gap */
+        .input-row label { flex: 0 0 140px; font-size: 11px; color: var(--gold); font-weight: bold; text-transform: uppercase; text-align: left; }
+        .box-in { flex: 1; background: var(--white); border: 1px solid #444; padding: 10px; color: #000; border-radius: 5px; font-size: 14px; font-weight: 600; outline: none; margin-right: 15px; } /* 15px Right gap */
 
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th { background: #1c2539; color: var(--gold); padding: 10px 5px; text-align: left; font-size: 12px; }
-        .table-in { width: 100%; background: var(--white); border: none; padding: 10px; font-size: 14px; font-weight: bold; color: #000; }
+        table { width: calc(100% - 30px); margin: 10px auto; border-collapse: collapse; }
+        th { background: #1c2539; color: var(--gold); padding: 10px 5px; text-align: left; font-size: 11px; }
+        .table-in { width: 100%; background: var(--white); border: none; padding: 10px; font-size: 13px; font-weight: bold; color: #000; border-radius: 4px; }
 
-        .calc-area { margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid #334155; }
-        .total-display { font-size: 24px; font-weight: bold; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 15px; margin-top: 10px; }
+        .calc-area { margin: 15px 20px; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid #334155; }
+        .total-display { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 10px; margin-top: 5px; }
 
-        .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 5px; }
+        .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 20px; }
         .btn { padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
         .btn-p { background: var(--gold); color: #000; }
         .btn-w { background: #16a34a; color: var(--white); }
-        .add-btn { background: transparent; color: var(--gold); border: 2px dashed var(--gold); width: calc(100% - 10px); margin: 10px 5px; padding: 12px; border-radius: 8px; font-weight: bold; }
+        .add-btn { background: transparent; color: var(--gold); border: 1px dashed var(--gold); width: calc(100% - 40px); margin: 5px 20px; padding: 10px; border-radius: 8px; font-weight: bold; }
 
         @media print {
-            @page { size: A4; margin: 5mm; }
-            body { background: white !important; color: black !important; zoom: 0.94; }
-            .invoice-card { border: 2px solid #000; background: white; padding: 20px; height: 98vh; display: flex; flex-direction: column; }
+            @page { size: A4; margin: 10mm; }
+            body { background: white !important; color: black !important; zoom: 0.95; }
+            .invoice-card { border: 1.5px solid #000; background: white; padding: 20px; height: 98vh; display: flex; flex-direction: column; }
             .no-print, .btn-grp, .add-btn, button { display: none !important; }
-            .bold-label { color: black !important; }
-            .bold-stats { border: 2px solid black !important; font-size: 24px !important; }
-            .box-in, .table-in { border: 1px solid black !important; }
+            .box-in { border: 1px solid black !important; background: transparent !important; }
             table, th, td { border: 1px solid black !important; color: black !important; }
             .print-footer { display: block !important; margin-top: auto; }
             .bank-details { border: 1.5px solid black; padding: 10px; display: flex; justify-content: space-between; align-items: center; border-radius: 5px; }
             .sig-box { text-align: right; margin-top: 30px; }
-            .sig-line { border-top: 2px solid black; width: 180px; display: inline-block; padding-top: 5px; text-align: center; font-weight: bold; }
+            .sig-line { border-top: 1.5px solid black; width: 180px; display: inline-block; padding-top: 5px; text-align: center; font-weight: bold; font-size: 13px; }
         }
         .print-footer { display: none; }
     </style>
@@ -57,15 +56,16 @@
 <div class="invoice-card">
     <div class="header">
         <h1>S.R ENTERPRISES</h1>
-        <p style="color:var(--gold); font-size:11px; margin:2px 0;">FUSING MACHINE SPECIALIST | MUMBAI</p>
+        <p style="color:var(--gold); font-size:10px; margin:2px 0;">FUSING MACHINE SPECIALIST | MUMBAI</p>
         <div class="top-stats">
             <div><span class="bold-label">INV NO:</span> <input type="text" placeholder="001" class="top-in bold-stats"></div>
             <div><span class="bold-label">DATE:</span> <input type="text" id="invDate" class="top-in bold-stats"></div>
         </div>
     </div>
 
-    <div class="input-row"><label style="color:var(--gold); font-size:12px; font-weight:bold;">CUSTOMER NAME:</label><input type="text" id="cName" class="box-in"></div>
-    <div class="input-row"><label style="color:var(--gold); font-size:12px; font-weight:bold;">ADDRESS:</label><input type="text" class="box-in"></div>
+    <div class="input-row"><label>CUSTOMER NAME</label><input type="text" id="cName" class="box-in"></div>
+    <div class="input-row"><label>ADDRESS</label><input type="text" class="box-in"></div>
+    <div class="input-row"><label>MOBILE NO</label><input type="text" id="cMob" class="box-in"></div>
 
     <table>
         <thead><tr><th style="width:55%">Description</th><th style="width:15%">Rate</th><th style="width:10%">Qty</th><th style="width:20%; text-align:right;">Total</th></tr></thead>
@@ -81,9 +81,9 @@
     <button class="add-btn no-print" onclick="addItem()">+ ADD ITEM</button>
 
     <div class="calc-area">
-        <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>Sub-Total:</span><span id="subT">₹0</span></div>
-        <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>Discount:</span><input type="number" id="discIn" class="top-in" value="0" oninput="clc()" style="width:80px; font-weight:bold; color:#000;"></div>
-        <div class="total-display" style="display:flex; justify-content:space-between;"><span>GRAND TOTAL:</span><span id="gTotal">₹0</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px;"><span>Sub-Total:</span><span id="subT">₹0</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px;"><span>Discount:</span><input type="number" id="discIn" class="top-in" value="0" oninput="clc()" style="width:70px; font-weight:bold; color:black;"></div>
+        <div class="total-display" style="display:flex; justify-content:space-between;"><span>TOTAL:</span><span id="gTotal">₹0</span></div>
     </div>
 
     <div class="print-footer">
