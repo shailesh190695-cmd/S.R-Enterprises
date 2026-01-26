@@ -3,34 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Master</title>
+    <title>S.R ENTERPRISES | Master Dashboard</title>
     <style>
         :root { --bg: #0b0f1a; --card: #161d2f; --gold: #facc15; --white: #ffffff; --border: #2d3748; }
-        body { font-family: sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
         .container { max-width: 1000px; margin: auto; padding: 15px; }
         
-        /* Header - Ispe click karne se login khulega */
+        /* Secret Header */
         .header { text-align: center; padding: 35px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 26px; text-transform: uppercase; pointer-events: none; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 26px; text-transform: uppercase; }
         
-        /* Home Page Content (Customer ke liye) */
+        /* Public Sections */
         .section-title { color: var(--gold); margin: 25px 0 15px 0; font-size: 18px; border-left: 4px solid var(--gold); padding-left: 10px; }
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
         .product-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 15px; text-align: center; }
         .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 13px; }
 
-        /* Admin Area (Shailesh Ji ke liye) */
-        #adminArea { display: none; margin-top: 30px; padding: 15px; border-top: 2px dashed var(--gold); background: #0b0f1a; }
-        .bill-btn { display: block; background: var(--gold); color: #000; text-align: center; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-bottom: 25px; border: 2px solid white; }
+        /* 📊 Private Admin Panel (The 5 Options) */
+        #adminArea { display: none; margin-top: 30px; padding: 15px; border-top: 2px dashed var(--gold); }
         
-        .data-form { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 30px; }
+        .admin-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 30px; }
+        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 15px; border-radius: 10px; text-align: center; cursor: pointer; font-weight: bold; font-size: 12px; text-decoration: none; }
+        .menu-btn:hover { background: var(--gold); color: #000; }
+
+        /* Sections inside Admin */
+        .admin-section { display: none; background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 20px; }
         input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; margin-bottom: 15px; }
-        .save-btn { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; }
+        .save-btn { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
 
         .table-container { overflow-x: auto; margin-top: 20px; }
         table { width: 100%; border-collapse: collapse; min-width: 800px; }
         th { background: #1c2539; color: var(--gold); padding: 12px; text-align: left; }
-        td { padding: 12px; border-bottom: 1px solid #1c2539; font-size: 13px; vertical-align: top; }
+        td { padding: 12px; border-bottom: 1px solid #1c2539; font-size: 13px; }
         .overdue { color: #f87171; font-weight: bold; }
     </style>
 </head>
@@ -38,41 +42,44 @@
 
 <div class="header" onclick="unlockAdmin()">
     <h1>S.R ENTERPRISES</h1>
-    <p style="color: #94a3b8; font-size: 11px;">(Admin Click Here)</p>
+    <p style="color: #94a3b8; font-size: 11px;">(Admin Control Panel)</p>
 </div>
 
 <div class="container">
-    <div class="section-title">🏗️ Our Fusing Machines</div>
+    <div class="section-title">🏗️ Machines & Spares</div>
     <div class="catalog-grid">
-        <div class="product-card"><h3>Hashima Series</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP</a></div>
-        <div class="product-card"><h3>Oshima Series</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP</a></div>
-    </div>
-
-    <div class="section-title">⚙️ Machine Spare Parts</div>
-    <div class="catalog-grid">
-        <div class="product-card"><h3>Teflon Belts</h3><a href="https://wa.me/917021733860" class="wa-btn">CHECK PRICE</a></div>
-        <div class="product-card"><h3>Heater Elements</h3><a href="https://wa.me/917021733860" class="wa-btn">CHECK PRICE</a></div>
+        <div class="product-card"><h3>Machines</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP</a></div>
+        <div class="product-card"><h3>Spare Parts</h3><a href="https://wa.me/917021733860" class="wa-btn">INQUIRY</a></div>
     </div>
 
     <div id="adminArea">
-        <a href="bill.html" class="bill-btn">➕ CREATE NEW GST BILL</a>
+        <h2 style="color:var(--gold); text-align:center;">MASTER ADMIN PANEL</h2>
         
-        <div class="data-form">
-            <h3 style="color:var(--gold); margin-top:0;">📋 Service Log Entry</h3>
-            <input type="text" id="cName" placeholder="Customer Name">
-            <input type="text" id="cMob" placeholder="Mobile Number">
-            <input type="text" id="cMach" placeholder="Machine & Model No.">
-            <input type="date" id="nDate" title="Next Service Date">
-            <input type="text" id="cParts" placeholder="Spare Parts Detail (Heater, Belt, etc.)">
-            <textarea id="wDetails" placeholder="Service Work Details..."></textarea>
-            <input type="number" id="tBill" placeholder="Total Bill Amount (₹)">
-            <button class="save-btn" onclick="saveData()">SAVE PRIVATE RECORD</button>
+        <div class="admin-menu">
+            <a href="bill.html" class="menu-btn">📄 1. NEW BILLING</a>
+            <div class="menu-btn" onclick="showSection('entryForm')">🛠️ 2. SERVICE ENTRY</div>
+            <div class="menu-btn" onclick="showSection('partsLog')">⚙️ 3. SPARE PARTS LOG</div>
+            <div class="menu-btn" onclick="showSection('tracker')">📅 4. SERVICE TRACKER</div>
+            <div class="menu-btn" onclick="showSection('search')">🔍 5. SEARCH HISTORY</div>
         </div>
 
-        <div class="table-container">
+        <div id="entryForm" class="admin-section">
+            <h3 style="color:var(--gold);">Nayi Entry Karein</h3>
+            <input type="text" id="cName" placeholder="Customer Name">
+            <input type="text" id="cMob" placeholder="Mobile">
+            <input type="text" id="cMach" placeholder="Machine & Model">
+            <input type="date" id="nDate">
+            <input type="text" id="cParts" placeholder="Spare Parts Detail (Heater, Belt, etc.)">
+            <textarea id="wDetails" placeholder="Kaam ki details..."></textarea>
+            <input type="number" id="tBill" placeholder="Amount (₹)">
+            <button class="save-btn" onclick="saveData()">SAVE RECORD</button>
+        </div>
+
+        <div id="commonRecords" class="table-container" style="display:none;">
+            <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="🔍 Record Search karein..." style="border:1px solid var(--gold);">
             <table>
                 <thead>
-                    <tr><th>Customer</th><th>Machine</th><th>Parts/Work History</th><th>Bill</th><th>Next Due</th><th>-</th></tr>
+                    <tr><th>Customer</th><th>Machine</th><th>Work/Parts</th><th>Bill</th><th>Due Date</th><th>-</th></tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
@@ -80,16 +87,27 @@
     </div>
 </div>
 
+
+
 <script>
-    // PIN: 7860
     function unlockAdmin() {
-        let pass = prompt("Admin Password Daalein:");
-        if (pass === "7860") {
+        if (prompt("PIN:") === "7860") {
             document.getElementById('adminArea').style.display = 'block';
-            loadData();
-            alert("S.R Enterprises Admin Panel Open!");
+            alert("S.R Admin Access Unlocked!");
+        } else { alert("Wrong PIN!"); }
+    }
+
+    function showSection(id) {
+        // Sab chhupao
+        document.getElementById('entryForm').style.display = 'none';
+        document.getElementById('commonRecords').style.display = 'none';
+        
+        // Jo chahiye wo dikhao
+        if(id === 'entryForm') {
+            document.getElementById('entryForm').style.display = 'block';
         } else {
-            alert("Galat Password!");
+            document.getElementById('commonRecords').style.display = 'block';
+            loadData();
         }
     }
 
@@ -101,23 +119,19 @@
             parts: document.getElementById('cParts').value,
             work: document.getElementById('wDetails').value,
             bill: document.getElementById('tBill').value,
-            next: document.getElementById('nDate').value,
-            date: new Date().toLocaleDateString('en-GB')
+            next: document.getElementById('nDate').value
         };
-        if(!entry.name || !entry.next) return alert("Customer Name aur Date bharna zaroori hai!");
-
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
         db.push(entry);
         localStorage.setItem('srMasterDB', JSON.stringify(db));
-        alert("Data Safe ho gaya!");
-        loadData();
+        alert("Record Saved!");
+        showSection('tracker');
     }
 
     function loadData() {
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
         let html = '';
         let today = new Date().toISOString().split('T')[0];
-
         db.reverse().forEach((item, index) => {
             let isOverdue = (item.next < today) ? 'overdue' : '';
             html += `<tr>
@@ -132,8 +146,16 @@
         document.getElementById('tableBody').innerHTML = html;
     }
 
+    function filterTable() {
+        let val = document.getElementById('searchInput').value.toLowerCase();
+        let rows = document.getElementById('tableBody').getElementsByTagName('tr');
+        for (let row of rows) {
+            row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none';
+        }
+    }
+
     function deleteEntry(i) {
-        if(confirm("Delete karein?")) {
+        if(confirm("Delete?")) {
             let db = JSON.parse(localStorage.getItem('srMasterDB'));
             db.splice(db.length - 1 - i, 1);
             localStorage.setItem('srMasterDB', JSON.stringify(db));
