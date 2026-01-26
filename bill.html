@@ -9,61 +9,62 @@
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--dark-bg); color: var(--white); margin: 0; padding: 0; }
         .invoice-card { background: var(--card-bg); width: 100%; margin: 0; padding: 15px; box-sizing: border-box; min-height: 100vh; display: flex; flex-direction: column; }
 
-        .header { border-bottom: 2px solid var(--gold); padding-bottom: 5px; margin-bottom: 10px; text-align: center; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 22px; text-transform: uppercase; }
+        .header { border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 15px; text-align: center; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 24px; text-transform: uppercase; }
         
-        .bold-label { font-size: 13px !important; font-weight: 900 !important; color: var(--gold) !important; }
-        .bold-stats { font-size: 16px !important; font-weight: 900 !important; color: #000 !important; width: 100px !important; background: #fff !important; padding: 4px !important; border-radius: 4px; border:none; text-align:right; }
+        .bold-label { font-size: 14px !important; font-weight: 900 !important; color: var(--gold) !important; }
+        .bold-stats { font-size: 19px !important; font-weight: 900 !important; color: #000 !important; width: 105px !important; background: #fff !important; padding: 5px !important; border-radius: 4px; border:none; text-align:right; }
 
-        .top-stats { display: flex; justify-content: space-between; margin: 5px 10px; align-items: center; }
+        .top-stats { display: flex; justify-content: space-between; margin: 10px 10px; align-items: center; }
 
-        .input-row { display: flex; align-items: center; margin-bottom: 8px; padding: 0 10px; gap: 10px; }
-        .input-row label { flex: 0 0 120px; font-size: 11px; color: var(--gold); font-weight: bold; text-transform: uppercase; }
-        .box-in { flex: 1; background: var(--white); border: 1px solid #444; padding: 8px; color: #000; border-radius: 4px; font-size: 13px; font-weight: 700; outline: none; }
+        .input-row { display: flex; align-items: center; margin-bottom: 10px; padding: 0 10px; gap: 10px; }
+        .input-row label { flex: 0 0 130px; font-size: 11px; color: var(--gold); font-weight: bold; text-transform: uppercase; }
+        .box-in { flex: 1; background: var(--white); border: 1px solid #444; padding: 10px; color: #000; border-radius: 5px; font-size: 14px; font-weight: 700; outline: none; }
 
-        .gst-box { margin: 5px 10px; padding: 8px; background: #2d3748; border-radius: 6px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--gold); }
+        .gst-box { margin: 10px 10px; padding: 10px; background: #2d3748; border-radius: 6px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--gold); }
         
         table { width: calc(100% - 20px); margin: 10px auto; border-collapse: collapse; }
-        th { background: #1c2539; color: var(--gold); padding: 8px 5px; text-align: left; font-size: 11px; }
-        .table-in { width: 100%; background: var(--white); border: 1px solid #ddd; padding: 6px; font-size: 12px; font-weight: bold; color: #000; border-radius: 4px; box-sizing: border-box; }
+        th { background: #1c2539; color: var(--gold); padding: 10px 5px; text-align: left; font-size: 11px; }
+        .table-in { width: 100%; background: var(--white); border: 1px solid #ddd; padding: 8px; font-size: 13px; font-weight: bold; color: #000; border-radius: 4px; box-sizing: border-box; }
 
-        .calc-area { margin: 10px 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid #334155; }
-        .total-display { font-size: 20px; font-weight: bold; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 5px; margin-top: 5px; }
+        .calc-area { margin: 15px 15px; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid #334155; }
+        .total-display { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 10px; margin-top: 5px; }
 
-        .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 15px; }
-        .btn { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .btn-p { background: var(--gold); color: #000; }
-        .btn-w { background: #16a34a; color: var(--white); }
-        .add-btn { background: transparent; color: var(--gold); border: 1px dashed var(--gold); width: calc(100% - 30px); margin: 5px 15px; padding: 8px; border-radius: 8px; font-weight: bold; }
-
-        /* 🖨️ 100% SINGLE PAGE PRINT FIX */
+        /* 🖨️ PROFESSIONAL PRINT LAYOUT - NO BOX LINES */
         @media print {
-            @page { size: A4; margin: 0; }
-            html, body { height: 100%; margin: 0 !important; padding: 0 !important; overflow: hidden; }
-            body { background: white !important; color: black !important; -webkit-print-color-adjust: exact; zoom: 0.85; } /* Zoom 0.85 forces single page */
-            
-            .invoice-card { 
-                border: 2px solid #000; 
-                background: white; 
-                padding: 20px; 
-                height: 100vh !important; 
-                width: 100% !important;
-                display: flex; 
-                flex-direction: column;
-                box-sizing: border-box;
-            }
-            
+            @page { size: A4; margin: 8mm; }
+            body { background: white !important; color: black !important; zoom: 0.85; }
+            .invoice-card { border: none !important; background: white; padding: 10px; height: 97vh !important; display: flex; flex-direction: column; }
             .no-print, .btn-grp, .add-btn, .gst-box, button { display: none !important; }
-            .box-in, .table-in { border: 1px solid black !important; background: transparent !important; }
-            table, th, td { border: 1px solid black !important; color: black !important; }
+            
+            .header { border-bottom: 2px solid black; }
+            .header h1 { color: black !important; font-size: 28px; }
+            .top-stats { border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+            
+            .input-row { margin-bottom: 5px; }
+            .input-row label { color: #333 !important; font-size: 12px; }
+            .box-in { border: none !important; border-bottom: 1px solid #eee !important; background: transparent !important; font-size: 15px; font-weight: bold; }
+            
+            table { margin-top: 20px; border: none !important; }
+            th { background: #f2f2f2 !important; color: #000 !important; border-top: 2px solid black !important; border-bottom: 2px solid black !important; padding: 10px 5px; }
+            td { border-bottom: 1px solid #eee !important; padding: 12px 5px; }
+            .table-in { border: none !important; background: transparent !important; font-size: 14px; }
 
-            .print-footer { display: flex !important; margin-top: auto; padding-top: 15px; border-top: 2px solid black; justify-content: space-between; align-items: flex-end; }
-            .bank-details { font-size: 11px; }
+            .calc-area { border: none !important; background: transparent !important; border-top: 1px solid #000; margin-top: 10px; padding: 5px 0; }
+            .total-display { color: black !important; border-top: 2px solid black; font-size: 24px; padding-top: 5px; }
+
+            .print-footer { display: flex !important; margin-top: auto; padding-top: 15px; border-top: 2px solid black; justify-content: space-between; align-items: center; }
+            .bank-details { font-size: 12px; }
             .qr-print img { width: 90px; height: 90px; }
-            .sig-box { text-align: right; }
-            .sig-line { border-top: 1.5px solid black; width: 160px; margin-top: 40px; font-weight: bold; }
+            .sig-box { text-align: center; }
+            .sig-line { border-top: 2px solid black; width: 180px; margin-top: 50px; font-size: 13px; font-weight: bold; }
         }
         .print-footer { display: none; }
+        .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 15px; }
+        .btn { padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .btn-p { background: var(--gold); color: #000; }
+        .btn-w { background: #16a34a; color: var(--white); }
+        .add-btn { background: transparent; color: var(--gold); border: 1px dashed var(--gold); width: calc(100% - 30px); margin: 5px 15px; padding: 10px; border-radius: 8px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -108,9 +109,9 @@
     <button class="add-btn no-print" onclick="addItem()">+ ADD MORE</button>
 
     <div class="calc-area">
-        <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>Sub-Total:</span><span id="subT">₹0</span></div>
-        <div id="gstAmtRow" style="display:none; justify-content:space-between; margin-bottom:5px; color:var(--gold);"><span>GST (18%):</span><span id="gstAmtDisplay">₹0</span></div>
-        <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>Discount:</span><input type="number" id="discIn" class="top-in" value="0" oninput="clc()" style="width:70px; font-weight:bold; color:black; background:white; border:none; padding:2px 5px;"></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Sub-Total:</span><span id="subT">₹0</span></div>
+        <div id="gstAmtRow" style="display:none; justify-content:space-between; margin-bottom:8px; font-weight:bold;"><span>GST (18%):</span><span id="gstAmtDisplay">₹0</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Discount:</span><input type="number" id="discIn" class="top-in" value="0" oninput="clc()" style="width:75px; font-weight:bold; color:black; background:white; border:none; padding:4px 6px;"></div>
         <div class="total-display" style="display:flex; justify-content:space-between;"><span>GRAND TOTAL:</span><span id="gTotal">₹0</span></div>
     </div>
 
@@ -118,14 +119,15 @@
         <div class="bank-details">
             <strong>PAYMENT DETAILS:</strong><br>
             SBI | A/c No: 44695199584<br>
-            IFSC: SBIN0008373 | UPI: 7021733860@sbi
+            IFSC: SBIN0008373<br>
+            UPI: 7021733860@sbi
         </div>
         <div class="qr-print">
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=upi://pay?pa=7021733860@sbi" alt="QR">
         </div>
         <div class="sig-box">
             <div class="sig-line">S.R ENTERPRISES</div>
-            <p style="font-size:10px; margin:0;">Authorised Signatory</p>
+            <p style="font-size:11px; margin-top:5px;">(Authorised Signatory)</p>
         </div>
     </div>
 
@@ -160,5 +162,4 @@
     }
 </script>
 </body>
-    </html>
-    
+</html>
