@@ -15,17 +15,94 @@
         .section-title { padding: 20px; color: var(--gold); font-size: 14px; font-weight: 600; display: flex; align-items: center; }
         .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(251,191,36,0.2); margin-left: 10px; }
 
-        /* Amazon Style Catalog - Layout Locked */
+        /* Catalog Style */
         .machine-gallery { display: flex; overflow-x: auto; gap: 15px; padding: 0 20px 20px; scrollbar-width: none; }
         .product-card { 
             background: var(--card-bg); min-width: 200px; border-radius: 18px; padding: 15px; 
-            border: 1px solid rgba(255,255,255,0.05); position: relative;
+            border: 1px solid rgba(255,255,255,0.05); position: relative; box-shadow: 0 8px 15px rgba(0,0,0,0.3);
         }
         
-        .icon-box { background: rgba(255,255,255,0.03); height: 110px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 50px; margin-bottom: 12px; }
+        .icon-box { background: rgba(255,255,255,0.03); height: 100px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 50px; margin-bottom: 12px; }
         .product-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
         .price-tag { color: #4ade80; font-size: 18px; font-weight: 700; display: block; margin-bottom: 15px; }
 
         .buy-btn { 
-            background: linear-gradient(180deg,
-                                        
+            background: linear-gradient(180deg, #fcd34d 0%, #fbbf24 100%); 
+            color: #000; text-align: center; padding: 10px; border-radius: 8px; 
+            text-decoration: none; font-size: 13px; font-weight: 700; display: block;
+            box-shadow: 0 4px 0 #b45309;
+        }
+
+        /* ADMIN OFFICE - Initially Hidden */
+        #admin-office { display: none; margin-top: 10px; }
+        
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
+        .action-card { 
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 15px; padding: 20px; 
+            text-decoration: none; color: white; text-align: center; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .admin-price { margin-top: 10px; font-size: 11px; color: var(--gold); display: none; padding-top: 8px; border-top: 1px dashed #444; }
+        
+        footer { text-align: center; padding: 30px; font-size: 10px; color: #64748b; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-name" onclick="unlockAdmin()">S.R ENTERPRISES</div>
+        <div style="font-size: 10px; color: #94a3b8; margin-top: 5px;">MUMBAI'S FUSING MACHINE EXPERT</div>
+    </header>
+
+    <div class="section-title">⭐ FEATURED PRODUCTS</div>
+    <div class="machine-gallery">
+        <div class="product-card">
+            <div class="icon-box">🏗️</div>
+            <div class="product-name">HASHIMA HP-450</div>
+            <span class="price-tag">₹1,55,000</span>
+            <a href="https://wa.me/918850813765?text=Hi+Shailesh+ji,+I+want+Hashima+HP-450" class="buy-btn">🛒 BUY NOW</a>
+            <div class="admin-price">Secret Cost: ₹1,40,000</div>
+        </div>
+        <div class="product-card">
+            <div class="icon-box">🏗️</div>
+            <div class="product-name">OSHIMA OP-450</div>
+            <span class="price-tag">₹1,25,000</span>
+            <a href="https://wa.me/918850813765?text=Hi+Shailesh+ji,+I+want+Oshima+OP-450" class="buy-btn">🛒 BUY NOW</a>
+            <div class="admin-price">Secret Cost: ₹1,10,000</div>
+        </div>
+        <div class="product-card">
+            <div class="icon-box">⚙️</div>
+            <div class="product-name">GEARED MOTOR</div>
+            <span class="price-tag">₹3,500</span>
+            <a href="https://wa.me/918850813765?text=Hi+Shailesh+ji,+I+want+Geared+Motor" class="buy-btn">🛒 BUY NOW</a>
+            <div class="admin-price">Cost: ₹2200</div>
+        </div>
+    </div>
+
+    <div id="admin-office">
+        <div class="section-title">💼 MY PRIVATE OFFICE</div>
+        <div class="grid-container">
+            <a href="bill.html" class="action-card">📝 BILLING</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScyB-Yv6865X0zG_C9hWpX_I-oQvNl6t9K-X1P8u5UoY-yL0A/viewform" class="action-card">📥 ENTRY</a>
+            <a href="https://docs.google.com/spreadsheets/d/1Xy_Jp9E9gS1A_nU0Y0X6_K3yU9P-L6oX-m-E-rX9Xw/edit" class="action-card">📊 REPORTS</a>
+            <a href="https://wa.me/918850813765" class="action-card" style="border: 1px solid #25D366;">📲 SUPPORT</a>
+        </div>
+    </div>
+
+    <footer>S.R ENTERPRISES | MALAD, MUMBAI | 8850813765</footer>
+
+    <script>
+        function unlockAdmin() {
+            let p = prompt("Shailesh ji, Password Daaliye:");
+            if(p === "1234") { 
+                document.getElementById('admin-office').style.display = 'block';
+                document.querySelectorAll('.admin-price').forEach(d => d.style.display='block');
+                alert("Office Unlocked! Saare buttons niche aa gaye hain.");
+                // Smooth scroll to buttons
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            } else {
+                alert("Galt Password!");
+            }
+        }
+    </script>
+</body>
+</html>
