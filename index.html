@@ -1,95 +1,27 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Digital Catalog</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; --text-white: #f8fafc; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--dark-bg); margin: 0; color: var(--text-white); }
-        header { background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); padding: 30px 20px; text-align: center; border-bottom: 2px solid var(--gold); position: relative; }
-        .brand-name { font-size: 26px; font-weight: 700; color: var(--gold); letter-spacing: 2px; }
-        .admin-lock { position: absolute; right: 15px; top: 15px; font-size: 20px; cursor: pointer; opacity: 0.4; }
-        .section-title { padding: 0 20px; margin-top: 25px; font-weight: 600; color: var(--gold); font-size: 14px; display: flex; align-items: center; }
-        .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(251, 191, 36, 0.2); margin-left: 10px; }
-        .machine-gallery { display: flex; overflow-x: auto; gap: 15px; padding: 15px 20px; scrollbar-width: none; }
-        .product-card { background: var(--card-bg); min-width: 190px; border-radius: 20px; padding: 12px; text-align: center; border: 1px solid rgba(251, 191, 36, 0.1); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
-        /* Image fix: White background for visibility */
-        .machine-img { width: 100%; height: 130px; border-radius: 15px; object-fit: contain; background: white; margin-bottom: 12px; padding: 5px; }
-        .product-name { font-size: 13px; font-weight: 700; color: white; margin-bottom: 2px; }
-        .model-no { font-size: 10px; color: var(--gold); margin-bottom: 8px; font-weight: 600; }
-        .public-price { color: #4ade80; font-size: 14px; font-weight: 700; background: rgba(74, 222, 128, 0.1); padding: 4px; border-radius: 6px; }
-        .admin-price-box { margin-top: 10px; padding: 8px; background: rgba(255,255,255,0.05); border-radius: 10px; display: none; border: 1px dashed var(--gold); }
-        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
-        .action-card { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 18px; padding: 25px 10px; text-decoration: none; color: white; text-align: center; border: 1px solid rgba(255,255,255,0.05); font-weight: 700; font-size: 14px; }
-        footer { text-align: center; padding: 30px; font-size: 10px; color: #64748b; }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="admin-lock" onclick="unlockAdmin()">🔑</div>
-        <div class="brand-name">S.R ENTERPRISES</div>
-        <div style="font-size: 10px; color: #94a3b8; margin-top: 5px;">FUSING MACHINE EXPERT</div>
-    </header>
-
-    <div class="section-title">📦 FUSING MACHINES</div>
-    <div class="machine-gallery">
-        <div class="product-card">
-            <img src="https://m.media-amazon.com/images/I/41-97D8v3eL.jpg" class="machine-img" alt="Hashima">
-            <div class="product-name">HASHIMA</div>
-            <div class="model-no">HP-450MS / 600L</div>
-            <div class="public-price">Starts ₹1,500*</div>
-            <div class="admin-price-box">Cost: ₹900 | Profit: ₹600</div>
-        </div>
-        <div class="product-card">
-            <img src="https://m.media-amazon.com/images/I/61Nl-HhshjL._AC_SL1001_.jpg" class="machine-img" alt="Oshima">
-            <div class="product-name">OSHIMA</div>
-            <div class="model-no">OP-450GS / 520</div>
-            <div class="public-price">Starts ₹1,200*</div>
-            <div class="admin-price-box">Cost: ₹750 | Profit: ₹450</div>
-        </div>
+<div class="machine-gallery">
+    <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=300&q=80" class="machine-img" alt="Hashima">
+        <div class="product-name">HASHIMA</div>
+        <div class="model-no">HP-450MS / 600L</div>
+        <div class="public-price">Starts ₹1,500*</div>
     </div>
-
-    <div class="section-title">⚙️ SPARE PARTS</div>
-    <div class="machine-gallery">
-        <div class="product-card">
-            <img src="https://m.media-amazon.com/images/I/61T0mE7j8HL._AC_SL1000_.jpg" class="machine-img" alt="Motor">
-            <div class="product-name">GEARED MOTOR</div>
-            <div class="model-no">220V AC Geared</div>
-            <div class="public-price">Market Price</div>
-            <div class="admin-price-box">Cost: ₹2,200 | Sell: ₹3,500</div>
-        </div>
-        <div class="product-card">
-            <img src="https://m.media-amazon.com/images/I/417oI6OQoGL.jpg" class="machine-img" alt="Belt">
-            <div class="product-name">TEFLON BELT</div>
-            <div class="model-no">Heat Resistant</div>
-            <div class="public-price">Starts ₹800</div>
-            <div class="admin-price-box">Profit: ₹300/pc</div>
-        </div>
-        <div class="product-card">
-            <img src="https://m.media-amazon.com/images/I/61H-3L3-KUL._AC_SL1500_.jpg" class="machine-img" alt="Heater">
-            <div class="product-name">HEATER ELEMENT</div>
-            <div class="model-no">Industrial Grade</div>
-            <div class="public-price">Market Price</div>
-            <div class="admin-price-box">Cost: ₹450 | Sell: ₹850</div>
-        </div>
+    <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=300&q=80" class="machine-img" alt="Oshima">
+        <div class="product-name">OSHIMA</div>
+        <div class="model-no">OP-450GS / 520</div>
+        <div class="public-price">Starts ₹1,200*</div>
     </div>
+</div>
 
-    <div class="grid-container">
-        <a href="bill.html" class="action-card">🧾 CREATE BILL</a>
-        <a href="https://wa.me/918850813765" class="action-card">📲 WHATSAPP</a>
+<div class="machine-gallery">
+    <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1530124560677-bdaea92ca51e?auto=format&fit=crop&w=300&q=80" class="machine-img" alt="Motor">
+        <div class="product-name">GEARED MOTOR</div>
+        <div class="public-price">Market Price</div>
     </div>
-
-    <script>
-        function unlockAdmin() {
-            let pass = prompt("Admin Password:");
-            if(pass === "1234") {
-                document.querySelectorAll('.admin-price-box').forEach(box => box.style.display = 'block');
-                alert("Prices Unlocked, Shailesh ji!");
-            } else { alert("Wrong!"); }
-        }
-    </script>
-</body>
-</html>
+    <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=300&q=80" class="machine-img" alt="Belt">
+        <div class="product-name">TEFLON BELT</div>
+        <div class="public-price">Starts ₹800</div>
+    </div>
+</div>
