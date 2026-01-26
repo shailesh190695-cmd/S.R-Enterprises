@@ -3,48 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Master Dashboard</title>
+    <title>S.R ENTERPRISES | Master Control</title>
     <style>
         :root { --bg: #0b0f1a; --card: #161d2f; --gold: #facc15; --white: #ffffff; --border: #2d3748; }
         body { font-family: sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
-        .container { max-width: 1000px; margin: auto; padding: 15px; }
-        .header { text-align: center; padding: 30px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 24px; text-transform: uppercase; }
-        
-        #adminArea { display: none; margin-top: 20px; padding: 15px; border-top: 2px dashed var(--gold); }
-        .admin-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
-        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; text-decoration: none; font-size: 13px; }
+        .container { max-width: 1100px; margin: auto; padding: 15px; }
 
-        .admin-section { display: none; background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); }
+        /* Header */
+        .header { text-align: center; padding: 40px 10px; background: linear-gradient(to bottom, #1c2539, #0b0f1a); border-bottom: 3px solid var(--gold); cursor: pointer; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 28px; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Catalog Section */
+        .section-title { color: var(--gold); margin: 30px 0 15px 0; font-size: 20px; border-left: 5px solid var(--gold); padding-left: 12px; }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .product-card { background: var(--card); border-radius: 15px; border: 1px solid var(--border); padding: 20px; text-align: center; }
+        .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 13px; }
+
+        /* Admin Area */
+        #adminArea { display: none; margin-top: 40px; border-top: 2px dashed var(--gold); padding-top: 20px; }
+        .admin-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
+        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 15px; border-radius: 10px; text-align: center; cursor: pointer; font-weight: bold; text-decoration: none; }
+
+        /* Form Design */
+        .admin-section { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 25px; }
         .form-group { margin-bottom: 12px; }
-        label { display: block; color: var(--gold); margin-bottom: 5px; font-size: 13px; }
-        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 6px; width: 100%; box-sizing: border-box; outline: none; }
+        label { display: block; color: var(--gold); margin-bottom: 5px; font-size: 13px; font-weight: bold; }
+        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; }
         
-        /* Parts Row Design */
+        /* Spare Parts Row */
         .part-row { display: flex; gap: 10px; margin-bottom: 8px; }
-        .part-name { flex: 2; }
-        .part-price { flex: 1; }
-        .add-btn { background: #1e293b; color: var(--gold); border: 1px solid var(--gold); padding: 8px; border-radius: 6px; cursor: pointer; margin-bottom: 15px; width: 100%; font-weight: bold; }
+        .add-item-btn { background: #1e293b; color: var(--gold); border: 1px solid var(--gold); padding: 8px; border-radius: 6px; cursor: pointer; width: 100%; margin-bottom: 15px; font-weight: bold; }
         
-        .total-display { font-size: 18px; color: var(--gold); font-weight: bold; text-align: right; margin: 10px 0; padding: 10px; border-top: 1px solid var(--border); }
-        .save-btn { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; }
+        .total-box { font-size: 20px; color: var(--gold); text-align: right; margin: 15px 0; padding: 10px; border-top: 1px solid var(--border); font-weight: bold; }
+        .save-btn { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; }
 
-        .table-container { overflow-x: auto; margin-top: 20px; }
-        table { width: 100%; border-collapse: collapse; min-width: 800px; }
-        th { background: #1c2539; color: var(--gold); padding: 10px; text-align: left; }
-        td { padding: 10px; border-bottom: 1px solid #1c2539; font-size: 13px; }
-        .due-alert { background: #ef4444; color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.5; } }
+        /* Table/Tracker */
+        .table-container { overflow-x: auto; background: var(--card); border-radius: 15px; }
+        table { width: 100%; border-collapse: collapse; min-width: 900px; }
+        th { background: #1c2539; color: var(--gold); padding: 15px; text-align: left; }
+        td { padding: 15px; border-bottom: 1px solid #1c2539; font-size: 13px; vertical-align: top; }
+        .due-alert { background: #ef4444; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 10px; }
     </style>
 </head>
 <body>
 
 <div class="header" onclick="unlockAdmin()">
     <h1>S.R ENTERPRISES</h1>
-    <p style="color:#94a3b8; font-size:10px;">(Admin Panel)</p>
+    <p style="color:#94a3b8; font-size:10px;">(Admin Click Here)</p>
 </div>
 
-<div class="container" id="mainView">
+<div class="container">
+    <div class="section-title">🏗️ Machines</div>
+    <div class="catalog-grid">
+        <div class="product-card"><h3>Hashima HP-600</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP</a></div>
+        <div class="product-card"><h3>Oshima OP-450</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP</a></div>
+    </div>
+
     <div id="adminArea">
         <div class="admin-menu">
             <a href="bill.html" class="menu-btn">📄 NEW BILL</a>
@@ -52,37 +66,31 @@
             <div class="menu-btn" onclick="showSection('tracker')">📅 TRACKER</div>
         </div>
 
-        <div id="entryForm" class="admin-section">
+        <div id="entryForm" class="admin-section" style="display:none;">
             <h3 style="color:var(--gold);">Naya Service Record</h3>
             <div class="form-group"><label>Customer Name:</label><input type="text" id="cName"></div>
             <div class="form-group"><label>Mobile:</label><input type="text" id="cMob"></div>
             <div class="form-group"><label>Machine Model:</label><input type="text" id="cMach"></div>
             
             <label>Spare Parts & Items:</label>
-            <div id="partsContainer">
+            <div id="partsList">
                 <div class="part-row">
-                    <input type="text" class="part-name" placeholder="Item Name" oninput="calcTotal()">
-                    <input type="number" class="part-price" placeholder="Price" oninput="calcTotal()">
+                    <input type="text" class="p-name" placeholder="Part Name" oninput="sumTotal()">
+                    <input type="number" class="p-price" placeholder="Price" oninput="sumTotal()">
                 </div>
             </div>
-            <button class="add-btn" onclick="addPartRow()">+ Add More Item</button>
+            <button class="add-item-btn" onclick="addRow()">+ Add More Item</button>
 
             <div class="form-group"><label>Work Details:</label><textarea id="wDetails"></textarea></div>
-            
-            <div class="total-display">Total Amount: ₹<span id="displayTotal">0</span></div>
-            
-            <div class="form-group">
-                <label>Next Service Date (Auto 3 Months):</label>
-                <input type="date" id="nDate">
-            </div>
-
-            <button class="save-btn" onclick="saveData()">SAVE RECORD</button>
+            <div class="total-box">Total Bill: ₹<span id="finalTotal">0</span></div>
+            <div class="form-group"><label>Next Service Date (6 Months Auto):</label><input type="date" id="nDate"></div>
+            <button class="save-btn" onclick="saveRecord()">SAVE RECORD</button>
         </div>
 
         <div id="tracker" class="table-container" style="display:none;">
-            <table id="myTable">
+            <table>
                 <thead>
-                    <tr><th>Customer</th><th>Machine</th><th>Parts & Items</th><th>Total</th><th>Next Due</th><th>Action</th></tr>
+                    <tr><th>Customer</th><th>Machine</th><th>Work & Spares</th><th>Bill</th><th>Due Date</th><th>Action</th></tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
@@ -94,30 +102,31 @@
     function unlockAdmin() {
         if (prompt("PIN:") === "7860") {
             document.getElementById('adminArea').style.display = 'block';
-        }
+            showSection('tracker');
+        } else { alert("Wrong PIN!"); }
     }
 
+    // 6 Mahine ki date automatic set karne ke liye
     function openEntry() {
         showSection('entryForm');
-        // Auto Set Next Date (3 Months from today)
         let d = new Date();
-        d.setMonth(d.getMonth() + 3);
+        d.setMonth(d.getMonth() + 6); // <-- 6 Mahine set kiya
         document.getElementById('nDate').value = d.toISOString().split('T')[0];
     }
 
-    function addPartRow() {
+    function addRow() {
         let div = document.createElement('div');
         div.className = 'part-row';
-        div.innerHTML = `<input type="text" class="part-name" placeholder="Item Name" oninput="calcTotal()">
-                         <input type="number" class="part-price" placeholder="Price" oninput="calcTotal()">`;
-        document.getElementById('partsContainer').appendChild(div);
+        div.innerHTML = `<input type="text" class="p-name" placeholder="Item Name" oninput="sumTotal()">
+                         <input type="number" class="p-price" placeholder="Price" oninput="sumTotal()">`;
+        document.getElementById('partsList').appendChild(div);
     }
 
-    function calcTotal() {
-        let prices = document.getElementsByClassName('part-price');
+    function sumTotal() {
+        let prices = document.getElementsByClassName('p-price');
         let total = 0;
         for(let p of prices) { total += Number(p.value) || 0; }
-        document.getElementById('displayTotal').innerText = total;
+        document.getElementById('finalTotal').innerText = total;
     }
 
     function showSection(id) {
@@ -127,27 +136,25 @@
         if(id === 'tracker') loadData();
     }
 
-    function saveData() {
-        let parts = [];
+    function saveRecord() {
+        let items = [];
         let rows = document.getElementsByClassName('part-row');
         for(let r of rows) {
-            let n = r.querySelector('.part-name').value;
-            let p = r.querySelector('.part-price').value;
-            if(n) parts.push(n + " (₹" + p + ")");
+            let n = r.querySelector('.p-name').value;
+            let p = r.querySelector('.p-price').value;
+            if(n) items.push(n + " (₹" + p + ")");
         }
-
-        const entry = {
+        const data = {
             name: document.getElementById('cName').value,
             mob: document.getElementById('cMob').value,
             mach: document.getElementById('cMach').value,
-            parts: parts.join(", "),
+            parts: items.join(", "),
             work: document.getElementById('wDetails').value,
-            total: document.getElementById('displayTotal').innerText,
+            total: document.getElementById('finalTotal').innerText,
             next: document.getElementById('nDate').value
         };
-
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
-        db.push(entry);
+        db.push(data);
         localStorage.setItem('srMasterDB', JSON.stringify(db));
         alert("Record Saved!");
         location.reload();
@@ -157,22 +164,21 @@
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
         let html = '';
         let today = new Date().toISOString().split('T')[0];
-
         db.reverse().forEach((item, index) => {
-            let alertMsg = (item.next <= today) ? `<br><span class="due-alert">SERVICE DUE!</span>` : '';
+            let isDue = (item.next <= today);
             html += `<tr>
                 <td><b>${item.name}</b><br><small>${item.mob}</small></td>
                 <td>${item.mach}</td>
                 <td><small>${item.parts}</small><br><i>${item.work}</i></td>
                 <td>₹${item.total}</td>
-                <td style="${item.next <= today ? 'color:red; font-weight:bold;' : ''}">${item.next}${alertMsg}</td>
-                <td><button onclick="deleteRec(${index})" style="color:red; border:none; background:none; cursor:pointer;">🗑️</button></td>
+                <td style="${isDue ? 'color:#ef4444; font-weight:bold;' : ''}">${item.next} ${isDue ? '<br><span class="due-alert">DUE</span>' : ''}</td>
+                <td><button onclick="del(${index})" style="color:red; border:none; background:none; cursor:pointer;">🗑️</button></td>
             </tr>`;
         });
         document.getElementById('tableBody').innerHTML = html;
     }
 
-    function deleteRec(i) {
+    function del(i) {
         if(confirm("Delete?")) {
             let db = JSON.parse(localStorage.getItem('srMasterDB'));
             db.splice(db.length - 1 - i, 1);
