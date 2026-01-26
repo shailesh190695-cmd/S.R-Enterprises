@@ -3,36 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Service Master</title>
+    <title>S.R ENTERPRISES | Master System</title>
     <style>
         :root { --bg: #0b0f1a; --card: #161d2f; --gold: #facc15; --white: #ffffff; --border: #2d3748; }
         body { font-family: sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
         .container { max-width: 1100px; margin: auto; padding: 15px; }
 
+        /* Header */
         .header { text-align: center; padding: 35px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 26px; text-transform: uppercase; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 26px; text-transform: uppercase; letter-spacing: 2px; }
 
         .section-title { color: var(--gold); margin: 30px 0 15px 0; font-size: 20px; border-left: 5px solid var(--gold); padding-left: 12px; }
         
+        /* Product Catalog Grid */
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
         .product-card { background: var(--card); border-radius: 15px; border: 1px solid var(--border); padding: 20px; text-align: center; }
-        .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 13px; }
+        .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 13px; border:none; width:100%; cursor:pointer; }
 
-        /* Service Due Styling */
-        .due-row { background: rgba(239, 68, 68, 0.1) !important; border-left: 4px solid #ef4444; }
-        .due-alert { background: #ef4444; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 10px; display: inline-block; margin-top: 5px; }
+        /* Customer Service Box */
+        .service-box { background: var(--card); padding: 20px; border-radius: 15px; border: 2px solid var(--gold); margin-top: 20px; }
+        .service-box input, .service-box textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; margin-bottom: 10px; }
 
-        /* Admin Area */
+        /* Admin Area Styling */
         #adminArea { display: none; margin-top: 40px; border-top: 2px dashed var(--gold); padding-top: 20px; }
         .admin-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 25px; }
-        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; font-size: 13px; }
-
-        .admin-section { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 25px; }
-        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; margin-bottom: 10px; }
+        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; text-decoration: none; font-size: 13px; }
         
+        /* Entry Form */
+        .admin-section { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 25px; }
+        .part-row { display: flex; gap: 10px; margin-bottom: 8px; }
+        .total-display { font-size: 22px; color: var(--gold); text-align: right; margin: 15px 0; font-weight: bold; border-top: 1px solid var(--border); padding-top: 10px; }
+
+        /* History Table & Alerts */
+        .due-row { background: rgba(239, 68, 68, 0.1) !important; border-left: 5px solid #ef4444; }
+        .due-alert { background: #ef4444; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 10px; display: inline-block; }
+        .table-container { overflow-x: auto; background: var(--card); border-radius: 12px; }
         table { width: 100%; border-collapse: collapse; min-width: 900px; }
         th { background: #1c2539; color: var(--gold); padding: 15px; text-align: left; }
         td { padding: 15px; border-bottom: 1px solid #1c2539; font-size: 13px; vertical-align: top; }
+        .search-box { width: 100%; padding: 15px; background: #1e293b; border: 2px solid var(--gold); color: white; border-radius: 10px; margin-bottom: 20px; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -44,39 +53,60 @@
 
 <div class="container">
     <div class="section-title">🛠️ Machine Service Enquiry</div>
-    <div class="product-card" style="text-align: left;">
+    <div class="service-box">
         <input type="text" id="custName" placeholder="Aapka Naam">
-        <textarea id="custProblem" placeholder="Machine ki samasya likhein..."></textarea>
-        <button class="wa-btn" style="width:100%; border:none; cursor:pointer;" onclick="sendServiceWA()">SEND REQUEST ON WA</button>
+        <input type="text" id="custMachine" placeholder="Machine ka Model">
+        <textarea id="custProblem" placeholder="Machine mein kya problem hai?"></textarea>
+        <button class="wa-btn" onclick="sendServiceWA()">SEND SERVICE REQUEST ON WHATSAPP</button>
+    </div>
+
+    <div class="section-title">🏗️ Buy Machines</div>
+    <div class="catalog-grid">
+        <div class="product-card"><h3>Hashima Fusing</h3><a href="https://wa.me/917021733860?text=Hashima Machine Enquiry" class="wa-btn">ENQUIRY</a></div>
+        <div class="product-card"><h3>Oshima Fusing</h3><a href="https://wa.me/917021733860?text=Oshima Machine Enquiry" class="wa-btn">ENQUIRY</a></div>
+    </div>
+
+    <div class="section-title">⚙️ Genuine Spare Parts</div>
+    <div class="catalog-grid">
+        <div class="product-card"><h3>Teflon Belts</h3><a href="https://wa.me/917021733860?text=Teflon Belt Enquiry" class="wa-btn">ENQUIRY</a></div>
+        <div class="product-card"><h3>Heater Sets</h3><a href="https://wa.me/917021733860?text=Heater Set Enquiry" class="wa-btn">ENQUIRY</a></div>
+        <div class="product-card"><h3>Machine Motors</h3><a href="https://wa.me/917021733860?text=Motor Enquiry" class="wa-btn">ENQUIRY</a></div>
     </div>
 
     <div id="adminArea">
         <div class="admin-menu">
             <div class="menu-btn" onclick="openEntry()">🛠️ NEW SERVICE LOG</div>
             <div class="menu-btn" onclick="showSec('history')">🔍 SEARCH HISTORY</div>
+            <a href="bill.html" class="menu-btn" style="text-decoration:none;">📄 CREATE BILL</a>
         </div>
 
         <div id="entryForm" class="admin-section" style="display:none;">
-            <h3>Service Entry (6 Months Auto)</h3>
+            <h3 style="color:var(--gold);">New Service Entry (6 Months Auto)</h3>
             <input type="text" id="cName" placeholder="Customer Name">
-            <input type="text" id="cMob" placeholder="Mobile">
+            <input type="text" id="cMob" placeholder="Mobile Number">
             <input type="text" id="cMach" placeholder="Machine Model">
+            
+            <label style="color:var(--gold); display:block; margin:10px 0 5px;">Spare Parts & Pricing:</label>
             <div id="partsList">
-                <div style="display:flex; gap:5px; margin-bottom:5px;">
-                    <input type="text" class="p-name" placeholder="Item Name">
-                    <input type="number" class="p-price" placeholder="Price">
+                <div class="part-row">
+                    <input type="text" class="p-name" placeholder="Part Name" oninput="sumTotal()">
+                    <input type="number" class="p-price" placeholder="Price" oninput="sumTotal()">
                 </div>
             </div>
-            <textarea id="wDetails" placeholder="Work Done"></textarea>
+            <button onclick="addPartRow()" style="width:100%; margin-bottom:15px; cursor:pointer; background:#1e293b; color:var(--gold); border:1px solid var(--gold); padding:8px; border-radius:5px;">+ Add More Item</button>
+
+            <textarea id="wDetails" placeholder="Work Details (Service Done)"></textarea>
+            <div class="total-display">Total Bill: ₹<span id="fTotal">0</span></div>
+            <label style="color:var(--gold); display:block; margin-bottom:5px;">Next Service Date:</label>
             <input type="date" id="nDate">
-            <button class="wa-btn" style="background:var(--gold); color:black; width:100%; border:none;" onclick="saveRecord()">SAVE RECORD</button>
+            <button class="wa-btn" style="background:var(--gold); color:black;" onclick="saveRecord()">SAVE RECORD</button>
         </div>
 
         <div id="history" style="display:none;">
-            <input type="text" id="search" onkeyup="filter()" placeholder="🔍 Naam ya Number se search karein..." style="border:1px solid var(--gold);">
-            <div style="overflow-x:auto;">
+            <input type="text" id="search" onkeyup="filterHistory()" class="search-box" placeholder="🔍 Search by Customer Name or Mobile...">
+            <div class="table-container">
                 <table>
-                    <thead><tr><th>Client</th><th>Machine</th><th>Work/Parts</th><th>Due Date</th><th>Action</th></tr></thead>
+                    <thead><tr><th>Client Info</th><th>Machine</th><th>Parts & Work</th><th>Bill</th><th>Due Date</th><th>Action</th></tr></thead>
                     <tbody id="histBody"></tbody>
                 </table>
             </div>
@@ -85,12 +115,24 @@
 </div>
 
 <script>
-    function unlockAdmin() { if (prompt("PIN:") === "7860") { document.getElementById('adminArea').style.display = 'block'; showSec('history'); } }
+    function unlockAdmin() {
+        if (prompt("Enter Admin PIN:") === "7860") {
+            document.getElementById('adminArea').style.display = 'block';
+            showSec('history');
+        }
+    }
+
+    function sendServiceWA() {
+        let n = document.getElementById('custName').value;
+        let m = document.getElementById('custMachine').value;
+        let p = document.getElementById('custProblem').value;
+        let msg = `*NEW SERVICE REQUEST*%0A*Name:* ${n}%0A*Machine:* ${m}%0A*Problem:* ${p}`;
+        window.open(`https://wa.me/917021733860?text=${msg}`, '_blank');
+    }
 
     function openEntry() {
         showSec('entryForm');
-        let d = new Date();
-        d.setMonth(d.getMonth() + 6); // Auto 6 months
+        let d = new Date(); d.setMonth(d.getMonth() + 6);
         document.getElementById('nDate').value = d.toISOString().split('T')[0];
     }
 
@@ -101,42 +143,55 @@
         if(id === 'history') loadHist();
     }
 
+    function addPartRow() {
+        let div = document.createElement('div'); div.className = 'part-row';
+        div.innerHTML = `<input type="text" class="p-name" placeholder="Part Name" oninput="sumTotal()"><input type="number" class="p-price" placeholder="Price" oninput="sumTotal()">`;
+        document.getElementById('partsList').appendChild(div);
+    }
+
+    function sumTotal() {
+        let prices = document.getElementsByClassName('p-price');
+        let total = 0;
+        for(let p of prices) { total += Number(p.value) || 0; }
+        document.getElementById('fTotal').innerText = total;
+    }
+
     function saveRecord() {
+        let items = [];
+        let rows = document.getElementsByClassName('part-row');
+        for(let r of rows) {
+            let n = r.querySelector('.p-name').value; let p = r.querySelector('.p-price').value;
+            if(n) items.push(n + " (₹" + p + ")");
+        }
         const data = {
-            name: document.getElementById('cName').value,
-            mob: document.getElementById('cMob').value,
-            mach: document.getElementById('cMach').value,
-            work: document.getElementById('wDetails').value,
+            name: document.getElementById('cName').value, mob: document.getElementById('cMob').value,
+            mach: document.getElementById('cMach').value, parts: items.join(", "),
+            work: document.getElementById('wDetails').value, total: document.getElementById('fTotal').innerText,
             next: document.getElementById('nDate').value
         };
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
-        db.push(data);
-        localStorage.setItem('srMasterDB', JSON.stringify(db));
-        alert("Saved!"); showSec('history');
+        db.push(data); localStorage.setItem('srMasterDB', JSON.stringify(db));
+        alert("Record Saved!"); showSec('history');
     }
 
     function loadHist() {
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
-        let html = '';
-        let today = new Date().toISOString().split('T')[0];
-        
+        let html = ''; let today = new Date().toISOString().split('T')[0];
         db.reverse().forEach((item, index) => {
-            // Logic: Agar due date aaj ki hai ya purani hai
             let due = (item.next <= today);
             html += `<tr class="${due ? 'due-row' : ''}">
                 <td><b>${item.name}</b><br><small>${item.mob}</small></td>
                 <td>${item.mach}</td>
-                <td>${item.work}</td>
-                <td style="${due ? 'color:#ef4444; font-weight:bold;' : ''}">
-                    ${item.next} ${due ? '<br><span class="due-alert">SERVICE DUE</span>' : ''}
-                </td>
+                <td><small>${item.parts}</small><br><i>${item.work}</i></td>
+                <td>₹${item.total}</td>
+                <td style="${due ? 'color:#ef4444; font-weight:bold;' : ''}">${item.next}${due ? '<br><span class="due-alert">SERVICE DUE</span>' : ''}</td>
                 <td><button onclick="del(${index})" style="color:red; border:none; background:none; cursor:pointer;">🗑️</button></td>
             </tr>`;
         });
         document.getElementById('histBody').innerHTML = html;
     }
 
-    function filter() {
+    function filterHistory() {
         let val = document.getElementById('search').value.toLowerCase();
         let rows = document.getElementById('histBody').getElementsByTagName('tr');
         for (let row of rows) { row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none'; }
@@ -145,9 +200,7 @@
     function del(i) {
         if(confirm("Delete?")) {
             let db = JSON.parse(localStorage.getItem('srMasterDB'));
-            db.splice(db.length-1-i, 1);
-            localStorage.setItem('srMasterDB', JSON.stringify(db));
-            loadHist();
+            db.splice(db.length-1-i, 1); localStorage.setItem('srMasterDB', JSON.stringify(db)); loadHist();
         }
     }
 </script>
