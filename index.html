@@ -3,175 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Master Admin</title>
+    <title>S.R ENTERPRISES | Home</title>
     <style>
-        :root { --bg: #0b1120; --card: #1e293b; --gold: #facc15; --white: #ffffff; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
-        .container { max-width: 900px; margin: auto; padding: 15px; }
+        :root { --bg: #0b0f1a; --card: #161d2f; --gold: #facc15; --white: #ffffff; --border: #2d3748; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
+        .container { max-width: 1100px; margin: auto; padding: 15px; }
 
-        /* Premium Header */
-        .header { text-align: center; border-bottom: 2px solid var(--gold); padding: 30px 0; margin-bottom: 25px; background: linear-gradient(180deg, #1e293b 0%, #0b1120 100%); }
-        .header h1 { margin: 0; color: var(--gold); font-size: 28px; text-transform: uppercase; letter-spacing: 2px; }
-        .header p { margin: 8px 0; color: #94a3b8; font-weight: bold; font-size: 12px; }
-
-        /* Navigation Grid */
-        .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
-        .nav-btn { background: var(--card); border: 1px solid #334155; padding: 25px; border-radius: 15px; text-align: center; text-decoration: none; color: white; font-weight: bold; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
-        .nav-btn:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .nav-btn span { font-size: 32px; display: block; margin-bottom: 10px; }
-
-        /* 🔒 Admin Login Section */
-        #lockScreen { text-align: center; margin: 20px 5px; padding: 50px 20px; background: var(--card); border-radius: 20px; border: 2px solid #334155; }
-        .btn-gold { background: var(--gold); color: #000; border: none; padding: 15px 40px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; width: 100%; max-width: 320px; text-transform: uppercase; }
-
-        /* Admin Panel (Hidden until Login) */
-        #adminPanel { display: none; padding: 0 5px; }
-        .data-card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #334155; margin-bottom: 25px; }
-        input, textarea { background: #0f172a; border: 1px solid #334155; color: white; padding: 12px; border-radius: 8px; margin-bottom: 12px; width: 100%; box-sizing: border-box; outline: none; }
-        textarea { height: 100px; resize: none; }
-
-        /* History Table */
-        .table-container { width: 100%; overflow-x: auto; background: var(--card); border-radius: 15px; border: 1px solid #334155; }
-        table { width: 100%; border-collapse: collapse; min-width: 800px; }
-        th { background: #1e293b; color: var(--gold); padding: 15px; text-align: left; font-size: 11px; text-transform: uppercase; border-bottom: 2px solid #0f172a; }
-        td { padding: 15px; border-bottom: 1px solid #0f172a; font-size: 13px; vertical-align: top; }
-        .work-log { font-size: 11px; color: #cbd5e1; line-height: 1.6; white-space: pre-line; background: #0f172a; padding: 12px; border-radius: 8px; border: 1px solid #334155; margin-top: 8px; }
+        /* Header & Banner */
+        .header { text-align: center; padding: 30px 10px; border-bottom: 1px solid var(--border); background: linear-gradient(to bottom, #1c2539, #0b0f1a); }
+        .header h1 { color: var(--gold); margin: 0; font-size: 28px; letter-spacing: 2px; }
         
-        /* Status Tags */
-        .status-tag { padding: 5px 10px; border-radius: 6px; font-size: 10px; font-weight: bold; }
-        .pending { background: #7f1d1d; color: #fecaca; border: 1px solid #dc2626; }
-        .ok { background: #064e3b; color: #d1fae5; border: 1px solid #10b981; }
+        /* 🛒 Public Catalog (Amazon/Flipkart Style) */
+        .section-title { color: var(--gold); margin: 30px 0 15px 0; font-size: 20px; border-left: 4px solid var(--gold); padding-left: 10px; }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }
+        .product-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 10px; text-align: center; transition: 0.3s; }
+        .product-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .product-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; background: #000; }
+        .product-card h4 { margin: 10px 0 5px 0; font-size: 14px; }
+        .wa-link { display: inline-block; background: #25d366; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: bold; margin-top: 5px; }
 
-        @media (max-width: 600px) { .nav-grid { grid-template-columns: 1fr; } }
+        /* 🔒 Private Admin Login Section */
+        .admin-box { max-width: 400px; margin: 40px auto; padding: 25px; background: var(--card); border-radius: 15px; border: 1px solid var(--gold); text-align: center; }
+        .btn-gold { background: var(--gold); color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; }
+
+        /* 📊 Private Dashboard Content (Hidden) */
+        #adminArea { display: none; margin-top: 30px; }
+        .billing-link { display: block; background: var(--gold); color: black; text-align: center; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-bottom: 20px; }
+        
+        /* Form & Table */
+        .data-form { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 6px; width: 100%; box-sizing: border-box; }
+        textarea { grid-column: span 2; height: 60px; }
+
+        .table-container { overflow-x: auto; background: var(--card); border-radius: 12px; }
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        th { background: #1c2539; color: var(--gold); padding: 12px; text-align: left; font-size: 11px; }
+        td { padding: 12px; border-bottom: 1px solid #1c2539; font-size: 12px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>S.R ENTERPRISES</h1>
-        <p>FUSING MACHINE SPECIALIST | ADMIN PANEL</p>
-    </div>
-
-    <div class="nav-grid">
-        <a href="bill.html" class="nav-btn"><span>📄</span> NEW BILL</a>
-        <a href="https://wa.me/917021733860" class="nav-btn"><span>💬</span> WHATSAPP</a>
-    </div>
-
-    <div id="lockScreen">
-        <div style="font-size: 50px; margin-bottom: 20px;">🛡️</div>
-        <h2 style="color:var(--gold); margin:0;">ADMIN LOGIN</h2>
-        <p style="font-size:12px; color:#94a3b8; margin: 15px 0 30px 0;">Private Client Records aur History ke liye PIN dalen.</p>
-        <button class="btn-gold" onclick="unlockAdmin()">👤 LOGIN TO TRACKER</button>
-    </div>
-
-    <div id="adminPanel">
-        <div class="data-card">
-            <h3 style="color:var(--gold); margin-top:0;">📝 New Entry (Visit & Spare Parts)</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <input type="text" id="cName" placeholder="Customer Name">
-                <input type="text" id="cMob" placeholder="Mobile Number">
-                <input type="text" id="cMach" placeholder="Machine Model">
-                <input type="date" id="nDate" title="Next Service Date">
-            </div>
-            <textarea id="wDetails" placeholder="Details: Kya kaam kiya? Spare part ka naam aur daam?"></textarea>
-            <input type="number" id="tBill" placeholder="Total Bill (₹)">
-            <button class="btn-gold" style="width:100%;" onclick="saveData()">SAVE CLIENT DATA</button>
-        </div>
-
-        <input type="text" id="search" onkeyup="filterData()" placeholder="🔍 Search History by Name or Machine..." style="border: 1px solid var(--gold); padding: 15px; margin-bottom: 15px;">
-
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Customer / Machine</th>
-                        <th>Work History & Spares</th>
-                        <th>Bill</th>
-                        <th>Next Due</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="masterTableBody"></tbody>
-            </table>
-        </div>
-        
-        <div style="text-align:center; margin-top:40px; padding-bottom: 40px;">
-            <button onclick="location.reload()" style="background:none; border:none; color:#475569; cursor:pointer; font-size:12px; font-weight:bold;">🔒 LOGOUT ADMIN</button>
-        </div>
-    </div>
+<div class="header">
+    <h1>S.R ENTERPRISES</h1>
+    <p style="color:#94a3b8; font-size:12px;">FUSING MACHINE SPECIALIST | MUMBAI</p>
 </div>
 
-<script>
-    // 🔑 Security PIN: 7860
-    function unlockAdmin() {
-        let pin = prompt("Admin Security PIN daalen:");
-        if (pin === "7860") {
-            document.getElementById('lockScreen').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'block';
-            loadData();
-        } else {
-            alert("Galat PIN!");
-        }
-    }
-
-    // 💾 Data Saving
-    function saveData() {
-        const entry = {
-            name: document.getElementById('cName').value,
-            mob: document.getElementById('cMob').value,
-            mach: document.getElementById('cMach').value,
-            work: document.getElementById('wDetails').value,
-            bill: document.getElementById('tBill').value,
-            next: document.getElementById('nDate').value,
-            date: new Date().toLocaleDateString('en-GB')
-        };
-        if(!entry.name || !entry.next) return alert("Kam se kam Name aur Next Date bharen!");
-
-        let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
-        db.push(entry);
-        localStorage.setItem('srMasterDB', JSON.stringify(db));
-        alert("Entry Saved!");
-        loadData();
-        
-        // Clear Form
-        document.getElementById('cName').value = '';
-        document.getElementById('cMob').value = '';
-        document.getElementById('wDetails').value = '';
-    }
-
-    // 📋 Load Table
-    function loadData() {
-        let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
-        let html = '';
-        let today = new Date().toISOString().split('T')[0];
-        db.reverse().forEach((item, index) => {
-            let statusClass = (item.next < today) ? 'pending' : 'ok';
-            html += `<tr>
-                <td><b style="color:var(--gold);">${item.name}</b><br><small>${item.mach}</small><br><small>${item.mob}</small></td>
-                <td><div style="font-size:10px; color:var(--gold);">Visit: ${item.date}</div><div class="work-log">${item.work || '-'}</div></td>
-                <td style="font-weight:bold;">₹${item.bill || '0'}</td>
-                <td><span class="status-tag ${statusClass}">${item.next}</span></td>
-                <td><button onclick="deleteEntry(${index})" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:20px;">🗑️</button></td>
-            </tr>`;
-        });
-        document.getElementById('masterTableBody').innerHTML = html;
-    }
-
-    function filterData() {
-        let val = document.getElementById('search').value.toLowerCase();
-        let rows = document.getElementById('masterTableBody').getElementsByTagName('tr');
-        for (let row of rows) { row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none'; }
-    }
-
-    function deleteEntry(i) {
-        if(confirm("Delete record?")) {
-            let db = JSON.parse(localStorage.getItem('srMasterDB'));
-            db.splice(db.length - 1 - i, 1);
-            localStorage.setItem('srMasterDB', JSON.stringify(db));
-            loadData();
-        }
-    }
-</script>
-</body>
-</html>
+<div class="container">
+    <div class="section-title">📦 Our Machines & Spare Parts</div>
+    <div class="catalog-grid">
+        <div class="product-card">
+            <div style="font-size:40px;">⚙️</div>
+            <h4>Hashima HP-600</h4>
+            <p style="font-size:10px; color:#94a3b8;">High Performance Fusing</p>
+            <a href="https://wa.me/917021733860?text=I am interested in Hashima HP-600" class="wa-link">ENQUIRE ON WA</a>
+        </div>
+        <div class="product-card">
+            <div style="font-size:40px;">⛓️</div>
+            <h4>Teflon Belts</h4>
+            
