@@ -5,63 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S.R ENTERPRISES | Master Invoice</title>
     <style>
-        :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--dark-bg); color: white; margin: 0; padding: 10px; }
-        .invoice-card { background: var(--card-bg); max-width: 500px; margin: auto; padding: 20px; border-radius: 12px; border: 1px solid #334155; }
+        :root { --dark-bg: #0b1120; --card-bg: #1e293b; --gold: #facc15; --white: #ffffff; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--dark-bg); color: var(--white); margin: 0; padding: 10px; }
+        .invoice-card { background: var(--card-bg); max-width: 500px; margin: auto; padding: 25px; border-radius: 15px; border: 1px solid #334155; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
 
-        .header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 20px; }
+        /* Header Fix */
+        .header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--gold); padding-bottom: 12px; margin-bottom: 25px; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }
         .header-right { text-align: right; }
         .top-row { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-bottom: 5px; }
-        .top-in { background: white; border: none; padding: 5px; color: black; border-radius: 4px; font-size: 12px; font-weight: bold; width: 85px; text-align: right; }
+        .top-in { background: var(--white); border: none; padding: 6px; color: #000; border-radius: 5px; font-size: 12px; font-weight: bold; width: 90px; text-align: right; }
 
-        .input-row { display: flex; align-items: center; margin-bottom: 12px; }
-        .input-row label { width: 120px; font-size: 11px; color: var(--gold); font-weight: bold; flex-shrink: 0; }
-        .box-in { flex: 1; background: white; border: none; padding: 10px; color: black; border-radius: 6px; font-size: 14px; font-weight: 600; outline: none; }
+        /* Systematic Input Alignment */
+        .sys-group { margin-bottom: 20px; }
+        .input-row { display: flex; align-items: center; margin-bottom: 15px; gap: 12px; }
+        .input-row label { width: 130px; font-size: 11px; color: var(--gold); font-weight: bold; text-transform: uppercase; flex-shrink: 0; }
+        .box-in { flex: 1; background: var(--white); border: 2px solid #334155; padding: 12px; color: #000; border-radius: 8px; font-size: 14px; font-weight: 600; outline: none; transition: 0.3s; }
+        .box-in:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(250, 204, 21, 0.3); }
 
+        /* Work Table */
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th { color: var(--gold); font-size: 12px; text-align: left; padding-bottom: 8px; border-bottom: 1px solid #444; }
-        .table-in { width: 100%; background: white; border: none; padding: 8px; border-radius: 4px; font-size: 13px; font-weight: bold; box-sizing: border-box; }
+        th { color: var(--gold); font-size: 12px; text-align: left; padding: 10px 5px; border-bottom: 1px solid #444; }
+        .table-in { width: 100%; background: var(--white); border: none; padding: 10px; border-radius: 5px; font-size: 13px; font-weight: bold; box-sizing: border-box; color: #000; }
+        .l-total { color: var(--gold); font-weight: bold; font-size: 14px; }
 
-        .total-display { text-align: right; margin-top: 15px; font-size: 18px; font-weight: bold; color: var(--gold); }
-        .print-footer { display: none; }
-        .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        .btn { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .btn-p { background: var(--gold); color: black; }
-        .btn-w { background: #25D366; color: white; }
+        .total-display { text-align: right; margin-top: 20px; font-size: 20px; font-weight: bold; color: var(--gold); border-top: 1px solid #334155; padding-top: 10px; }
 
-        /* 🖨️ PERFECT PRINT SETTINGS */
+        /* Buttons */
+        .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 25px; }
+        .btn { padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 14px; }
+        .btn-p { background: var(--gold); color: #000; }
+        .btn-w { background: #16a34a; color: var(--white); }
+        .add-btn { background: transparent; color: var(--gold); border: 1px dashed var(--gold); width: 100%; margin-top: 12px; padding: 10px; font-weight: bold; cursor: pointer; border-radius: 8px; }
+
+        .print-area { display: none; }
+
         @media print {
-            @page { size: auto; margin: 40px; } /* Paper ke charo taraf gap */
+            @page { size: auto; margin: 20mm; }
             body { background: white !important; color: black !important; padding: 0; }
-            .invoice-card { 
-                border: none; 
-                background: white; 
-                width: 100%; 
-                padding: 20px; 
-                margin-top: 50px; /* Bill ko upar se niche khiskane ke liye */
-            }
-            .box-in, .table-in, .top-in { 
-                background: transparent !important; 
-                color: black !important; 
-                padding: 2px 0 !important; 
-                font-weight: bold; 
-                border: none; 
-            }
-            .print-footer { display: block !important; margin-top: 30px; }
-            .bank-qr-row { 
-                display: flex; 
-                border: 1px solid black; 
-                padding: 12px; 
-                gap: 15px; 
-                align-items: center; 
-                border-radius: 5px; 
-            }
-            .qr { width: 85px; height: 85px; border: 1px solid #ddd; padding: 5px; }
-            .bank-text { font-size: 12px; text-align: left; line-height: 1.5; flex: 1; }
-            .sig-area { margin-top: 60px; text-align: right; }
-            .sig-line { border-top: 1px solid black; display: inline-block; width: 200px; text-align: center; padding-top: 5px; font-weight: bold; font-size: 12px; }
-            .no-print { display: none !important; }
+            .invoice-card { border: none; background: white; width: 100%; padding: 0; margin-top: 30px; box-shadow: none; }
+            .box-in, .table-in, .top-in { background: transparent !important; color: black !important; padding: 4px 0 !important; font-weight: bold; border:none; }
+            .print-area { display: block !important; margin-top: 40px; }
+            .bank-qr-row { display: flex; border: 1.5px solid black; padding: 15px; gap: 20px; align-items: center; border-radius: 8px; }
+            .qr { width: 90px; height: 90px; border: 1px solid #ccc; padding: 5px; }
+            .bank-text { font-size: 13px; text-align: left; line-height: 1.6; flex: 1; color: #000; }
+            .sig-area { margin-top: 80px; text-align: right; }
+            .sig-line { border-top: 2px solid black; display: inline-block; width: 220px; text-align: center; padding-top: 8px; font-weight: bold; font-size: 14px; }
+            .no-print, .add-btn { display: none !important; }
+            .header h1 { color: #000; }
             hr { border-color: #000; }
         }
     </style>
@@ -72,58 +63,60 @@
     <div class="header">
         <div>
             <h1>S.R ENTERPRISES</h1>
-            <p style="font-size: 10px; margin: 2px 0; color: #94a3b8;">FUSING MACHINE SPECIALIST</p>
+            <p style="font-size: 10px; margin: 5px 0 0 0; color: #94a3b8; font-weight: bold;">FUSING MACHINE SPECIALIST</p>
         </div>
         <div class="header-right">
-            <div class="top-row"><span style="font-size:10px; color:#94a3b8;">NO:</span><input type="text" value="033" class="top-in"></div>
-            <div class="top-row"><span style="font-size:10px; color:#94a3b8;">DATE:</span><input type="text" id="invDate" class="top-in"></div>
+            <div class="top-row"><span style="font-size:10px; color:var(--gold);">NO:</span><input type="text" value="033" class="top-in"></div>
+            <div class="top-row"><span style="font-size:10px; color:var(--gold);">DATE:</span><input type="text" id="invDate" class="top-in"></div>
         </div>
     </div>
 
-    <div class="input-row"><label>CUSTOMER NAME:</label><input type="text" id="cName" class="box-in" placeholder="Name"></div>
-    <div class="input-row"><label>ADDRESS:</label><input type="text" class="box-in" placeholder="Mumbai"></div>
-    <div class="input-row">
-        <label>MOBILE NO:</label>
-        <div style="display: flex; gap: 5px; flex: 1;">
-            <input type="text" id="cMob" class="box-in" placeholder="98XXXXXXXX">
-            <button onclick="getContact()" class="no-print" style="background:var(--gold); border:none; border-radius:4px; padding:0 10px; font-weight:bold; cursor:pointer; font-size:10px;">SELECT</button>
+    <div class="sys-group">
+        <div class="input-row"><label>Customer Name:</label><input type="text" id="cName" class="box-in" placeholder="Full Name"></div>
+        <div class="input-row"><label>Address:</label><input type="text" class="box-in" placeholder="Customer Address"></div>
+        <div class="input-row">
+            <label>Mobile No:</label>
+            <div style="display: flex; gap: 8px; flex: 1;">
+                <input type="text" id="cMob" class="box-in" placeholder="98XXXXXXXX">
+                <button onclick="getContact()" class="no-print" style="background:var(--gold); border:none; border-radius:6px; padding:0 12px; font-weight:bold; cursor:pointer; font-size:11px;">SELECT</button>
+            </div>
         </div>
+        <hr style="border:0; border-top:1px solid #334155; margin:20px 0;">
+        <div class="input-row"><label>Machine Name:</label><input type="text" class="box-in" placeholder="Hashima / Oshima"></div>
+        <div class="input-row"><label>Job Type:</label><input type="text" class="box-in" placeholder="Repairing / Service"></div>
     </div>
-    <hr style="border:0; border-top:1px solid #334155; margin:15px 0;">
-    <div class="input-row"><label>MACHINE NAME:</label><input type="text" class="box-in" placeholder="Hashima"></div>
-    <div class="input-row"><label>JOB TYPE:</label><input type="text" class="box-in" placeholder="Repairing"></div>
 
     <table>
-        <thead><tr><th style="width: 50%;">Work Description</th><th style="width: 20%;">Rate</th><th style="width: 10%;">Qty</th><th style="width: 20%; text-align: right;">Total</th></tr></thead>
+        <thead><tr><th style="width: 50%;">Description</th><th style="width: 20%;">Rate</th><th style="width: 10%;">Qty</th><th style="width: 20%; text-align: right;">Total</th></tr></thead>
         <tbody id="bBody">
             <tr>
-                <td><input type="text" class="table-in" placeholder="Charge"></td>
+                <td><input type="text" class="table-in" placeholder="Service/Part"></td>
                 <td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td>
                 <td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td>
-                <td style="text-align: right; font-weight: bold;" class="l-total">₹0.00</td>
+                <td style="text-align: right;" class="l-total">₹0.00</td>
             </tr>
         </tbody>
     </table>
-    <button class="no-print btn" style="background:transparent; color:var(--gold); border:1px dashed var(--gold); width:100%; margin-top:10px;" onclick="addItem()">+ ADD ITEM</button>
+    <button class="add-btn no-print" onclick="addItem()">+ ADD ITEM / WORK</button>
 
     <div class="total-display">GRAND TOTAL: <span id="gTotal">₹0.00</span></div>
 
-    <div class="print-footer">
+    <div class="print-area">
         <div class="bank-qr-row">
             <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=7021733860@sbi&pn=Hariram%20Sitaram%20Rajbhar" style="width:100%;"></div>
             <div class="bank-text">
                 <strong>PAYMENT DETAILS:</strong><br>
                 Name: Mr. Hariram Sitaram Rajbhar<br>
                 Bank: SBI | A/c No: 44695199584<br>
-                IFSC: SBIN0008373 | UPI: 7021733860@sbi
+                IFSC: SBIN0008373 | UPI ID: 7021733860@sbi
             </div>
         </div>
-        <div class="sig-area"><div class="sig-line">S.R ENTERPRISES<br><span style="font-size:9px; font-weight:normal;">Authorized Signature</span></div></div>
+        <div class="sig-area"><div class="sig-line">S.R ENTERPRISES<br><span style="font-size:10px; font-weight:normal;">Authorized Signature</span></div></div>
     </div>
 
     <div class="btn-grp no-print">
-        <button class="btn btn-p" onclick="window.print()">📄 PRINT BILL</button>
-        <button class="btn btn-w" onclick="wa()">📲 WHATSAPP</button>
+        <button class="btn btn-p" onclick="window.print()">📄 PRINT / SAVE PDF</button>
+        <button class="btn btn-w" onclick="wa()">📲 WHATSAPP BILL</button>
     </div>
 </div>
 
@@ -131,7 +124,7 @@
     window.onload = function() { document.getElementById('invDate').value = new Date().toLocaleDateString('en-GB'); };
     function addItem() {
         let tr = document.createElement('tr');
-        tr.innerHTML = `<td><input type="text" class="table-in"></td><td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td><td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td><td style="text-align: right; font-weight: bold;" class="l-total">₹0.00</td>`;
+        tr.innerHTML = `<td><input type="text" class="table-in"></td><td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td><td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td><td style="text-align: right;" class="l-total">₹0.00</td>`;
         document.getElementById('bBody').appendChild(tr);
     }
     function clc() {
@@ -151,8 +144,9 @@
                 document.getElementById('cName').value = contact[0].name[0];
                 document.getElementById('cMob').value = contact[0].tel[0].replace(/\s/g, '');
             }
-        } catch (e) { alert("Mobile mode aur HTTPS zaroori hai."); }
+        } catch (e) { alert("Mobile view aur HTTPS zaroori hai."); }
     }
 </script>
 </body>
-</html>
+                                </html>
+                                
