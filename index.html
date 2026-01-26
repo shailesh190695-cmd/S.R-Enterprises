@@ -6,35 +6,34 @@
     <title>S.R ENTERPRISES | Master Dashboard</title>
     <style>
         :root { --bg: #0b0f1a; --card: #161d2f; --gold: #facc15; --white: #ffffff; --border: #2d3748; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
+        body { font-family: sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
         .container { max-width: 1000px; margin: auto; padding: 15px; }
         
-        /* Secret Header */
         .header { text-align: center; padding: 35px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
         .header h1 { color: var(--gold); margin: 0; font-size: 26px; text-transform: uppercase; }
         
-        /* Public Sections */
         .section-title { color: var(--gold); margin: 25px 0 15px 0; font-size: 18px; border-left: 4px solid var(--gold); padding-left: 10px; }
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
         .product-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 15px; text-align: center; }
         .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 13px; }
 
-        /* 📊 Private Admin Panel (The 5 Options) */
         #adminArea { display: none; margin-top: 30px; padding: 15px; border-top: 2px dashed var(--gold); }
-        
         .admin-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 30px; }
         .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 15px; border-radius: 10px; text-align: center; cursor: pointer; font-weight: bold; font-size: 12px; text-decoration: none; }
-        .menu-btn:hover { background: var(--gold); color: #000; }
 
-        /* Sections inside Admin */
         .admin-section { display: none; background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 20px; }
-        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; margin-bottom: 15px; }
-        .save-btn { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
+        
+        /* Form Styling with Labels */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; color: var(--gold); margin-bottom: 5px; font-size: 14px; font-weight: bold; }
+        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; outline: none; }
+        
+        .save-btn { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; margin-top: 10px; }
 
         .table-container { overflow-x: auto; margin-top: 20px; }
         table { width: 100%; border-collapse: collapse; min-width: 800px; }
         th { background: #1c2539; color: var(--gold); padding: 12px; text-align: left; }
-        td { padding: 12px; border-bottom: 1px solid #1c2539; font-size: 13px; }
+        td { padding: 12px; border-bottom: 1px solid #1c2539; font-size: 13px; vertical-align: top; }
         .overdue { color: #f87171; font-weight: bold; }
     </style>
 </head>
@@ -42,7 +41,7 @@
 
 <div class="header" onclick="unlockAdmin()">
     <h1>S.R ENTERPRISES</h1>
-    <p style="color: #94a3b8; font-size: 11px;">(Admin Control Panel)</p>
+    <p style="color: #94a3b8; font-size: 11px;">(Click to Login)</p>
 </div>
 
 <div class="container">
@@ -53,8 +52,6 @@
     </div>
 
     <div id="adminArea">
-        <h2 style="color:var(--gold); text-align:center;">MASTER ADMIN PANEL</h2>
-        
         <div class="admin-menu">
             <a href="bill.html" class="menu-btn">📄 1. NEW BILLING</a>
             <div class="menu-btn" onclick="showSection('entryForm')">🛠️ 2. SERVICE ENTRY</div>
@@ -64,22 +61,51 @@
         </div>
 
         <div id="entryForm" class="admin-section">
-            <h3 style="color:var(--gold);">Nayi Entry Karein</h3>
-            <input type="text" id="cName" placeholder="Customer Name">
-            <input type="text" id="cMob" placeholder="Mobile">
-            <input type="text" id="cMach" placeholder="Machine & Model">
-            <input type="date" id="nDate">
-            <input type="text" id="cParts" placeholder="Spare Parts Detail (Heater, Belt, etc.)">
-            <textarea id="wDetails" placeholder="Kaam ki details..."></textarea>
-            <input type="number" id="tBill" placeholder="Amount (₹)">
-            <button class="save-btn" onclick="saveData()">SAVE RECORD</button>
+            <h3 style="color:var(--gold); margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:10px;">New Service Record</h3>
+            
+            <div class="form-group">
+                <label>Customer Name:</label>
+                <input type="text" id="cName" placeholder="Customer ka naam likhein">
+            </div>
+            
+            <div class="form-group">
+                <label>Mobile Number:</label>
+                <input type="text" id="cMob" placeholder="Mobile number daalein">
+            </div>
+            
+            <div class="form-group">
+                <label>Machine & Model No:</label>
+                <input type="text" id="cMach" placeholder="Machine ka model number">
+            </div>
+
+            <div class="form-group">
+                <label>Kya Kam Kiya (Work Done):</label>
+                <textarea id="wDetails" placeholder="Kaam ki poori detail likhein"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Spare Parts Changed:</label>
+                <input type="text" id="cParts" placeholder="Jo saman badla wo likhein (e.g. Belt, Heater)">
+            </div>
+
+            <div class="form-group">
+                <label>Total Bill Amount (₹):</label>
+                <input type="number" id="tBill" placeholder="Kitna bill hua?">
+            </div>
+
+            <div class="form-group">
+                <label>Next Service Date:</label>
+                <input type="date" id="nDate">
+            </div>
+
+            <button class="save-btn" onclick="saveData()">SAVE SERVICE RECORD</button>
         </div>
 
         <div id="commonRecords" class="table-container" style="display:none;">
-            <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="🔍 Record Search karein..." style="border:1px solid var(--gold);">
+            <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="🔍 Customer ya Machine search karein..." style="margin-bottom:15px; border:1px solid var(--gold);">
             <table>
                 <thead>
-                    <tr><th>Customer</th><th>Machine</th><th>Work/Parts</th><th>Bill</th><th>Due Date</th><th>-</th></tr>
+                    <tr><th>Customer</th><th>Machine</th><th>Work/Parts</th><th>Bill</th><th>Next Due</th><th>-</th></tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
@@ -87,22 +113,17 @@
     </div>
 </div>
 
-
-
 <script>
     function unlockAdmin() {
         if (prompt("PIN:") === "7860") {
             document.getElementById('adminArea').style.display = 'block';
-            alert("S.R Admin Access Unlocked!");
+            alert("Admin Access Unlocked!");
         } else { alert("Wrong PIN!"); }
     }
 
     function showSection(id) {
-        // Sab chhupao
         document.getElementById('entryForm').style.display = 'none';
         document.getElementById('commonRecords').style.display = 'none';
-        
-        // Jo chahiye wo dikhao
         if(id === 'entryForm') {
             document.getElementById('entryForm').style.display = 'block';
         } else {
@@ -119,12 +140,14 @@
             parts: document.getElementById('cParts').value,
             work: document.getElementById('wDetails').value,
             bill: document.getElementById('tBill').value,
-            next: document.getElementById('nDate').value
+            next: document.getElementById('nDate').value,
+            date: new Date().toLocaleDateString('en-GB')
         };
+        if(!entry.name || !entry.next) return alert("Naam aur Date zaroori hai!");
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
         db.push(entry);
         localStorage.setItem('srMasterDB', JSON.stringify(db));
-        alert("Record Saved!");
+        alert("Record Save Ho Gaya!");
         showSection('tracker');
     }
 
@@ -149,13 +172,11 @@
     function filterTable() {
         let val = document.getElementById('searchInput').value.toLowerCase();
         let rows = document.getElementById('tableBody').getElementsByTagName('tr');
-        for (let row of rows) {
-            row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none';
-        }
+        for (let row of rows) { row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none'; }
     }
 
     function deleteEntry(i) {
-        if(confirm("Delete?")) {
+        if(confirm("Delete record?")) {
             let db = JSON.parse(localStorage.getItem('srMasterDB'));
             db.splice(db.length - 1 - i, 1);
             localStorage.setItem('srMasterDB', JSON.stringify(db));
