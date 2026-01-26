@@ -1,54 +1,131 @@
-<style>
-    /* Print ko sundar banane ke liye special settings */
-    @media print {
-        body { background: white !important; color: black !important; padding: 0; }
-        .no-print { display: none !important; } /* Buttons print mein nahi aayenge */
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.R ENTERPRISES | Master Invoice</title>
+    <style>
+        :root { --dark-bg: #0b1120; --card-bg: #1e293b; --gold: #facc15; --white: #ffffff; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--dark-bg); color: var(--white); margin: 0; padding: 0; }
+        .invoice-card { background: var(--card-bg); width: 100%; margin: 0; padding: 15px; box-sizing: border-box; min-height: 100vh; }
+
+        /* Header */
+        .header { border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; text-align: center; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 24px; text-transform: uppercase; }
+        .header-info { font-size: 11px; color: #94a3b8; margin-top: 5px; font-weight: bold; letter-spacing: 1px; }
         
-        .bill-container {
-            border: 2px solid #000 !important;
-            padding: 20px !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            box-shadow: none !important;
-            position: relative;
-        }
+        .top-stats { display: flex; justify-content: space-between; margin-top: 15px; padding: 0 5px; }
+        .top-row { display: flex; align-items: center; gap: 5px; }
+        .top-in { background: var(--white); border: none; padding: 6px; color: #000; border-radius: 4px; font-size: 13px; font-weight: bold; width: 85px; text-align: right; }
 
-        /* Bill ke beech mein halka watermark taaki khali na lage */
-        .bill-container::before {
-            content: "S.R ENTERPRISES";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 50px;
-            color: rgba(0, 0, 0, 0.05);
-            white-space: nowrap;
-            z-index: 0;
-        }
+        /* Full Width Input Rows */
+        .input-row { display: flex; flex-direction: column; margin-bottom: 15px; padding: 0 5px; }
+        .input-row label { font-size: 12px; color: var(--gold); font-weight: bold; text-transform: uppercase; margin-bottom: 6px; }
+        .box-in { width: 100%; background: var(--white); border: none; padding: 12px; color: #000; border-radius: 6px; font-size: 15px; font-weight: 600; box-sizing: border-box; outline: none; }
+        .mobile-input-group { display: flex; gap: 8px; width: 100%; }
 
-        table { 
-            width: 100%; 
-            border: 1px solid #000 !important; 
-            margin-top: 20px; 
-            z-index: 1;
-            position: relative;
-        }
+        /* Table Settings */
+        .table-container { width: 100%; overflow-x: auto; margin-top: 15px; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #1c2539; color: var(--gold); font-size: 12px; text-align: left; padding: 12px 5px; border-bottom: 2px solid var(--gold); }
+        .table-in { width: 100%; background: var(--white); border: none; padding: 12px; border-radius: 5px; font-size: 14px; font-weight: bold; box-sizing: border-box; color: #000; }
 
-        th, td { 
-            border: 1px solid #000 !important; 
-            padding: 12px !important; 
-            text-align: left; 
-        }
+        /* Calculations Area */
+        .calc-area { margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid #334155; }
+        .calc-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .calc-label { font-size: 14px; color: #94a3b8; font-weight: bold; }
+        .total-display { font-size: 24px; font-weight: bold; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 15px; margin-top: 10px; }
 
-        th { background-color: #f2f2f2 !important; -webkit-print-color-adjust: exact; }
+        .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 5px; }
+        .btn { padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; text-transform: uppercase; }
+        .btn-p { background: var(--gold); color: #000; }
+        .btn-w { background: #16a34a; color: var(--white); }
+        .add-btn { background: transparent; color: var(--gold); border: 2px dashed var(--gold); width: calc(100% - 10px); margin: 10px 5px; padding: 12px; font-weight: bold; border-radius: 8px; }
 
-        .header h1 { font-size: 28px !important; margin-bottom: 5px; }
-        .total-box { 
-            border-top: 2px solid #000; 
-            padding-top: 10px; 
-            margin-top: 20px; 
-            font-size: 20px !important; 
+        /* 🖨️ PRINT OPTIMIZATION (Bhara-Bhara Look) */
+        .print-area { display: none; }
+        @media print {
+            body { background: white !important; color: black !important; padding: 20px; }
+            .invoice-card { border: 2px solid #000; background: white; padding: 30px; min-height: auto; position: relative; }
+            
+            /* Watermark */
+            .invoice-card::before {
+                content: "S.R ENTERPRISES";
+                position: absolute; top: 40%; left: 15%; font-size: 70px;
+                color: rgba(0,0,0,0.03); transform: rotate(-35deg); z-index: 0;
+                font-weight: 900; pointer-events: none;
+            }
+
+            .header h1 { color: black !important; border-bottom: 2px solid #000; padding-bottom: 10px; }
+            .box-in, .table-in, .top-in { background: #f8fafc !important; color: black !important; border: 1px solid #ccc !important; padding: 8px !important; margin: 2px 0; }
+            
+            table { border: 1px solid #000; }
+            th { background: #eee !important; color: black !important; border: 1px solid #000 !important; }
+            td { border: 1px solid #000 !important; }
+            
+            .calc-area { background: #f9f9f9 !important; border: 1px solid #000 !important; margin-top: 30px; }
+            .print-area { display: block !important; margin-top: 40px; }
+            .bank-qr-row { display: flex; border: 2px solid black; padding: 20px; gap: 30px; align-items: center; border-radius: 10px; background: #fff; }
+            .qr { width: 110px; height: 110px; border: 1px solid #eee; }
+            .bank-text { font-size: 13px; line-height: 1.8; flex: 1; color: #000; font-weight: bold; }
+            .sig-area { margin-top: 80px; text-align: right; }
+            .sig-line { border-top: 2px solid black; display: inline-block; width: 250px; text-align: center; padding-top: 10px; font-weight: bold; font-size: 14px; }
+            .no-print, .add-btn, label, .gst-check-row, hr { display: none !important; }
         }
+    </style>
+</head>
+<body>
+
+<div class="invoice-card">
+    <div class="header">
+        <h1>S.R ENTERPRISES</h1>
+        <div class="header-info">FUSING MACHINE SPECIALIST | MUMBAI</div>
+        <div class="top-stats">
+            <div class="top-row"><span style="font-size:11px; color:var(--gold);">NO:</span><input type="text" value="033" class="top-in"></div>
+            <div class="top-row"><span style="font-size:11px; color:var(--gold);">DATE:</span><input type="text" id="invDate" class="top-in"></div>
+        </div>
     </div>
-        </style>
-        
+
+    <div class="input-row"><label>Customer Name:</label><input type="text" id="cName" class="box-in" placeholder="Full Name"></div>
+    <div class="input-row"><label>Address:</label><input type="text" class="box-in" placeholder="Address"></div>
+    <div class="input-row">
+        <label>Mobile No:</label>
+        <div class="mobile-input-group"><input type="text" id="cMob" class="box-in" placeholder="98XXXXXXXX"> <button onclick="getContact()" class="no-print" style="background:var(--gold); border:none; border-radius:6px; padding:0 15px; font-weight:bold; cursor:pointer;">SELECT</button></div>
+    </div>
+
+    <hr style="border:0; border-top: 1px solid #334155; margin: 15px 5px;">
+    <div class="input-row"><label>Machine Name:</label><input type="text" class="box-in" placeholder="Hashima"></div>
+    <div class="input-row"><label>Job Type:</label><input type="text" class="box-in" placeholder="Repair / Service"></div>
+
+    <div class="table-container">
+        <table>
+            <thead><tr><th style="width: 45%;">Description</th><th style="width: 20%;">Rate</th><th style="width: 15%;">Qty</th><th style="width: 20%; text-align: right;">Total</th></tr></thead>
+            <tbody id="bBody">
+                <tr>
+                    <td><input type="text" class="table-in" placeholder="Detail"></td>
+                    <td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td>
+                    <td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td>
+                    <td style="text-align: right;" class="l-total">₹0.00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <button class="add-btn no-print" onclick="addItem()">+ ADD ITEM / PART</button>
+
+    <div class="calc-area">
+        <div class="calc-row"><span class="calc-label">Sub-Total:</span><span id="subT">₹0.00</span></div>
+        <div class="calc-row"><span class="calc-label">Discount:</span><input type="number" id="discIn" class="top-in" value="0" oninput="clc()" style="width:80px;"></div>
+        <div class="calc-row gst-check-row"><span class="calc-label">GST (18%):</span><input type="checkbox" id="gstCheck" onchange="clc()" style="width:22px; height:22px;"></div>
+        <div class="calc-row" id="gstAmtRow" style="display:none;"><span class="calc-label">GST Amount:</span><span id="gstAmtDisplay">₹0.00</span></div>
+        <div class="calc-row total-display"><span>GRAND TOTAL:</span><span id="gTotal">₹0.00</span></div>
+    </div>
+
+    <div class="print-area">
+        <div class="bank-qr-row">
+            <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=7021733860@sbi&pn=Hariram%20Sitaram%20Rajbhar" style="width:100%;"></div>
+            <div class="bank-text">
+                <strong>PAYMENT DETAILS:</strong><br>
+                Name: Mr. Hariram Sitaram Rajbhar<br>
+                Bank: SBI | A/c No: 44695199584<br>
+                IFSC: SBIN0008373 | UPI: 7021733860@sbi
+                
