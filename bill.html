@@ -3,38 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Pro GST Bill</title>
+    <title>S.R ENTERPRISES | Official Invoice</title>
     <style>
-        :root { --blue: #0056b3; --dark: #001f3f; }
+        :root { --blue: #0056b3; }
         body { font-family: 'Segoe UI', Arial, sans-serif; padding: 10px; background: #f4f7f6; margin: 0; }
-        .invoice-box { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; border-top: 8px solid var(--blue); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        /* A4 Size Print Fix - Isse bill nahi kategi */
+        .invoice-box { 
+            max-width: 800px; 
+            margin: auto; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            border-top: 8px solid var(--blue); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            box-sizing: border-box; /* Isse padding andar hi rehti hai */
+        }
+
         .header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         
-        /* Details Section with input boxes */
         .details-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .detail-box { background: #f9f9f9; padding: 12px; border-radius: 6px; border: 1px solid #ddd; }
         .detail-box h4 { margin: 0 0 10px 0; color: var(--blue); font-size: 13px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         
         .row-input { display: flex; align-items: center; margin-bottom: 8px; font-size: 14px; }
-        .row-input label { width: 100px; font-weight: bold; color: #555; }
-        .row-input input { flex: 1; border: 1px solid #ddd; padding: 5px; border-radius: 4px; outline: none; background: #fffdf0; }
+        .row-input label { width: 80px; font-weight: bold; color: #555; }
+        .row-input input { flex: 1; border: 1px solid #ddd; padding: 5px; border-radius: 4px; outline: none; background: #fffdf0; width: 100%; }
 
+        /* Table Responsive Fix */
+        .table-wrapper { width: 100%; overflow: hidden; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; table-layout: fixed; }
-        table th { background: var(--blue); color: white; padding: 10px; font-size: 12px; text-align: left; text-transform: uppercase; }
-        table td { border: 1px solid #eee; padding: 8px; vertical-align: middle; }
+        table th { background: var(--blue); color: white; padding: 10px; font-size: 12px; text-align: left; }
+        table td { border: 1px solid #eee; padding: 8px; vertical-align: middle; word-wrap: break-word; }
+        
         input.cell-input { width: 100%; padding: 8px 5px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-size: 14px; background: #fffdf0; }
         
         .footer-flex { display: flex; justify-content: space-between; margin-top: 25px; flex-wrap: wrap; }
         .bank-details { width: 50%; font-size: 12px; line-height: 1.6; }
         .totals-section { width: 45%; font-size: 14px; }
         .total-row { display: flex; justify-content: space-between; padding: 5px 0; }
-        .grand-total-row { background: var(--blue); color: white; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 18px; margin-top: 10px; }
+        
+        /* Grand Total Box */
+        .grand-total-row { background: var(--blue); color: white; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 18px; margin-top: 10px; display: flex; justify-content: space-between; }
         
         .no-print { text-align: center; margin-bottom: 15px; }
         .print-btn { background: #ff8c00; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; max-width: 350px; font-size: 18px; }
-        .add-btn { background: #28a745; color: white; border: none; padding: 12px; border-radius: 6px; width: 100%; margin-top: 15px; cursor: pointer; font-weight: bold; font-size: 16px; display: block; }
+        .add-btn { background: #28a745; color: white; border: none; padding: 12px; border-radius: 6px; width: 100%; margin-top: 15px; cursor: pointer; font-weight: bold; }
         
-        @media print { .no-print, .add-btn { display: none !important; } input { border: none !important; background: transparent !important; padding: 0 !important; } .invoice-box { box-shadow: none; border: none; width: 100%; } }
+        /* Print Settings - Isse margins sahi ho jayengi */
+        @media print { 
+            @page { margin: 1cm; }
+            body { background: white; padding: 0; }
+            .no-print, .add-btn { display: none !important; } 
+            input, .row-input input { border: none !important; background: transparent !important; padding: 0 !important; font-weight: bold; } 
+            .invoice-box { border: none; box-shadow: none; width: 100%; padding: 0; }
+            .detail-box { border: 1px solid #eee; }
+        }
         @media (max-width: 600px) { .details-container { grid-template-columns: 1fr; } .bank-details, .totals-section { width: 100%; } }
     </style>
 </head>
@@ -49,7 +73,7 @@
                 <div style="font-size:12px; margin-top:5px;">Malad, Mumbai, Maharashtra, 400097<br><b>Mob:</b> 8850813765</div>
             </div>
             <div style="text-align:right; font-size:14px;">
-                <b style="font-size: 20px;">INVOICE</b><br>
+                <b style="font-size: 18px;">INVOICE</b><br>
                 No: #<span contenteditable="true">039</span><br>
                 Date: 26/01/2026
             </div>
@@ -69,24 +93,26 @@
             </div>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 50%;">Item/Service</th>
-                    <th style="width: 10%; text-align: center;">Qty</th>
-                    <th style="width: 20%; text-align: center;">Rate</th>
-                    <th style="width: 20%; text-align: right;">Total</th>
-                </tr>
-            </thead>
-            <tbody id="billBody">
-                <tr>
-                    <td><input type="text" class="cell-input" value="Servicing Charge"></td>
-                    <td><input type="number" class="cell-input qty" value="1" oninput="calculate()"></td>
-                    <td><input type="number" class="cell-input rate" value="0" oninput="calculate()"></td>
-                    <td style="text-align: right; font-weight: bold;">₹<span class="row-total">0.00</span></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 45%;">Item/Service</th>
+                        <th style="width: 10%; text-align: center;">Qty</th>
+                        <th style="width: 20%; text-align: center;">Rate</th>
+                        <th style="width: 25%; text-align: right;">Total</th>
+                    </tr>
+                </thead>
+                <tbody id="billBody">
+                    <tr>
+                        <td><input type="text" class="cell-input" value="Servicing Charge"></td>
+                        <td><input type="number" class="cell-input qty" value="1" oninput="calculate()"></td>
+                        <td><input type="number" class="cell-input rate" value="0" oninput="calculate()"></td>
+                        <td style="text-align: right; font-weight: bold;">₹<span class="row-total">0.00</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <button type="button" class="add-btn" onclick="addRow()">+ LINE ADD KAREIN</button>
 
         <div class="footer-flex">
@@ -111,6 +137,7 @@
         </div>
     </div>
     <script>
+        // ... (Baaki saara javascript code pehle wala hi rahega)
         function addRow() {
             let tableBody = document.getElementById('billBody');
             let tr = document.createElement('tr');
@@ -159,5 +186,4 @@
         calculate();
     </script>
 </body>
-                                                                               </html>
-                                                                               
+</html>
