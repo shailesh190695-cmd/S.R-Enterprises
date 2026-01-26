@@ -8,104 +8,81 @@
         :root { --bg: #0b0f1a; --card: #161d2f; --gold: #facc15; --white: #ffffff; --border: #2d3748; }
         body { font-family: sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
         .container { max-width: 1000px; margin: auto; padding: 15px; }
+        .header { text-align: center; padding: 30px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 24px; text-transform: uppercase; }
         
-        .header { text-align: center; padding: 35px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 26px; text-transform: uppercase; }
-        
-        .section-title { color: var(--gold); margin: 25px 0 15px 0; font-size: 18px; border-left: 4px solid var(--gold); padding-left: 10px; }
-        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
-        .product-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 15px; text-align: center; }
-        .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 13px; }
+        #adminArea { display: none; margin-top: 20px; padding: 15px; border-top: 2px dashed var(--gold); }
+        .admin-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; text-decoration: none; font-size: 13px; }
 
-        #adminArea { display: none; margin-top: 30px; padding: 15px; border-top: 2px dashed var(--gold); }
-        .admin-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 30px; }
-        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 15px; border-radius: 10px; text-align: center; cursor: pointer; font-weight: bold; font-size: 12px; text-decoration: none; }
-
-        .admin-section { display: none; background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 20px; }
+        .admin-section { display: none; background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); }
+        .form-group { margin-bottom: 12px; }
+        label { display: block; color: var(--gold); margin-bottom: 5px; font-size: 13px; }
+        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 6px; width: 100%; box-sizing: border-box; outline: none; }
         
-        /* Form Styling with Labels */
-        .form-group { margin-bottom: 15px; }
-        label { display: block; color: var(--gold); margin-bottom: 5px; font-size: 14px; font-weight: bold; }
-        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; outline: none; }
+        /* Parts Row Design */
+        .part-row { display: flex; gap: 10px; margin-bottom: 8px; }
+        .part-name { flex: 2; }
+        .part-price { flex: 1; }
+        .add-btn { background: #1e293b; color: var(--gold); border: 1px solid var(--gold); padding: 8px; border-radius: 6px; cursor: pointer; margin-bottom: 15px; width: 100%; font-weight: bold; }
         
-        .save-btn { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; margin-top: 10px; }
+        .total-display { font-size: 18px; color: var(--gold); font-weight: bold; text-align: right; margin: 10px 0; padding: 10px; border-top: 1px solid var(--border); }
+        .save-btn { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; }
 
         .table-container { overflow-x: auto; margin-top: 20px; }
         table { width: 100%; border-collapse: collapse; min-width: 800px; }
-        th { background: #1c2539; color: var(--gold); padding: 12px; text-align: left; }
-        td { padding: 12px; border-bottom: 1px solid #1c2539; font-size: 13px; vertical-align: top; }
-        .overdue { color: #f87171; font-weight: bold; }
+        th { background: #1c2539; color: var(--gold); padding: 10px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #1c2539; font-size: 13px; }
+        .due-alert { background: #ef4444; color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; } }
     </style>
 </head>
 <body>
 
 <div class="header" onclick="unlockAdmin()">
     <h1>S.R ENTERPRISES</h1>
-    <p style="color: #94a3b8; font-size: 11px;">(Click to Login)</p>
+    <p style="color:#94a3b8; font-size:10px;">(Admin Panel)</p>
 </div>
 
-<div class="container">
-    <div class="section-title">🏗️ Machines & Spares</div>
-    <div class="catalog-grid">
-        <div class="product-card"><h3>Machines</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP</a></div>
-        <div class="product-card"><h3>Spare Parts</h3><a href="https://wa.me/917021733860" class="wa-btn">INQUIRY</a></div>
-    </div>
-
+<div class="container" id="mainView">
     <div id="adminArea">
         <div class="admin-menu">
-            <a href="bill.html" class="menu-btn">📄 1. NEW BILLING</a>
-            <div class="menu-btn" onclick="showSection('entryForm')">🛠️ 2. SERVICE ENTRY</div>
-            <div class="menu-btn" onclick="showSection('partsLog')">⚙️ 3. SPARE PARTS LOG</div>
-            <div class="menu-btn" onclick="showSection('tracker')">📅 4. SERVICE TRACKER</div>
-            <div class="menu-btn" onclick="showSection('search')">🔍 5. SEARCH HISTORY</div>
+            <a href="bill.html" class="menu-btn">📄 NEW BILL</a>
+            <div class="menu-btn" onclick="openEntry()">🛠️ SERVICE ENTRY</div>
+            <div class="menu-btn" onclick="showSection('tracker')">📅 TRACKER</div>
         </div>
 
         <div id="entryForm" class="admin-section">
-            <h3 style="color:var(--gold); margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:10px;">New Service Record</h3>
+            <h3 style="color:var(--gold);">Naya Service Record</h3>
+            <div class="form-group"><label>Customer Name:</label><input type="text" id="cName"></div>
+            <div class="form-group"><label>Mobile:</label><input type="text" id="cMob"></div>
+            <div class="form-group"><label>Machine Model:</label><input type="text" id="cMach"></div>
+            
+            <label>Spare Parts & Items:</label>
+            <div id="partsContainer">
+                <div class="part-row">
+                    <input type="text" class="part-name" placeholder="Item Name" oninput="calcTotal()">
+                    <input type="number" class="part-price" placeholder="Price" oninput="calcTotal()">
+                </div>
+            </div>
+            <button class="add-btn" onclick="addPartRow()">+ Add More Item</button>
+
+            <div class="form-group"><label>Work Details:</label><textarea id="wDetails"></textarea></div>
+            
+            <div class="total-display">Total Amount: ₹<span id="displayTotal">0</span></div>
             
             <div class="form-group">
-                <label>Customer Name:</label>
-                <input type="text" id="cName" placeholder="Customer ka naam likhein">
-            </div>
-            
-            <div class="form-group">
-                <label>Mobile Number:</label>
-                <input type="text" id="cMob" placeholder="Mobile number daalein">
-            </div>
-            
-            <div class="form-group">
-                <label>Machine & Model No:</label>
-                <input type="text" id="cMach" placeholder="Machine ka model number">
-            </div>
-
-            <div class="form-group">
-                <label>Kya Kam Kiya (Work Done):</label>
-                <textarea id="wDetails" placeholder="Kaam ki poori detail likhein"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Spare Parts Changed:</label>
-                <input type="text" id="cParts" placeholder="Jo saman badla wo likhein (e.g. Belt, Heater)">
-            </div>
-
-            <div class="form-group">
-                <label>Total Bill Amount (₹):</label>
-                <input type="number" id="tBill" placeholder="Kitna bill hua?">
-            </div>
-
-            <div class="form-group">
-                <label>Next Service Date:</label>
+                <label>Next Service Date (Auto 3 Months):</label>
                 <input type="date" id="nDate">
             </div>
 
-            <button class="save-btn" onclick="saveData()">SAVE SERVICE RECORD</button>
+            <button class="save-btn" onclick="saveData()">SAVE RECORD</button>
         </div>
 
-        <div id="commonRecords" class="table-container" style="display:none;">
-            <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="🔍 Customer ya Machine search karein..." style="margin-bottom:15px; border:1px solid var(--gold);">
-            <table>
+        <div id="tracker" class="table-container" style="display:none;">
+            <table id="myTable">
                 <thead>
-                    <tr><th>Customer</th><th>Machine</th><th>Work/Parts</th><th>Bill</th><th>Next Due</th><th>-</th></tr>
+                    <tr><th>Customer</th><th>Machine</th><th>Parts & Items</th><th>Total</th><th>Next Due</th><th>Action</th></tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
@@ -117,66 +94,86 @@
     function unlockAdmin() {
         if (prompt("PIN:") === "7860") {
             document.getElementById('adminArea').style.display = 'block';
-            alert("Admin Access Unlocked!");
-        } else { alert("Wrong PIN!"); }
+        }
+    }
+
+    function openEntry() {
+        showSection('entryForm');
+        // Auto Set Next Date (3 Months from today)
+        let d = new Date();
+        d.setMonth(d.getMonth() + 3);
+        document.getElementById('nDate').value = d.toISOString().split('T')[0];
+    }
+
+    function addPartRow() {
+        let div = document.createElement('div');
+        div.className = 'part-row';
+        div.innerHTML = `<input type="text" class="part-name" placeholder="Item Name" oninput="calcTotal()">
+                         <input type="number" class="part-price" placeholder="Price" oninput="calcTotal()">`;
+        document.getElementById('partsContainer').appendChild(div);
+    }
+
+    function calcTotal() {
+        let prices = document.getElementsByClassName('part-price');
+        let total = 0;
+        for(let p of prices) { total += Number(p.value) || 0; }
+        document.getElementById('displayTotal').innerText = total;
     }
 
     function showSection(id) {
         document.getElementById('entryForm').style.display = 'none';
-        document.getElementById('commonRecords').style.display = 'none';
-        if(id === 'entryForm') {
-            document.getElementById('entryForm').style.display = 'block';
-        } else {
-            document.getElementById('commonRecords').style.display = 'block';
-            loadData();
-        }
+        document.getElementById('tracker').style.display = 'none';
+        document.getElementById(id).style.display = 'block';
+        if(id === 'tracker') loadData();
     }
 
     function saveData() {
+        let parts = [];
+        let rows = document.getElementsByClassName('part-row');
+        for(let r of rows) {
+            let n = r.querySelector('.part-name').value;
+            let p = r.querySelector('.part-price').value;
+            if(n) parts.push(n + " (₹" + p + ")");
+        }
+
         const entry = {
             name: document.getElementById('cName').value,
             mob: document.getElementById('cMob').value,
             mach: document.getElementById('cMach').value,
-            parts: document.getElementById('cParts').value,
+            parts: parts.join(", "),
             work: document.getElementById('wDetails').value,
-            bill: document.getElementById('tBill').value,
-            next: document.getElementById('nDate').value,
-            date: new Date().toLocaleDateString('en-GB')
+            total: document.getElementById('displayTotal').innerText,
+            next: document.getElementById('nDate').value
         };
-        if(!entry.name || !entry.next) return alert("Naam aur Date zaroori hai!");
+
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
         db.push(entry);
         localStorage.setItem('srMasterDB', JSON.stringify(db));
-        alert("Record Save Ho Gaya!");
-        showSection('tracker');
+        alert("Record Saved!");
+        location.reload();
     }
 
     function loadData() {
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
         let html = '';
         let today = new Date().toISOString().split('T')[0];
+
         db.reverse().forEach((item, index) => {
-            let isOverdue = (item.next < today) ? 'overdue' : '';
+            let alertMsg = (item.next <= today) ? `<br><span class="due-alert">SERVICE DUE!</span>` : '';
             html += `<tr>
                 <td><b>${item.name}</b><br><small>${item.mob}</small></td>
                 <td>${item.mach}</td>
-                <td><small style="color:var(--gold)">Parts: ${item.parts}</small><br>${item.work}</td>
-                <td>₹${item.bill}</td>
-                <td class="${isOverdue}">${item.next}</td>
-                <td><button onclick="deleteEntry(${index})" style="color:red; background:none; border:none; cursor:pointer;">🗑️</button></td>
+                <td><small>${item.parts}</small><br><i>${item.work}</i></td>
+                <td>₹${item.total}</td>
+                <td style="${item.next <= today ? 'color:red; font-weight:bold;' : ''}">${item.next}${alertMsg}</td>
+                <td><button onclick="deleteRec(${index})" style="color:red; border:none; background:none; cursor:pointer;">🗑️</button></td>
             </tr>`;
         });
         document.getElementById('tableBody').innerHTML = html;
     }
 
-    function filterTable() {
-        let val = document.getElementById('searchInput').value.toLowerCase();
-        let rows = document.getElementById('tableBody').getElementsByTagName('tr');
-        for (let row of rows) { row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none'; }
-    }
-
-    function deleteEntry(i) {
-        if(confirm("Delete record?")) {
+    function deleteRec(i) {
+        if(confirm("Delete?")) {
             let db = JSON.parse(localStorage.getItem('srMasterDB'));
             db.splice(db.length - 1 - i, 1);
             localStorage.setItem('srMasterDB', JSON.stringify(db));
