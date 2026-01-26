@@ -3,69 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Master Control</title>
+    <title>S.R ENTERPRISES | Master</title>
     <style>
         :root { --bg: #0b0f1a; --card: #161d2f; --gold: #facc15; --white: #ffffff; --border: #2d3748; }
         body { font-family: sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
         .container { max-width: 1000px; margin: auto; padding: 15px; }
-        .header { text-align: center; padding: 30px; background: #1c2539; border-bottom: 3px solid var(--gold); position: relative; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 24px; text-transform: uppercase; }
-        .secret-login-zone { position: absolute; top: 0; right: 0; width: 60px; height: 60px; cursor: pointer; opacity: 0; z-index: 100; }
+        
+        /* Header - Ispe click karne se login khulega */
+        .header { text-align: center; padding: 35px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 26px; text-transform: uppercase; pointer-events: none; }
+        
+        /* Home Page Content (Customer ke liye) */
         .section-title { color: var(--gold); margin: 25px 0 15px 0; font-size: 18px; border-left: 4px solid var(--gold); padding-left: 10px; }
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
         .product-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 15px; text-align: center; }
-        .wa-btn { display: block; background: #25d366; color: white; padding: 8px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 12px; }
-        #adminArea { display: none; margin-top: 30px; padding: 15px; border-top: 2px dashed var(--gold); }
-        .bill-btn { display: block; background: var(--gold); color: #000; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 20px; }
-        .data-form { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; }
-        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 6px; width: 100%; box-sizing: border-box; margin-bottom: 10px; }
-        .save-btn { background: var(--gold); color: #000; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; }
+        .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 13px; }
+
+        /* Admin Area (Shailesh Ji ke liye) */
+        #adminArea { display: none; margin-top: 30px; padding: 15px; border-top: 2px dashed var(--gold); background: #0b0f1a; }
+        .bill-btn { display: block; background: var(--gold); color: #000; text-align: center; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-bottom: 25px; border: 2px solid white; }
+        
+        .data-form { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 30px; }
+        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; margin-bottom: 15px; }
+        .save-btn { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; }
+
         .table-container { overflow-x: auto; margin-top: 20px; }
         table { width: 100%; border-collapse: collapse; min-width: 800px; }
-        th { background: #1c2539; color: var(--gold); padding: 10px; text-align: left; font-size: 12px; }
-        td { padding: 10px; border-bottom: 1px solid #1c2539; font-size: 12px; vertical-align: top; }
-        .badge { padding: 3px 6px; border-radius: 4px; font-size: 10px; }
-        .overdue { background: #7f1d1d; color: #f87171; }
-        .status-ok { background: #064e3b; color: #4ade80; }
+        th { background: #1c2539; color: var(--gold); padding: 12px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #1c2539; font-size: 13px; vertical-align: top; }
+        .overdue { color: #f87171; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <div class="secret-login-zone" onclick="unlockAdmin()"></div>
+<div class="header" onclick="unlockAdmin()">
     <h1>S.R ENTERPRISES</h1>
-    <p style="font-size: 10px; color: #94a3b8;">INDUSTRIAL FUSING SPECIALIST</p>
+    <p style="color: #94a3b8; font-size: 11px;">(Admin Click Here)</p>
 </div>
 
 <div class="container">
-    <div class="section-title">🏗️ Our Machines</div>
+    <div class="section-title">🏗️ Our Fusing Machines</div>
     <div class="catalog-grid">
-        <div class="product-card"><h4>Hashima HP-600</h4><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP</a></div>
-        <div class="product-card"><h4>Oshima OP-450</h4><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP</a></div>
+        <div class="product-card"><h3>Hashima Series</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP</a></div>
+        <div class="product-card"><h3>Oshima Series</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP</a></div>
     </div>
 
-    <div class="section-title">⚙️ Spare Parts</div>
+    <div class="section-title">⚙️ Machine Spare Parts</div>
     <div class="catalog-grid">
-        <div class="product-card"><h4>Teflon Belts</h4><a href="https://wa.me/917021733860" class="wa-btn">PRICE</a></div>
-        <div class="product-card"><h4>Heater Elements</h4><a href="https://wa.me/917021733860" class="wa-btn">PRICE</a></div>
+        <div class="product-card"><h3>Teflon Belts</h3><a href="https://wa.me/917021733860" class="wa-btn">CHECK PRICE</a></div>
+        <div class="product-card"><h3>Heater Elements</h3><a href="https://wa.me/917021733860" class="wa-btn">CHECK PRICE</a></div>
     </div>
 
     <div id="adminArea">
-        <a href="bill.html" class="bill-btn">➕ CREATE NEW BILL</a>
+        <a href="bill.html" class="bill-btn">➕ CREATE NEW GST BILL</a>
+        
         <div class="data-form">
-            <h3 style="color:var(--gold); margin-top:0;">📋 Service Entry</h3>
+            <h3 style="color:var(--gold); margin-top:0;">📋 Service Log Entry</h3>
             <input type="text" id="cName" placeholder="Customer Name">
-            <input type="text" id="cMob" placeholder="Mobile">
-            <input type="text" id="cMach" placeholder="Machine & Model">
+            <input type="text" id="cMob" placeholder="Mobile Number">
+            <input type="text" id="cMach" placeholder="Machine & Model No.">
             <input type="date" id="nDate" title="Next Service Date">
-            <input type="text" id="cParts" placeholder="Spare Parts (Heater, Belt, etc.)">
-            <textarea id="wDetails" placeholder="Work Summary"></textarea>
-            <input type="number" id="tBill" placeholder="Total Bill (₹)">
-            <button class="save-btn" onclick="saveData()">SAVE RECORD</button>
+            <input type="text" id="cParts" placeholder="Spare Parts Detail (Heater, Belt, etc.)">
+            <textarea id="wDetails" placeholder="Service Work Details..."></textarea>
+            <input type="number" id="tBill" placeholder="Total Bill Amount (₹)">
+            <button class="save-btn" onclick="saveData()">SAVE PRIVATE RECORD</button>
         </div>
+
         <div class="table-container">
             <table>
-                <thead><tr><th>Customer</th><th>Machine</th><th>Parts/Work</th><th>Bill</th><th>Next Due</th><th>Action</th></tr></thead>
+                <thead>
+                    <tr><th>Customer</th><th>Machine</th><th>Parts/Work History</th><th>Bill</th><th>Next Due</th><th>-</th></tr>
+                </thead>
                 <tbody id="tableBody"></tbody>
             </table>
         </div>
@@ -73,13 +81,16 @@
 </div>
 
 <script>
+    // PIN: 7860
     function unlockAdmin() {
-        let pin = prompt("Admin PIN:");
-        if (pin === "7860") {
+        let pass = prompt("Admin Password Daalein:");
+        if (pass === "7860") {
             document.getElementById('adminArea').style.display = 'block';
             loadData();
-            alert("Unlocked!");
-        } else { alert("Wrong PIN!"); }
+            alert("S.R Enterprises Admin Panel Open!");
+        } else {
+            alert("Galat Password!");
+        }
     }
 
     function saveData() {
@@ -93,11 +104,12 @@
             next: document.getElementById('nDate').value,
             date: new Date().toLocaleDateString('en-GB')
         };
-        if(!entry.name || !entry.next) return alert("Fill Name & Date!");
+        if(!entry.name || !entry.next) return alert("Customer Name aur Date bharna zaroori hai!");
+
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
         db.push(entry);
         localStorage.setItem('srMasterDB', JSON.stringify(db));
-        alert("Saved!");
+        alert("Data Safe ho gaya!");
         loadData();
     }
 
@@ -105,14 +117,15 @@
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
         let html = '';
         let today = new Date().toISOString().split('T')[0];
+
         db.reverse().forEach((item, index) => {
-            let statusClass = (item.next < today) ? 'overdue' : 'status-ok';
+            let isOverdue = (item.next < today) ? 'overdue' : '';
             html += `<tr>
                 <td><b>${item.name}</b><br><small>${item.mob}</small></td>
                 <td>${item.mach}</td>
                 <td><small style="color:var(--gold)">Parts: ${item.parts}</small><br>${item.work}</td>
                 <td>₹${item.bill}</td>
-                <td><span class="badge ${statusClass}">${item.next}</span></td>
+                <td class="${isOverdue}">${item.next}</td>
                 <td><button onclick="deleteEntry(${index})" style="color:red; background:none; border:none; cursor:pointer;">🗑️</button></td>
             </tr>`;
         });
@@ -120,7 +133,7 @@
     }
 
     function deleteEntry(i) {
-        if(confirm("Delete?")) {
+        if(confirm("Delete karein?")) {
             let db = JSON.parse(localStorage.getItem('srMasterDB'));
             db.splice(db.length - 1 - i, 1);
             localStorage.setItem('srMasterDB', JSON.stringify(db));
