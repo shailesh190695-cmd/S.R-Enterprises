@@ -7,7 +7,7 @@
     <style>
         :root { --dark-bg: #0b1120; --card-bg: #1e293b; --gold: #facc15; --white: #ffffff; }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--dark-bg); color: var(--white); margin: 0; padding: 0; }
-        .invoice-card { background: var(--card-bg); width: 100%; margin: 0; padding: 15px; box-sizing: border-box; min-height: 100vh; display: flex; flex-direction: column; }
+        .invoice-card { background: var(--card-bg); width: 100%; margin: 0; padding: 15px; box-sizing: border-box; min-height: 100vh; }
 
         .header { border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 15px; text-align: center; }
         .header h1 { color: var(--gold); margin: 0; font-size: 24px; text-transform: uppercase; }
@@ -25,39 +25,37 @@
         
         table { width: calc(100% - 20px); margin: 10px auto; border-collapse: collapse; }
         th { background: #1c2539; color: var(--gold); padding: 10px 5px; text-align: left; font-size: 11px; }
-        .table-in { width: 100%; background: var(--white); border: 1px solid #ddd; padding: 8px; font-size: 13px; font-weight: bold; color: #000; border-radius: 4px; box-sizing: border-box; }
+        .table-in { width: 100%; background: var(--white); border: 1px solid #ddd; padding: 8px; font-size: 13px; font-weight: bold; color: #000; border-radius: 4px; margin-bottom: 4px; box-sizing: border-box; }
 
         .calc-area { margin: 15px 15px; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid #334155; }
         .total-display { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 10px; margin-top: 5px; }
 
-        /* 🖨️ PROFESSIONAL PRINT LAYOUT - NO BOX LINES */
+        /* 🖨️ PRINT SETTINGS: Footer ko Grand Total ke theek niche lane ke liye */
         @media print {
             @page { size: A4; margin: 8mm; }
-            body { background: white !important; color: black !important; zoom: 0.85; }
-            .invoice-card { border: none !important; background: white; padding: 10px; height: 97vh !important; display: flex; flex-direction: column; }
+            body { background: white !important; color: black !important; zoom: 0.9; }
+            .invoice-card { border: none !important; background: white; padding: 10px; min-height: auto !important; display: block !important; }
             .no-print, .btn-grp, .add-btn, .gst-box, button { display: none !important; }
             
             .header { border-bottom: 2px solid black; }
-            .header h1 { color: black !important; font-size: 28px; }
-            .top-stats { border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+            .header h1 { color: black !important; }
+            .box-in { border: none !important; border-bottom: 1px solid #eee !important; background: transparent !important; }
             
-            .input-row { margin-bottom: 5px; }
-            .input-row label { color: #333 !important; font-size: 12px; }
-            .box-in { border: none !important; border-bottom: 1px solid #eee !important; background: transparent !important; font-size: 15px; font-weight: bold; }
-            
-            table { margin-top: 20px; border: none !important; }
-            th { background: #f2f2f2 !important; color: #000 !important; border-top: 2px solid black !important; border-bottom: 2px solid black !important; padding: 10px 5px; }
-            td { border-bottom: 1px solid #eee !important; padding: 12px 5px; }
-            .table-in { border: none !important; background: transparent !important; font-size: 14px; }
+            table { border: none !important; margin-top: 20px; }
+            th { background: #f2f2f2 !important; color: black !important; border-top: 2px solid black !important; border-bottom: 2px solid black !important; }
+            td { border-bottom: 1px solid #eee !important; }
+            .table-in { border: none !important; background: transparent !important; }
 
-            .calc-area { border: none !important; background: transparent !important; border-top: 1px solid #000; margin-top: 10px; padding: 5px 0; }
-            .total-display { color: black !important; border-top: 2px solid black; font-size: 24px; padding-top: 5px; }
+            .calc-area { border: none !important; background: transparent !important; border-top: 1px solid black; margin-bottom: 20px; }
+            .total-display { color: black !important; border-top: 2px solid black; }
 
-            .print-footer { display: flex !important; margin-top: auto; padding-top: 15px; border-top: 2px solid black; justify-content: space-between; align-items: center; }
-            .bank-details { font-size: 12px; }
+            /* 🛠️ Footer Alignment Fix: Niche nahi bhagega */
+            .print-footer { display: flex !important; margin-top: 20px !important; border-top: 1px solid black; padding-top: 15px; justify-content: space-between; align-items: flex-start; page-break-inside: avoid; }
+            .bank-details { font-size: 12px; flex: 1; }
+            .qr-print { text-align: center; flex: 0 0 100px; }
             .qr-print img { width: 90px; height: 90px; }
-            .sig-box { text-align: center; }
-            .sig-line { border-top: 2px solid black; width: 180px; margin-top: 50px; font-size: 13px; font-weight: bold; }
+            .sig-box { text-align: right; flex: 1; }
+            .sig-line { border-top: 2px solid black; width: 180px; margin-left: auto; margin-top: 50px; font-weight: bold; }
         }
         .print-footer { display: none; }
         .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 15px; }
@@ -119,8 +117,7 @@
         <div class="bank-details">
             <strong>PAYMENT DETAILS:</strong><br>
             SBI | A/c No: 44695199584<br>
-            IFSC: SBIN0008373<br>
-            UPI: 7021733860@sbi
+            IFSC: SBIN0008373 | UPI: 7021733860@sbi
         </div>
         <div class="qr-print">
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=upi://pay?pa=7021733860@sbi" alt="QR">
@@ -162,4 +159,5 @@
     }
 </script>
 </body>
-</html>
+            </html>
+            
