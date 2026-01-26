@@ -9,38 +9,39 @@
         body { font-family: sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
         .container { max-width: 1100px; margin: auto; padding: 15px; }
 
-        /* Header */
-        .header { text-align: center; padding: 40px 10px; background: linear-gradient(to bottom, #1c2539, #0b0f1a); border-bottom: 3px solid var(--gold); cursor: pointer; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 28px; text-transform: uppercase; letter-spacing: 2px; }
+        /* Header & Secret Login */
+        .header { text-align: center; padding: 35px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 26px; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* Catalog Section */
+        /* Public Catalog (Customer sees this) */
         .section-title { color: var(--gold); margin: 30px 0 15px 0; font-size: 20px; border-left: 5px solid var(--gold); padding-left: 12px; }
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
         .product-card { background: var(--card); border-radius: 15px; border: 1px solid var(--border); padding: 20px; text-align: center; }
         .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 13px; }
 
-        /* Admin Area */
-        #adminArea { display: none; margin-top: 40px; border-top: 2px dashed var(--gold); padding-top: 20px; }
-        .admin-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
-        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 15px; border-radius: 10px; text-align: center; cursor: pointer; font-weight: bold; text-decoration: none; }
+        /* Admin Area (Hidden) */
+        #adminArea { display: none; margin-top: 30px; border-top: 2px dashed var(--gold); padding-top: 20px; }
+        .admin-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 25px; }
+        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; text-decoration: none; font-size: 13px; }
 
-        /* Form Design */
+        /* Form Styling */
         .admin-section { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 25px; }
-        .form-group { margin-bottom: 12px; }
+        .form-group { margin-bottom: 15px; }
         label { display: block; color: var(--gold); margin-bottom: 5px; font-size: 13px; font-weight: bold; }
         input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; }
         
-        /* Spare Parts Row */
+        /* Parts Row Logic */
         .part-row { display: flex; gap: 10px; margin-bottom: 8px; }
-        .add-item-btn { background: #1e293b; color: var(--gold); border: 1px solid var(--gold); padding: 8px; border-radius: 6px; cursor: pointer; width: 100%; margin-bottom: 15px; font-weight: bold; }
-        
-        .total-box { font-size: 20px; color: var(--gold); text-align: right; margin: 15px 0; padding: 10px; border-top: 1px solid var(--border); font-weight: bold; }
-        .save-btn { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; }
+        .add-row-btn { background: #1e293b; color: var(--gold); border: 1px solid var(--gold); padding: 8px; border-radius: 6px; cursor: pointer; width: 100%; margin-bottom: 15px; font-weight: bold; }
+        .total-display { font-size: 22px; color: var(--gold); text-align: right; margin: 15px 0; font-weight: bold; border-top: 1px solid var(--border); padding-top: 10px; }
 
-        /* Table/Tracker */
-        .table-container { overflow-x: auto; background: var(--card); border-radius: 15px; }
+        /* Table & History */
+        .search-container { margin-bottom: 20px; }
+        .search-box { width: 100%; padding: 15px; background: #1e293b; border: 2px solid var(--gold); color: white; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
+        
+        .table-container { overflow-x: auto; background: var(--card); border-radius: 12px; }
         table { width: 100%; border-collapse: collapse; min-width: 900px; }
-        th { background: #1c2539; color: var(--gold); padding: 15px; text-align: left; }
+        th { background: #1c2539; color: var(--gold); padding: 15px; text-align: left; font-size: 12px; }
         td { padding: 15px; border-bottom: 1px solid #1c2539; font-size: 13px; vertical-align: top; }
         .due-alert { background: #ef4444; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 10px; }
     </style>
@@ -49,141 +50,161 @@
 
 <div class="header" onclick="unlockAdmin()">
     <h1>S.R ENTERPRISES</h1>
-    <p style="color:#94a3b8; font-size:10px;">(Admin Click Here)</p>
+    <p style="color:#94a3b8; font-size:10px;">(Admin Control Panel - Click Here)</p>
 </div>
 
 <div class="container">
-    <div class="section-title">🏗️ Machines</div>
+    <div class="section-title">🏗️ Machines & Equipment</div>
     <div class="catalog-grid">
-        <div class="product-card"><h3>Hashima HP-600</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP</a></div>
-        <div class="product-card"><h3>Oshima OP-450</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP</a></div>
+        <div class="product-card"><h3>Hashima Fusing</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP INQUIRY</a></div>
+        <div class="product-card"><h3>Oshima Fusing</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP INQUIRY</a></div>
+    </div>
+
+    <div class="section-title">⚙️ Genuine Spare Parts</div>
+    <div class="catalog-grid">
+        <div class="product-card"><h3>Teflon Belts</h3><a href="https://wa.me/917021733860" class="wa-btn">CHECK PRICE</a></div>
+        <div class="product-card"><h3>Heater Sets</h3><a href="https://wa.me/917021733860" class="wa-btn">CHECK PRICE</a></div>
     </div>
 
     <div id="adminArea">
         <div class="admin-menu">
-            <a href="bill.html" class="menu-btn">📄 NEW BILL</a>
-            <div class="menu-btn" onclick="openEntry()">🛠️ SERVICE ENTRY</div>
-            <div class="menu-btn" onclick="showSection('tracker')">📅 TRACKER</div>
+            <div class="menu-btn" onclick="openServiceForm()">🛠️ 1. NEW SERVICE ENTRY</div>
+            <div class="menu-btn" onclick="showSection('historyView')">🔍 2. SEARCH HISTORY</div>
+            <a href="bill.html" class="menu-btn" style="text-decoration:none;">📄 3. CREATE BILL</a>
         </div>
 
         <div id="entryForm" class="admin-section" style="display:none;">
-            <h3 style="color:var(--gold);">Naya Service Record</h3>
+            <h3 style="color:var(--gold);">Customer Service Entry</h3>
             <div class="form-group"><label>Customer Name:</label><input type="text" id="cName"></div>
-            <div class="form-group"><label>Mobile:</label><input type="text" id="cMob"></div>
+            <div class="form-group"><label>Mobile Number:</label><input type="text" id="cMob"></div>
             <div class="form-group"><label>Machine Model:</label><input type="text" id="cMach"></div>
             
-            <label>Spare Parts & Items:</label>
-            <div id="partsList">
+            <label>Spare Parts & Pricing:</label>
+            <div id="partsContainer">
                 <div class="part-row">
-                    <input type="text" class="p-name" placeholder="Part Name" oninput="sumTotal()">
-                    <input type="number" class="p-price" placeholder="Price" oninput="sumTotal()">
+                    <input type="text" class="p-name" placeholder="Item Name" oninput="calculateTotal()">
+                    <input type="number" class="p-price" placeholder="Price" oninput="calculateTotal()">
                 </div>
             </div>
-            <button class="add-item-btn" onclick="addRow()">+ Add More Item</button>
+            <button class="add-row-btn" onclick="addNewPartRow()">+ Add More Spare Parts</button>
 
-            <div class="form-group"><label>Work Details:</label><textarea id="wDetails"></textarea></div>
-            <div class="total-box">Total Bill: ₹<span id="finalTotal">0</span></div>
-            <div class="form-group"><label>Next Service Date (6 Months Auto):</label><input type="date" id="nDate"></div>
-            <button class="save-btn" onclick="saveRecord()">SAVE RECORD</button>
+            <div class="form-group"><label>Service Details (Work Done):</label><textarea id="wDetails"></textarea></div>
+            <div class="total-display">Total Amount: ₹<span id="finalBill">0</span></div>
+            <div class="form-group"><label>Next Service Date (Auto 6 Months):</label><input type="date" id="nDate"></div>
+            
+            <button class="wa-btn" style="background:var(--gold); color:black; width:100%; padding:15px; font-size:16px;" onclick="saveRecordToDB()">SAVE CUSTOMER RECORD</button>
         </div>
 
-        <div id="tracker" class="table-container" style="display:none;">
-            <table>
-                <thead>
-                    <tr><th>Customer</th><th>Machine</th><th>Work & Spares</th><th>Bill</th><th>Due Date</th><th>Action</th></tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
+        <div id="historyView" style="display:none;">
+            <div class="search-container">
+                <input type="text" id="masterSearch" class="search-box" onkeyup="searchCustomer()" placeholder="🔍 Type Name or Number to find History...">
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Client Info</th><th>Machine</th><th>Parts & Work</th><th>Bill</th><th>Next Service</th><th>Action</th></tr>
+                    </thead>
+                    <tbody id="masterTableBody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
     function unlockAdmin() {
-        if (prompt("PIN:") === "7860") {
+        if (prompt("Enter PIN:") === "7860") {
             document.getElementById('adminArea').style.display = 'block';
-            showSection('tracker');
-        } else { alert("Wrong PIN!"); }
+            showSection('historyView');
+        }
     }
 
-    // 6 Mahine ki date automatic set karne ke liye
-    function openEntry() {
+    function openServiceForm() {
         showSection('entryForm');
         let d = new Date();
-        d.setMonth(d.getMonth() + 6); // <-- 6 Mahine set kiya
+        d.setMonth(d.getMonth() + 6);
         document.getElementById('nDate').value = d.toISOString().split('T')[0];
-    }
-
-    function addRow() {
-        let div = document.createElement('div');
-        div.className = 'part-row';
-        div.innerHTML = `<input type="text" class="p-name" placeholder="Item Name" oninput="sumTotal()">
-                         <input type="number" class="p-price" placeholder="Price" oninput="sumTotal()">`;
-        document.getElementById('partsList').appendChild(div);
-    }
-
-    function sumTotal() {
-        let prices = document.getElementsByClassName('p-price');
-        let total = 0;
-        for(let p of prices) { total += Number(p.value) || 0; }
-        document.getElementById('finalTotal').innerText = total;
     }
 
     function showSection(id) {
         document.getElementById('entryForm').style.display = 'none';
-        document.getElementById('tracker').style.display = 'none';
+        document.getElementById('historyView').style.display = 'none';
         document.getElementById(id).style.display = 'block';
-        if(id === 'tracker') loadData();
+        if(id === 'historyView') loadRecords();
     }
 
-    function saveRecord() {
-        let items = [];
+    function addNewPartRow() {
+        let div = document.createElement('div');
+        div.className = 'part-row';
+        div.innerHTML = `<input type="text" class="p-name" placeholder="Item Name" oninput="calculateTotal()">
+                         <input type="number" class="p-price" placeholder="Price" oninput="calculateTotal()">`;
+        document.getElementById('partsContainer').appendChild(div);
+    }
+
+    function calculateTotal() {
+        let prices = document.getElementsByClassName('p-price');
+        let total = 0;
+        for(let p of prices) { total += Number(p.value) || 0; }
+        document.getElementById('finalBill').innerText = total;
+    }
+
+    function saveRecordToDB() {
+        let partsArr = [];
         let rows = document.getElementsByClassName('part-row');
         for(let r of rows) {
             let n = r.querySelector('.p-name').value;
             let p = r.querySelector('.p-price').value;
-            if(n) items.push(n + " (₹" + p + ")");
+            if(n) partsArr.push(n + " (₹" + p + ")");
         }
-        const data = {
+        const record = {
             name: document.getElementById('cName').value,
             mob: document.getElementById('cMob').value,
             mach: document.getElementById('cMach').value,
-            parts: items.join(", "),
+            parts: partsArr.join(", "),
             work: document.getElementById('wDetails').value,
-            total: document.getElementById('finalTotal').innerText,
-            next: document.getElementById('nDate').value
+            total: document.getElementById('finalBill').innerText,
+            next: document.getElementById('nDate').value,
+            date: new Date().toLocaleDateString('en-GB')
         };
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
-        db.push(data);
+        db.push(record);
         localStorage.setItem('srMasterDB', JSON.stringify(db));
-        alert("Record Saved!");
-        location.reload();
+        alert("Customer Record Saved!");
+        showSection('historyView');
     }
 
-    function loadData() {
+    function loadRecords() {
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
         let html = '';
         let today = new Date().toISOString().split('T')[0];
         db.reverse().forEach((item, index) => {
-            let isDue = (item.next <= today);
+            let isOverdue = (item.next <= today);
             html += `<tr>
                 <td><b>${item.name}</b><br><small>${item.mob}</small></td>
                 <td>${item.mach}</td>
                 <td><small>${item.parts}</small><br><i>${item.work}</i></td>
                 <td>₹${item.total}</td>
-                <td style="${isDue ? 'color:#ef4444; font-weight:bold;' : ''}">${item.next} ${isDue ? '<br><span class="due-alert">DUE</span>' : ''}</td>
-                <td><button onclick="del(${index})" style="color:red; border:none; background:none; cursor:pointer;">🗑️</button></td>
+                <td style="${isOverdue ? 'color:#ef4444; font-weight:bold;' : ''}">${item.next} ${isOverdue ? '<br><span class="due-alert">DUE</span>' : ''}</td>
+                <td><button onclick="deleteRecord(${index})" style="color:red; border:none; background:none; cursor:pointer;">🗑️</button></td>
             </tr>`;
         });
-        document.getElementById('tableBody').innerHTML = html;
+        document.getElementById('masterTableBody').innerHTML = html;
     }
 
-    function del(i) {
-        if(confirm("Delete?")) {
+    function searchCustomer() {
+        let val = document.getElementById('masterSearch').value.toLowerCase();
+        let rows = document.getElementById('masterTableBody').getElementsByTagName('tr');
+        for (let row of rows) {
+            row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none';
+        }
+    }
+
+    function deleteRecord(i) {
+        if(confirm("Delete this record?")) {
             let db = JSON.parse(localStorage.getItem('srMasterDB'));
             db.splice(db.length - 1 - i, 1);
             localStorage.setItem('srMasterDB', JSON.stringify(db));
-            loadData();
+            loadRecords();
         }
     }
 </script>
