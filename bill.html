@@ -30,11 +30,11 @@
         .calc-area { margin: 15px 15px; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid #334155; }
         .total-display { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 10px; margin-top: 5px; }
 
-        /* 🖨️ PRINT SETTINGS: Footer ko Grand Total ke theek niche lane ke liye */
+        /* PRINT SETTINGS */
         @media print {
             @page { size: A4; margin: 8mm; }
             body { background: white !important; color: black !important; zoom: 0.9; }
-            .invoice-card { border: none !important; background: white; padding: 10px; min-height: auto !important; display: block !important; }
+            .invoice-card { border: none !important; background: white; padding: 10px; min-height: auto !important; }
             .no-print, .btn-grp, .add-btn, .gst-box, button { display: none !important; }
             
             .header { border-bottom: 2px solid black; }
@@ -46,16 +46,16 @@
             td { border-bottom: 1px solid #eee !important; }
             .table-in { border: none !important; background: transparent !important; }
 
-            .calc-area { border: none !important; background: transparent !important; border-top: 1px solid black; margin-bottom: 20px; }
+            .calc-area { border: none !important; background: transparent !important; border-top: 1.5px solid black; margin-bottom: 10px; }
             .total-display { color: black !important; border-top: 2px solid black; }
 
-            /* 🛠️ Footer Alignment Fix: Niche nahi bhagega */
-            .print-footer { display: flex !important; margin-top: 20px !important; border-top: 1px solid black; padding-top: 15px; justify-content: space-between; align-items: flex-start; page-break-inside: avoid; }
-            .bank-details { font-size: 12px; flex: 1; }
-            .qr-print { text-align: center; flex: 0 0 100px; }
-            .qr-print img { width: 90px; height: 90px; }
+            /* 🛠️ Footer Adjustment: Grand Total se thoda niche kiya */
+            .print-footer { display: flex !important; margin-top: 45px !important; border-top: 1px solid #ccc; padding-top: 20px; justify-content: space-between; align-items: flex-start; }
+            .bank-details { font-size: 12px; flex: 1.2; }
+            .qr-print { text-align: center; flex: 0.8; }
+            .qr-print img { width: 95px; height: 95px; }
             .sig-box { text-align: right; flex: 1; }
-            .sig-line { border-top: 2px solid black; width: 180px; margin-left: auto; margin-top: 50px; font-weight: bold; }
+            .sig-line { border-top: 2px solid black; width: 180px; margin-left: auto; margin-top: 60px; font-weight: bold; }
         }
         .print-footer { display: none; }
         .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 15px; }
@@ -120,7 +120,7 @@
             IFSC: SBIN0008373 | UPI: 7021733860@sbi
         </div>
         <div class="qr-print">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=upi://pay?pa=7021733860@sbi" alt="QR">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=95x95&data=upi://pay?pa=7021733860@sbi" alt="QR">
         </div>
         <div class="sig-box">
             <div class="sig-line">S.R ENTERPRISES</div>
@@ -159,5 +159,4 @@
     }
 </script>
 </body>
-            </html>
-            
+</html>
