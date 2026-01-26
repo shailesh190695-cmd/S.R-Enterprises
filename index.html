@@ -3,95 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Dashboard</title>
+    <title>S.R ENTERPRISES | Digital Store</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; --text-white: #f8fafc; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--dark-bg); margin: 0; color: var(--text-white); padding-bottom: 30px; }
+        :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; --amazon-orange: #ff9900; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--dark-bg); margin: 0; color: white; overflow-x: hidden; }
         
-        header { background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); padding: 30px 20px; text-align: center; border-bottom: 2px solid var(--gold); position: relative; }
-        .brand-name { font-size: 24px; font-weight: 700; color: var(--gold); letter-spacing: 2px; }
-        .admin-lock { position: absolute; right: 15px; top: 15px; font-size: 20px; cursor: pointer; opacity: 0.5; }
+        header { background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); padding: 25px; text-align: center; border-bottom: 3px solid var(--gold); }
+        .brand-name { font-size: 26px; font-weight: 700; color: var(--gold); letter-spacing: 1px; text-shadow: 0 0 10px rgba(251,191,36,0.3); }
 
-        .section-title { padding: 0 20px; margin-top: 25px; font-weight: 600; color: var(--gold); font-size: 14px; display: flex; align-items: center; }
-        .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(251, 191, 36, 0.2); margin-left: 10px; }
+        .section-title { padding: 20px; color: var(--gold); font-size: 14px; font-weight: 600; display: flex; align-items: center; }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(251,191,36,0.2); margin-left: 10px; }
 
-        .machine-gallery { display: flex; overflow-x: auto; gap: 15px; padding: 15px 20px; scrollbar-width: none; }
-        .product-card { background: var(--card-bg); min-width: 170px; border-radius: 20px; padding: 15px; text-align: center; border: 1px solid rgba(251, 191, 36, 0.1); }
-        .icon-box { width: 100%; height: 80px; background: rgba(251, 191, 36, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 10px; }
+        /* Amazon Style Catalog */
+        .machine-gallery { display: flex; overflow-x: auto; gap: 15px; padding: 0 20px 20px; scrollbar-width: none; }
+        .product-card { 
+            background: var(--card-bg); min-width: 200px; border-radius: 18px; padding: 15px; 
+            border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 8px 20px rgba(0,0,0,0.4); position: relative;
+        }
+        .best-seller { position: absolute; top: 10px; left: 10px; background: #e11d48; color: white; font-size: 8px; padding: 3px 8px; border-radius: 4px; font-weight: bold; z-index: 10; }
         
-        .product-name { font-size: 14px; font-weight: 700; color: white; margin-bottom: 2px; }
-        .model-no { font-size: 10px; color: #94a3b8; margin-bottom: 10px; display: block; }
-        .price-tag { color: #4ade80; font-size: 13px; font-weight: 700; background: rgba(74, 222, 128, 0.1); padding: 4px; border-radius: 6px; }
+        .icon-box { background: rgba(255,255,255,0.03); height: 110px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 50px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        
+        .product-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: #fff; }
+        .model-no { font-size: 11px; color: #94a3b8; margin-bottom: 10px; display: block; }
+        .price-tag { color: #4ade80; font-size: 18px; font-weight: 700; display: block; }
+        .stock-status { color: #22c55e; font-size: 10px; font-weight: 600; margin-bottom: 15px; }
 
+        /* Amazon Gold Button */
+        .buy-btn { 
+            background: linear-gradient(180deg, #fcd34d 0%, #fbbf24 100%); 
+            color: #000; text-align: center; padding: 10px; border-radius: 8px; 
+            text-decoration: none; font-size: 13px; font-weight: 700; display: block;
+            box-shadow: 0 4px 0 #b45309; transition: 0.1s;
+        }
+        .buy-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #b45309; }
+
+        /* Quick Dashboard Area */
         .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
-        .action-card { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 18px; padding: 20px 10px; text-decoration: none; color: white; text-align: center; border: 1px solid rgba(255,255,255,0.05); font-weight: 700; font-size: 13px; }
-        .btn-icon { font-size: 24px; margin-bottom: 8px; display: block; }
-
-        .admin-price { margin-top: 10px; padding: 5px; background: rgba(255,255,255,0.05); border-radius: 8px; display: none; border: 1px dashed var(--gold); font-size: 11px; }
-        footer { text-align: center; padding: 20px; font-size: 10px; color: #64748b; }
+        .action-card { 
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 15px; padding: 20px; 
+            text-decoration: none; color: white; text-align: center; border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .admin-price { margin-top: 10px; font-size: 11px; color: var(--gold); display: none; padding-top: 8px; border-top: 1px dashed #444; }
+        
+        footer { text-align: center; padding: 30px; font-size: 10px; color: #64748b; background: #0a0f1d; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="admin-lock" onclick="unlockAdmin()">🔑</div>
-        <div class="brand-name">S.R ENTERPRISES</div>
-        <div style="font-size: 10px; color: #94a3b8;">FUSING MACHINE EXPERT</div>
+        <div class="brand-name" onclick="unlockAdmin()">S.R ENTERPRISES</div>
+        <div style="font-size: 10px; color: #94a3b8; margin-top: 5px;">MUMBAI'S FUSING MACHINE EXPERT</div>
     </header>
 
-    <div class="section-title">📦 CATALOG</div>
+    <div class="section-title">⭐ TOP SELLING MACHINES</div>
     <div class="machine-gallery">
         <div class="product-card">
+            <div class="best-seller">BEST SELLER</div>
             <div class="icon-box">🏗️</div>
-            <div class="product-name">HASHIMA</div>
-            <span class="model-no">HP-450MS / 600L</span>
-            <div class="price-tag">Starts ₹1,500*</div>
-            <div class="admin-price">Cost: ₹900</div>
+            <div class="product-name">HASHIMA HP-450</div>
+            <span class="model-no">Heavy Duty Fusing</span>
+            <span class="price-tag">₹1,55,000</span>
+            <div class="stock-status">✅ In Stock (Ready to Ship)</div>
+            <a href="https://wa.me/918850813765?text=Hi+Shailesh+ji,+I+am+interested+in+Hashima+HP-450" class="buy-btn">🛒 BUY NOW</a>
+            <div class="admin-price">Secret Cost: ₹1,40,000</div>
         </div>
+
         <div class="product-card">
             <div class="icon-box">🏗️</div>
-            <div class="product-name">OSHIMA</div>
-            <span class="model-no">OP-450GS / 520</span>
-            <div class="price-tag">Starts ₹1,200*</div>
-            <div class="admin-price">Cost: ₹750</div>
+            <div class="product-name">OSHIMA OP-450</div>
+            <span class="model-no">Precision Control</span>
+            <span class="price-tag">₹1,25,000</span>
+            <div class="stock-status">✅ In Stock</div>
+            <a href="https://wa.me/918850813765?text=Hi+Shailesh+ji,+I+am+interested+in+Oshima+OP-450" class="buy-btn">🛒 BUY NOW</a>
+            <div class="admin-price">Secret Cost: ₹1,10,000</div>
         </div>
+    </div>
+
+    <div class="section-title">⚙️ SPARE PARTS HUB</div>
+    <div class="machine-gallery">
         <div class="product-card">
             <div class="icon-box">⚙️</div>
-            <div class="product-name">MOTOR</div>
-            <span class="model-no">220V AC Geared</span>
-            <div class="price-tag">₹3,500</div>
+            <div class="product-name">GEARED MOTOR</div>
+            <span class="model-no">220V AC / High Torque</span>
+            <span class="price-tag">₹3,500</span>
+            <div class="stock-status">✅ In Stock</div>
+            <a href="https://wa.me/918850813765?text=Hi+Shailesh+ji,+I+want+to+buy+Geared+Motor" class="buy-btn">🛒 BUY NOW</a>
             <div class="admin-price">Cost: ₹2200</div>
         </div>
     </div>
 
-    <div class="section-title">⚡ QUICK OPTIONS</div>
+    <div class="section-title">💼 ADMIN DASHBOARD</div>
     <div class="grid-container">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLScyB-Yv6865X0zG_C9hWpX_I-oQvNl6t9K-X1P8u5UoY-yL0A/viewform" class="action-card">
-            <span class="btn-icon">📝</span>NEW ENTRY
-        </a>
-        <a href="bill.html" class="action-card">
-            <span class="btn-icon">🧾</span>CREATE BILL
-        </a>
-        <a href="https://docs.google.com/spreadsheets/d/1Xy_Jp9E9gS1A_nU0Y0X6_K3yU9P-L6oX-m-E-rX9Xw/edit" class="action-card">
-            <span class="btn-icon">📊</span>REPORTS
-        </a>
-        <a href="https://wa.me/918850813765" class="action-card" style="border: 1px solid #25D366;">
-            <span class="btn-icon">📲</span>WHATSAPP
-        </a>
+        <a href="bill.html" class="action-card">📝 BILLING</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScyB-Yv6865X0zG_C9hWpX_I-oQvNl6t9K-X1P8u5UoY-yL0A/viewform" class="action-card">📥 ENTRY</a>
+        <a href="https://docs.google.com/spreadsheets/d/1Xy_Jp9E9gS1A_nU0Y0X6_K3yU9P-L6oX-m-E-rX9Xw/edit" class="action-card">📊 REPORTS</a>
+        <a href="https://wa.me/918850813765" class="action-card" style="border: 1px solid #25D366;">📲 SUPPORT</a>
     </div>
 
-    <footer>MALAD, MUMBAI | 8850813765</footer>
+    <footer>S.R ENTERPRISES | MALAD, MUMBAI | 8850813765</footer>
 
     <script>
         function unlockAdmin() {
-            let pass = prompt("Enter Password:");
-            if(pass === "1234") {
-                document.querySelectorAll('.admin-price').forEach(el => el.style.display = 'block');
-                alert("Unlocked!");
+            let p = prompt("Enter Password:");
+            if(p === "1234") { 
+                document.querySelectorAll('.admin-price').forEach(d => d.style.display='block');
+                alert("Welcome Shailesh ji! Profit prices unlocked.");
             }
         }
     </script>
 </body>
-        </html>
-        
+</html>
