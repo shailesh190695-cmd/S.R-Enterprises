@@ -9,23 +9,58 @@
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--dark-bg); color: white; margin: 0; padding: 10px; }
         .invoice-card { background: var(--card-bg); max-width: 500px; margin: auto; padding: 20px; border-radius: 12px; border: 1px solid #334155; }
 
-        /* Header & Invoice/Date Boxes */
+        /* Header & Fix for Top Boxes */
         .header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
         .header h1 { color: var(--gold); margin: 0; font-size: 20px; }
         
         .header-right { text-align: right; }
-        .top-box-row { display: flex; align-items: center; justify-content: flex-end; gap: 5px; margin-bottom: 5px; }
-        .top-label { font-size: 11px; color: #94a3b8; font-weight: bold; }
-        .top-in { background: white; border: none; padding: 5px; color: black; border-radius: 4px; font-size: 12px; font-weight: bold; width: 80px; text-align: right; }
+        .top-row { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-bottom: 5px; }
+        .top-in { background: white; border: none; padding: 5px; color: black; border-radius: 4px; font-size: 12px; font-weight: bold; width: 85px; text-align: right; outline: none; }
 
-        /* 📦 Systematic Alignment (Seedha Layout) */
+        /* Systematic Alignment */
         .input-row { display: flex; align-items: center; margin-bottom: 12px; }
         .input-row label { width: 120px; font-size: 12px; color: var(--gold); font-weight: bold; flex-shrink: 0; }
         .box-in { flex: 1; background: white; border: none; padding: 10px; color: black; border-radius: 6px; font-size: 14px; font-weight: 600; outline: none; }
 
-        .section-tag { background: #334155; padding: 5px 10px; font-size: 11px; border-radius: 4px; margin-bottom: 15px; display: inline-block; color: var(--gold); }
-
         /* Table Alignment */
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th { color: var(--gold); font-size: 12px; text-align: left; padding-bottom: 8px; border-bottom: 1px
-            
+        th { color: var(--gold); font-size: 12px; text-align: left; padding-bottom: 8px; border-bottom: 1px solid #444; }
+        .table-in { width: 100%; background: white; border: none; padding: 8px; border-radius: 4px; font-size: 13px; font-weight: bold; box-sizing: border-box; }
+
+        .total-display { text-align: right; margin-top: 15px; font-size: 18px; font-weight: bold; color: var(--gold); }
+
+        /* Footer & Print */
+        .print-area { display: none; }
+        .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .btn { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .btn-p { background: var(--gold); color: black; }
+        .btn-w { background: #25D366; color: white; }
+
+        @media print {
+            body { background: white; color: black; padding: 0; }
+            .invoice-card { border: none; background: white; width: 100%; padding: 0; }
+            .box-in, .table-in, .top-in { background: transparent !important; color: black !important; padding: 2px 0 !important; font-weight: bold; border:none; }
+            .print-area { display: flex !important; margin-top: 20px; border: 1px solid black; padding: 10px; gap: 15px; align-items: center; }
+            .qr { width: 80px; height: 80px; border: 1px solid #ddd; padding: 5px; }
+            .bank-text { font-size: 12px; text-align: left; line-height: 1.4; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="invoice-card">
+    <div class="header">
+        <div>
+            <h1>S.R ENTERPRISES</h1>
+            <p style="font-size: 10px; margin: 2px 0; color: #94a3b8;">FUSING MACHINE SPECIALIST</p>
+        </div>
+        <div class="header-right">
+            <div class="top-row">
+                <span style="font-size:10px; color:#94a3b8;">NO:</span>
+                <input type="text" value="033" class="top-in">
+            </div>
+            <div class="top-row">
+                <span style="font-size:10px; color:#94a3b8;">DATE:</span>
+                <input type="text" id="
+                    
