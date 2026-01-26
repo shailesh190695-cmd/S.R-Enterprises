@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Master Bill</title>
+    <title>S.R ENTERPRISES | Official Bill</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; }
@@ -23,8 +23,8 @@
         .btn-wa { background: #25D366; color: white; padding: 15px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; }
         .btn-pdf { background: #fff; color: #000; padding: 15px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; }
         
-        /* Bank Info - Normal screen pe nahi dikhega */
-        .bank-info-print { display: none; margin-top: 20px; border-top: 1px solid #000; padding-top: 10px; font-size: 12px; color: #000; }
+        /* Bank Details - Only for Print */
+        .bank-info-print { display: none; margin-top: 20px; border-top: 2px solid #000; padding-top: 15px; font-size: 13px; color: #000; }
 
         @media print { 
             .btn-group, .btn-add, .btn-back, label { display: none !important; } 
@@ -33,7 +33,7 @@
             input { border: none !important; color: black !important; background: transparent !important; padding: 5px !important; } 
             .header h2 { color: black; } 
             .total-box { border: 2px solid black; color: black; } 
-            .bank-info-print { display: block !important; } /* Print me dikhega */
+            .bank-info-print { display: block !important; } 
         }
     </style>
 </head>
@@ -42,7 +42,7 @@
     <div class="bill-card">
         <div class="header">
             <h2>S.R ENTERPRISES</h2>
-            <p style="font-size: 10px; color: #94a3b8;">FUSING MACHINE EXPERT | 8850813765</p>
+            <p style="font-size: 10px; color: #94a3b8;">FUSING MACHINE SPECIALIST | 8850813765</p>
         </div>
 
         <label>Customer Details</label>
@@ -76,11 +76,16 @@
         </div>
 
         <div class="bank-info-print">
-            <strong>🏦 BANK DETAILS:</strong><br>
-            Name: Shailesh Rajbhar<br>
-            A/C: (Aapka Account No yahan likhein)<br>
-            IFSC: (Aapka IFSC yahan likhein)<br>
-            G-Pay/PhonePe: 8850813765
+            <div style="background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <strong style="color: #1e293b; font-size: 14px;">🏦 BANK ACCOUNT DETAILS:</strong><br>
+                <div style="margin-top: 5px; line-height: 1.6;">
+                    <strong>Name:</strong> Shailesh Rajbhar<br>
+                    <strong>Bank:</strong> Bank of Baroda<br>
+                    <strong>A/C No:</strong> 27810100021319<br>
+                    <strong>IFSC:</strong> BARB0MALADV (Fifth digit is Zero)<br>
+                    <strong>G-Pay/PhonePe:</strong> 8850813765
+                </div>
+            </div>
         </div>
 
         <div class="btn-group">
@@ -88,7 +93,7 @@
             <button class="btn-pdf" onclick="window.print()">📄 SAVE PDF</button>
         </div>
         
-        <a href="index.html" style="display:block; text-align:center; margin-top:20px; color:#94a3b8; font-size:11px; text-decoration:none;">← Dashboard</a>
+        <a href="index.html" style="display:block; text-align:center; margin-top:20px; color:#94a3b8; font-size:11px; text-decoration:none;">← Back to Dashboard</a>
     </div>
 
     <script>
@@ -96,7 +101,7 @@
             let container = document.getElementById('workContainer');
             let div = document.createElement('div');
             div.className = 'work-row';
-            div.innerHTML = `<input type="text" class="work-desc" placeholder="Next Work Detail">
+            div.innerHTML = `<input type="text" class="work-desc" placeholder="Next Detail">
                              <input type="number" class="work-price" placeholder="Rate" oninput="calculateTotal()">`;
             container.appendChild(div);
         }
@@ -114,16 +119,16 @@
         function sendWhatsApp() {
             let name = document.getElementById('custName').value || 'Customer';
             let mobile = document.getElementById('custMobile').value || 'N/A';
+            let final = document.getElementById('grandTotal').innerText;
             let descs = document.getElementsByClassName('work-desc');
             let prices = document.getElementsByClassName('work-price');
-            let final = document.getElementById('grandTotal').innerText;
             
             let billItems = "";
             for(let i=0; i < descs.length; i++) {
                 if(descs[i].value) { billItems += `${i+1}. ${descs[i].value}: ₹${prices[i].value}%0A`; }
             }
 
-            let msg = `*S.R ENTERPRISES - BILL*%0A*Customer:* ${name}%0A*Mob:* ${mobile}%0A--------------------------%0A*Work Details:*%0A${billItems}--------------------------%0A*GRAND TOTAL: ${final}*%0A--------------------------%0A*PAYMENT DETAILS:*%0AG-Pay/PhonePe: 8850813765%0A--------------------------%0A_Thank you!_`;
+            let msg = `*S.R ENTERPRISES - BILL*%0A*Customer:* ${name}%0A*Mob:* ${mobile}%0A--------------------------%0A*Work Details:*%0A${billItems}--------------------------%0A*GRAND TOTAL: ${final}*%0A--------------------------%0A*BANK DETAILS:*%0ABank: Bank of Baroda%0AA/C: 27810100021319%0AIFSC: BARB0MALADV%0AG-Pay: 8850813765%0A--------------------------%0A_Thank you!_`;
             window.open(`https://wa.me/?text=${msg}`, '_blank');
         }
     </script>
