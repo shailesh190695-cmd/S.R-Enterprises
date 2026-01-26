@@ -3,62 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Home</title>
+    <title>S.R ENTERPRISES | Master Dashboard</title>
     <style>
         :root { --bg: #0b0f1a; --card: #161d2f; --gold: #facc15; --white: #ffffff; --border: #2d3748; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
         .container { max-width: 1100px; margin: auto; padding: 15px; }
 
-        /* Header & Banner */
-        .header { text-align: center; padding: 30px 10px; border-bottom: 1px solid var(--border); background: linear-gradient(to bottom, #1c2539, #0b0f1a); }
-        .header h1 { color: var(--gold); margin: 0; font-size: 28px; letter-spacing: 2px; }
-        
-        /* 🛒 Public Catalog (Amazon/Flipkart Style) */
-        .section-title { color: var(--gold); margin: 30px 0 15px 0; font-size: 20px; border-left: 4px solid var(--gold); padding-left: 10px; }
-        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }
-        .product-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 10px; text-align: center; transition: 0.3s; }
+        /* Secret Header */
+        .header { text-align: center; padding: 35px 10px; background: linear-gradient(to bottom, #1c2539, #0b0f1a); border-bottom: 2px solid var(--gold); position: relative; }
+        .secret-trigger { position: absolute; top: 0; right: 0; width: 40px; height: 40px; cursor: pointer; opacity: 0.05; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 26px; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Public Navigation */
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
+        .nav-link { background: var(--card); border: 1px solid var(--border); padding: 12px 25px; border-radius: 10px; text-decoration: none; color: white; font-weight: bold; font-size: 13px; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .nav-link:hover { border-color: var(--gold); }
+
+        /* Amazon Style Catalog */
+        .section-title { color: var(--gold); margin: 35px 0 15px 0; font-size: 20px; border-left: 5px solid var(--gold); padding-left: 12px; }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .product-card { background: var(--card); border-radius: 15px; border: 1px solid var(--border); padding: 20px; text-align: center; transition: 0.3s; }
         .product-card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .product-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; background: #000; }
-        .product-card h4 { margin: 10px 0 5px 0; font-size: 14px; }
-        .wa-link { display: inline-block; background: #25d366; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: bold; margin-top: 5px; }
+        .img-box { font-size: 50px; margin-bottom: 10px; height: 100px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 10px; }
+        .wa-btn { background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: bold; display: block; margin-top: 10px; }
 
-        /* 🔒 Private Admin Login Section */
-        .admin-box { max-width: 400px; margin: 40px auto; padding: 25px; background: var(--card); border-radius: 15px; border: 1px solid var(--gold); text-align: center; }
-        .btn-gold { background: var(--gold); color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; }
-
-        /* 📊 Private Dashboard Content (Hidden) */
-        #adminArea { display: none; margin-top: 30px; }
-        .billing-link { display: block; background: var(--gold); color: black; text-align: center; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-bottom: 20px; }
+        /* 📊 Private Admin Dashboard (After Secret Login) */
+        #adminArea { display: none; margin-top: 40px; animation: slideUp 0.5s ease; border-top: 2px dashed var(--gold); padding-top: 30px; }
+        .billing-banner { display: block; background: var(--gold); color: #000; text-align: center; padding: 15px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 16px; margin-bottom: 30px; }
         
-        /* Form & Table */
-        .data-form { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 6px; width: 100%; box-sizing: border-box; }
-        textarea { grid-column: span 2; height: 60px; }
+        .data-card { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 25px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; outline: none; }
+        textarea { grid-column: 1 / -1; height: 80px; }
+        .save-btn { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 15px; text-transform: uppercase; }
 
-        .table-container { overflow-x: auto; background: var(--card); border-radius: 12px; }
-        table { width: 100%; border-collapse: collapse; min-width: 800px; }
-        th { background: #1c2539; color: var(--gold); padding: 12px; text-align: left; font-size: 11px; }
-        td { padding: 12px; border-bottom: 1px solid #1c2539; font-size: 12px; }
-    </style>
-</head>
-<body>
-
-<div class="header">
-    <h1>S.R ENTERPRISES</h1>
-    <p style="color:#94a3b8; font-size:12px;">FUSING MACHINE SPECIALIST | MUMBAI</p>
-</div>
-
-<div class="container">
-    <div class="section-title">📦 Our Machines & Spare Parts</div>
-    <div class="catalog-grid">
-        <div class="product-card">
-            <div style="font-size:40px;">⚙️</div>
-            <h4>Hashima HP-600</h4>
-            <p style="font-size:10px; color:#94a3b8;">High Performance Fusing</p>
-            <a href="https://wa.me/917021733860?text=I am interested in Hashima HP-600" class="wa-link">ENQUIRE ON WA</a>
-        </div>
-        <div class="product-card">
-            <div style="font-size:40px;">⛓️</div>
-            <h4>Teflon Belts</h4>
-            
+        /* Service History Table */
+        .table-container { overflow-x: auto; background: var(--card); border-radius: 15px; border: 1px
+        
