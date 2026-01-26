@@ -1,94 +1,19 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | All-in-One Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; --text-white: #f8fafc; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--dark-bg); margin: 0; color: var(--text-white); padding-bottom: 30px; }
-        
-        header { background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); padding: 30px 20px; text-align: center; border-bottom: 2px solid var(--gold); position: relative; }
-        .brand-name { font-size: 24px; font-weight: 700; color: var(--gold); letter-spacing: 2px; }
-        .admin-lock { position: absolute; right: 15px; top: 15px; font-size: 20px; cursor: pointer; opacity: 0.5; }
+<div class="product-card">
+    <div class="icon-box">🏗️</div>
+    <div class="product-name">HASHIMA</div>
+    <div class="model-no">HP-450MS</div>
+    
+    <div style="color: #4ade80; font-size: 13px; font-weight: bold; margin-top: 5px;">Starts ₹1,500*</div>
+    
+    <div class="admin-price">Cost: ₹900 | Profit: ₹600</div>
+</div>
 
-        .section-title { padding: 0 20px; margin-top: 25px; font-weight: 600; color: var(--gold); font-size: 14px; display: flex; align-items: center; }
-        .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(251, 191, 36, 0.2); margin-left: 10px; }
-
-        /* horizontal catalog */
-        .machine-gallery { display: flex; overflow-x: auto; gap: 15px; padding: 15px 20px; scrollbar-width: none; }
-        .product-card { background: var(--card-bg); min-width: 160px; border-radius: 20px; padding: 12px; text-align: center; border: 1px solid rgba(251, 191, 36, 0.1); }
-        .machine-img { width: 100%; height: 100px; border-radius: 12px; object-fit: contain; background: white; margin-bottom: 10px; }
-
-        /* buttons grid - saare purane options yahan hain */
-        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
-        .action-card { 
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); 
-            border-radius: 18px; padding: 20px 10px; text-decoration: none; color: white; 
-            text-align: center; border: 1px solid rgba(255,255,255,0.05); font-weight: 700; font-size: 13px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .icon { font-size: 24px; margin-bottom: 8px; display: block; }
-
-        .admin-price { margin-top: 10px; padding: 5px; background: rgba(255,255,255,0.05); border-radius: 8px; display: none; border: 1px dashed var(--gold); font-size: 11px; }
-        
-        footer { text-align: center; padding: 20px; font-size: 10px; color: #64748b; }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="admin-lock" onclick="unlockAdmin()">🔑</div>
-        <div class="brand-name">S.R ENTERPRISES</div>
-        <div style="font-size: 10px; color: #94a3b8;">FUSING MACHINE EXPERT</div>
-    </header>
-
-    <div class="section-title">📦 MACHINE CATALOG</div>
-    <div class="machine-gallery">
-        <div class="product-card">
-            <img src="https://m.media-amazon.com/images/I/41-97D8v3eL.jpg" class="machine-img">
-            <div style="font-size: 12px; font-weight: bold;">HASHIMA</div>
-            <div class="admin-price">Cost: ₹900</div>
-        </div>
-        <div class="product-card">
-            <img src="https://m.media-amazon.com/images/I/61Nl-HhshjL._AC_SL1001_.jpg" class="machine-img">
-            <div style="font-size: 12px; font-weight: bold;">OSHIMA</div>
-            <div class="admin-price">Cost: ₹750</div>
-        </div>
-        <div class="product-card">
-            <img src="https://m.media-amazon.com/images/I/61T0mE7j8HL._AC_SL1000_.jpg" class="machine-img">
-            <div style="font-size: 12px; font-weight: bold;">MOTOR</div>
-            <div class="admin-price">Cost: ₹2200</div>
-        </div>
-    </div>
-
-    <div class="section-title">⚡ QUICK OPTIONS</div>
-    <div class="grid-container">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLScyB-Yv6865X0zG_C9hWpX_I-oQvNl6t9K-X1P8u5UoY-yL0A/viewform" class="action-card">
-            <span class="icon">📝</span>NEW ENTRY
-        </a>
-        <a href="bill.html" class="action-card">
-            <span class="icon">🧾</span>CREATE BILL
-        </a>
-        <a href="https://docs.google.com/spreadsheets/d/1Xy_Jp9E9gS1A_nU0Y0X6_K3yU9P-L6oX-m-E-rX9Xw/edit" class="action-card">
-            <span class="icon">📊</span>REPORTS
-        </a>
-        <a href="https://wa.me/918850813765" class="action-card" style="border: 1px solid #25D366;">
-            <span class="icon">📲</span>WHATSAPP
-        </a>
-    </div>
-
-    <footer>MALAD, MUMBAI | 8850813765</footer>
-
-    <script>
-        function unlockAdmin() {
-            let pass = prompt("Enter Password:");
-            if(pass === "1234") {
-                document.querySelectorAll('.admin-price').forEach(el => el.style.display = 'block');
-                alert("Unlocked!");
-            }
-        }
-    </script>
-</body>
-</html>
+<div class="product-card">
+    <div class="icon-box">⚙️</div>
+    <div class="product-name">GEARED MOTOR</div>
+    <div class="model-no">220V AC</div>
+    
+    <div style="color: #4ade80; font-size: 13px; font-weight: bold; margin-top: 5px;">₹3,500</div>
+    
+    <div class="admin-price">Cost: ₹2,200 | Profit: ₹1,300</div>
+</div>
