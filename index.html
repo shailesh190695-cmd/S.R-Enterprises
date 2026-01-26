@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Home</title>
+    <title>S.R ENTERPRISES | Master Control</title>
     <style>
         :root { --bg: #0b0f1a; --card: #161d2f; --gold: #facc15; --white: #ffffff; --border: #2d3748; }
         body { font-family: sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
         .container { max-width: 1000px; margin: auto; padding: 15px; }
-        .header { text-align: center; padding: 30px; background: #1c2539; border-bottom: 3px solid var(--gold); position: relative; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 24px; text-transform: uppercase; }
-        .secret-trigger { position: absolute; top: 0; right: 0; width: 50px; height: 50px; cursor: pointer; opacity: 0.01; }
-        .section-title { color: var(--gold); margin: 25px 0 15px 0; font-size: 18px; border-left: 4px solid var(--gold); padding-left: 10px; }
-        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
-        .product-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 15px; text-align: center; }
-        .wa-btn { display: block; background:
-            
+
+        /* 🤫 Secret Login Zone */
+        .secret-trigger { position: absolute; top: 0; right: 0; width: 60px; height: 60px; cursor: pointer; z-index: 100; opacity: 0.01; }
+
+        .header { text-align: center; padding: 40px 10px; background: #1c2539; border-bottom: 3px solid var(--gold); position: relative; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 26px; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* 🛒 Public View (Customer ke liye) */
+        .section-title { color: var(--gold); margin: 30px 0 15px 0; font-size: 20px; border-left: 5px solid var(--gold); padding-left: 12px; }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .product-card { background: var(--card); border-radius: 15px; border: 1px solid var(--border); padding: 20px; text-align: center; }
+        .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin
+                 
