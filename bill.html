@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Hybrid Invoice</title>
+    <title>S.R ENTERPRISES | Official Invoice</title>
     <style>
-        /* SCREEN PAR KAISA DIKHEGA (DARK THEME) */
         :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; --text-color: #f8fafc; }
-        
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--dark-bg); color: var(--text-color); margin: 0; padding: 20px; }
         .invoice-card { background: var(--card-bg); max-width: 800px; margin: auto; padding: 30px; border-radius: 15px; border: 1px solid #334155; }
         
@@ -24,25 +22,26 @@
         th { background: #334155; color: var(--gold); padding: 12px; text-align: left; }
         td { padding: 10px; border-bottom: 1px solid #334155; }
 
-        .footer-area { display: flex; justify-content: space-between; margin-top: 20px; }
-        .bank-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; width: 55%; font-size: 13px; border: 1px dashed #444; }
+        .footer-area { display: flex; justify-content: space-between; margin-top: 20px; flex-wrap: wrap; }
+        .bank-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; width: 60%; font-size: 13px; border: 1px dashed #444; }
         .total-box { width: 35%; text-align: right; }
+
+        .signature-section { display: none; margin-top: 50px; text-align: right; width: 100%; }
+        .signature-line { border-top: 2px solid black; display: inline-block; width: 200px; padding-top: 5px; text-align: center; }
 
         .btn-group { margin-top: 30px; display: flex; gap: 15px; justify-content: center; }
         .btn { padding: 15px 30px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-print { background: var(--gold); color: #000; }
-        .btn-wa { background: #25D366; color: white; }
 
-        /* PRINT KE WAQT ASLI PROFESSIONAL LOOK (WHITE THEME) */
         @media print {
             body { background: white; color: black; padding: 0; }
             .invoice-card { border: none; box-shadow: none; background: white; max-width: 100%; padding: 0; }
             .header h1 { color: black; border-bottom: 2px solid black; width: 100%; }
-            .header p, label { color: #555; }
-            input { background: transparent !important; border: none !important; color: black !important; padding: 0 !important; font-size: 14px; }
+            input { background: transparent !important; border: none !important; color: black !important; padding: 0 !important; }
             th { background: #f2f2f2 !important; color: black !important; border: 1px solid #ddd; }
             td { border: 1px solid #ddd; color: black; }
-            .bank-box { background: white; border: 1px solid black; color: black; }
+            .bank-box { background: white; border: 1px solid black; color: black; width: 55%; }
+            .signature-section { display: block !important; }
             .btn-group, .add-row, .no-print { display: none !important; }
             .total-row { font-weight: bold; font-size: 18px; border-top: 2px solid black; }
         }
@@ -59,22 +58,22 @@
         </div>
         <div style="text-align:right">
             <h2 style="margin:0; color:#94a3b8">INVOICE</h2>
-            <p>No: #<input type="text" id="in" value="039" style="width:40px; text-align:right; font-weight:bold;"></p>
-            <p>Date: <input type="text" id="id" style="width:90px; text-align:right;"></p>
+            <p>No: #<input type="text" value="039" style="width:40px; text-align:right; font-weight:bold;"></p>
+            <p>Date: <input type="text" id="idate" style="width:90px; text-align:right;"></p>
         </div>
     </div>
 
     <div class="input-group">
         <div>
             <label>Bill To (Customer)</label>
-            <input type="text" id="cn" placeholder="Customer Name">
-            <input type="text" id="ca" placeholder="Address" style="margin-top:5px;">
-            <input type="text" id="cm" placeholder="Mobile No." style="margin-top:5px;">
+            <input type="text" placeholder="Customer Name">
+            <input type="text" placeholder="Address" style="margin-top:5px;">
+            <input type="text" placeholder="Mobile No." style="margin-top:5px;">
         </div>
         <div>
             <label>Work Details</label>
-            <input type="text" id="im" placeholder="Machine (Hashima/Oshima)">
-            <input type="text" id="ij" placeholder="Job (Repairing/Service)" style="margin-top:5px;">
+            <input type="text" placeholder="Machine (Hashima/Oshima)">
+            <input type="text" placeholder="Job (Repairing/Service)" style="margin-top:5px;">
         </div>
     </div>
 
@@ -100,11 +99,12 @@
 
     <div class="footer-area">
         <div class="bank-box">
-            <strong style="color:var(--gold)" class="no-print">PAYMENT DETAILS:</strong><br>
-            Name: Sanjay Hariram Rajbhar<br>
-            A/c: 12478100013378 | IFSC: BARB0MALEAS<br>
-            Bank: Bank of Baroda, Malad-East<br>
-            <strong>G-Pay: 8850813765</strong>
+            <strong style="color:var(--gold)" class="no-print">NEW PAYMENT DETAILS:</strong><br>
+            <strong>Name:</strong> Mr. Hariram Sitaram Rajbhar<br>
+            <strong>Bank:</strong> SBI (State Bank of India)<br>
+            <strong>A/c No:</strong> 44695199584<br>
+            <strong>IFSC:</strong> SBIN0008373<br>
+            <strong>Scanner/UPI:</strong> 7021733860@sbi
         </div>
         <div class="total-box">
             <p>Sub-Total: <span id="st">₹0.00</span></p>
@@ -113,15 +113,20 @@
         </div>
     </div>
 
+    <div class="signature-section">
+        <div class="signature-line">
+            <p style="margin:0; font-weight:bold;">S.R ENTERPRISES</p>
+            <p style="margin:20px 0 0 0; font-size:10px;">Authorized Signature</p>
+        </div>
+    </div>
+
     <div class="btn-group">
         <button class="btn btn-print" onclick="window.print()">PRINT / SAVE PDF</button>
-        <button class="btn btn-wa" onclick="wa()">SEND WHATSAPP</button>
     </div>
 </div>
 
 <script>
-    document.getElementById('id').value = new Date().toLocaleDateString('en-GB');
-
+    document.getElementById('idate').value = new Date().toLocaleDateString('en-GB');
     function add() {
         let tr = document.createElement('tr');
         tr.innerHTML = `<td><input type="text" placeholder="Item Name"></td>
@@ -130,7 +135,6 @@
                         <td style="text-align:right;" class="rt">₹0.00</td>`;
         document.getElementById('tb').appendChild(tr);
     }
-
     function clc() {
         let rs = document.getElementsByClassName('r');
         let qs = document.getElementsByClassName('q');
@@ -142,15 +146,8 @@
             sub += t;
         }
         let d = document.getElementById('ds').value;
-        let final = sub - d;
         document.getElementById('st').innerText = "₹" + sub.toFixed(2);
-        document.getElementById('ft').innerText = "₹" + final.toFixed(2);
-    }
-
-    function wa() {
-        let n = document.getElementById('cn').value || "Customer";
-        let f = document.getElementById('ft').innerText;
-        window.open(`https://wa.me/?text=*S.R ENTERPRISES*%0A*Customer:* ${n}%0A*Total:* ${f}%0A_PDF Invoice is ready._`, '_blank');
+        document.getElementById('ft').innerText = "₹" + (sub - d).toFixed(2);
     }
 </script>
 </body>
