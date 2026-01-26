@@ -13,13 +13,13 @@
         .header { text-align: center; padding: 35px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
         .header h1 { color: var(--gold); margin: 0; font-size: 26px; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* Public Catalog (Customer sees this) */
+        /* Public Catalog */
         .section-title { color: var(--gold); margin: 30px 0 15px 0; font-size: 20px; border-left: 5px solid var(--gold); padding-left: 12px; }
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
         .product-card { background: var(--card); border-radius: 15px; border: 1px solid var(--border); padding: 20px; text-align: center; }
         .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 13px; }
 
-        /* Admin Area (Hidden) */
+        /* Admin Area */
         #adminArea { display: none; margin-top: 30px; border-top: 2px dashed var(--gold); padding-top: 20px; }
         .admin-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 25px; }
         .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; text-decoration: none; font-size: 13px; }
@@ -30,18 +30,15 @@
         label { display: block; color: var(--gold); margin-bottom: 5px; font-size: 13px; font-weight: bold; }
         input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; }
         
-        /* Parts Row Logic */
         .part-row { display: flex; gap: 10px; margin-bottom: 8px; }
         .add-row-btn { background: #1e293b; color: var(--gold); border: 1px solid var(--gold); padding: 8px; border-radius: 6px; cursor: pointer; width: 100%; margin-bottom: 15px; font-weight: bold; }
         .total-display { font-size: 22px; color: var(--gold); text-align: right; margin: 15px 0; font-weight: bold; border-top: 1px solid var(--border); padding-top: 10px; }
 
-        /* Table & History */
-        .search-container { margin-bottom: 20px; }
-        .search-box { width: 100%; padding: 15px; background: #1e293b; border: 2px solid var(--gold); color: white; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
-        
+        /* History */
+        .search-box { width: 100%; padding: 15px; background: #1e293b; border: 2px solid var(--gold); color: white; border-radius: 10px; font-size: 16px; margin-bottom: 20px; }
         .table-container { overflow-x: auto; background: var(--card); border-radius: 12px; }
         table { width: 100%; border-collapse: collapse; min-width: 900px; }
-        th { background: #1c2539; color: var(--gold); padding: 15px; text-align: left; font-size: 12px; }
+        th { background: #1c2539; color: var(--gold); padding: 15px; text-align: left; }
         td { padding: 15px; border-bottom: 1px solid #1c2539; font-size: 13px; vertical-align: top; }
         .due-alert { background: #ef4444; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 10px; }
     </style>
@@ -50,20 +47,21 @@
 
 <div class="header" onclick="unlockAdmin()">
     <h1>S.R ENTERPRISES</h1>
-    <p style="color:#94a3b8; font-size:10px;">(Admin Control Panel - Click Here)</p>
+    <p style="color:#94a3b8; font-size:10px;">(Admin Click Here)</p>
 </div>
 
 <div class="container">
-    <div class="section-title">🏗️ Machines & Equipment</div>
+    <div class="section-title">🏗️ High Performance Machines</div>
     <div class="catalog-grid">
-        <div class="product-card"><h3>Hashima Fusing</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP INQUIRY</a></div>
-        <div class="product-card"><h3>Oshima Fusing</h3><a href="https://wa.me/917021733860" class="wa-btn">WHATSAPP INQUIRY</a></div>
+        <div class="product-card"><h3>Hashima Fusing</h3><a href="https://wa.me/917021733860?text=I'm interested in Hashima Machines" class="wa-btn">ENQUIRY ON WA</a></div>
+        <div class="product-card"><h3>Oshima Fusing</h3><a href="https://wa.me/917021733860?text=I'm interested in Oshima Machines" class="wa-btn">ENQUIRY ON WA</a></div>
     </div>
 
     <div class="section-title">⚙️ Genuine Spare Parts</div>
     <div class="catalog-grid">
-        <div class="product-card"><h3>Teflon Belts</h3><a href="https://wa.me/917021733860" class="wa-btn">CHECK PRICE</a></div>
-        <div class="product-card"><h3>Heater Sets</h3><a href="https://wa.me/917021733860" class="wa-btn">CHECK PRICE</a></div>
+        <div class="product-card"><h3>Teflon Belts</h3><a href="https://wa.me/917021733860?text=I need Enquiry for Teflon Belts" class="wa-btn">ENQUIRY ON WA</a></div>
+        <div class="product-card"><h3>Heater Elements</h3><a href="https://wa.me/917021733860?text=I need Enquiry for Heater Elements" class="wa-btn">ENQUIRY ON WA</a></div>
+        <div class="product-card"><h3>Machine Motors</h3><a href="https://wa.me/917021733860?text=I need Enquiry for Fusing Motors" class="wa-btn">ENQUIRY ON WA</a></div>
     </div>
 
     <div id="adminArea">
@@ -74,35 +72,33 @@
         </div>
 
         <div id="entryForm" class="admin-section" style="display:none;">
-            <h3 style="color:var(--gold);">Customer Service Entry</h3>
+            <h3 style="color:var(--gold);">Service Record Entry</h3>
             <div class="form-group"><label>Customer Name:</label><input type="text" id="cName"></div>
             <div class="form-group"><label>Mobile Number:</label><input type="text" id="cMob"></div>
             <div class="form-group"><label>Machine Model:</label><input type="text" id="cMach"></div>
             
-            <label>Spare Parts & Pricing:</label>
+            <label>Spare Parts Details & Pricing:</label>
             <div id="partsContainer">
                 <div class="part-row">
-                    <input type="text" class="p-name" placeholder="Item Name" oninput="calculateTotal()">
+                    <input type="text" class="p-name" placeholder="Part Name" oninput="calculateTotal()">
                     <input type="number" class="p-price" placeholder="Price" oninput="calculateTotal()">
                 </div>
             </div>
-            <button class="add-row-btn" onclick="addNewPartRow()">+ Add More Spare Parts</button>
+            <button class="add-row-btn" onclick="addNewPartRow()">+ Add More Items</button>
 
-            <div class="form-group"><label>Service Details (Work Done):</label><textarea id="wDetails"></textarea></div>
+            <div class="form-group"><label>Work Details:</label><textarea id="wDetails"></textarea></div>
             <div class="total-display">Total Amount: ₹<span id="finalBill">0</span></div>
             <div class="form-group"><label>Next Service Date (Auto 6 Months):</label><input type="date" id="nDate"></div>
             
-            <button class="wa-btn" style="background:var(--gold); color:black; width:100%; padding:15px; font-size:16px;" onclick="saveRecordToDB()">SAVE CUSTOMER RECORD</button>
+            <button class="wa-btn" style="background:var(--gold); color:black; width:100%; padding:15px; font-size:16px;" onclick="saveRecordToDB()">SAVE RECORD</button>
         </div>
 
         <div id="historyView" style="display:none;">
-            <div class="search-container">
-                <input type="text" id="masterSearch" class="search-box" onkeyup="searchCustomer()" placeholder="🔍 Type Name or Number to find History...">
-            </div>
+            <input type="text" id="masterSearch" class="search-box" onkeyup="searchCustomer()" placeholder="🔍 Type Customer Name or Mobile to Search History...">
             <div class="table-container">
                 <table>
                     <thead>
-                        <tr><th>Client Info</th><th>Machine</th><th>Parts & Work</th><th>Bill</th><th>Next Service</th><th>Action</th></tr>
+                        <tr><th>Client Info</th><th>Machine</th><th>Parts & Work Detail</th><th>Total Bill</th><th>Next Service</th><th>Action</th></tr>
                     </thead>
                     <tbody id="masterTableBody"></tbody>
                 </table>
@@ -136,7 +132,7 @@
     function addNewPartRow() {
         let div = document.createElement('div');
         div.className = 'part-row';
-        div.innerHTML = `<input type="text" class="p-name" placeholder="Item Name" oninput="calculateTotal()">
+        div.innerHTML = `<input type="text" class="p-name" placeholder="Part Name" oninput="calculateTotal()">
                          <input type="number" class="p-price" placeholder="Price" oninput="calculateTotal()">`;
         document.getElementById('partsContainer').appendChild(div);
     }
@@ -169,7 +165,7 @@
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
         db.push(record);
         localStorage.setItem('srMasterDB', JSON.stringify(db));
-        alert("Customer Record Saved!");
+        alert("Record Saved!");
         showSection('historyView');
     }
 
@@ -194,13 +190,11 @@
     function searchCustomer() {
         let val = document.getElementById('masterSearch').value.toLowerCase();
         let rows = document.getElementById('masterTableBody').getElementsByTagName('tr');
-        for (let row of rows) {
-            row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none';
-        }
+        for (let row of rows) { row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none'; }
     }
 
     function deleteRecord(i) {
-        if(confirm("Delete this record?")) {
+        if(confirm("Delete this?")) {
             let db = JSON.parse(localStorage.getItem('srMasterDB'));
             db.splice(db.length - 1 - i, 1);
             localStorage.setItem('srMasterDB', JSON.stringify(db));
