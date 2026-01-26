@@ -3,170 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Professional Invoice</title>
+    <title>S.R ENTERPRISES | Official Invoice</title>
     <style>
-        :root { --primary: #1e293b; --gold: #fbbf24; }
-        body { font-family: 'Arial', sans-serif; background: #f1f5f9; margin: 0; padding: 10px; color: #334155; }
-        .invoice-box { background: #fff; max-width: 800px; margin: auto; padding: 30px; border-top: 8px solid var(--primary); box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        :root { --main-blue: #1e293b; --light-gray: #f8fafc; }
+        body { font-family: 'Helvetica', Arial, sans-serif; background: #e2e8f0; margin: 0; padding: 20px; color: #1e293b; }
+        .invoice-container { background: white; max-width: 800px; margin: auto; padding: 40px; border: 1px solid #cbd5e1; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; }
         
-        /* Header Style Like Invoice 4 */
-        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #eee; padding-bottom: 20px; }
-        .company-info h1 { margin: 0; color: var(--primary); font-size: 28px; letter-spacing: 1px; }
-        .company-info p { margin: 5px 0; font-size: 12px; color: #64748b; }
-        .invoice-title { text-align: right; }
-        .invoice-title h2 { margin: 0; color: #64748b; font-size: 32px; text-transform: uppercase; }
+        /* Header Section */
+        .header-table { width: 100%; border-bottom: 3px solid var(--main-blue); margin-bottom: 25px; padding-bottom: 15px; }
+        .brand h1 { margin: 0; font-size: 32px; letter-spacing: 2px; color: var(--main-blue); }
+        .invoice-label { text-align: right; font-size: 36px; font-weight: bold; color: #94a3b8; }
 
-        /* Customer & Details Grid */
-        .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; }
-        .bill-to h3 { border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 5px; margin-bottom: 15px; font-size: 14px; }
-        .input-field { width: 100%; border: none; border-bottom: 1px solid #e2e8f0; padding: 5px 0; margin-bottom: 10px; font-size: 14px; outline: none; }
+        /* Details Grid */
+        .info-section { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-bottom: 30px; }
+        .info-box h3 { font-size: 14px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; margin-bottom: 10px; color: #64748b; }
         
-        /* Professional Table */
-        table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-        th { background: var(--primary); color: white; text-align: left; padding: 12px; font-size: 14px; }
+        input, textarea { width: 100%; border: 1px solid transparent; padding: 5px 0; font-size: 14px; color: #1e293b; outline: none; transition: 0.3s; }
+        input:hover, input:focus { border-bottom: 1px solid #3b82f6; background: #eff6ff; }
+
+        /* Clean Table */
+        table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+        th { background: var(--main-blue); color: white; padding: 12px; text-align: left; font-size: 13px; text-transform: uppercase; }
         td { padding: 12px; border-bottom: 1px solid #f1f5f9; }
-        .work-input { width: 100%; border: none; font-size: 14px; outline: none; }
+        
+        /* Summary & Bank Details */
+        .footer-flex { display: flex; justify-content: space-between; margin-top: 30px; }
+        .bank-info { width: 55%; font-size: 12px; line-height: 1.8; background: var(--light-gray); padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .totals-box { width: 35%; }
+        .total-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; }
+        .grand-total-row { border-top: 2px solid var(--main-blue); margin-top: 10px; padding-top: 10px; font-weight: bold; font-size: 18px; color: var(--main-blue); }
 
-        /* Calculations Section */
-        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; margin-top: 30px; }
-        .bank-details { font-size: 12px; line-height: 1.8; color: #475569; background: #f8fafc; padding: 15px; border-radius: 8px; }
-        .totals-table td { border: none; padding: 5px; text-align: right; }
-        .grand-total { font-weight: bold; color: var(--primary); font-size: 18px; border-top: 2px solid var(--primary) !important; }
+        .btn-group { margin-top: 40px; display: flex; gap: 15px; justify-content: center; }
+        .btn { padding: 12px 30px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-p { background: var(--main-blue); color: white; }
+        .btn-w { background: #22c55e; color: white; }
 
-        .btn-area { margin-top: 30px; text-align: center; display: flex; gap: 10px; justify-content: center; }
-        .btn { padding: 12px 25px; border-radius: 5px; border: none; color: white; cursor: pointer; font-weight: bold; }
-        .btn-print { background: #334155; }
-        .btn-wa { background: #25D366; }
-
-        @media print { 
-            .btn-area, .no-print { display: none !important; } 
+        /* PRINT SETTINGS - Ye hai asli jaadu */
+        @media print {
             body { background: white; padding: 0; }
-            .invoice-box { box-shadow: none; border: none; padding: 10px; }
+            .invoice-container { box-shadow: none; border: none; padding: 0; width: 100%; max-width: 100%; }
+            input, textarea { border: none !important; background: transparent !important; padding: 0 !important; }
+            .btn-group, .add-row-btn { display: none !important; }
+            input::placeholder { color: transparent; }
         }
     </style>
 </head>
 <body>
 
-<div class="invoice-box">
-    <div class="header">
-        <div class="company-info">
-            <h1>S.R ENTERPRISES</h1>
-            [span_6](start_span)<p>Malad, Mumbai, Maharashtra, 400097[span_6](end_span)</p>
-            [span_7](start_span)<p>Mob: 8850813765[span_7](end_span)</p>
-        </div>
-        <div class="invoice-title">
-            <h2>INVOICE</h2>
-            <p>No: #<input type="text" id="invNo" value="039" style="width:40px; border:none; text-align:right; font-weight:bold;"></p>
-            <p>Date: <input type="text" id="invDate" style="border:none; text-align:right; width:90px;"></p>
-        </div>
-    </div>
-
-    <div class="details-grid">
-        <div class="bill-to">
-            <h3>BILL TO (CUSTOMER)</h3>
-            <label style="font-size:10px; color:gray;">Name:</label>
-            [span_8](start_span)<input type="text" id="cName" class="input-field" placeholder="Ramesh[span_8](end_span)">
-            <label style="font-size:10px; color:gray;">Address:</label>
-            [span_9](start_span)<input type="text" id="cAddr" class="input-field" placeholder="Address[span_9](end_span)">
-            <label style="font-size:10px; color:gray;">Contact:</label>
-            [span_10](start_span)<input type="text" id="cMob" class="input-field" placeholder="Mobile No.[span_10](end_span)">
-        </div>
-        <div class="bill-to">
-            <h3>WORK DETAILS</h3>
-            <label style="font-size:10px; color:gray;">Machine:</label>
-            [span_11](start_span)<input type="text" id="machine" class="input-field" placeholder="Hashima/ Oshima[span_11](end_span)">
-            <label style="font-size:10px; color:gray;">Job:</label>
-            [span_12](start_span)<input type="text" id="job" class="input-field" placeholder="Repairing / Service[span_12](end_span)">
-        </div>
-    </div>
-
-    <table id="itemTable">
-        <thead>
-            <tr>
-                [span_13](start_span)<th>Item/Service[span_13](end_span)</th>
-                [span_14](start_span)<th style="width:100px;">Rate[span_14](end_span)</th>
-                [span_15](start_span)<th style="width:50px;">Qty[span_15](end_span)</th>
-                [span_16](start_span)<th style="width:100px; text-align:right;">Total[span_16](end_span)</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody">
-            <tr>
-                <td><input type="text" class="work-input" placeholder="Servicing Charge"></td>
-                <td><input type="number" class="work-rate" value="0" oninput="calc()"></td>
-                <td><input type="number" class="work-qty" value="1" oninput="calc()"></td>
-                <td style="text-align:right;" class="row-total">₹0.00</td>
-            </tr>
-        </tbody>
-    </table>
-    <button class="no-print" onclick="addRow()" style="margin-top:10px; cursor:pointer;">+ Add Row</button>
-
-    <div class="footer-grid">
-        <div class="bank-details">
-            <strong>BANK DETAILS:</strong><br>
-            [span_17](start_span)Name: Sanjay Hariram Rajbhar[span_17](end_span)<br>
-            [span_18](start_span)A/c: 12478100013378[span_18](end_span)<br>
-            BOB, Malad-East | [span_19](start_span)IFSC: BARB0MALEAS[span_19](end_span)<br>
-            <strong>G-Pay:</strong> 8850813765
-        </div>
-        <table class="totals-table">
-            <tr><td>Sub-Total:</td><td id="subTotal">₹0.00</td></tr>
-            <tr><td>Discount (-):</td><td><input type="number" id="disc" value="0" oninput="calc()" style="width:60px; text-align:right; border:none; border-bottom:1px solid #ddd;"></td></tr>
-            <tr><td>GST (%): <input type="number" id="gstPerc" value="0" oninput="calc()" style="width:30px; border:none;">%</td><td id="gstAmtText">₹0.00</td></tr>
-            <tr class="grand-total"><td>Grand Total:</td><td id="gTotal">₹0.00</td></tr>
-        </table>
-    </div>
-
-    [span_20](start_span)<p style="font-size:12px; margin-top:20px;"><strong>Total in Words:</strong> <span id="wordTotal">Zero Rupees Only</span>[span_20](end_span)</p>
-
-    <div class="btn-area">
-        <button class="btn btn-print" onclick="window.print()">Print / Save PDF</button>
-        <button class="btn btn-wa" onclick="sendWA()">Send on WhatsApp</button>
-    </div>
-</div>
-
-<script>
-    document.getElementById('invDate').value = new Date().toLocaleDateString('en-GB');
-
-    function addRow() {
-        let tr = document.createElement('tr');
-        tr.innerHTML = `<td><input type="text" class="work-input" placeholder="Item Name"></td>
-                        <td><input type="number" class="work-rate" value="0" oninput="calc()"></td>
-                        <td><input type="number" class="work-qty" value="1" oninput="calc()"></td>
-                        <td style="text-align:right;" class="row-total">₹0.00</td>`;
-        document.getElementById('tableBody').appendChild(tr);
-    }
-
-    function calc() {
-        let rates = document.getElementsByClassName('work-rate');
-        let qtys = document.getElementsByClassName('work-qty');
-        let rowTotals = document.getElementsByClassName('row-total');
-        let sub = 0;
-
-        for(let i=0; i<rates.length; i++) {
-            let row = rates[i].value * qtys[i].value;
-            rowTotals[i].innerText = "₹" + row.toFixed(2);
-            sub += row;
-        }
-
-        let disc = document.getElementById('disc').value;
-        let gstP = document.getElementById('gstPerc').value;
-        let gstAmt = ((sub - disc) * gstP) / 100;
-        let total = (sub - disc) + gstAmt;
-
-        document.getElementById('subTotal').innerText = "₹" + sub.toFixed(2);
-        document.getElementById('gstAmtText').innerText = "₹" + gstAmt.toFixed(2);
-        document.getElementById('gTotal').innerText = "₹" + total.toFixed(2);
-        document.getElementById('wordTotal').innerText = total.toFixed(0) + " Rupees Only";
-    }
-
-    function sendWA() {
-        let name = document.getElementById('cName').value || "Customer";
-        let total = document.getElementById('gTotal').innerText;
-        let msg = `*S.R ENTERPRISES INVOICE*%0A*Customer:* ${name}%0A*Total Amount:* ${total}%0A_Check your PDF for details._`;
-        window.open(`https://wa.me/?text=${msg}`, '_blank');
-    }
-</script>
-
-</body>
-                        </html>
-                             
+<div class="invoice-container">
+    <table class="header-table">
+        <tr>
+            <td class="brand" style="border:none">
+                <h1>S.R ENTERPR
