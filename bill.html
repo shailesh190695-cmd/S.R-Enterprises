@@ -28,8 +28,8 @@
 
         .total-display { text-align: right; margin-top: 15px; font-size: 18px; font-weight: bold; color: var(--gold); }
 
-        /* QR & Bank Section (Print Only) */
-        .print-area { display: none; }
+        /* QR, Bank & Signature Section */
+        .print-footer { display: none; }
         .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
         .btn { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
         .btn-p { background: var(--gold); color: black; }
@@ -39,9 +39,12 @@
             body { background: white; color: black; padding: 0; }
             .invoice-card { border: none; background: white; width: 100%; padding: 0; }
             .box-in, .table-in, .top-in { background: transparent !important; color: black !important; padding: 2px 0 !important; font-weight: bold; border:none; }
-            .print-area { display: flex !important; margin-top: 20px; border: 1px solid black; padding: 10px; gap: 15px; align-items: center; }
+            .print-footer { display: block !important; margin-top: 20px; }
+            .bank-qr-row { display: flex; border: 1px solid black; padding: 10px; gap: 15px; align-items: center; border-radius: 5px; }
             .qr { width: 80px; height: 80px; border: 1px solid #ddd; padding: 5px; }
-            .bank-text { font-size: 12px; text-align: left; line-height: 1.4; }
+            .bank-text { font-size: 12px; text-align: left; line-height: 1.4; flex: 1; }
+            .sig-area { margin-top: 40px; text-align: right; }
+            .sig-line { border-top: 1px solid black; display: inline-block; width: 180px; text-align: center; padding-top: 5px; font-weight: bold; font-size: 12px; }
             .no-print { display: none !important; }
         }
     </style>
@@ -93,15 +96,24 @@
 
     <div class="total-display">GRAND TOTAL: <span id="gTotal">₹0.00</span></div>
 
-    <div class="print-area">
-        <div class="qr">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=7021733860@sbi&pn=Hariram%20Sitaram%20Rajbhar" style="width:100%;">
+    <div class="print-footer">
+        <div class="bank-qr-row">
+            <div class="qr">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=7021733860@sbi&pn=Hariram%20Sitaram%20Rajbhar" style="width:100%;">
+            </div>
+            <div class="bank-text">
+                <strong>PAYMENT DETAILS:</strong><br>
+                Name: Mr. Hariram Sitaram Rajbhar<br>
+                Bank: SBI | A/c No: 44695199584<br>
+                IFSC: SBIN0008373 | UPI: 7021733860@sbi
+            </div>
         </div>
-        <div class="bank-text">
-            <strong>PAYMENT DETAILS:</strong><br>
-            Name: Mr. Hariram Sitaram Rajbhar<br>
-            Bank: SBI | A/c No: 44695199584<br>
-            IFSC: SBIN0008373 | UPI: 7021733860@sbi
+        
+        <div class="sig-area">
+            <div class="sig-line">
+                S.R ENTERPRISES<br>
+                <span style="font-size:9px; font-weight:normal;">Authorized Signature</span>
+            </div>
         </div>
     </div>
 
