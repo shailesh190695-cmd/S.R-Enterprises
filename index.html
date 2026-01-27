@@ -2,196 +2,174 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>S.R ENTERPRISES | Master System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.R ENTERPRISES | Master Invoice</title>
     <style>
-        :root { --bg: #0b0f1a; --card: #161d2f; --gold: #facc15; --white: #ffffff; --border: #2d3748; }
-        * { box-sizing: border-box; }
-        body { font-family: sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; overflow-x: hidden; width: 100%; }
-        .container { width: 100%; max-width: 600px; margin: auto; padding: 12px; }
+        :root { --dark-bg: #0b1120; --card-bg: #1e293b; --gold: #facc15; --white: #ffffff; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--dark-bg); color: var(--white); margin: 0; padding: 0; }
+        .invoice-card { background: var(--card-bg); width: 100%; margin: 0; padding: 15px; box-sizing: border-box; min-height: 100vh; }
 
-        /* Header */
-        .header { text-align: center; padding: 30px 10px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 22px; text-transform: uppercase; }
+        /* Form Page Layout (Same as before) */
+        .header { border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 15px; text-align: center; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 24px; text-transform: uppercase; }
+        .bold-label { font-size: 14px !important; font-weight: 900 !important; color: var(--gold) !important; }
+        .bold-stats { font-size: 18px !important; font-weight: 900 !important; color: #000 !important; width: 105px !important; background: #fff !important; padding: 5px !important; border-radius: 4px; border:none; text-align:right; }
+        .top-stats { display: flex; justify-content: space-between; margin: 10px 10px; align-items: center; }
+        .input-row { display: flex; align-items: center; margin-bottom: 10px; padding: 0 10px; gap: 10px; }
+        .input-row label { flex: 0 0 130px; font-size: 11px; color: var(--gold); font-weight: bold; text-transform: uppercase; }
+        .box-in { flex: 1; background: var(--white); border: 1px solid #444; padding: 10px; color: #000; border-radius: 5px; font-size: 14px; font-weight: 700; outline: none; }
+        .gst-box { margin: 10px 10px; padding: 10px; background: #2d3748; border-radius: 6px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--gold); }
+        table { width: calc(100% - 20px); margin: 10px auto; border-collapse: collapse; }
+        th { background: #1c2539; color: var(--gold); padding: 10px 5px; text-align: left; font-size: 11px; }
+        .table-in { width: 100%; background: var(--white); border: 1px solid #ddd; padding: 8px; font-size: 13px; font-weight: bold; color: #000; border-radius: 4px; box-sizing: border-box; }
+        .calc-area { margin: 15px 15px; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid #334155; }
+        .total-display { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 10px; margin-top: 5px; }
 
-        .section-title { color: var(--gold); margin: 25px 0 10px 0; font-size: 18px; border-left: 4px solid var(--gold); padding-left: 10px; }
-        
-        /* Catalog */
-        .catalog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .product-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 15px; text-align: center; }
-        .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 12px; border:none; width:100%; cursor:pointer; }
+        /* 🖨️ ADAMS MACHINERY STYLE PRINT LAYOUT */
+        @media print {
+            @page { size: A4; margin: 0; }
+            body { background: white !important; color: #333 !important; zoom: 0.9; }
+            
+            .invoice-card { 
+                border: none !important; 
+                background: white; 
+                padding: 60px 40px !important; /* Premium Top Gap like Adams Machinery */
+                min-height: auto !important; 
+            }
 
-        /* Customer Service Enquiry */
-        .service-box { background: var(--card); padding: 15px; border-radius: 12px; border: 2px solid var(--gold); margin-top: 15px; }
-        .service-box input, .service-box textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 8px; width: 100%; margin-bottom: 10px; font-size: 14px; }
+            .no-print, .btn-grp, .add-btn, .gst-box, button { display: none !important; }
+            
+            .header { border-bottom: 3px solid #000; margin-bottom: 40px; text-align: center !important; }
+            .header h1 { color: black !important; font-size: 34px !important; letter-spacing: 3px; font-weight: 900; }
+            .header p { color: #555 !important; font-size: 11px !important; text-transform: uppercase; letter-spacing: 1px; }
+            
+            .top-stats { border: none !important; margin-bottom: 30px; font-size: 14px; }
+            .bold-label { color: black !important; font-weight: bold; }
+            .bold-stats { background: transparent !important; border: none !important; font-size: 16px !important; font-weight: 900 !important; }
 
-        /* Admin Area */
-        #adminArea { display: none; margin-top: 30px; border-top: 2px dashed var(--gold); padding-top: 20px; }
-        .admin-menu { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 20px; }
-        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; font-size: 14px; text-decoration: none; }
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+            .input-row { margin-bottom: 8px; border: none !important; }
+            .input-row label { color: #666 !important; font-size: 11px; }
+            .box-in { border: none !important; border-bottom: 1px solid #eee !important; background: transparent !important; font-size: 16px; font-weight: 700; }
+            
+            table { margin-top: 40px; border: none !important; width: 100%; }
+            th { background: #f8f9fa !important; color: #000 !important; border-top: 2px solid #000 !important; border-bottom: 2px solid #000 !important; padding: 15px 5px; text-transform: uppercase; }
+            td { border-bottom: 1px solid #eee !important; padding: 15px 5px; }
+            .table-in { border: none !important; background: transparent !important; font-size: 14px; font-weight: bold; }
 
-        /* Form Entry */
-        .admin-section { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; }
-        .part-row { display: flex; gap: 8px; margin-bottom: 10px; width: 100%; }
-        .p-name { flex: 2; min-width: 0; } 
-        .p-price { flex: 1; min-width: 0; } 
-        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 8px; width: 100%; font-size: 14px; outline: none; }
-        .total-display { font-size: 18px; color: var(--gold); text-align: right; margin: 15px 0; font-weight: bold; border-top: 1px solid var(--border); padding-top: 10px; }
+            .calc-area { border: none !important; background: transparent !important; border-top: 2px solid #000; margin-top: 20px; padding: 10px 0; }
+            .total-display { color: black !important; border-top: 3px solid #000; font-size: 28px; padding-top: 10px; }
 
-        /* History Tracker */
-        .table-container { overflow-x: auto; background: var(--card); border-radius: 10px; }
-        table { width: 100%; border-collapse: collapse; min-width: 500px; }
-        th { background: #1c2539; color: var(--gold); padding: 10px; text-align: left; font-size: 11px; }
-        td { padding: 10px; border-bottom: 1px solid #1c2539; font-size: 11px; vertical-align: top; }
-        .due-row { background: rgba(239, 68, 68, 0.15) !important; border-left: 4px solid #ef4444; }
-        .due-alert { background: #ef4444; color: white; padding: 2px 5px; border-radius: 4px; font-size: 9px; font-weight: bold; }
+            /* Premium Footer Style */
+            .print-footer { display: flex !important; margin-top: 60px !important; padding-top: 20px; justify-content: space-between; align-items: flex-end; border-top: 1px solid #eee; }
+            .bank-details { font-size: 11px; color: #444; line-height: 1.8; }
+            .qr-print img { width: 100px; height: 100px; filter: grayscale(1); }
+            .sig-box { text-align: right; }
+            .sig-line { border-top: 2px solid #000; width: 200px; margin-left: auto; margin-top: 60px; font-weight: bold; font-size: 13px; }
+        }
+
+        .print-footer { display: none; }
+        .btn-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 15px; }
+        .btn { padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .btn-p { background: var(--gold); color: #000; }
+        .btn-w { background: #16a34a; color: var(--white); }
+        .add-btn { background: transparent; color: var(--gold); border: 1px dashed var(--gold); width: calc(100% - 30px); margin: 5px 15px; padding: 10px; border-radius: 8px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="header" onclick="unlockAdmin()">
-    <h1>S.R ENTERPRISES</h1>
-</div>
-
-<div class="container">
-    <div class="section-title">🏗️ Our Machines</div>
-    <div class="catalog-grid">
-        <div class="product-card"><h3>Hashima</h3><button class="wa-btn" onclick="window.open('https://wa.me/919326113988?text=Hashima Enquiry')">ENQUIRY</button></div>
-        <div class="product-card"><h3>Oshima</h3><button class="wa-btn" onclick="window.open('https://wa.me/919326113988?text=Oshima Enquiry')">ENQUIRY</button></div>
+<div class="invoice-card">
+    <div class="header">
+        <h1>S.R ENTERPRISES</h1>
+        <p style="font-weight:bold; letter-spacing: 1px;">FUSING MACHINE SPECIALIST | MUMBAI</p>
+        <div class="top-stats">
+            <div><span class="bold-label">INV NO:</span> <input type="text" placeholder="033" class="top-in bold-stats"></div>
+            <div><span class="bold-label">DATE:</span> <input type="text" id="invDate" class="top-in bold-stats"></div>
+        </div>
     </div>
 
-    <div class="section-title">🛠️ Service Request</div>
-    <div class="service-box">
-        <input type="text" id="custName" placeholder="Aapka Naam">
-        <textarea id="custProblem" placeholder="Machine problem..."></textarea>
-        <button class="wa-btn" onclick="sendServiceWA()">SEND ON WHATSAPP</button>
+    <div class="input-row"><label>CUSTOMER NAME</label><input type="text" id="cName" class="box-in"></div>
+    <div class="input-row"><label>ADDRESS</label><input type="text" class="box-in"></div>
+    <div class="input-row"><label>MOBILE NO</label><input type="text" id="cMob" class="box-in"></div>
+
+    <div class="gst-box no-print">
+        <input type="checkbox" id="gstCheck" onchange="clc()" style="width:20px; height:20px;">
+        <label for="gstCheck" style="font-weight:bold;">Apply GST (18%)</label>
     </div>
 
-    <div id="adminArea">
-        <div class="admin-menu">
-            <a href="bill.html" class="menu-btn" style="background: var(--gold); color: #000; padding: 15px;">📄 CREATE NEW BILL</a>
-            <div class="menu-grid">
-                <div class="menu-btn" onclick="openEntry()">🛠️ NEW LOG</div>
-                <div class="menu-btn" onclick="showSec('history')">🔍 HISTORY</div>
-            </div>
-        </div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width:45%">DESCRIPTION</th>
+                <th style="width:20%; text-align:center;">RATE</th>
+                <th style="width:15%; text-align:center;">QTY</th>
+                <th style="width:20%; text-align:right;">TOTAL</th>
+            </tr>
+        </thead>
+        <tbody id="bBody">
+            <tr>
+                <td><input type="text" class="table-in" placeholder="Item Name/Spare Part"></td>
+                <td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td>
+                <td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td>
+                <td style="text-align:right; font-weight:bold;" class="l-total">₹0</td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="add-btn no-print" onclick="addItem()">+ ADD MORE</button>
 
-        <div id="entryForm" class="admin-section" style="display:none;">
-            <input type="text" id="cName" placeholder="Customer Name" style="margin-bottom:10px;">
-            <input type="text" id="cMob" placeholder="Mobile" style="margin-bottom:10px;">
-            <input type="text" id="cMach" placeholder="Machine Model" style="margin-bottom:10px;">
-            
-            <label style="color:var(--gold); font-size: 12px; margin-bottom:5px; display:block;">Spare Parts & Price:</label>
-            <div id="partsList">
-                <div class="part-row">
-                    <input type="text" class="p-name" placeholder="Item Name" oninput="sumTotal()">
-                    <input type="number" class="p-price" placeholder="Price" oninput="sumTotal()">
-                </div>
-            </div>
-            <button onclick="addPartRow()" style="width:100%; margin-top:5px; margin-bottom:15px; background:#1e293b; color:var(--gold); border:1px solid var(--gold); padding:8px; border-radius:5px; font-size:12px; cursor:pointer;">+ Add More Item</button>
+    <div class="calc-area">
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Sub-Total:</span><span id="subT">₹0</span></div>
+        <div id="gstAmtRow" style="display:none; justify-content:space-between; margin-bottom:8px; font-weight:bold;"><span>GST (18%):</span><span id="gstAmtDisplay">₹0</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Discount:</span><input type="number" id="discIn" class="top-in" value="0" oninput="clc()" style="width:75px; font-weight:bold; color:black; background:white; border:none; padding:4px 6px;"></div>
+        <div class="total-display" style="display:flex; justify-content:space-between;"><span>GRAND TOTAL:</span><span id="gTotal">₹0</span></div>
+    </div>
 
-            <textarea id="wDetails" placeholder="Work Done Details" style="margin-bottom:10px;"></textarea>
-            <div class="total-display">Total Bill: ₹<span id="fTotal">0</span></div>
-            <label style="color:var(--gold); font-size: 12px;">Next Service (6 Months Auto):</label>
-            <input type="date" id="nDate" style="margin-bottom:10px;">
-            <button class="wa-btn" style="background:var(--gold); color:black;" onclick="saveRecord()">SAVE RECORD</button>
+    <div class="print-footer">
+        <div class="bank-details">
+            <strong style="color:#000; font-size:13px;">PAYMENT TERMS</strong><br>
+            Bank: State Bank of India (SBI)<br>
+            A/c No: 44695199584<br>
+            IFSC: SBIN0008373 | UPI ID: 7021733860@sbi
         </div>
+        <div class="qr-print">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=7021733860@sbi" alt="QR">
+            <p style="font-size:10px; margin-top:5px; color:#666;">SCAN TO PAY</p>
+        </div>
+        <div class="sig-box">
+            <div class="sig-line">FOR S.R ENTERPRISES</div>
+            <p style="font-size:10px; margin-top:8px; color:#555;">(Authorised Signatory)</p>
+        </div>
+    </div>
 
-        <div id="history" style="display:none;">
-            <input type="text" id="search" onkeyup="filter()" placeholder="🔍 Search Customer..." style="width:100%; padding:10px; margin-bottom:10px; border:1px solid var(--gold); background:none; color:white; border-radius:5px;">
-            <div class="table-container">
-                <table>
-                    <thead><tr><th>Client</th><th>Work/Parts</th><th>Due Date</th><th>Action</th></tr></thead>
-                    <tbody id="histBody"></tbody>
-                </table>
-            </div>
-        </div>
+    <div class="btn-grp no-print">
+        <button class="btn btn-p" onclick="window.print()">📄 PRINT BILL</button>
+        <button class="btn btn-w" onclick="wa()">📲 WHATSAPP</button>
     </div>
 </div>
 
 <script>
-    function unlockAdmin() { if (prompt("PIN:") === "7860") { document.getElementById('adminArea').style.display = 'block'; showSec('history'); } }
-
-    function sendServiceWA() {
-        let n = document.getElementById('custName').value;
-        let p = document.getElementById('custProblem').value;
-        window.open(`https://wa.me/919326113988?text=*SERVICE REQUEST*%0A*Name:* ${n}%0A*Problem:* ${p}`, '_blank');
+    window.onload = function() { document.getElementById('invDate').value = new Date().toLocaleDateString('en-GB'); };
+    function addItem() {
+        let tr = document.createElement('tr');
+        tr.innerHTML = `<td><input type="text" class="table-in"></td><td><input type="number" class="r-val table-in" value="0" oninput="clc()"></td><td><input type="number" class="q-val table-in" value="1" oninput="clc()"></td><td style="text-align:right;" class="l-total">₹0</td>`;
+        document.getElementById('bBody').appendChild(tr);
     }
-
-    function openEntry() {
-        showSec('entryForm');
-        let d = new Date(); d.setMonth(d.getMonth() + 6);
-        document.getElementById('nDate').value = d.toISOString().split('T')[0];
+    function clc() {
+        let rs = document.getElementsByClassName('r-val'), qs = document.getElementsByClassName('q-val'), ts = document.getElementsByClassName('l-total'), sub = 0;
+        for(let i=0; i<rs.length; i++) { let line = rs[i].value * qs[i].value; ts[i].innerText = "₹" + line; sub += line; }
+        let d = parseFloat(document.getElementById('discIn').value) || 0;
+        let isGst = document.getElementById('gstCheck').checked;
+        let gst = isGst ? (sub - d) * 0.18 : 0;
+        document.getElementById('gstAmtRow').style.display = isGst ? 'flex' : 'none';
+        document.getElementById('gstAmtDisplay').innerText = "₹" + gst.toFixed(2);
+        document.getElementById('subT').innerText = "₹" + sub;
+        document.getElementById('gTotal').innerText = "₹" + (sub - d + gst).toFixed(2);
     }
-
-    function showSec(id) {
-        document.getElementById('entryForm').style.display = 'none';
-        document.getElementById('history').style.display = 'none';
-        document.getElementById(id).style.display = 'block';
-        if(id === 'history') loadHist();
-    }
-
-    function addPartRow() {
-        let div = document.createElement('div'); div.className = 'part-row';
-        div.innerHTML = `<input type="text" class="p-name" placeholder="Item" oninput="sumTotal()"><input type="number" class="p-price" placeholder="₹" oninput="sumTotal()">`;
-        document.getElementById('partsList').appendChild(div);
-    }
-
-    function sumTotal() {
-        let prices = document.getElementsByClassName('p-price');
-        let total = 0;
-        for(let p of prices) { total += Number(p.value) || 0; }
-        document.getElementById('fTotal').innerText = total;
-    }
-
-    function saveRecord() {
-        let items = [];
-        let rows = document.getElementsByClassName('part-row');
-        for(let r of rows) {
-            let n = r.querySelector('.p-name').value; let p = r.querySelector('.p-price').value;
-            if(n) items.push(n + " (₹" + p + ")");
-        }
-        const data = {
-            name: document.getElementById('cName').value,
-            mob: document.getElementById('cMob').value,
-            mach: document.getElementById('cMach').value,
-            parts: items.join(", "),
-            work: document.getElementById('wDetails').value,
-            total: document.getElementById('fTotal').innerText,
-            next: document.getElementById('nDate').value
-        };
-        let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
-        db.push(data); localStorage.setItem('srMasterDB', JSON.stringify(db));
-        alert("Record Saved!"); location.reload();
-    }
-
-    function loadHist() {
-        let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
-        let html = ''; let today = new Date().toISOString().split('T')[0];
-        db.reverse().forEach((item, index) => {
-            let due = (item.next <= today);
-            html += `<tr class="${due ? 'due-row' : ''}">
-                <td><b>${item.name}</b><br><small>${item.mob}</small></td>
-                <td><small>${item.parts}</small><br><b>Total: ₹${item.total}</b></td>
-                <td style="${due?'color:#ef4444;font-weight:bold':''}">${item.next}${due?'<br><span class="due-alert">DUE</span>':''}</td>
-                <td><button onclick="del(${index})" style="color:red;border:none;background:none;cursor:pointer;">🗑️</button></td></tr>`;
-        });
-        document.getElementById('histBody').innerHTML = html;
-    }
-
-    function filter() {
-        let val = document.getElementById('search').value.toLowerCase();
-        let rows = document.getElementById('histBody').getElementsByTagName('tr');
-        for (let row of rows) { row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none'; }
-    }
-
-    function del(i) {
-        if(confirm("Delete record?")) {
-            let db = JSON.parse(localStorage.getItem('srMasterDB'));
-            db.splice(db.length-1-i, 1); localStorage.setItem('srMasterDB', JSON.stringify(db)); loadHist();
-        }
+    function wa() {
+        let n = document.getElementById('cName').value || "Customer";
+        let t = document.getElementById('gTotal').innerText;
+        window.open(`https://wa.me/917021733860?text=*S.R ENTERPRISES*%0A*Customer:* ${n}%0A*Total Bill:* ${t}`, '_blank');
     }
 </script>
 </body>
-</html>
+    </html>
+                    
