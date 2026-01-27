@@ -10,53 +10,53 @@
         body { font-family: sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; overflow-x: hidden; width: 100%; }
         .container { width: 100%; max-width: 600px; margin: auto; padding: 12px; }
 
-        /* Dashboard Header */
+        /* Header */
         .header { text-align: center; padding: 30px 10px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
         .header h1 { color: var(--gold); margin: 0; font-size: 22px; text-transform: uppercase; }
 
         .section-title { color: var(--gold); margin: 25px 0 10px 0; font-size: 18px; border-left: 4px solid var(--gold); padding-left: 10px; }
         
-        /* Catalog & Service */
+        /* Catalog */
         .catalog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .product-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 15px; text-align: center; }
         .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 12px; border:none; width:100%; cursor:pointer; }
 
-        /* Admin/Dashboard UI */
+        /* Customer Service Enquiry */
+        .service-box { background: var(--card); padding: 15px; border-radius: 12px; border: 2px solid var(--gold); margin-top: 15px; }
+        .service-box input, .service-box textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 8px; width: 100%; margin-bottom: 10px; font-size: 14px; }
+
+        /* Admin Area */
         #adminArea { display: none; margin-top: 30px; border-top: 2px dashed var(--gold); padding-top: 20px; }
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; font-size: 14px; }
+        .admin-menu { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 20px; }
+        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; font-size: 14px; text-decoration: none; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
+        /* Form Entry */
         .admin-section { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; }
-        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 10px; font-size: 14px; outline: none; }
-        
-        .part-row { display: flex; gap: 8px; margin-bottom: 10px; }
-        .total-display { font-size: 18px; color: var(--gold); text-align: right; margin: 15px 0; font-weight: bold; }
+        .part-row { display: flex; gap: 8px; margin-bottom: 10px; width: 100%; }
+        .p-name { flex: 2; min-width: 0; } 
+        .p-price { flex: 1; min-width: 0; } 
+        input, textarea { background: #0b0f1a; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 8px; width: 100%; font-size: 14px; outline: none; }
+        .total-display { font-size: 18px; color: var(--gold); text-align: right; margin: 15px 0; font-weight: bold; border-top: 1px solid var(--border); padding-top: 10px; }
 
-        /* History Table */
+        /* History Tracker */
         .table-container { overflow-x: auto; background: var(--card); border-radius: 10px; }
-        table { width: 100%; border-collapse: collapse; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
         th { background: #1c2539; color: var(--gold); padding: 10px; text-align: left; font-size: 11px; }
-        td { padding: 12px 10px; border-bottom: 1px solid #1c2539; font-size: 12px; }
+        td { padding: 10px; border-bottom: 1px solid #1c2539; font-size: 11px; vertical-align: top; }
         .due-row { background: rgba(239, 68, 68, 0.15) !important; border-left: 4px solid #ef4444; }
+        .due-alert { background: #ef4444; color: white; padding: 2px 5px; border-radius: 4px; font-size: 9px; font-weight: bold; }
 
-        /* 🖨️ ADAMS STYLE PRINT (Sirf Print ke waqt dikhega) */
+        /* 🖨️ PRINT STYLE (Wahi purana 1-page wala look) */
         @media print {
-            @page { size: A4; margin: 0; }
-            body { background: white !important; color: black !important; zoom: 0.85; }
-            .container, .header, #adminArea { display: none !important; }
-            .print-only { display: block !important; padding: 60px 40px !important; }
-            
-            .print-header { border-bottom: 3px solid black; text-align: center; margin-bottom: 40px; padding-bottom: 10px; }
-            .print-header h1 { font-size: 34px; letter-spacing: 2px; margin: 0; font-weight: 900; }
-            
-            .p-row { display: flex; justify-content: space-between; margin-bottom: 30px; font-size: 16px; }
-            .p-table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-            .p-table th { background: #f2f2f2 !important; color: black !important; border-top: 2px solid black !important; border-bottom: 2px solid black !important; padding: 15px; text-align: left; }
-            .p-table td { border-bottom: 1px solid #eee; padding: 15px; }
-            
-            .p-total { border-top: 3px solid black; margin-top: 30px; text-align: right; font-size: 28px; font-weight: 900; padding-top: 15px; }
-            
-            .print-footer { display: flex !important; margin-top: 60px; justify-content: space-between; align-items: flex-end; border-top: 1px solid #eee; padding-top: 20px; }
+            @page { size: A4; margin: 5mm; }
+            body { background: white !important; color: black !important; zoom: 0.9; }
+            .container, .header, #adminArea, .no-print { display: none !important; }
+            .print-only { display: block !important; padding: 20px; border: 1px solid black; }
+            .p-header { text-align: center; border-bottom: 2px solid black; margin-bottom: 20px; padding-bottom: 10px; }
+            .p-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            .p-table th, .p-table td { border: 1px solid black; padding: 10px; text-align: left; color: black !important; }
+            .p-footer { display: flex !important; justify-content: space-between; margin-top: 30px; border-top: 1px solid black; padding-top: 10px; }
         }
         .print-only { display: none; }
     </style>
@@ -64,23 +64,22 @@
 <body>
 
 <div class="print-only" id="printTarget">
-    <div class="print-header">
-        <h1>S.R ENTERPRISES</h1>
-        <p style="font-weight:bold; text-transform: uppercase;">Fusing Machine Specialist | Mumbai</p>
+    <div class="p-header">
+        <h1 style="margin:0;">S.R ENTERPRISES</h1>
+        <p>FUSING MACHINE SPECIALIST | MUMBAI</p>
     </div>
-    <div class="p-row">
-        <div><p><b>CUSTOMER:</b> <span id="prName"></span></p><p><b>MOBILE:</b> <span id="prMob"></span></p></div>
-        <div style="text-align:right;"><p><b>DATE:</b> <span id="prDate"></span></p><p><b>MODEL:</b> <span id="prMach"></span></p></div>
+    <div style="display:flex; justify-content:space-between;">
+        <p><b>CUSTOMER:</b> <span id="prName"></span></p>
+        <p><b>DATE:</b> <span id="prDate"></span></p>
     </div>
     <table class="p-table">
-        <thead><tr><th>DESCRIPTION</th><th style="text-align:right;">AMOUNT</th></tr></thead>
+        <thead><tr><th>DESCRIPTION</th><th>AMOUNT</th></tr></thead>
         <tbody id="prBody"></tbody>
     </table>
-    <div class="p-total">TOTAL: ₹<span id="prTotal"></span></div>
-    <div class="print-footer">
-        <div style="font-size: 12px;"><strong>PAYMENT:</strong><br>SBI | A/c: 44695199584<br>IFSC: SBIN0008373 | UPI: 7021733860@sbi</div>
-        <div style="text-align:center;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=7021733860@sbi" width="100"><p style="font-size:9px;">SCAN TO PAY</p></div>
-        <div style="text-align:right;"><div style="border-top:2px solid black; width:180px; margin-top:50px; font-weight:bold;">S.R ENTERPRISES</div></div>
+    <h2 style="text-align:right;">TOTAL: ₹<span id="prTotal"></span></h2>
+    <div class="p-footer">
+        <div>SBI | A/c No: 44695199584<br>IFSC: SBIN0008373 | UPI: 7021733860@sbi</div>
+        <div style="text-align:right;"><b>S.R ENTERPRISES</b><br><br>(Authorised Signatory)</div>
     </div>
 </div>
 
@@ -91,14 +90,23 @@
 <div class="container">
     <div class="section-title">🏗️ Our Machines</div>
     <div class="catalog-grid">
-        <div class="product-card"><h3>Hashima</h3><button class="wa-btn" onclick="window.open('https://wa.me/919326113988?text=Hashima')">ENQUIRY</button></div>
-        <div class="product-card"><h3>Oshima</h3><button class="wa-btn" onclick="window.open('https://wa.me/919326113988?text=Oshima')">ENQUIRY</button></div>
+        <div class="product-card"><h3>Hashima</h3><button class="wa-btn" onclick="window.open('https://wa.me/919326113988?text=Hashima Enquiry')">ENQUIRY</button></div>
+        <div class="product-card"><h3>Oshima</h3><button class="wa-btn" onclick="window.open('https://wa.me/919326113988?text=Oshima Enquiry')">ENQUIRY</button></div>
+    </div>
+
+    <div class="section-title">🛠️ Service Request</div>
+    <div class="service-box">
+        <input type="text" id="custName" placeholder="Aapka Naam">
+        <textarea id="custProblem" placeholder="Machine problem..."></textarea>
+        <button class="wa-btn" onclick="sendServiceWA()">SEND ON WHATSAPP</button>
     </div>
 
     <div id="adminArea">
-        <div class="menu-grid">
-            <div class="menu-btn" onclick="showSec('entryForm')" style="background:var(--gold); color:black;">🛠️ NEW LOG</div>
-            <div class="menu-btn" onclick="showSec('history')">🔍 HISTORY</div>
+        <div class="admin-menu">
+            <div class="menu-grid">
+                <div class="menu-btn" onclick="openEntry()" style="background:var(--gold); color:black;">🛠️ NEW LOG</div>
+                <div class="menu-btn" onclick="showSec('history')">🔍 HISTORY</div>
+            </div>
         </div>
 
         <div id="entryForm" class="admin-section" style="display:none;">
@@ -107,24 +115,26 @@
             <input type="text" id="cMach" placeholder="Machine Model">
             <div id="partsList">
                 <div class="part-row">
-                    <input type="text" class="p-name" placeholder="Item" style="flex:2;" oninput="sum()">
-                    <input type="number" class="p-price" placeholder="₹" style="flex:1;" oninput="sum()">
+                    <input type="text" class="p-name" placeholder="Work/Part Detail" oninput="sumTotal()">
+                    <input type="number" class="p-price" placeholder="₹" oninput="sumTotal()">
                 </div>
             </div>
-            <button onclick="addPart()" style="width:100%; background:none; border:1px dashed var(--gold); color:var(--gold); padding:8px; margin-bottom:10px;">+ Add Item</button>
+            <button onclick="addPartRow()" style="width:100%; background:#1e293b; color:var(--gold); border:1px solid var(--gold); padding:8px; border-radius:5px; margin:10px 0;">+ Add More Item</button>
+            <textarea id="wDetails" placeholder="Extra Work Details"></textarea>
             <div class="total-display">Total: ₹<span id="fTotal">0</span></div>
+            <label style="color:var(--gold); font-size: 11px;">Next Service Due:</label>
             <input type="date" id="nDate">
-            <div style="display:flex; gap:10px;">
-                <button class="wa-btn" style="background:var(--gold); color:black;" onclick="save()">💾 SAVE</button>
-                <button class="wa-btn" style="background:white; color:black;" onclick="printBill()">📄 PRINT</button>
+            <div style="display:flex; gap:10px; margin-top:15px;">
+                <button class="wa-btn" style="flex:1; background:var(--gold); color:black;" onclick="saveRecord()">💾 SAVE</button>
+                <button class="wa-btn" style="flex:1; background:white; color:black;" onclick="printThis()">📄 PRINT</button>
             </div>
         </div>
 
         <div id="history" style="display:none;">
-            <input type="text" id="search" onkeyup="filter()" placeholder="🔍 Search Customer..." class="box-in" style="background:none; color:white; border:1px solid var(--gold);">
+            <input type="text" id="search" onkeyup="filter()" placeholder="🔍 Search Customer..." style="width:100%; padding:12px; margin-bottom:15px; border:1px solid var(--gold); background:none; color:white; border-radius:8px;">
             <div class="table-container">
                 <table>
-                    <thead><tr><th>Client</th><th>Details</th><th>Due</th><th>Del</th></tr></thead>
+                    <thead><tr><th>Client</th><th>Details</th><th>Due Date</th><th>Del</th></tr></thead>
                     <tbody id="histBody"></tbody>
                 </table>
             </div>
@@ -133,78 +143,99 @@
 </div>
 
 <script>
-    // DASHBOARD FORMULAS (Original System)
     function unlockAdmin() { if (prompt("PIN:") === "7860") { document.getElementById('adminArea').style.display = 'block'; showSec('history'); } }
-    
+
+    function openEntry() {
+        showSec('entryForm');
+        let d = new Date(); d.setMonth(d.getMonth() + 6);
+        document.getElementById('nDate').value = d.toISOString().split('T')[0];
+    }
+
     function showSec(id) {
         document.getElementById('entryForm').style.display = 'none';
         document.getElementById('history').style.display = 'none';
         document.getElementById(id).style.display = 'block';
-        if(id === 'history') load();
+        if(id === 'history') loadHist();
     }
 
-    function addPart() {
+    function addPartRow() {
         let div = document.createElement('div'); div.className = 'part-row';
-        div.innerHTML = `<input type="text" class="p-name" style="flex:2;" oninput="sum()"><input type="number" class="p-price" style="flex:1;" oninput="sum()">`;
+        div.innerHTML = `<input type="text" class="p-name" placeholder="Item" oninput="sumTotal()"><input type="number" class="p-price" placeholder="₹" oninput="sumTotal()">`;
         document.getElementById('partsList').appendChild(div);
     }
 
-    function sum() {
-        let p = document.getElementsByClassName('p-price'), t = 0;
-        for(let v of p) { t += Number(v.value) || 0; }
-        document.getElementById('fTotal').innerText = t;
+    function sumTotal() {
+        let prices = document.getElementsByClassName('p-price');
+        let total = 0;
+        for(let p of prices) { total += Number(p.value) || 0; }
+        document.getElementById('fTotal').innerText = total;
     }
 
-    function printBill() {
+    function printThis() {
         document.getElementById('prName').innerText = document.getElementById('cName').value;
-        document.getElementById('prMob').innerText = document.getElementById('cMob').value;
         document.getElementById('prDate').innerText = new Date().toLocaleDateString('en-GB');
-        document.getElementById('prMach').innerText = document.getElementById('cMach').value;
         document.getElementById('prTotal').innerText = document.getElementById('fTotal').innerText;
-        let rows = document.getElementsByClassName('part-row'), h = '';
+        let rows = document.getElementsByClassName('part-row');
+        let html = '';
         for(let r of rows) {
-            let n = r.querySelector('.p-name').value, p = r.querySelector('.p-price').value;
-            if(n) h += `<tr><td>${n}</td><td style="text-align:right;">₹${p}</td></tr>`;
+            let n = r.querySelector('.p-name').value; let p = r.querySelector('.p-price').value;
+            if(n) html += `<tr><td>${n}</td><td>₹${p}</td></tr>`;
         }
-        document.getElementById('prBody').innerHTML = h;
+        document.getElementById('prBody').innerHTML = html;
         window.print();
     }
 
-    function save() {
-        let items = [], rows = document.getElementsByClassName('part-row');
+    function saveRecord() {
+        let items = [];
+        let rows = document.getElementsByClassName('part-row');
         for(let r of rows) {
-            let n = r.querySelector('.p-name').value, p = r.querySelector('.p-price').value;
-            if(n) items.push(`${n} (₹${p})`);
+            let n = r.querySelector('.p-name').value; let p = r.querySelector('.p-price').value;
+            if(n) items.push(n + " (₹" + p + ")");
         }
-        let d = { name: document.getElementById('cName').value, mob: document.getElementById('cMob').value, mach: document.getElementById('cMach').value, parts: items.join(", "), total: document.getElementById('fTotal').innerText, next: document.getElementById('nDate').value };
+        const data = {
+            name: document.getElementById('cName').value,
+            mob: document.getElementById('cMob').value,
+            total: document.getElementById('fTotal').innerText,
+            parts: items.join(", "),
+            next: document.getElementById('nDate').value
+        };
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
-        db.push(d); localStorage.setItem('srMasterDB', JSON.stringify(db));
-        alert("Saved!"); location.reload();
+        db.push(data); localStorage.setItem('srMasterDB', JSON.stringify(db));
+        alert("Record Saved!"); location.reload();
     }
 
-    function load() {
+    function loadHist() {
         let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
-        let h = '', today = new Date().toISOString().split('T')[0];
-        db.reverse().forEach((item, i) => {
+        let html = ''; let today = new Date().toISOString().split('T')[0];
+        db.reverse().forEach((item, index) => {
             let due = (item.next <= today);
-            h += `<tr class="${due ? 'due-row' : ''}"><td><b>${item.name}</b><br>${item.mob}</td><td>${item.parts}<br><b>₹${item.total}</b></td><td>${item.next}${due?'<br><b style="color:red">DUE</b>':''}</td><td><button onclick="del(${i})" style="color:red;border:none;background:none;">🗑️</button></td></tr>`;
+            html += `<tr class="${due ? 'due-row' : ''}">
+                <td><b>${item.name}</b><br><small>${item.mob}</small></td>
+                <td><small>${item.parts}</small><br><b>Total: ₹${item.total}</b></td>
+                <td style="${due?'color:#ef4444;font-weight:bold':''}">${item.next}${due?'<br><span class="due-alert">DUE</span>':''}</td>
+                <td><button onclick="del(${index})" style="color:red;border:none;background:none;cursor:pointer;">🗑️</button></td></tr>`;
         });
-        document.getElementById('histBody').innerHTML = h;
+        document.getElementById('histBody').innerHTML = html;
     }
 
     function filter() {
-        let v = document.getElementById('search').value.toLowerCase();
-        let r = document.getElementById('histBody').getElementsByTagName('tr');
-        for (let row of r) { row.style.display = row.innerText.toLowerCase().includes(v) ? '' : 'none'; }
+        let val = document.getElementById('search').value.toLowerCase();
+        let rows = document.getElementById('histBody').getElementsByTagName('tr');
+        for (let row of rows) { row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none'; }
     }
 
     function del(i) {
-        if(confirm("Delete?")) {
+        if(confirm("Delete record?")) {
             let db = JSON.parse(localStorage.getItem('srMasterDB'));
-            db.reverse().splice(i, 1); localStorage.setItem('srMasterDB', JSON.stringify(db.reverse())); load();
+            db.splice(db.length-1-i, 1); localStorage.setItem('srMasterDB', JSON.stringify(db)); loadHist();
         }
+    }
+
+    function sendServiceWA() {
+        let n = document.getElementById('custName').value;
+        let p = document.getElementById('custProblem').value;
+        window.open(`https://wa.me/919326113988?text=Service Request from ${n}: ${p}`);
     }
 </script>
 </body>
 </html>
-    
