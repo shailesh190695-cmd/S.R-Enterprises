@@ -10,27 +10,37 @@
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--dark-bg); color: var(--white); margin: 0; padding: 0; overflow-x: hidden; width: 100%; }
         .container { width: 100%; max-width: 600px; margin: auto; padding: 12px; }
 
-        /* Header Button Area */
-        .header { text-align: center; padding: 30px 10px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; -webkit-tap-highlight-color: transparent; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 22px; text-transform: uppercase; pointer-events: none; }
+        /* Header Dashboard Access */
+        .header { text-align: center; padding: 30px 10px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 22px; text-transform: uppercase; }
 
-        /* Dashboard UI */
+        /* Home Page Catalog */
+        .section-title { color: var(--gold); margin: 25px 0 10px 0; font-size: 18px; border-left: 4px solid var(--gold); padding-left: 10px; }
+        .catalog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .product-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 15px; text-align: center; }
+        .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 12px; border:none; width:100%; cursor:pointer; text-align:center; }
+
+        /* Admin Dashboard Area */
         #adminArea { display: none; margin-top: 30px; border-top: 2px dashed var(--gold); padding-top: 20px; }
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
         .menu-btn { background: var(--card-bg); border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; font-size: 14px; }
 
-        /* Forms & Inputs */
+        /* Forms Styling */
         .admin-section { background: var(--card-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; }
         .input-row { display: flex; align-items: center; margin-bottom: 10px; gap: 10px; }
         .input-row label { flex: 0 0 110px; font-size: 11px; color: var(--gold); font-weight: bold; text-transform: uppercase; }
-        .box-in { flex: 1; background: var(--white); border: 1px solid #444; padding: 12px; color: #000; border-radius: 6px; font-size: 14px; font-weight: bold; outline: none; }
-        .select-btn { background: var(--gold); color: #000; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 10px; }
+        .box-in { flex: 1; background: var(--white); border: 1px solid #444; padding: 10px; color: #000; border-radius: 6px; font-size: 14px; font-weight: bold; outline: none; }
+        .select-btn { background: var(--gold); color: #000; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 10px; }
 
-        /* Tables */
+        /* Billing Table */
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th { background: #1c2539; color: var(--gold); padding: 10px 5px; text-align: left; font-size: 11px; }
         .table-in { width: 100%; background: var(--white); border: 1px solid #ddd; padding: 8px; font-size: 13px; font-weight: bold; color: #000; border-radius: 4px; box-sizing: border-box; }
         .total-display { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 10px; display: flex; justify-content: space-between; }
+
+        /* History Tracker */
+        .table-container { overflow-x: auto; background: var(--card-bg); border-radius: 10px; }
+        .hist-table { width: 100%; border-collapse: collapse; }
         .hist-table td { padding: 12px 10px; border-bottom: 1px solid #1c2539; font-size: 12px; }
         .due-row { background: rgba(239, 68, 68, 0.15) !important; border-left: 4px solid #ef4444; }
 
@@ -38,11 +48,11 @@
         @media print {
             @page { size: A4; margin: 0; }
             body { background: white !important; color: black !important; zoom: 0.85; }
-            .container, .header, #adminArea, #homeView { display: none !important; }
-            .print-only { display: block !important; padding: 60px 30px !important; min-height: 95vh; position: relative; }
-            .p-header { border-bottom: 2px solid black; text-align: center; margin-bottom: 40px; }
+            .container, .header, #adminArea, .no-print { display: none !important; }
+            .print-only { display: block !important; padding: 50px 30px !important; min-height: 95vh; position: relative; }
+            .p-header { border-bottom: 2px solid black; text-align: center; margin-bottom: 30px; }
             .p-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            .p-table th, .p-table td { border: 1px solid black; padding: 12px; text-align: left; color: black !important; }
+            .p-table th, .p-table td { border: 1px solid black; padding: 10px; text-align: left; color: black !important; }
             .p-footer { position: absolute; bottom: 40px; left: 30px; right: 30px; display: flex !important; justify-content: space-between; border-top: 1px solid #000; padding-top: 20px; }
         }
         .print-only { display: none; }
@@ -57,10 +67,10 @@
         <div style="text-align:right;"><p><b>DATE:</b> <span id="prDate"></span></p><p><b>INV NO:</b> <span id="prNo"></span></p></div>
     </div>
     <table class="p-table">
-        <thead><tr><th>DESCRIPTION</th><th style="text-align:right;">AMOUNT</th></tr></thead>
+        <thead><tr><th>DESCRIPTION (WORK & PARTS)</th><th style="text-align:right;">AMOUNT</th></tr></thead>
         <tbody id="prBody"></tbody>
     </table>
-    <div class="p-total" style="text-align:right; font-size:24px; font-weight:bold; margin-top:20px; border-top:2px solid black;">TOTAL: ₹<span id="prTotal"></span></div>
+    <div class="p-total" style="text-align:right; font-size:24px; font-weight:bold; border-top:2px solid black; margin-top:20px;">TOTAL: ₹<span id="prTotal"></span></div>
     <div class="p-footer">
         <div style="font-size:12px;">SBI | A/c No: 44695199584<br>IFSC: SBIN0008373 | UPI: 7021733860@sbi</div>
         <div style="text-align:right;"><b>S.R ENTERPRISES</b><br><br><br>Authorised Signatory</div>
@@ -73,9 +83,16 @@
 
 <div class="container no-print">
     <div id="homeView">
-        <div class="catalog-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px;">
-            <div class="product-card"><h3>Hashima</h3><button class="wa-btn" style="background:#25d366; color:white; width:100%; padding:10px; border-radius:8px; border:none;" onclick="window.open('https://wa.me/919326113988')">ENQUIRY</button></div>
-            <div class="product-card"><h3>Oshima</h3><button class="wa-btn" style="background:#25d366; color:white; width:100%; padding:10px; border-radius:8px; border:none;" onclick="window.open('https://wa.me/919326113988')">ENQUIRY</button></div>
+        <div class="section-title">🏗️ Our Machines</div>
+        <div class="catalog-grid">
+            <div class="product-card"><h3>Hashima</h3><button class="wa-btn" onclick="window.open('https://wa.me/919326113988')">ENQUIRY</button></div>
+            <div class="product-card"><h3>Oshima</h3><button class="wa-btn" onclick="window.open('https://wa.me/919326113988')">ENQUIRY</button></div>
+        </div>
+        <div class="section-title">🛠️ Service Support</div>
+        <div class="admin-section" style="margin-top:15px;">
+            <input type="text" id="custName" placeholder="Aapka Naam" class="box-in" style="background:#0b0f1a; color:white; width:100%; margin-bottom:10px;">
+            <textarea id="custProblem" placeholder="Machine problem..." style="width:100%; height:80px; background:#0b0f1a; color:white; padding:10px; border-radius:8px; border:1px solid var(--border);"></textarea>
+            <button class="wa-btn" style="background:var(--gold); color:black;" onclick="window.open('https://wa.me/919326113988?text=Service Request')">SEND ON WHATSAPP</button>
         </div>
     </div>
 
@@ -92,26 +109,25 @@
             <div class="input-row"><label>NAME:</label><input type="text" id="cNameBill" class="box-in"></div>
             <div class="input-row"><label>MOBILE:</label><input type="text" id="cMobBill" class="box-in"><button class="select-btn" onclick="selectContact('cNameBill', 'cMobBill')">SELECT</button></div>
             <table id="billTable">
-                <thead><tr><th>ITEM</th><th>₹</th></tr></thead>
+                <thead><tr><th style="width:70%">ITEM</th><th style="width:30%">₹</th></tr></thead>
                 <tbody id="bBody">
                     <tr><td><input type="text" class="table-in p-name"></td><td><input type="number" class="table-in r-val" oninput="clc()"></td></tr>
                 </tbody>
             </table>
-            <button onclick="addItem()" style="width:100%; margin-top:10px; background:none; border:1px dashed var(--gold); color:var(--gold); padding:8px;">+ Add Item</button>
+            <button onclick="addItem()" class="menu-btn" style="width:100%; background:none; border:1px dashed var(--gold); color:var(--gold); margin:10px 0;">+ Add Item</button>
             <div class="total-display"><span>TOTAL:</span><span id="gTotal">₹0</span></div>
-            <div style="display:flex; gap:10px; margin-top:15px;"><button class="menu-btn" style="flex:1; background:var(--gold); color:black;" onclick="saveBill()">💾 SAVE</button><button class="menu-btn" style="flex:1; background:white; color:black;" onclick="printBill()">📄 PRINT</button></div>
+            <div style="display:flex; gap:10px; margin-top:15px;"><button class="wa-btn" style="flex:1; background:var(--gold); color:black;" onclick="saveBill()">💾 SAVE</button><button class="wa-btn" style="flex:1; background:white; color:black;" onclick="printBill()">📄 PRINT</button></div>
         </div>
 
         <div id="custLog" class="admin-section" style="display:none;">
             <div class="input-row"><label>NAME:</label><input type="text" id="logName" class="box-in"></div>
             <div class="input-row"><label>MOBILE:</label><input type="text" id="logMob" class="box-in"><button class="select-btn" onclick="selectContact('logName', 'logMob')">SELECT</button></div>
-            <textarea id="logParts" style="width:100%; height:80px; background:#0b0f1a; color:white; padding:10px; margin-top:10px; border-radius:8px; border:1px solid var(--border);" placeholder="Work Details"></textarea>
-            <div class="input-row" style="margin-top:10px;"><label>TOTAL ₹:</label><input type="number" id="logTotal" class="box-in"></div>
+            <textarea id="logParts" style="width:100%; height:80px; background:#0b0f1a; color:white; padding:10px; margin-top:10px; border-radius:8px;" placeholder="Work Details"></textarea>
+            <div class="input-row"><label>TOTAL:</label><input type="number" id="logTotal" class="box-in"></div>
             <div class="input-row"><label>DUE DATE:</label><input type="date" id="logNext" class="box-in"></div>
-            <button class="menu-btn" style="width:100%; background:var(--gold); color:black;" onclick="saveLog()">💾 SAVE RECORD</button>
+            <button class="wa-btn" style="background:var(--gold); color:black;" onclick="saveLog()">💾 SAVE RECORD</button>
         </div>
 
         <div id="history" style="display:none;">
-            <input type="text" id="search" onkeyup="filter()" placeholder="🔍 Search Customer..." style="width:100%; padding:12px; margin-bottom:10px; background:none; color:white; border:1px solid var(--gold); border-radius:8px;">
-            <div class="table-container"><table style="width:10
-                                             
+            <input type="text" id="search" onkeyup="filter()" placeholder="🔍 Search..." class="box-in" style="background:none
+                                                                                                             
