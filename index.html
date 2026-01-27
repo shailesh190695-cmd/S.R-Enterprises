@@ -10,18 +10,17 @@
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--dark-bg); color: var(--white); margin: 0; padding: 0; overflow-x: hidden; width: 100%; }
         .container { width: 100%; max-width: 600px; margin: auto; padding: 12px; }
 
-        /* Dashboard Header */
+        /* Header (Ispe click karne se Dashboard khulega) */
         .header { text-align: center; padding: 30px 10px; background: #1c2539; border-bottom: 3px solid var(--gold); cursor: pointer; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 22px; text-transform: uppercase; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 22px; text-transform: uppercase; pointer-events: none; }
 
+        /* Home Page Catalog */
         .section-title { color: var(--gold); margin: 25px 0 10px 0; font-size: 18px; border-left: 4px solid var(--gold); padding-left: 10px; }
-        
-        /* Catalog & Home Page */
         .catalog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .product-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 15px; text-align: center; }
         .wa-btn { display: block; background: #25d366; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 12px; border:none; width:100%; cursor:pointer; text-align:center; }
 
-        /* Admin Area Dashboard */
+        /* Admin Dashboard Hidden Area */
         #adminArea { display: none; margin-top: 30px; border-top: 2px dashed var(--gold); padding-top: 20px; }
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
         .menu-btn { background: var(--card-bg); border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; font-size: 14px; }
@@ -39,13 +38,13 @@
         .table-in { width: 100%; background: var(--white); border: 1px solid #ddd; padding: 8px; font-size: 13px; font-weight: bold; color: #000; border-radius: 4px; box-sizing: border-box; }
         .total-display { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 10px; display: flex; justify-content: space-between; }
 
-        /* History Tracker */
+        /* History Table */
         .table-container { overflow-x: auto; background: var(--card-bg); border-radius: 10px; }
         .hist-table { width: 100%; border-collapse: collapse; }
         .hist-table th, .hist-table td { padding: 12px 10px; border-bottom: 1px solid #1c2539; font-size: 12px; }
         .due-row { background: rgba(239, 68, 68, 0.15) !important; border-left: 4px solid #ef4444; }
 
-        /* 🖨️ FIXED PRINT LAYOUT */
+        /* Print Settings */
         @media print {
             @page { size: A4; margin: 0; }
             body { background: white !important; color: black !important; zoom: 0.85; }
@@ -80,77 +79,18 @@
     </div>
 </div>
 
-<div class="header" onclick="unlockAdmin()"><h1>S.R ENTERPRISES</h1></div>
+<div class="header" id="mainHeader">
+    <h1>S.R ENTERPRISES</h1>
+</div>
 
 <div class="container no-print">
     <div id="homeView">
         <div class="section-title">🏗️ Our Machines</div>
         <div class="catalog-grid">
-            <div class="product-card"><h3>Hashima</h3><button class="wa-btn" onclick="window.open('https://wa.me/919326113988?text=Hashima Enquiry')">ENQUIRY</button></div>
-            <div class="product-card"><h3>Oshima</h3><button class="wa-btn" onclick="window.open('https://wa.me/919326113988?text=Oshima Enquiry')">ENQUIRY</button></div>
+            <div class="product-card"><h3>Hashima</h3><button class="wa-btn" onclick="window.open('https://wa.me/919326113988')">ENQUIRY</button></div>
+            <div class="product-card"><h3>Oshima</h3><button class="wa-btn" onclick="window.open('https://wa.me/919326113988')">ENQUIRY</button></div>
         </div>
         <div class="section-title">🛠️ Service Request</div>
-        <div class="service-box">
-            <input type="text" id="custName" placeholder="Aapka Naam" class="box-in" style="background:#0b0f1a; color:white; width:100%; margin-bottom:10px;">
-            <textarea id="custProblem" placeholder="Machine problem..." style="width:100%; height:80px; background:#0b0f1a; color:white; padding:10px; border-radius:8px; border:1px solid var(--border);"></textarea>
-            <button class="wa-btn" style="background:var(--gold); color:black;" onclick="sendWA()">SEND ON WHATSAPP</button>
-        </div>
-    </div>
-
-    <div id="adminArea">
-        <div class="menu-grid">
-            <div class="menu-btn" onclick="showSec('entryForm')" style="background:var(--gold); color:black;">🛠️ NEW BILL</div>
-            <div class="menu-btn" onclick="showSec('custLog')">📝 NEW CUSTOMER</div>
-            <div class="menu-btn" onclick="showSec('history')" style="grid-column: span 2;">🔍 HISTORY</div>
-        </div>
-
-        <div id="entryForm" class="admin-section" style="display:none;">
-            <div class="input-row"><label>INV NO:</label><input type="text" id="invNo" placeholder="033" class="box-in"></div>
-            <div class="input-row"><label>DATE:</label><input type="text" id="invDate" class="box-in"></div>
-            <div class="input-row"><label>NAME:</label><input type="text" id="cNameBill" class="box-in"></div>
-            <div class="input-row"><label>MOBILE:</label><input type="text" id="cMobBill" class="box-in"><button class="select-btn" onclick="selectContact('cNameBill', 'cMobBill')">SELECT</button></div>
-            <table>
-                <thead><tr><th style="width:60%">DESCRIPTION</th><th style="width:40%">AMOUNT</th></tr></thead>
-                <tbody id="bBody">
-                    <tr><td><input type="text" class="table-in p-name" placeholder="Item/Work..."></td><td><input type="number" class="table-in r-val" value="0" oninput="clc()"></td></tr>
-                </tbody>
-            </table>
-            <button onclick="addItem()" class="menu-btn" style="width:100%; background:none; border:1px dashed var(--gold); color:var(--gold); margin:10px 0;">+ Add Item</button>
-            <div class="total-display"><span>TOTAL:</span><span id="gTotal">₹0</span></div>
-            <div style="display:flex; gap:10px; margin-top:15px;"><button class="wa-btn" style="flex:1; background:var(--gold); color:black;" onclick="saveBill()">💾 SAVE</button><button class="wa-btn" style="flex:1; background:white; color:black;" onclick="printBill()">📄 PRINT</button></div>
-        </div>
-
-        <div id="custLog" class="admin-section" style="display:none;">
-            <div class="input-row"><label>NAME:</label><input type="text" id="logName" class="box-in"></div>
-            <div class="input-row"><label>MOBILE:</label><input type="text" id="logMob" class="box-in"><button class="select-btn" onclick="selectContact('logName', 'logMob')">SELECT</button></div>
-            <textarea id="logParts" placeholder="Work Details / Parts Used" style="width:100%; background:#0b0f1a; color:white; padding:10px; margin-top:10px; border-radius:8px;"></textarea>
-            <div class="input-row"><label>TOTAL ₹:</label><input type="number" id="logTotal" class="box-in"></div>
-            <div class="input-row"><label>NEXT DUE:</label><input type="date" id="logNext" class="box-in"></div>
-            <button class="wa-btn" style="background:var(--gold); color:black;" onclick="saveLog()">💾 SAVE RECORD</button>
-        </div>
-
-        <div id="history" style="display:none;">
-            <input type="text" id="search" onkeyup="filter()" placeholder="🔍 Search Customer..." class="box-in" style="background:none; color:white; border:1px solid var(--gold); margin-bottom:10px; width:100%;">
-            <div class="table-container"><table class="hist-table"><thead><tr><th>Client</th><th>Details</th><th>Due</th><th>Del</th></tr></thead><tbody id="histBody"></tbody></table></div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function unlockAdmin() { if (prompt("PIN:") === "7860") { document.getElementById('adminArea').style.display = 'block'; document.getElementById('homeView').style.display = 'none'; showSec('history'); } }
-    function showSec(id) { document.getElementById('entryForm').style.display = 'none'; document.getElementById('custLog').style.display = 'none'; document.getElementById('history').style.display = 'none'; document.getElementById(id).style.display = 'block'; if(id === 'entryForm') document.getElementById('invDate').value = new Date().toLocaleDateString('en-GB'); if(id === 'history') loadHist(); }
-    async function selectContact(nId, mId) { try { const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if (contacts.length > 0) { document.getElementById(nId).value = contacts[0].name[0]; document.getElementById(mId).value = contacts[0].tel[0].replace(/\s/g, ''); } } catch (err) { alert("Contact select karne ke liye Chrome/HTTPS zaroori hai!"); } }
-    function addItem() { let tr = document.createElement('tr'); tr.innerHTML = `<td><input type="text" class="table-in p-name"></td><td><input type="number" class="table-in r-val\" value=\"0\" oninput=\"clc()\"></td>`; document.getElementById('bBody').appendChild(tr); }
-    function clc() { let rs = document.getElementsByClassName('r-val'), sub = 0; for(let v of rs) { sub += Number(v.value) || 0; } document.getElementById('gTotal').innerText = "₹" + sub; }
-    function saveBill() { saveDB(document.getElementById('cNameBill').value, document.getElementById('cMobBill').value, 'Bill Record', document.getElementById('gTotal').innerText, ''); }
-    function saveLog() { saveDB(document.getElementById('logName').value, document.getElementById('logMob').value, document.getElementById('logParts').value, '₹'+document.getElementById('logTotal').value, document.getElementById('logNext').value); }
-    function saveDB(n, m, p, t, nxt) { if(!n) return alert("Customer Name bhariye!"); let db = JSON.parse(localStorage.getItem('srMasterDB')) || []; db.push({name:n, mob:m, parts:p, total:t, next:nxt, date:new Date().toLocaleDateString('en-GB')}); localStorage.setItem('srMasterDB', JSON.stringify(db)); alert("Saved!"); location.reload(); }
-    function loadHist() { let db = JSON.parse(localStorage.getItem('srMasterDB')) || []; let h = '', today = new Date().toISOString().split('T')[0]; db.reverse().forEach((item, i) => { let due = (item.next && item.next <= today); h += `<tr class="${due?'due-row':''}"><td><b>${item.name}</b><br><small>${item.mob}</small></td><td>${item.total}<br><small>${item.parts}</small></td><td>${item.next||'-'}${due?'<br><b style=\"color:red\">DUE</b>':''}</td><td><button onclick=\"del(${i})\" style=\"color:red;border:none;background:none;\">🗑️</button></td></tr>`; }); document.getElementById('histBody').innerHTML = h; }
-    function printBill() { document.getElementById('prName').innerText = document.getElementById('cNameBill').value; document.getElementById('prMob').innerText = document.getElementById('cMobBill').value; document.getElementById('prNo').innerText = document.getElementById('invNo').value; document.getElementById('prDate').innerText = document.getElementById('invDate').value; document.getElementById('prTotal').innerText = document.getElementById('gTotal').innerText.replace('₹',''); let names = document.getElementsByClassName('p-name'), rates = document.getElementsByClassName('r-val'), h = ''; for(let i=0; i<names.length; i++) { if(names[i].value) h += `<tr><td>${names[i].value}</td><td style=\"text-align:right;\">₹${rates[i].value}</td></tr>`; } document.getElementById('prBody').innerHTML = h; window.print(); }
-    function filter() { let v = document.getElementById('search').value.toLowerCase(); let rows = document.getElementById('histBody').getElementsByTagName('tr'); for (let r of rows) r.style.display = r.innerText.toLowerCase().includes(v) ? '' : 'none'; }
-    function del(i) { if(confirm(\"Delete Record?\")) { let db = JSON.parse(localStorage.getItem('srMasterDB')); db.reverse().splice(i, 1); localStorage.setItem('srMasterDB', JSON.stringify(db.reverse())); loadHist(); } }
-    function sendWA() { window.open(`https://wa.me/919326113988?text=Service Request from ${document.getElementById('custName').value}: ${document.getElementById('custProblem').value}`); }
-</script>
-</body>
-                                           </html>
-    
+        <div class="service-box" style="background:var(--card-bg); padding:15px; border-radius:12px; border: 2px solid var(--gold); margin-top:15px;">
+            <input type="text" id="custName" placeholder="Aapka Naam" class="box-in
+                
