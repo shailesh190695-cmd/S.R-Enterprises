@@ -7,44 +7,33 @@
     <style>
         :root { --bg: #0b1120; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 10px; }
-        .app-container { max-width: 500px; margin: auto; background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .app-container { max-width: 500px; margin: auto; background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid #334155; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid var(--gold); padding-bottom: 10px; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 20px; }
+        .meta-row { display: flex; justify-content: flex-end; align-items: center; gap: 5px; margin-bottom: 5px; font-size: 10px; }
+        .meta-row div { background: white; color: black; padding: 2px 8px; border-radius: 4px; font-weight: bold; min-width: 65px; text-align: center; }
         
-        /* Header Section */
-        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; border-bottom: 1px solid var(--gold); padding-bottom: 10px; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 20px; line-height: 1.2; }
-        .meta-box { text-align: right; }
-        .meta-row { display: flex; justify-content: flex-end; align-items: center; gap: 5px; margin-bottom: 5px; }
-        .meta-row span { color: var(--gold); font-size: 10px; font-weight: bold; }
-        .meta-row div { background: white; color: black; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 12px; min-width: 65px; text-align: center; }
-
-        /* Label Samne Box Samne Layout */
+        /* Label Samne Box Layout */
         .form-row { display: flex; align-items: center; margin-bottom: 12px; gap: 10px; }
         .form-row label { flex: 1.2; color: var(--gold); font-size: 11px; font-weight: bold; text-transform: uppercase; }
-        .form-row .input-container { flex: 2.5; display: flex; gap: 5px; }
-        
-        input, select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: white; color: black; font-weight: 500; font-size: 13px; outline: none; }
-        
-        /* Select Button */
-        .select-btn { background: var(--gold); border: none; padding: 0 15px; border-radius: 8px; font-weight: bold; cursor: pointer; color: black; font-size: 11px; height: 38px; }
+        .input-container { flex: 2.5; display: flex; gap: 5px; }
+        input, select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: white; color: black; font-weight: 500; font-size: 13px; }
+        .select-btn { background: var(--gold); border: none; padding: 0 15px; border-radius: 8px; font-weight: bold; cursor: pointer; height: 38px; color: black; }
 
-        /* Item Row Design */
-        .item-header { display: flex; gap: 5px; font-size: 10px; color: var(--gold); margin-top: 20px; margin-bottom: 5px; text-transform: uppercase; font-weight: bold; }
-        .item-row { display: flex; gap: 5px; align-items: center; margin-bottom: 10px; }
-        .add-btn { border: 1px dashed var(--gold); background: rgba(251, 191, 36, 0.1); color: var(--gold); padding: 10px; width: 100%; border-radius: 10px; margin: 10px 0; cursor: pointer; font-weight: bold; font-size: 12px; }
+        /* Multi-Item Section */
+        .item-list { margin-top: 20px; border-top: 1px solid #334155; padding-top: 10px; }
+        .item-header { display: flex; color: var(--gold); font-size: 10px; font-weight: bold; margin-bottom: 5px; }
+        .item-row { display: flex; gap: 5px; margin-bottom: 8px; align-items: center; }
+        .add-btn { border: 1px dashed var(--gold); background: rgba(251, 191, 36, 0.1); color: var(--gold); padding: 10px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold; margin: 10px 0; }
 
-        .grand-total-box { text-align: right; font-size: 20px; font-weight: bold; color: var(--gold); margin: 20px 0; border-top: 1px solid #334155; padding-top: 10px; }
-        
-        .btn-group { display: flex; gap: 10px; }
-        .btn { flex: 1; padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; }
+        .summary-box { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; margin-top: 20px; border: 1px dashed var(--gold); }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px; }
+        .grand-total { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 1px solid #475569; padding-top: 10px; margin-top: 10px; }
+
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        .btn { flex: 1; padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; font-size: 14px; }
         .btn-wa { background: var(--green); color: white; }
         .btn-print { background: var(--gold); color: black; }
-
-        @media print {
-            body { background: white !important; color: black !important; padding: 40px !important; }
-            .btn-group, .add-btn, .select-btn, .app-container { border: none; box-shadow: none; width: 100%; max-width: 100%; }
-            input, select { border: none; background: none; padding: 0; }
-            .no-print { display: none !important; }
-        }
     </style>
 </head>
 <body>
@@ -58,52 +47,32 @@
         </div>
     </div>
 
-    <div class="form-row">
-        <label>Customer Name:</label>
-        <div class="input-container"><input type="text" id="custName" placeholder="Full Name"></div>
-    </div>
+    <div class="form-row"><label>Customer Name:</label><div class="input-container"><input type="text" id="custName"></div></div>
+    <div class="form-row"><label>Address:</label><div class="input-container"><input type="text" id="custAddr"></div></div>
+    <div class="form-row"><label>Mobile No:</label><div class="input-container"><input type="text" id="mob"><button class="select-btn">SELECT</button></div></div>
 
-    <div class="form-row">
-        <label>Address:</label>
-        <div class="input-container"><input type="text" id="custAddr" placeholder="Customer Address"></div>
-    </div>
-
-    <div class="form-row">
-        <label>Mobile No:</label>
-        <div class="input-container">
-            <input type="text" id="mob" placeholder="98XXXXXXXX">
-            <button class="select-btn">SELECT</button>
+    <div class="item-list">
+        <div class="item-header"><div style="flex:2">Description</div><div style="flex:1; text-align:center;">Rate</div><div style="flex:0.6; text-align:center;">Qty</div><div style="flex:1; text-align:right;">Total</div></div>
+        <div id="itemContainer">
+            <div class="item-row">
+                <input type="text" style="flex:2" class="i-desc" placeholder="Service/Part">
+                <input type="number" style="flex:1; text-align:center;" class="i-rate" value="0" oninput="calculate()">
+                <input type="number" style="flex:0.6; text-align:center;" class="i-qty" value="1" oninput="calculate()">
+                <div style="flex:1; color: var(--gold); text-align: right; font-weight: bold;" class="i-total">₹0.00</div>
+            </div>
         </div>
     </div>
 
-    <div class="form-row">
-        <label>Machine Name:</label>
-        <div class="input-container"><input type="text" id="macName" placeholder="Hashima / Oshima"></div>
-    </div>
+    <button class="add-btn" onclick="addItem()">+ ADD ITEM / WORK</button>
 
-    <div class="form-row">
-        <label>Job Type:</label>
-        <div class="input-container"><input type="text" id="jobType" placeholder="Repairing / Service"></div>
-    </div>
+    <div class="form-row"><label>GST (%):</label><div class="input-container"><select id="gstRate" onchange="calculate()"><option value="0">0%</option><option value="18" selected>18%</option></select></div></div>
+    <div class="form-row"><label>Discount (₹):</label><div class="input-container"><input type="number" id="discount" value="0" oninput="calculate()"></div></div>
 
-    <div class="item-header">
-        <div style="flex:2">Description</div>
-        <div style="flex:1; text-align:center;">Rate</div>
-        <div style="flex:0.6; text-align:center;">Qty</div>
-        <div style="flex:1; text-align:right;">Total</div>
-    </div>
-    
-    <div class="item-row">
-        <input type="text" style="flex:2" id="desc" placeholder="Service/Part">
-        <input type="number" style="flex:1; text-align:center;" id="rate" oninput="calculate()" value="0">
-        <input type="number" style="flex:0.6; text-align:center;" id="qty" oninput="calculate()" value="1">
-        <div style="flex:1; color: var(--gold); text-align: right; font-weight: bold;" id="lineTotal">₹0.00</div>
-    </div>
-
-    <button class="add-btn">+ ADD ITEM / WORK</button>
-
-    <div class="grand-total-box">
-        GRAND TOTAL: <span id="grandTotal">₹0.00</span>
+    <div class="summary-box">
+        <div class="summary-row"><span>Base Amount:</span><span id="baseVal">₹0.00</span></div>
+        <div class="summary-row"><span>Tax (GST):</span><span id="taxVal">₹0.00</span></div>
+        <div class="summary-row"><span>Discount:</span><span id="discVal">₹0.00</span></div>
+        <div class="grand-total"><div class="summary-row"><span>TOTAL:</span><span id="grandTotal">₹0.00</span></div></div>
     </div>
 
     <div class="btn-group">
@@ -115,31 +84,59 @@
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwxyLkLvxrvZCTQlprdm3ekBdhuEmWXpsWsJ5a6-P9TYntcCBlo_8SCVpsYNvyQoVzG/exec';
 
-    // Set Date and Auto Invoice
+    // Invoice & Date logic
     let today = new Date().toLocaleDateString('en-GB');
     document.getElementById('currDate').innerText = today;
     let inv = localStorage.getItem('sr_invoice_no') || 33;
     document.getElementById('invNum').innerText = inv.toString().padStart(3, '0');
 
+    function addItem() {
+        const container = document.getElementById('itemContainer');
+        const div = document.createElement('div');
+        div.className = 'item-row';
+        div.innerHTML = `<input type="text" style="flex:2" class="i-desc" placeholder="Service/Part"><input type="number" style="flex:1; text-align:center;" class="i-rate" value="0" oninput="calculate()"><input type="number" style="flex:0.6; text-align:center;" class="i-qty" value="1" oninput="calculate()"><div style="flex:1; color: var(--gold); text-align: right; font-weight: bold;" class="i-total">₹0.00</div>`;
+        container.appendChild(div);
+    }
+
     function calculate() {
-        let r = parseFloat(document.getElementById('rate').value) || 0;
-        let q = parseFloat(document.getElementById('qty').value) || 0;
-        let t = r * q;
-        document.getElementById('lineTotal').innerText = "₹" + t.toFixed(2);
-        document.getElementById('grandTotal').innerText = "₹" + t.toFixed(2);
-        return t;
+        let base = 0;
+        document.querySelectorAll('.item-row').forEach(row => {
+            let r = parseFloat(row.querySelector('.i-rate').value) || 0;
+            let q = parseFloat(row.querySelector('.i-qty').value) || 0;
+            let line = r * q;
+            row.querySelector('.i-total').innerText = "₹" + line.toFixed(2);
+            base += line;
+        });
+        let gst = parseFloat(document.getElementById('gstRate').value) || 0;
+        let disc = parseFloat(document.getElementById('discount').value) || 0;
+        let tax = (base * gst) / 100;
+        let final = (base + tax) - disc;
+
+        document.getElementById('baseVal').innerText = "₹" + base.toFixed(2);
+        document.getElementById('taxVal').innerText = "₹" + tax.toFixed(2);
+        document.getElementById('discVal').innerText = "₹" + disc.toFixed(2);
+        document.getElementById('grandTotal').innerText = "₹" + final.toFixed(2);
+        return final;
     }
 
     function sendBill() {
-        let name = document.getElementById('custName').value;
-        let total = calculate();
-        if(!name || total <= 0) { alert("Please fill details!"); return; }
+        const name = document.getElementById('custName').value;
+        const finalTotal = calculate();
+        if(!name || finalTotal <= 0) { alert("Details bhariye!"); return; }
 
         localStorage.setItem('sr_invoice_no', parseInt(inv) + 1);
 
-        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ custName: name, total: total, type: "SIDE_LABEL_LAYOUT" }) });
+        // Fixing Error 400 with proper encoding
+        const formData = new URLSearchParams({
+            invNo: inv,
+            custName: name,
+            total: finalTotal,
+            type: "APP_MULTI_ITEM"
+        });
 
-        let msg = `*S.R ENTERPRISES*%0A*Invoice:* ${inv}%0A*Customer:* ${name}%0A*Grand Total:* ₹${total}%0A--------------------------%0A*Pay via UPI:* 7021733860@okbizaxis`;
+        fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' });
+
+        let msg = `*S.R ENTERPRISES*%0A*Invoice:* ${inv}%0A*Customer:* ${name}%0A*Total:* ₹${finalTotal.toFixed(2)}%0A--------------------------%0A*Pay via UPI:* 7021733860@okbizaxis`;
         window.open(`https://wa.me/919326113988?text=${msg}`);
         setTimeout(() => location.reload(), 2000);
     }
