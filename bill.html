@@ -3,35 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Billing System</title>
+    <title>S.R ENTERPRISES | Professional Billing</title>
     <style>
         :root { --bg: #0f172a; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 15px; }
-        .app-card { max-width: 500px; margin: auto; background: var(--card); border-radius: 15px; padding: 20px; border: 1px solid #334155; }
-        .header { border-bottom: 2px solid var(--gold); margin-bottom: 20px; padding-bottom: 10px; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 22px; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 10px; }
         
-        .input-group { margin-bottom: 15px; }
+        /* App UI Design */
+        .app-card { max-width: 480px; margin: auto; background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .header { border-bottom: 2px solid var(--gold); margin-bottom: 20px; padding-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 22px; text-transform: uppercase; }
+        .inv-badge { background: var(--gold); color: black; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 14px; }
+        
         label { display: block; color: var(--gold); font-size: 11px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
-        input, select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; box-sizing: border-box; }
+        input, select { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: white; box-sizing: border-box; }
         
-        .row { display: flex; gap: 10px; margin-bottom: 10px; }
-        .total-box { text-align: center; border: 1px dashed var(--gold); padding: 15px; border-radius: 10px; margin: 15px 0; }
-        .grand-total { font-size: 24px; font-weight: bold; color: var(--gold); }
+        .row { display: flex; gap: 10px; }
+        .total-section { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; margin: 15px 0; border: 1px dashed var(--gold); }
+        .total-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .grand-total { border-top: 1px solid #475569; padding-top: 10px; font-size: 24px; font-weight: bold; color: var(--gold); }
 
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
-        .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .btn { padding: 16px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-wa { background: var(--green); color: white; }
         .btn-print { background: var(--gold); color: black; }
 
-        /* PRINT SETTINGS */
+        /* PRINT STYLING - Ekdum Professional */
         @media print {
+            @page { margin: 1cm; }
             body { background: white !important; color: black !important; padding: 40px !important; }
-            .app-card { border: none; box-shadow: none; width: 100%; max-width: 100%; padding: 0; margin-top: 20px !important; }
-            .btn-group, input, select, label, .no-print { display: none !important; }
+            .app-card { border: none; box-shadow: none; max-width: 100%; width: 100%; padding: 0; margin-top: 50px !important; }
+            .btn-group, label, input, select, .no-print, .header p { display: none !important; }
             .print-only { display: block !important; }
-            .print-header { text-align: left; border-bottom: 2px solid black; margin-bottom: 20px; padding-bottom: 10px; }
-            .total-box { border: 1px solid black; color: black; }
+            .print-header { border-bottom: 2px solid black; padding-bottom: 15px; margin-bottom: 30px; }
+            .total-section { border: 1px solid black; color: black; background: none; }
+            .grand-total { color: black !important; }
         }
         .print-only { display: none; color: black; }
     </style>
@@ -40,68 +45,74 @@
 
 <div class="app-card">
     <div class="header">
-        <h1>S.R ENTERPRISES</h1>
-        <p style="font-size: 10px; color: #94a3b8; margin: 5px 0 0 0;">FUSING MACHINE SPECIALIST</p>
+        <div>
+            <h1>S.R Enterprises</h1>
+            <p style="font-size: 10px; color: #94a3b8; margin:0;">Fusing Machine Specialist</p>
+        </div>
+        <div class="inv-badge" id="invDisplay">INV-1</div>
     </div>
 
     <div class="print-only print-header">
-        <h1 style="font-size: 30px;">INVOICE / BILL</h1>
-        <p>Prop: Hariram Sitaram Rajbhar | Contact: 9326113988</p>
+        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+            <div>
+                <h1 style="font-size: 32px; margin: 0; color: black;">TAX INVOICE</h1>
+                <p style="margin: 5px 0; font-size: 14px;"><b>Prop:</b> Hariram Sitaram Rajbhar | <b>Mob:</b> 9326113988</p>
+            </div>
+            <div style="text-align: right; font-size: 14px;">
+                <b id="pInvNo">Invoice No: SR-1</b><br>
+                <span id="pDate">Date: 31/01/2026</span>
+            </div>
+        </div>
     </div>
 
-    <div class="input-group">
-        <label>Customer Name</label>
-        <input type="text" id="custName" placeholder="Full Name">
-    </div>
-    <div class="input-group">
-        <label>Address</label>
-        <input type="text" id="custAddr" placeholder="Customer Address">
-    </div>
+    <label>Customer Details</label>
+    <input type="text" id="cName" placeholder="Customer Name">
+    <input type="text" id="cAddr" placeholder="Address / City">
+
+    <label>Machine & Service Details</label>
+    <input type="text" id="item" placeholder="e.g. Hashima Repair / Service">
 
     <div class="row">
-        <div style="flex:2"><label>Machine Name</label><input type="text" id="machine" placeholder="Hashima / Oshima"></div>
-        <div style="flex:2"><label>Job Type</label><input type="text" id="job" placeholder="Repairing / Service"></div>
-    </div>
-
-    <div class="row">
-        <div style="flex:2"><label>Rate (₹)</label><input type="number" id="rate" oninput="calc()"></div>
-        <div style="flex:1"><label>Qty</label><input type="number" id="qty" value="1" oninput="calc()"></div>
+        <div style="flex:2"><label>Rate (₹)</label><input type="number" id="rate" oninput="calculate()"></div>
+        <div style="flex:1"><label>Qty</label><input type="number" id="qty" value="1" oninput="calculate()"></div>
     </div>
 
     <div class="row">
         <div style="flex:1"><label>GST (%)</label>
-            <select id="gst" onchange="calc()">
+            <select id="gst" onchange="calculate()">
                 <option value="0">0%</option>
-                <option value="18">18%</option>
+                <option value="18" selected>18%</option>
             </select>
         </div>
-        <div style="flex:1"><label>Discount (₹)</label><input type="number" id="disc" value="0" oninput="calc()"></div>
+        <div style="flex:1"><label>Discount (₹)</label><input type="number" id="disc" value="0" oninput="calculate()"></div>
     </div>
 
-    <div class="total-box">
-        <span style="font-size: 14px;">GRAND TOTAL</span>
-        <div class="grand-total" id="totalDisplay">₹ 0.00</div>
+    <div class="total-section">
+        <div class="total-row"><span>Base Amount:</span><span id="base">₹0.00</span></div>
+        <div class="total-row"><span>Tax (GST):</span><span id="tax">₹0.00</span></div>
+        <div class="total-row"><span>Discount:</span><span id="ds">₹0.00</span></div>
+        <div class="grand-total"><div class="total-row"><span>TOTAL:</span><span id="total">₹0.00</span></div></div>
     </div>
 
-    <div class="print-only" style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
-        <div style="display: flex; gap: 40px; align-items: center;">
+    <div class="print-only" style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px;">
+        <div style="display: flex; gap: 50px; align-items: center;">
             <div style="text-align: center;">
-                <p style="font-size: 12px; font-weight: bold;">SCAN TO PAY</p>
+                <p style="font-size: 12px; font-weight: bold; margin-bottom: 5px;">SCAN TO PAY</p>
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=7021733860@okbizaxis%26pn=Hariram%20Sitaram%20Rajbhar" width="120">
             </div>
             <div style="font-size: 14px; line-height: 1.8;">
-                <h3 style="margin:0 0 10px 0;">BANK DETAILS:</h3>
-                <b>A/C Holder:</b> Hariram Sitaram Rajbhar<br>
+                <h3 style="margin:0 0 10px 0; border-bottom: 1px solid #000; display: inline-block;">BANK ACCOUNT DETAILS:</h3><br>
+                <b>Account Holder:</b> Hariram Sitaram Rajbhar<br>
                 <b>UPI ID:</b> 7021733860@okbizaxis<br>
-                <b>Bank Name:</b> [Bank Name Likhein]<br>
-                <b>A/C No:</b> [Number Likhein]<br>
-                <b>IFSC:</b> [IFSC Likhein]
+                <b>Bank:</b> [Bank Name Likhein]<br>
+                <b>A/C No:</b> [A/C Number Likhein]<br>
+                <b>IFSC:</b> [IFSC Code Likhein]
             </div>
         </div>
     </div>
 
     <div class="btn-group">
-        <button class="btn btn-wa" onclick="sendWA()">📲 WHATSAPP BILL</button>
+        <button class="btn btn-wa" onclick="sendWA()">📲 SEND BILL & SAVE</button>
         <button class="btn btn-print" onclick="window.print()">🖨️ PRINT / SAVE PDF</button>
     </div>
 </div>
@@ -109,35 +120,53 @@
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwxyLkLvxrvZCTQlprdm3ekBdhuEmWXpsWsJ5a6-P9TYntcCBlo_8SCVpsYNvyQoVzG/exec';
 
-    function calc() {
+    // Sequence Generator Logic
+    let lastInv = localStorage.getItem('sr_inv_no') || 100; // 100 se shuru hoga
+    let currentInv = parseInt(lastInv) + 1;
+    let invID = "SR-" + currentInv;
+
+    document.getElementById('invDisplay').innerText = invID;
+    document.getElementById('pInvNo').innerText = "Invoice No: " + invID;
+    document.getElementById('pDate').innerText = "Date: " + new Date().toLocaleDateString('en-IN');
+
+    function calculate() {
         let r = parseFloat(document.getElementById('rate').value) || 0;
         let q = parseFloat(document.getElementById('qty').value) || 0;
         let g = parseFloat(document.getElementById('gst').value) || 0;
         let d = parseFloat(document.getElementById('disc').value) || 0;
 
-        let base = r * q;
-        let tax = (base * g) / 100;
-        let total = (base + tax) - d;
+        let b = r * q;
+        let t = (b * g) / 100;
+        let final = (b + t) - d;
 
-        document.getElementById('totalDisplay').innerText = "₹ " + total.toFixed(2);
-        return { base, tax, total, disc: d, gst: g };
+        document.getElementById('base').innerText = "₹" + b.toFixed(2);
+        document.getElementById('tax').innerText = "₹" + t.toFixed(2);
+        document.getElementById('ds').innerText = "₹" + d.toFixed(2);
+        document.getElementById('total').innerText = "₹" + final.toFixed(2);
+        return final;
     }
 
     function sendWA() {
-        let name = document.getElementById('custName').value;
-        let machine = document.getElementById('machine').value;
-        let v = calc();
+        let name = document.getElementById('cName').value;
+        let item = document.getElementById('item').value;
+        let finalVal = calculate();
 
-        if(!name || !machine || v.base == 0) { alert("Details bhariye Shailesh ji!"); return; }
+        if(!name || !item || finalVal <= 0) { alert("Details bhariye Shailesh ji!"); return; }
 
-        // Sheet Save
-        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ custName: name, item: machine, total: v.total, type: "GST BILL" }) });
+        // Save Current Invoice No
+        localStorage.setItem('sr_inv_no', currentInv);
 
-        // WhatsApp to Support Number 9326113988
-        let msg = `*S.R ENTERPRISES*%0A--------------------------%0A*Cust:* ${name}%0A*Machine:* ${machine}%0A*Total:* ₹${v.total}%0A--------------------------%0A*UPI:* 7021733860@okbizaxis`;
+        // Google Sheet
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ invNo: invID, custName: name, item: item, total: finalVal }) });
+
+        // WhatsApp to 9326113988
+        let msg = `*S.R ENTERPRISES*%0A*Invoice:* ${invID}%0A*Cust:* ${name}%0A*Total:* ₹${finalVal.toFixed(2)}%0A--------------------------%0A*UPI:* 7021733860@okbizaxis`;
         window.open(`https://wa.me/919326113988?text=${msg}`);
+        
+        setTimeout(() => { location.reload(); }, 2000);
     }
 </script>
 
 </body>
-</html>
+        </html>
+    
