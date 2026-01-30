@@ -7,65 +7,66 @@
     <style>
         :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; }
         body { font-family: sans-serif; background: var(--dark-bg); color: white; padding: 15px; margin: 0; }
-        .bill-card { background: var(--card-bg); padding: 20px; border-radius: 15px; border: 1px solid var(--gold); max-width: 500px; margin: 20px auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .bill-card { background: var(--card-bg); padding: 20px; border-radius: 15px; border: 1px solid var(--gold); max-width: 500px; margin: 20px auto; }
         input { width: 100%; padding: 12px; margin: 5px 0 15px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
-        label { color: var(--gold); font-size: 12px; font-weight: bold; text-transform: uppercase; }
+        label { color: var(--gold); font-size: 12px; font-weight: bold; }
         .type-btn { padding: 12px; border: 1px solid var(--gold); background: transparent; color: var(--gold); cursor: pointer; width: 48%; border-radius: 8px; font-weight: bold; }
         .active { background: var(--gold); color: black; }
         .total-box { text-align: center; border: 2px dashed var(--gold); padding: 15px; margin: 15px 0; border-radius: 10px; }
-        .send-btn { background: #25D366; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
-        .loading { display:none; color: var(--gold); text-align: center; margin-bottom: 10px; font-size: 14px; }
+        .btn-group { display: flex; gap: 10px; flex-direction: column; }
+        .send-btn { background: #25D366; color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        .print-btn { background: #e2e8f0; color: #0f172a; border: none; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        .loading { display:none; color: var(--gold); text-align: center; margin-bottom: 10px; }
+        @media print {
+            body { background: white; color: black; }
+            .bill-card { border: none; box-shadow: none; margin: 0; padding: 0; width: 100%; max-width: none; }
+            .btn-group, .type-btn, label, input, .loading, a { display: none !important; }
+            .total-box { border: 1px solid black; color: black; }
+            #t { color: black !important; }
+            .print-only { display: block !important; }
+        }
+        .print-only { display: none; color: black; text-align: center; margin-bottom: 20px; }
     </style>
 </head>
 <body>
-    <div class="bill-card">
+    <div class="bill-card" id="printableArea">
+        <div class="print-only">
+            <h1>S.R ENTERPRISES</h1>
+            <p>Invoice / Service Receipt</p>
+            <hr>
+        </div>
         <h2 style="text-align:center; color:var(--gold); margin-top:0;">S.R ENTERPRISES</h2>
-        
         <div style="display:flex; justify-content: space-between; margin-bottom:15px;">
             <button class="type-btn active" id="s1" onclick="setType('SALE')">SALE</button>
             <button class="type-btn" id="s2" onclick="setType('SERVICE')">SERVICE</button>
         </div>
-
-        <label>Customer Name</label>
-        <input type="text" id="n" placeholder="Naam likhein">
-
-        <label>Customer Address</label>
-        <input type="text" id="a" placeholder="Shehar ya Pata">
-
-        <label>Item Name</label>
-        <input type="text" id="i" placeholder="Machine ya Part ka naam">
-
+        <label>Customer Name</label><input type="text" id="n" placeholder="Customer Name">
+        <label>Customer Address</label><input type="text" id="a" placeholder="Address">
+        <label>Item Name</label><input type="text" id="i" placeholder="Item/Service Name">
         <div style="display:flex; gap:10px;">
             <div style="width:60%"><label>Rate (₹)</label><input type="number" id="r" oninput="calc()"></div>
             <div style="width:40%"><label>Qty</label><input type="number" id="q" value="1" oninput="calc()"></div>
         </div>
-
-        <div class="total-box">
-            <span style="font-size: 14px;">Total Amount</span>
-            <h2 id="t" style="margin:5px 0 0 0; color: var(--gold);">₹ 0</h2>
+        <div class="total-box"><span>Total Amount</span><h2 id="t" style="margin:5px 0 0 0; color: var(--gold);">₹ 0</h2></div>
+        <div id="loader" class="loading">Saving to Sheet... ⏳</div>
+        <div class="btn-group">
+            <button class="send-btn" onclick="sendData()">📲 SEND WHATSAPP & SAVE</button>
+            <button class="print-btn" onclick="window.print()">🖨️ PRINT BILL</button>
         </div>
-
-        <div id="loader" class="loading">Saving to Google Sheet... ⏳</div>
-        <button class="send-btn" onclick="sendData()">📲 SEND BILL & SAVE</button>
-        
-        <a href="index.html" style="display:block; text-align:center; color:#94a3b8; margin-top:20px; text-decoration:none; font-size:13px;">← Back to Dashboard</a>
+        <a href="index.html" style="display:block; text-align:center; color:#94a3b8; margin-top:20px; text-decoration:none; font-size:13px;">← Back</a>
     </div>
-
     <script>
         let mode = 'SALE';
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwxyLkLvxrvZCTQlprdm3ekBdhuEmWXpsWsJ5a6-P9TYntcCBlo_8SCVpsYNvyQoVzG/exec';
-
         function setType(m) {
             mode = m;
             document.getElementById('s1').className = m=='SALE'?'type-btn active':'type-btn';
             document.getElementById('s2').className = m=='SERVICE'?'type-btn active':'type-btn';
         }
-
         function calc() {
             let total = document.getElementById('r').value * document.getElementById('q').value;
             document.getElementById('t').innerText = "₹ " + total;
         }
-
         function sendData() {
             const name = document.getElementById('n').value;
             const addr = document.getElementById('a').value;
@@ -73,16 +74,11 @@
             const rate = document.getElementById('r').value;
             const qty = document.getElementById('q').value;
             const total = rate * qty;
-
-            if(!name || !item || !rate) { alert("Please fill all details!"); return; }
-
+            if(!name || !item || !rate) { alert("Details bhariye!"); return; }
             document.getElementById('loader').style.display = 'block';
-
-            // Google Sheet mein data bhejna
             fetch(scriptURL, {
                 method: 'POST',
                 mode: 'no-cors',
-                cache: 'no-cache',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     invNo: "INV-" + Date.now().toString().slice(-4),
@@ -94,15 +90,13 @@
                 })
             }).then(() => {
                 document.getElementById('loader').style.display = 'none';
-                // WhatsApp par message bhejna
-                let msg = `*S.R ENTERPRISES*%0A--------------------------%0A*Type:* ${mode}%0A*Customer:* ${name}%0A*Address:* ${addr}%0A*Item:* ${item}%0A*Qty:* ${qty}%0A*Total:* ₹${total}%0A--------------------------%0A_Generated by SR App_`;
-                window.open(`https://wa.me/918850813765?text=${msg}`);
+                let msg = `*S.R ENTERPRISES*%0A*Type:* ${mode}%0A*Customer:* ${name}%0A*Address:* ${addr}%0A*Item:* ${item}%0A*Qty:* ${qty}%0A*Total:* ₹${total}`;
+                // ✅ Naya Number Update kar diya hai
+                window.open(`https://wa.me/919326113988?text=${msg}`);
             }).catch(err => {
-                alert("Error saving data!");
-                console.error(err);
+                alert("Sheet Error!");
             });
         }
     </script>
 </body>
-            </html>
-            
+</html>
