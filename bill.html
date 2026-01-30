@@ -9,7 +9,6 @@
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 10px; }
         .app-container { max-width: 500px; margin: auto; background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid #334155; }
         
-        /* Header Fix */
         .header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
         .header h1 { color: var(--gold); margin: 0; font-size: 20px; }
         .meta-box div { background: white; color: black; padding: 4px 12px; border-radius: 6px; font-weight: bold; margin-bottom: 5px; text-align: center; font-size: 15px; border: 1px solid var(--gold); }
@@ -21,7 +20,6 @@
         
         .select-btn { background: var(--gold); border: none; padding: 0 10px; border-radius: 8px; font-weight: bold; cursor: pointer; color: black; height: 38px; font-size: 11px; }
 
-        /* Work Table Fix */
         .item-list { margin-top: 20px; border-top: 1px solid #334155; padding-top: 10px; }
         .item-header { display: flex; color: var(--gold); font-size: 10px; font-weight: bold; margin-bottom: 8px; text-transform: uppercase; }
         .item-row { display: flex; gap: 5px; margin-bottom: 10px; align-items: center; width: 100%; }
@@ -41,7 +39,6 @@
         .btn-wa { background: #25D366; color: white; }
         .btn-print { background: var(--gold); color: black; }
 
-        /* Print Design */
         .print-footer { display: none; margin-top: 30px; border-top: 1px solid #000; padding-top: 20px; }
         @media print {
             body { background: white !important; color: black !important; padding: 40px !important; }
@@ -61,8 +58,8 @@
             <p style="font-size: 10px; margin:0; color: #94a3b8;">FUSING MACHINE SPECIALIST</p>
         </div>
         <div class="meta-box">
-            <div id="invNum">001</div>
-            <div id="currDate">--/--/--</div>
+            <div id="invNum">NO: 001</div>
+            <div id="currDate">DATE: --/--/--</div>
         </div>
     </div>
 
@@ -71,7 +68,7 @@
     <div class="form-row"><label>Mobile No:</label>
         <div class="input-container">
             <input type="text" id="mob" placeholder="98XXXXXXXX">
-            <button class="select-btn">SELECT</button>
+            <button class="select-btn" onclick="pickContact()">SELECT</button>
         </div>
     </div>
 
@@ -90,29 +87,26 @@
 
     <div class="form-row">
         <label>GST 18%:</label>
-        <div class="input-container" style="align-items: center; justify-content: flex-start;">
-            <input type="checkbox" id="gstCheck" onchange="calculate()" style="width: 20px; height: 20px; margin: 0;">
-            <span style="font-size: 12px; margin-left: 10px; color: var(--gold);">Apply Tax</span>
+        <div class="input-container" style="align-items: center;">
+            <input type="checkbox" id="gstCheck" onchange="calculate()" style="width: 22px; height: 22px;">
+            <span style="font-size: 12px; margin-left: 10px; color: var(--gold);">Enable Tax</span>
         </div>
     </div>
     <div class="form-row"><label>Discount (₹):</label><div class="input-container"><input type="number" id="discount" value="0" oninput="calculate()"></div></div>
 
     <div class="summary-box">
-        <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 5px;"><span>Taxable:</span><span id="baseVal">₹0.00</span></div>
-        <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 5px;"><span>GST 18%:</span><span id="taxVal">₹0.00</span></div>
+        <div style="display: flex; justify-content: space-between; font-size: 14px;"><span>Taxable Amt:</span><span id="baseVal">₹0.00</span></div>
+        <div style="display: flex; justify-content: space-between; font-size: 14px;"><span>GST (18%):</span><span id="taxVal">₹0.00</span></div>
         <div class="grand-total"><div style="display: flex; justify-content: space-between;"><span>GRAND TOTAL:</span><span id="grandTotal">₹0.00</span></div></div>
         <div id="words" class="words">Zero Rupees Only</div>
     </div>
 
     <div class="print-footer">
         <div>
-            <p style="font-size: 10px; font-weight: bold;">PAYMENT QR</p>
+            <p style="font-size: 10px; font-weight: bold;">SCAN TO PAY</p>
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=7021733860@okbizaxis%26pn=Hariram%20Sitaram%20Rajbhar" width="100">
         </div>
-        <div style="text-align: right; min-width: 150px;">
-            <br><br>
-            <p style="border-top: 1px solid #000; padding-top: 5px; font-weight: bold;">Authorized Signature</p>
-        </div>
+        <div style="text-align: right; min-width: 150px;"><br><br><p style="border-top: 1px solid #000; padding-top: 5px; font-weight: bold;">Authorized Signature</p></div>
     </div>
 
     <div class="btn-group no-print">
@@ -122,12 +116,27 @@
 </div>
 
 <script>
-    // --- Naya URL yahan update kar diya hai ---
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyrYfmZvFsYGEppFlWFPzMurwRHJYIjTwqs7Ci-xUvlX1xMbYZNImBwSAA9uVNBKQ6H/exec';
     
     let inv = localStorage.getItem('sr_inv_no') || 1;
     document.getElementById('invNum').innerText = "NO: " + inv.toString().padStart(3, '0');
     document.getElementById('currDate').innerText = "DATE: " + new Date().toLocaleDateString('en-GB');
+
+    // --- Contact Picker Function ---
+    async function pickContact() {
+        try {
+            const props = ['name', 'tel'];
+            const opts = {multiple: false};
+            const contacts = await navigator.contacts.select(props, opts);
+            if (contacts.length) {
+                document.getElementById('custName').value = contacts[0].name[0];
+                let phone = contacts[0].tel[0].replace(/\s/g, '').replace('+91', '');
+                document.getElementById('mob').value = phone;
+            }
+        } catch (ex) {
+            alert("Contact selection sirf Chrome browser mein chalta hai.");
+        }
+    }
 
     function addItem() {
         const div = document.createElement('div'); div.className = 'item-row';
@@ -144,11 +153,8 @@
             row.querySelector('.i-total').innerText = "₹" + line.toFixed(2);
             base += line;
         });
-
-        let tax = document.getElementById('gstCheck').checked ? (base * 18 / 100) : 0;
-        let disc = parseFloat(document.getElementById('discount').value) || 0;
-        let final = (base + tax) - disc;
-
+        let tax = document.getElementById('gstCheck').checked ? (base * 0.18) : 0;
+        let final = (base + tax) - (parseFloat(document.getElementById('discount').value) || 0);
         document.getElementById('baseVal').innerText = "₹" + base.toFixed(2);
         document.getElementById('taxVal').innerText = "₹" + tax.toFixed(2);
         document.getElementById('grandTotal').innerText = "₹" + final.toFixed(2);
@@ -159,7 +165,6 @@
     function numberToWords(num) {
         const a = ['','one ','two ','three ','four ','five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
         const b = ['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
-        if ((num = num.toString()).length > 9) return '';
         let n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
         if (!n) return ''; 
         let str = '';
@@ -174,14 +179,10 @@
     function sendBill() {
         const name = document.getElementById('custName').value;
         const total = calculate();
-        if(!name || total <= 0) { alert("Details bhariye!"); return; }
-
-        // Data saving to Sheet
+        if(!name || total <= 0) { alert("Details bharo!"); return; }
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ invNo: inv, custName: name, total: total }) });
-        
         localStorage.setItem('sr_inv_no', parseInt(inv) + 1);
         window.open(`https://wa.me/919326113988?text=*S.R ENTERPRISES*%0A*Invoice:* ${inv}%0A*Customer:* ${name}%0A*Total:* ₹${total.toFixed(2)}`);
-        
         setTimeout(() => location.reload(), 2000);
     }
 </script>
