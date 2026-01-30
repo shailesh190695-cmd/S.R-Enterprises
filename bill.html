@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S.R ENTERPRISES | Official App</title>
     <style>
-        :root { --bg: #0b1120; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; --blue: #3b82f6; }
+        :root { --bg: #0b1120; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 10px; }
         .app-container { max-width: 500px; margin: auto; background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid #334155; }
         
+        /* Search Bar */
+        .search-section { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 12px; margin-bottom: 20px; display: flex; gap: 8px; border: 1px solid #475569; }
+        .search-section input { flex: 1; padding: 8px; border-radius: 6px; border: none; font-size: 13px; }
+        .search-btn { background: var(--gold); border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; color: black; }
+
         .header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
         .header h1 { color: var(--gold); margin: 0; font-size: 20px; }
         .meta-box div { background: white; color: black; padding: 4px 12px; border-radius: 6px; font-weight: bold; margin-bottom: 5px; text-align: center; font-size: 15px; border: 1px solid var(--gold); }
@@ -16,187 +21,16 @@
         .form-row { display: flex; align-items: center; margin-bottom: 12px; gap: 10px; }
         .form-row label { flex: 1.2; color: var(--gold); font-size: 11px; font-weight: bold; text-transform: uppercase; }
         .input-container { flex: 2.5; display: flex; gap: 5px; }
-        input, select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: white; color: black; font-weight: 500; font-size: 13px; box-sizing: border-box; }
+        input, select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: white; color: black; font-weight: 500; font-size: 13px; }
         
-        .select-btn { background: var(--gold); border: none; padding: 0 10px; border-radius: 8px; font-weight: bold; cursor: pointer; color: black; height: 38px; font-size: 11px; }
-
         .item-list { margin-top: 20px; border-top: 1px solid #334155; padding-top: 10px; }
-        .item-header { display: flex; color: var(--gold); font-size: 10px; font-weight: bold; margin-bottom: 8px; text-transform: uppercase; }
-        .item-row { display: flex; gap: 5px; margin-bottom: 10px; align-items: center; width: 100%; }
-        .i-desc { flex: 2; min-width: 0; }
-        .i-rate { flex: 1; min-width: 0; text-align: center; }
-        .i-qty { flex: 0.6; min-width: 0; text-align: center; }
-        .i-total { flex: 1; text-align: right; font-weight: bold; color: var(--gold); font-size: 13px; }
-
+        .item-header { display: flex; color: var(--gold); font-size: 10px; font-weight: bold; margin-bottom: 8px; }
+        .item-row { display: flex; gap: 5px; margin-bottom: 10px; align-items: center; }
         .add-btn { border: 1px dashed var(--gold); background: rgba(251, 191, 36, 0.1); color: var(--gold); padding: 12px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold; margin-bottom: 20px; }
 
         .summary-box { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; border: 1px dashed var(--gold); }
         .grand-total { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 1px solid #475569; padding-top: 10px; margin-top: 10px; }
         .words { font-size: 11px; color: #94a3b8; font-style: italic; margin-top: 5px; }
 
-        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        .btn { padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; font-size: 13px; text-align: center; }
-        .btn-save { background: var(--blue); color: white; grid-column: span 2; }
-        .btn-wa { background: #25D366; color: white; }
-        .btn-print { background: var(--gold); color: black; }
-
-        .print-footer { display: none; margin-top: 30px; border-top: 1px solid #000; padding-top: 20px; }
-        @media print {
-            body { background: white !important; color: black !important; padding: 40px !important; }
-            .btn-group, .add-btn, .select-btn, .no-print { display: none !important; }
-            input, select { border: none !important; background: transparent !important; color: black !important; padding: 0 !important; }
-            .app-container { border: none; box-shadow: none; max-width: 100%; }
-            .print-footer { display: flex; justify-content: space-between; align-items: flex-end; }
-        }
-    </style>
-</head>
-<body>
-
-<div class="app-container">
-    <div class="header">
-        <div>
-            <h1>S.R Enterprises</h1>
-            <p style="font-size: 10px; margin:0; color: #94a3b8;">FUSING MACHINE SPECIALIST</p>
-        </div>
-        <div class="meta-box">
-            <div id="invNum">NO: 001</div>
-            <div id="currDate">DATE: --/--/--</div>
-        </div>
-    </div>
-
-    <div class="form-row"><label>Customer:</label><div class="input-container"><input type="text" id="custName"></div></div>
-    <div class="form-row"><label>Address:</label><div class="input-container"><input type="text" id="custAddr"></div></div>
-    <div class="form-row"><label>Mobile No:</label>
-        <div class="input-container">
-            <input type="text" id="mob" placeholder="98XXXXXXXX">
-            <button class="select-btn" onclick="pickContact()">SELECT</button>
-        </div>
-    </div>
-
-    <div class="item-list">
-        <div class="item-header"><div style="flex:2">Description</div><div style="flex:1;text-align:center">Rate</div><div style="flex:0.6;text-align:center">Qty</div><div style="flex:1;text-align:right">Total</div></div>
-        <div id="itemContainer">
-            <div class="item-row">
-                <input type="text" class="i-desc" placeholder="Work/Part">
-                <input type="number" class="i-rate" value="0" oninput="calculate()">
-                <input type="number" class="i-qty" value="1" oninput="calculate()">
-                <div class="i-total">₹0.00</div>
-            </div>
-        </div>
-    </div>
-    <button class="add-btn no-print" onclick="addItem()">+ ADD MORE</button>
-
-    <div class="form-row">
-        <label>GST 18%:</label>
-        <div class="input-container" style="align-items: center;">
-            <input type="checkbox" id="gstCheck" onchange="calculate()" style="width: 20px; height: 20px;">
-            <span style="font-size: 12px; margin-left: 10px; color: var(--gold);">Tick for GST Bill</span>
-        </div>
-    </div>
-    <div class="form-row"><label>Discount:</label><div class="input-container"><input type="number" id="discount" value="0" oninput="calculate()"></div></div>
-
-    <div class="summary-box">
-        <div style="display: flex; justify-content: space-between; font-size: 14px;"><span>Taxable:</span><span id="baseVal">₹0.00</span></div>
-        <div style="display: flex; justify-content: space-between; font-size: 14px;"><span>GST:</span><span id="taxVal">₹0.00</span></div>
-        <div class="grand-total"><div style="display: flex; justify-content: space-between;"><span>TOTAL:</span><span id="grandTotal">₹0.00</span></div></div>
-        <div id="words" class="words">Zero Rupees Only</div>
-    </div>
-
-    <div class="print-footer">
-        <div>
-            <p style="font-size: 10px; font-weight: bold;">SCAN TO PAY</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=7021733860@okbizaxis%26pn=Hariram%20Sitaram%20Rajbhar" width="100">
-        </div>
-        <div style="text-align: right; min-width: 150px;"><br><br><p style="border-top: 1px solid #000; padding-top: 5px; font-weight: bold;">Authorized Signature</p></div>
-    </div>
-
-    <div class="btn-group no-print">
-        <button class="btn btn-save" onclick="saveDataOnly()">💾 SAVE DATA TO SHEET</button>
-        <button class="btn btn-print" onclick="window.print()">🖨️ PRINT BILL</button>
-        <button class="btn btn-wa" onclick="sendBill()">📲 WHATSAPP BILL</button>
-    </div>
-</div>
-
-<script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyrYfmZvFsYGEppFlWFPzMurwRHJYIjTwqs7Ci-xUvlX1xMbYZNImBwSAA9uVNBKQ6H/exec';
-    
-    let inv = localStorage.getItem('sr_inv_no') || 1;
-    document.getElementById('invNum').innerText = "NO: " + inv.toString().padStart(3, '0');
-    document.getElementById('currDate').innerText = "DATE: " + new Date().toLocaleDateString('en-GB');
-
-    async function pickContact() {
-        try {
-            const props = ['name', 'tel'];
-            const contacts = await navigator.contacts.select(props, {multiple: false});
-            if (contacts.length) {
-                document.getElementById('custName').value = contacts[0].name[0];
-                document.getElementById('mob').value = contacts[0].tel[0].replace(/\s/g, '').replace('+91', '');
-            }
-        } catch (ex) { alert("Use Chrome browser for Contact Picker."); }
-    }
-
-    function addItem() {
-        const div = document.createElement('div'); div.className = 'item-row';
-        div.innerHTML = `<input type="text" class="i-desc"><input type="number" class="i-rate" value="0" oninput="calculate()"><input type="number" class="i-qty" value="1" oninput="calculate()"><div class="i-total">₹0.00</div>`;
-        document.getElementById('itemContainer').appendChild(div);
-    }
-
-    function calculate() {
-        let base = 0;
-        document.querySelectorAll('.item-row').forEach(row => {
-            let r = parseFloat(row.querySelector('.i-rate').value) || 0;
-            let q = parseFloat(row.querySelector('.i-qty').value) || 0;
-            let line = r * q;
-            row.querySelector('.i-total').innerText = "₹" + line.toFixed(2);
-            base += line;
-        });
-        let tax = document.getElementById('gstCheck').checked ? (base * 0.18) : 0;
-        let final = (base + tax) - (parseFloat(document.getElementById('discount').value) || 0);
-        document.getElementById('baseVal').innerText = "₹" + base.toFixed(2);
-        document.getElementById('taxVal').innerText = "₹" + tax.toFixed(2);
-        document.getElementById('grandTotal').innerText = "₹" + final.toFixed(2);
-        document.getElementById('words').innerText = numberToWords(Math.round(final)) + " Rupees Only";
-        return final;
-    }
-
-    function numberToWords(num) {
-        const a = ['','one ','two ','three ','four ','five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
-        const b = ['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
-        let n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
-        if (!n) return ''; 
-        let str = '';
-        str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
-        str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
-        str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
-        str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
-        str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
-        return str;
-    }
-
-    // --- Sirf Sheet mein save karne ke liye ---
-    function saveDataOnly() {
-        const name = document.getElementById('custName').value;
-        const total = calculate();
-        if(!name || total <= 0) { alert("Customer Name aur Amount bhariye!"); return; }
-        
-        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ invNo: inv, custName: name, total: total }) });
-        
-        localStorage.setItem('sr_inv_no', parseInt(inv) + 1);
-        alert("Data Google Sheet mein save ho gaya!");
-        location.reload();
-    }
-
-    function sendBill() {
-        const name = document.getElementById('custName').value;
-        const total = calculate();
-        if(!name || total <= 0) { alert("Details bhariye!"); return; }
-        
-        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ invNo: inv, custName: name, total: total }) });
-        
-        localStorage.setItem('sr_inv_no', parseInt(inv) + 1);
-        window.open(`https://wa.me/919326113988?text=*S.R ENTERPRISES*%0A*Invoice:* ${inv}%0A*Customer:* ${name}%0A*Total:* ₹${total.toFixed(2)}`);
-        setTimeout(() => location.reload(), 2000);
-    }
-</script>
-</body>
-</html>
+        .btn-group { display:
+            
