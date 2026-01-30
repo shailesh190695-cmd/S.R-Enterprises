@@ -2,175 +2,47 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>S.R ENTERPRISES | Master System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.R ENTERPRISES | Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0b1120; --card: #1e293b; --gold: #facc15; --white: #ffffff; --border: #2d3748; }
-        * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; overflow-x: hidden; }
-        .container { width: 100%; max-width: 600px; margin: auto; padding: 12px; }
-
-        /* Header */
-        .header { text-align: center; padding: 25px 10px; background: #0f172a; border-bottom: 3px solid var(--gold); cursor: pointer; }
-        .header h1 { color: var(--gold); margin: 0; font-size: 24px; text-transform: uppercase; }
-
-        /* Dashboard Buttons */
-        #adminArea { display: none; margin-top: 20px; }
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .menu-btn { background: var(--card); border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; }
-
-        /* Billing Form */
-        .bill-form { background: #1e293b; padding: 15px; border-radius: 10px; border: 1px solid var(--border); }
-        .top-row { display: flex; justify-content: space-between; margin-bottom: 15px; }
-        .stat-box { display: flex; align-items: center; gap: 5px; }
-        .stat-box label { font-size: 11px; color: var(--gold); font-weight: bold; }
-        .stat-in { width: 80px; background: white; border: none; padding: 5px; border-radius: 4px; font-weight: bold; text-align: center; }
-
-        .bill-input-group { margin-bottom: 10px; }
-        .bill-input-group label { display: block; font-size: 10px; color: var(--gold); font-weight: bold; margin-bottom: 4px; text-transform: uppercase; }
-        
-        /* Mobile Row with Select Button */
-        .mobile-row { display: flex; gap: 8px; }
-        .bill-in { width: 100%; background: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; color: #000; outline: none; }
-        .select-btn { background: var(--gold); color: #000; border: none; padding: 0 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; }
-
-        .bill-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .bill-table th { color: var(--gold); font-size: 10px; text-align: left; padding-bottom: 5px; }
-        .table-in { width: 100%; background: white; border: none; padding: 8px; border-radius: 4px; font-weight: bold; font-size: 13px; }
-
-        .total-area { margin-top: 20px; border-top: 1px solid #444; padding-top: 15px; }
-        .total-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
-        .grand-total { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 1px solid var(--gold); padding-top: 10px; }
-
-        @media print {
-            .no-print { display: none; }
-            body { background: white; color: black; }
-            .bill-form { border: none; background: white; }
-            .bill-in, .table-in, .stat-in { border-bottom: 1px solid #000; }
-        }
+        :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--dark-bg); margin: 0; color: white; overflow-x: hidden; }
+        header { background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); padding: 25px; text-align: center; border-bottom: 3px solid var(--gold); }
+        .brand-name { font-size: 26px; font-weight: 700; color: var(--gold); letter-spacing: 1px; cursor: pointer; }
+        .section-title { padding: 20px; color: var(--gold); font-size: 14px; font-weight: 600; display: flex; align-items: center; }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(251,191,36,0.2); margin-left: 10px; }
+        .machine-gallery { display: flex; overflow-x: auto; gap: 15px; padding: 0 20px 20px; scrollbar-width: none; }
+        .product-card { background: var(--card-bg); min-width: 200px; border-radius: 18px; padding: 15px; border: 1px solid rgba(255,255,255,0.05); position: relative; }
+        .icon-box { background: rgba(255,255,255,0.03); height: 100px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 50px; margin-bottom: 12px; }
+        .price-tag { color: #4ade80; font-size: 18px; font-weight: 700; display: block; margin-bottom: 15px; }
+        .buy-btn { background: linear-gradient(180deg, #fcd34d 0%, #fbbf24 100%); color: #000; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700; display: block; box-shadow: 0 4px 0 #b45309; }
+        .action-card { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 15px; padding: 20px; text-decoration: none; color: white; text-align: center; border: 1px solid rgba(255,255,255,0.1); display: block; margin-bottom: 10px; }
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 20px 20px; }
+        #admin-office { display: none; }
+        footer { text-align: center; padding: 30px; font-size: 10px; color: #64748b; }
     </style>
 </head>
 <body>
-
-<div class="header" id="headerBtn">
-    <h1>S.R ENTERPRISES</h1>
-</div>
-
-<div class="container no-print">
-    <div id="homeCatalog">
-        <div class="menu-btn" style="width:100%; margin-top:20px; background:#25d366; color:white; border:none;" onclick="window.open('https://wa.me/919326113988')">WHATSAPP ENQUIRY</div>
+    <header><div class="brand-name" onclick="unlockAdmin()">S.R ENTERPRISES</div></header>
+    <div class="section-title">⭐ OUR MACHINES</div>
+    <div class="machine-gallery">
+        <div class="product-card"><div class="icon-box">🏗️</div><div>HASHIMA HP-450</div><span class="price-tag">₹1,55,000</span><a href="https://wa.me/918850813765?text=I+want+Hashima" class="buy-btn">🛒 BUY NOW</a></div>
+        <div class="product-card"><div class="icon-box">⚙️</div><div>GEARED MOTOR</div><span class="price-tag">₹3,500</span><a href="https://wa.me/918850813765?text=I+want+Motor" class="buy-btn">🛒 BUY NOW</a></div>
     </div>
-
-    <div id="adminArea">
-        <div class="menu-grid">
-            <div class="menu-btn" onclick="showSec('entryForm')" style="background:var(--gold); color:black;">📄 CREATE BILL</div>
-            <div class="menu-btn" onclick="showSec('history')">🔍 HISTORY</div>
-        </div>
-
-        <div id="entryForm" class="bill-form" style="display:none;">
-            <div class="top-row">
-                <div class="stat-box"><label>INV NO:</label><input type="text" id="invNo" class="stat-in" value="10"></div>
-                <div class="stat-box"><label>DATE:</label><input type="text" id="billDate" class="stat-in"></div>
-            </div>
-
-            <div class="bill-input-group"><label>Customer Name</label><input type="text" id="cName" class="bill-in"></div>
-            
-            <div class="bill-input-group">
-                <label>Mobile No</label>
-                <div class="mobile-row">
-                    <input type="text" id="cMob" class="bill-in" placeholder="Select or type...">
-                    <button class="select-btn" onclick="pickContact()">SELECT</button>
-                </div>
-            </div>
-
-            <table class="bill-table">
-                <thead>
-                    <tr><th style="width:60%">Item</th><th style="width:20%">Rate</th><th style="width:20%; text-align:right;">Total</th></tr>
-                </thead>
-                <tbody id="billItems">
-                    <tr>
-                        <td><input type="text" class="table-in item-name"></td>
-                        <td><input type="number" class="table-in item-rate" value="0" oninput="calculateBill()"></td>
-                        <td style="text-align:right; font-weight:bold;">₹<span class="item-total">0</span></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="menu-btn" style="width:100%; margin-top:10px; background:none; border:1px dashed var(--gold);" onclick="addRow()">+ ADD MORE</button>
-
-            <div class="total-area">
-                <div class="grand-total total-row"><span>GRAND TOTAL:</span><span>₹<span id="grandTotal">0</span></span></div>
-            </div>
-
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:20px;">
-                <button class="select-btn" style="padding:15px;" onclick="saveBill()">💾 SAVE</button>
-                <button class="select-btn" style="padding:15px; background:white;" onclick="window.print()">📄 PRINT</button>
-            </div>
-        </div>
-
-        <div id="history" style="display:none;">
-            <div id="histBody"></div>
+    <div class="section-title">💬 SUPPORT</div>
+    <div style="padding: 0 20px;"><a href="https://wa.me/918850813765" class="action-card" style="border: 1px solid #25D366;">📲 WHATSAPP CHAT</a></div>
+    <div id="admin-office">
+        <div class="section-title">💼 ADMIN</div>
+        <div class="grid-container">
+            <a href="bill.html" class="action-card">📝 BILLING</a>
+            <a href="https://docs.google.com/spreadsheets/d/1Xy_Jp9E9gS1A_nU0Y0X6_K3yU9P-L6oX-m-E-rX9Xw/edit" class="action-card">📊 REPORTS</a>
         </div>
     </div>
-</div>
-
-<script>
-    // PIN Function
-    document.getElementById('headerBtn').onclick = function() {
-        if(prompt("PIN:") === "7860") {
-            document.getElementById('adminArea').style.display = 'block';
-            document.getElementById('homeCatalog').style.display = 'none';
-            showSec('history');
+    <script>
+        function unlockAdmin() {
+            if(prompt("Password?") === "1234") { document.getElementById('admin-office').style.display = 'block'; }
         }
-    };
-
-    function showSec(id) {
-        document.getElementById('entryForm').style.display = 'none';
-        document.getElementById('history').style.display = 'none';
-        document.getElementById(id).style.display = 'block';
-        if(id === 'entryForm') document.getElementById('billDate').value = new Date().toLocaleDateString('en-GB');
-    }
-
-    // CONTACT PICKER
-    async function pickContact() {
-        try {
-            const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false});
-            if (contacts.length > 0) {
-                document.getElementById('cName').value = contacts[0].name[0];
-                document.getElementById('cMob').value = contacts[0].tel[0].replace(/\s/g, '');
-            }
-        } catch (err) { alert("Chrome & HTTPS required for Contact Picker"); }
-    }
-
-    function addRow() {
-        let tr = document.createElement('tr');
-        tr.innerHTML = `<td><input type="text" class="table-in item-name"></td><td><input type="number" class="table-in item-rate" value="0" oninput="calculateBill()"></td><td style="text-align:right; font-weight:bold;">₹<span class="item-total">0</span></td>`;
-        document.getElementById('billItems').appendChild(tr);
-    }
-
-    function calculateBill() {
-        let rows = document.querySelectorAll('#billItems tr');
-        let total = 0;
-        rows.forEach(row => {
-            let r = row.querySelector('.item-rate').value;
-            row.querySelector('.item-total').innerText = r;
-            total += Number(r);
-        });
-        document.getElementById('grandTotal').innerText = total;
-    }
-
-    function saveBill() {
-        let db = JSON.parse(localStorage.getItem('srMasterDB')) || [];
-        db.push({
-            name: document.getElementById('cName').value,
-            mob: document.getElementById('cMob').value,
-            total: document.getElementById('grandTotal').innerText,
-            date: document.getElementById('billDate').value
-        });
-        localStorage.setItem('srMasterDB', JSON.stringify(db));
-        alert("Saved!");
-        location.reload();
-    }
-</script>
+    </script>
 </body>
-    </html>
-    
+</html>
