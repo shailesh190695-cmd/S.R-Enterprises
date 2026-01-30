@@ -11,46 +11,41 @@
         .header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid var(--gold); padding-bottom: 10px; }
         .header h1 { color: var(--gold); margin: 0; font-size: 20px; }
         .meta-row { display: flex; justify-content: flex-end; align-items: center; gap: 5px; margin-bottom: 5px; font-size: 10px; }
-        .meta-row div { background: white; color: black; padding: 2px 8px; border-radius: 4px; font-weight: bold; min-width: 65px; text-align: center; }
-        
-        /* Label Samne Box Layout */
+        .meta-row div { background: white; color: black; padding: 2px 8px; border-radius: 4px; font-weight: bold; min-width: 70px; text-align: center; }
         .form-row { display: flex; align-items: center; margin-bottom: 12px; gap: 10px; }
         .form-row label { flex: 1.2; color: var(--gold); font-size: 11px; font-weight: bold; text-transform: uppercase; }
         .input-container { flex: 2.5; display: flex; gap: 5px; }
         input, select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: white; color: black; font-weight: 500; font-size: 13px; }
-        .select-btn { background: var(--gold); border: none; padding: 0 15px; border-radius: 8px; font-weight: bold; cursor: pointer; height: 38px; color: black; }
-
-        /* Multi-Item Section */
+        .select-btn { background: var(--gold); border: none; padding: 0 15px; border-radius: 8px; font-weight: bold; cursor: pointer; color: black; height: 38px; }
         .item-list { margin-top: 20px; border-top: 1px solid #334155; padding-top: 10px; }
         .item-header { display: flex; color: var(--gold); font-size: 10px; font-weight: bold; margin-bottom: 5px; }
         .item-row { display: flex; gap: 5px; margin-bottom: 8px; align-items: center; }
-        .add-btn { border: 1px dashed var(--gold); background: rgba(251, 191, 36, 0.1); color: var(--gold); padding: 10px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold; margin: 10px 0; }
-
+        .add-btn { border: 1px dashed var(--gold); background: rgba(251, 191, 36, 0.1); color: var(--gold); padding: 12px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold; margin: 10px 0; }
         .summary-box { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; margin-top: 20px; border: 1px dashed var(--gold); }
         .summary-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px; }
         .grand-total { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 1px solid #475569; padding-top: 10px; margin-top: 10px; }
-
         .btn-group { display: flex; gap: 10px; margin-top: 20px; }
         .btn { flex: 1; padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; font-size: 14px; }
         .btn-wa { background: var(--green); color: white; }
         .btn-print { background: var(--gold); color: black; }
+        @media print {
+            body { background: white !important; color: black !important; padding: 40px !important; }
+            .btn-group, .add-btn, .select-btn, .no-print { display: none !important; }
+        }
     </style>
 </head>
 <body>
-
 <div class="app-container">
     <div class="header">
         <h1>S.R Enterprises<br><span style="font-size: 10px; color: #94a3b8; font-weight: normal;">FUSING MACHINE SPECIALIST</span></h1>
         <div class="meta-box">
-            <div class="meta-row"><span>NO:</span><div id="invNum">033</div></div>
-            <div class="meta-row"><span>DATE:</span><div id="currDate">31/01/26</div></div>
+            <div class="meta-row"><span>NO:</span><div id="invNum">000</div></div>
+            <div class="meta-row"><span>DATE:</span><div id="currDate">--/--/--</div></div>
         </div>
     </div>
-
     <div class="form-row"><label>Customer Name:</label><div class="input-container"><input type="text" id="custName"></div></div>
     <div class="form-row"><label>Address:</label><div class="input-container"><input type="text" id="custAddr"></div></div>
     <div class="form-row"><label>Mobile No:</label><div class="input-container"><input type="text" id="mob"><button class="select-btn">SELECT</button></div></div>
-
     <div class="item-list">
         <div class="item-header"><div style="flex:2">Description</div><div style="flex:1; text-align:center;">Rate</div><div style="flex:0.6; text-align:center;">Qty</div><div style="flex:1; text-align:right;">Total</div></div>
         <div id="itemContainer">
@@ -62,40 +57,32 @@
             </div>
         </div>
     </div>
-
     <button class="add-btn" onclick="addItem()">+ ADD ITEM / WORK</button>
-
     <div class="form-row"><label>GST (%):</label><div class="input-container"><select id="gstRate" onchange="calculate()"><option value="0">0%</option><option value="18" selected>18%</option></select></div></div>
     <div class="form-row"><label>Discount (₹):</label><div class="input-container"><input type="number" id="discount" value="0" oninput="calculate()"></div></div>
-
     <div class="summary-box">
         <div class="summary-row"><span>Base Amount:</span><span id="baseVal">₹0.00</span></div>
         <div class="summary-row"><span>Tax (GST):</span><span id="taxVal">₹0.00</span></div>
         <div class="summary-row"><span>Discount:</span><span id="discVal">₹0.00</span></div>
         <div class="grand-total"><div class="summary-row"><span>TOTAL:</span><span id="grandTotal">₹0.00</span></div></div>
     </div>
-
     <div class="btn-group">
         <button class="btn btn-print" onclick="window.print()">📄 PRINT / SAVE</button>
         <button class="btn btn-wa" onclick="sendBill()">📲 WHATSAPP BILL</button>
     </div>
 </div>
-
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwxyLkLvxrvZCTQlprdm3ekBdhuEmWXpsWsJ5a6-P9TYntcCBlo_8SCVpsYNvyQoVzG/exec';
-
-    // Invoice & Date logic
     let today = new Date().toLocaleDateString('en-GB');
     document.getElementById('currDate').innerText = today;
-    let inv = localStorage.getItem('sr_invoice_no') || 33;
+    let inv = localStorage.getItem('sr_inv_no') || 101;
     document.getElementById('invNum').innerText = inv.toString().padStart(3, '0');
 
     function addItem() {
-        const container = document.getElementById('itemContainer');
         const div = document.createElement('div');
         div.className = 'item-row';
         div.innerHTML = `<input type="text" style="flex:2" class="i-desc" placeholder="Service/Part"><input type="number" style="flex:1; text-align:center;" class="i-rate" value="0" oninput="calculate()"><input type="number" style="flex:0.6; text-align:center;" class="i-qty" value="1" oninput="calculate()"><div style="flex:1; color: var(--gold); text-align: right; font-weight: bold;" class="i-total">₹0.00</div>`;
-        container.appendChild(div);
+        document.getElementById('itemContainer').appendChild(div);
     }
 
     function calculate() {
@@ -111,7 +98,6 @@
         let disc = parseFloat(document.getElementById('discount').value) || 0;
         let tax = (base * gst) / 100;
         let final = (base + tax) - disc;
-
         document.getElementById('baseVal').innerText = "₹" + base.toFixed(2);
         document.getElementById('taxVal').innerText = "₹" + tax.toFixed(2);
         document.getElementById('discVal').innerText = "₹" + disc.toFixed(2);
@@ -121,22 +107,12 @@
 
     function sendBill() {
         const name = document.getElementById('custName').value;
-        const finalTotal = calculate();
-        if(!name || finalTotal <= 0) { alert("Details bhariye!"); return; }
-
-        localStorage.setItem('sr_invoice_no', parseInt(inv) + 1);
-
-        // Fixing Error 400 with proper encoding
-        const formData = new URLSearchParams({
-            invNo: inv,
-            custName: name,
-            total: finalTotal,
-            type: "APP_MULTI_ITEM"
-        });
-
-        fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' });
-
-        let msg = `*S.R ENTERPRISES*%0A*Invoice:* ${inv}%0A*Customer:* ${name}%0A*Total:* ₹${finalTotal.toFixed(2)}%0A--------------------------%0A*Pay via UPI:* 7021733860@okbizaxis`;
+        const total = calculate();
+        if(!name || total <= 0) { alert("Details bhariye!"); return; }
+        localStorage.setItem('sr_inv_no', parseInt(inv) + 1);
+        const data = new URLSearchParams({ invNo: inv, custName: name, total: total, type: "GST_BILL" });
+        fetch(scriptURL, { method: 'POST', body: data, mode: 'no-cors' });
+        let msg = `*S.R ENTERPRISES*%0A*Invoice:* ${inv}%0A*Customer:* ${name}%0A*Total:* ₹${total.toFixed(2)}%0A*UPI:* 7021733860@okbizaxis`;
         window.open(`https://wa.me/919326113988?text=${msg}`);
         setTimeout(() => location.reload(), 2000);
     }
