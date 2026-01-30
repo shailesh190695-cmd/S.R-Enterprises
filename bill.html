@@ -21,7 +21,7 @@
         
         .select-btn { background: var(--gold); border: none; padding: 0 10px; border-radius: 8px; font-weight: bold; cursor: pointer; color: black; height: 38px; font-size: 11px; }
 
-        /* Work Table Fix (Bahar nahi nikalega) */
+        /* Work Table Fix */
         .item-list { margin-top: 20px; border-top: 1px solid #334155; padding-top: 10px; }
         .item-header { display: flex; color: var(--gold); font-size: 10px; font-weight: bold; margin-bottom: 8px; text-transform: uppercase; }
         .item-row { display: flex; gap: 5px; margin-bottom: 10px; align-items: center; width: 100%; }
@@ -38,11 +38,11 @@
 
         .btn-group { display: flex; gap: 10px; margin-top: 20px; }
         .btn { flex: 1; padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; font-size: 14px; }
-        .btn-wa { background: var(--green); color: white; }
+        .btn-wa { background: #25D366; color: white; }
         .btn-print { background: var(--gold); color: black; }
 
+        /* Print Design */
         .print-footer { display: none; margin-top: 30px; border-top: 1px solid #000; padding-top: 20px; }
-
         @media print {
             body { background: white !important; color: black !important; padding: 40px !important; }
             .btn-group, .add-btn, .select-btn, .no-print { display: none !important; }
@@ -91,7 +91,7 @@
     <div class="form-row">
         <label>GST 18%:</label>
         <div class="input-container" style="align-items: center; justify-content: flex-start;">
-            <input type="checkbox" id="gstCheck" onchange="calculate()" style="width: 25px; height: 25px; margin: 0;">
+            <input type="checkbox" id="gstCheck" onchange="calculate()" style="width: 20px; height: 20px; margin: 0;">
             <span style="font-size: 12px; margin-left: 10px; color: var(--gold);">Apply Tax</span>
         </div>
     </div>
@@ -122,7 +122,8 @@
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwxyLkLvxrvZCTQlprdm3ekBdhuEmWXpsWsJ5a6-P9TYntcCBlo_8SCVpsYNvyQoVzG/exec';
+    // --- Naya URL yahan update kar diya hai ---
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyrYfmZvFsYGEppFlWFPzMurwRHJYIjTwqs7Ci-xUvlX1xMbYZNImBwSAA9uVNBKQ6H/exec';
     
     let inv = localStorage.getItem('sr_inv_no') || 1;
     document.getElementById('invNum').innerText = "NO: " + inv.toString().padStart(3, '0');
@@ -175,9 +176,12 @@
         const total = calculate();
         if(!name || total <= 0) { alert("Details bhariye!"); return; }
 
+        // Data saving to Sheet
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ invNo: inv, custName: name, total: total }) });
+        
         localStorage.setItem('sr_inv_no', parseInt(inv) + 1);
         window.open(`https://wa.me/919326113988?text=*S.R ENTERPRISES*%0A*Invoice:* ${inv}%0A*Customer:* ${name}%0A*Total:* ₹${total.toFixed(2)}`);
+        
         setTimeout(() => location.reload(), 2000);
     }
 </script>
