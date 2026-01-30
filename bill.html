@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S.R ENTERPRISES | Official App</title>
     <style>
-        :root { --bg: #0b1120; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; }
+        :root { --bg: #0b1120; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; --blue: #3b82f6; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 10px; }
         .app-container { max-width: 500px; margin: auto; background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid #334155; }
         
@@ -34,8 +34,9 @@
         .grand-total { font-size: 22px; font-weight: bold; color: var(--gold); border-top: 1px solid #475569; padding-top: 10px; margin-top: 10px; }
         .words { font-size: 11px; color: #94a3b8; font-style: italic; margin-top: 5px; }
 
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
-        .btn { flex: 1; padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .btn { padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; font-size: 13px; text-align: center; }
+        .btn-save { background: var(--blue); color: white; grid-column: span 2; }
         .btn-wa { background: #25D366; color: white; }
         .btn-print { background: var(--gold); color: black; }
 
@@ -63,7 +64,7 @@
         </div>
     </div>
 
-    <div class="form-row"><label>Customer Name:</label><div class="input-container"><input type="text" id="custName"></div></div>
+    <div class="form-row"><label>Customer:</label><div class="input-container"><input type="text" id="custName"></div></div>
     <div class="form-row"><label>Address:</label><div class="input-container"><input type="text" id="custAddr"></div></div>
     <div class="form-row"><label>Mobile No:</label>
         <div class="input-container">
@@ -73,31 +74,31 @@
     </div>
 
     <div class="item-list">
-        <div class="item-header"><div style="flex:2">Work Description</div><div style="flex:1;text-align:center">Rate</div><div style="flex:0.6;text-align:center">Qty</div><div style="flex:1;text-align:right">Total</div></div>
+        <div class="item-header"><div style="flex:2">Description</div><div style="flex:1;text-align:center">Rate</div><div style="flex:0.6;text-align:center">Qty</div><div style="flex:1;text-align:right">Total</div></div>
         <div id="itemContainer">
             <div class="item-row">
-                <input type="text" class="i-desc" placeholder="Service/Part">
+                <input type="text" class="i-desc" placeholder="Work/Part">
                 <input type="number" class="i-rate" value="0" oninput="calculate()">
                 <input type="number" class="i-qty" value="1" oninput="calculate()">
                 <div class="i-total">₹0.00</div>
             </div>
         </div>
     </div>
-    <button class="add-btn no-print" onclick="addItem()">+ ADD ITEM / WORK</button>
+    <button class="add-btn no-print" onclick="addItem()">+ ADD MORE</button>
 
     <div class="form-row">
         <label>GST 18%:</label>
         <div class="input-container" style="align-items: center;">
-            <input type="checkbox" id="gstCheck" onchange="calculate()" style="width: 22px; height: 22px;">
-            <span style="font-size: 12px; margin-left: 10px; color: var(--gold);">Enable Tax</span>
+            <input type="checkbox" id="gstCheck" onchange="calculate()" style="width: 20px; height: 20px;">
+            <span style="font-size: 12px; margin-left: 10px; color: var(--gold);">Tick for GST Bill</span>
         </div>
     </div>
-    <div class="form-row"><label>Discount (₹):</label><div class="input-container"><input type="number" id="discount" value="0" oninput="calculate()"></div></div>
+    <div class="form-row"><label>Discount:</label><div class="input-container"><input type="number" id="discount" value="0" oninput="calculate()"></div></div>
 
     <div class="summary-box">
-        <div style="display: flex; justify-content: space-between; font-size: 14px;"><span>Taxable Amt:</span><span id="baseVal">₹0.00</span></div>
-        <div style="display: flex; justify-content: space-between; font-size: 14px;"><span>GST (18%):</span><span id="taxVal">₹0.00</span></div>
-        <div class="grand-total"><div style="display: flex; justify-content: space-between;"><span>GRAND TOTAL:</span><span id="grandTotal">₹0.00</span></div></div>
+        <div style="display: flex; justify-content: space-between; font-size: 14px;"><span>Taxable:</span><span id="baseVal">₹0.00</span></div>
+        <div style="display: flex; justify-content: space-between; font-size: 14px;"><span>GST:</span><span id="taxVal">₹0.00</span></div>
+        <div class="grand-total"><div style="display: flex; justify-content: space-between;"><span>TOTAL:</span><span id="grandTotal">₹0.00</span></div></div>
         <div id="words" class="words">Zero Rupees Only</div>
     </div>
 
@@ -110,6 +111,7 @@
     </div>
 
     <div class="btn-group no-print">
+        <button class="btn btn-save" onclick="saveDataOnly()">💾 SAVE DATA TO SHEET</button>
         <button class="btn btn-print" onclick="window.print()">🖨️ PRINT BILL</button>
         <button class="btn btn-wa" onclick="sendBill()">📲 WHATSAPP BILL</button>
     </div>
@@ -122,20 +124,15 @@
     document.getElementById('invNum').innerText = "NO: " + inv.toString().padStart(3, '0');
     document.getElementById('currDate').innerText = "DATE: " + new Date().toLocaleDateString('en-GB');
 
-    // --- Contact Picker Function ---
     async function pickContact() {
         try {
             const props = ['name', 'tel'];
-            const opts = {multiple: false};
-            const contacts = await navigator.contacts.select(props, opts);
+            const contacts = await navigator.contacts.select(props, {multiple: false});
             if (contacts.length) {
                 document.getElementById('custName').value = contacts[0].name[0];
-                let phone = contacts[0].tel[0].replace(/\s/g, '').replace('+91', '');
-                document.getElementById('mob').value = phone;
+                document.getElementById('mob').value = contacts[0].tel[0].replace(/\s/g, '').replace('+91', '');
             }
-        } catch (ex) {
-            alert("Contact selection sirf Chrome browser mein chalta hai.");
-        }
+        } catch (ex) { alert("Use Chrome browser for Contact Picker."); }
     }
 
     function addItem() {
@@ -176,11 +173,26 @@
         return str;
     }
 
+    // --- Sirf Sheet mein save karne ke liye ---
+    function saveDataOnly() {
+        const name = document.getElementById('custName').value;
+        const total = calculate();
+        if(!name || total <= 0) { alert("Customer Name aur Amount bhariye!"); return; }
+        
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ invNo: inv, custName: name, total: total }) });
+        
+        localStorage.setItem('sr_inv_no', parseInt(inv) + 1);
+        alert("Data Google Sheet mein save ho gaya!");
+        location.reload();
+    }
+
     function sendBill() {
         const name = document.getElementById('custName').value;
         const total = calculate();
-        if(!name || total <= 0) { alert("Details bharo!"); return; }
+        if(!name || total <= 0) { alert("Details bhariye!"); return; }
+        
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ invNo: inv, custName: name, total: total }) });
+        
         localStorage.setItem('sr_inv_no', parseInt(inv) + 1);
         window.open(`https://wa.me/919326113988?text=*S.R ENTERPRISES*%0A*Invoice:* ${inv}%0A*Customer:* ${name}%0A*Total:* ₹${total.toFixed(2)}`);
         setTimeout(() => location.reload(), 2000);
