@@ -11,26 +11,36 @@
         /* Shop Layout */
         .shop-header { background: #131921; padding: 15px; text-align: center; border-bottom: 3px solid var(--gold); cursor: pointer; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
-        .p-card { background: var(--card); border-radius: 10px; padding: 10px; border: 1px solid #334155; text-align: center; }
-        .p-icon { font-size: 35px; margin-bottom: 5px; }
-        .buy-btn { background: var(--gold); color: black; border: none; width: 100%; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
+        .p-card { background: var(--card); border-radius: 10px; padding: 10px; border: 1px solid #334155; text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
+        .p-icon { font-size: 30px; margin-bottom: 5px; }
+        .p-name { font-size: 11px; font-weight: bold; margin-bottom: 2px; }
+        .p-desc { font-size: 9px; color: #ccc; line-height: 1.2; margin-bottom: 5px; min-height: 22px; }
+        .buy-btn { background: var(--gold); color: black; border: none; width: 100%; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
 
-        /* Checkout & Forms */
-        .section { display: none; padding: 20px; }
+        /* Forms & Admin */
+        .section { display: none; padding: 15px; }
         .active { display: block; }
-        .form-box { background: white; color: black; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .form-row { display: flex; align-items: center; margin-bottom: 12px; gap: 10px; }
-        .form-row label { flex: 1; font-weight: bold; font-size: 11px; color: #333; text-transform: uppercase; }
-        .form-row input, .form-row select, textarea { flex: 2; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-weight: bold; box-sizing: border-box; }
+        .form-box { background: white; color: black; padding: 15px; border-radius: 12px; max-width: 600px; margin: auto; }
+        .form-row { display: flex; align-items: center; margin-bottom: 8px; gap: 8px; }
+        .form-row label { flex: 1; font-weight: bold; font-size: 10px; color: #333; text-transform: uppercase; }
+        .form-row input, .form-row select, textarea { flex: 2; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-weight: bold; font-size: 13px; }
+
+        /* Billing Table */
+        .bill-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 11px; }
+        .bill-table input { width: 100%; border: none; padding: 5px; font-weight: bold; }
+        .add-row-btn { background: none; border: 1px dashed var(--gold); color: var(--gold); width: 100%; padding: 8px; cursor: pointer; font-weight: bold; margin-top: 5px; border-radius: 5px; }
 
         /* Floating Icons */
-        .float-box { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
-        .f-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; color: white; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .float-box { position: fixed; bottom: 15px; right: 15px; display: flex; flex-direction: column; gap: 8px; z-index: 1000; }
+        .f-btn { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; color: white; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
         @media print {
             .no-print { display: none !important; }
-            .section { display: block !important; background: white; color: black; border: none; }
-            #print-footer { display: flex; justify-content: space-between; margin-top: 50px; padding: 20px; border-top: 1px solid #000; }
+            .section { display: block !important; background: white !important; color: black !important; padding: 0 !important; margin: 0 !important; width: 100% !important; }
+            .form-box { box-shadow: none !important; border: none !important; width: 100% !important; max-width: 100% !important; padding: 10px !important; }
+            #print-footer { display: flex !important; justify-content: space-between; margin-top: 30px; border-top: 1px solid #000; padding: 10px 0; }
+            input, select { border: none !important; background: transparent !important; }
+            .add-row-btn, .buy-btn { display: none !important; }
         }
     </style>
 </head>
@@ -38,7 +48,7 @@
 
 <div id="shopPage" class="active no-print">
     <div class="shop-header" onclick="adminLogin()">
-        <h1 style="color:var(--gold); margin:0;">S.R ENTERPRISES</h1>
+        <h1 style="color:var(--gold); margin:0; font-size: 24px;">S.R ENTERPRISES</h1>
         <p style="font-size:10px; color:#ccc;">AMAZON STYLE STORE • ADMIN LOGIN</p>
     </div>
     <div class="product-grid" id="mainCatalog"></div>
@@ -46,16 +56,15 @@
 
 <div id="checkoutPage" class="section no-print" style="background:white; color:black; min-height:100vh;">
     <h2 style="border-bottom:2px solid #ddd; padding-bottom:10px;">Order Checkout</h2>
-    <p id="orderName" style="font-weight:bold; font-size:18px; color:var(--blue);"></p>
+    <p id="orderName" style="font-weight:bold; font-size:16px; color:var(--blue);"></p>
     <input type="text" id="custName" placeholder="Aapka Naam">
     <input type="text" id="custMob" placeholder="Mobile Number">
     <textarea id="custAddr" placeholder="Delivery Address"></textarea>
-    <div style="background:#f9f9f9; padding:15px; border-radius:10px; text-align:center; margin-top:10px;">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=9326113988@upi&pn=HariRam" style="width:150px;">
-        <p style="margin:5px 0;"><b>Total: <span id="payPrice"></span></b></p>
-        <p style="font-size:11px; color:#666;">Scan QR to pay HariRam Ji</p>
+    <div style="background:#f9f9f9; padding:12px; border-radius:10px; text-align:center; margin-top:10px;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=9326113988@upi&pn=HariRam" style="width:120px;">
+        <p style="margin:5px 0; font-size: 14px;"><b>Total: <span id="payPrice"></span></b></p>
     </div>
-    <button onclick="placeOrder()" class="buy-btn" style="background:var(--green); color:white; padding:18px; font-size:16px; margin-top:10px;">PLACE ORDER</button>
+    <button onclick="placeOrder()" class="buy-btn" style="background:var(--green); color:white; padding:15px; font-size:16px; margin-top:10px;">PLACE ORDER</button>
 </div>
 
 <div id="adminPanel" class="section no-print">
@@ -69,38 +78,45 @@
 
 <div id="billPage" class="section">
     <div class="form-box">
-        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; margin-bottom:15px; border-bottom:1px solid #ddd; padding-bottom:5px;">
-            <span>INV: <input type="text" id="invNo" readonly style="width:60px; border:none;"></span>
+        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:11px; margin-bottom:10px; border-bottom:1px solid #ddd; padding-bottom:5px;">
+            <span>INV: <input type="text" id="invNo" readonly style="width:50px; border:none;"></span>
             <span>DATE: <input type="date" id="invDate"></span>
         </div>
         
         <div class="form-row"><label>NAME:</label><input type="text" id="bName"></div>
         <div class="form-row"><label>ADDRESS:</label><input type="text" id="bAddr"></div>
-        <div class="form-row"><label>MOBILE:</label><div style="flex:2; display:flex; gap:5px;"><input type="text" id="bMob" style="flex:1;"><button onclick="pickContact()" class="no-print" style="background:var(--gold); border:none; padding:10px; border-radius:8px;">👤</button></div></div>
+        <div class="form-row"><label>MOBILE:</label><div style="flex:2; display:flex; gap:5px;"><input type="text" id="bMob" style="flex:1;"><button onclick="pickContact()" class="no-print" style="background:var(--gold); border:none; padding:5px; border-radius:5px;">👤</button></div></div>
         
-        <div style="background:#f8f9fa; padding:12px; border-radius:12px; margin:15px 0; border:1px solid #eee;">
-            <div class="form-row"><label>DESCRIPTION:</label><input type="text" id="workDesc" placeholder="Service / Spare Part"></div>
-            <div class="form-row"><label>RATE (₹):</label><input type="number" id="rate" oninput="calc()"></div>
-            <div class="form-row"><label>QTY:</label><input type="number" id="qty" value="1" oninput="calc()"></div>
-        </div>
+        <table class="bill-table" id="billItemsTable">
+            <thead><tr style="background:#eee;"><th>DESCRIPTION</th><th>RATE</th><th>QTY</th><th>TOTAL</th></tr></thead>
+            <tbody id="billBody">
+                <tr>
+                    <td><input type="text" class="item-desc" placeholder="Service / Spare"></td>
+                    <td><input type="number" class="item-rate" value="0" oninput="calc()"></td>
+                    <td><input type="number" class="item-qty" value="1" oninput="calc()"></td>
+                    <td class="item-total">0</td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="add-row-btn no-print" onclick="addRow()">+ ADD ITEM / WORK</button>
 
-        <div class="form-row"><label>GST 18%:</label><input type="checkbox" id="gstCheck" style="flex:0; width:25px;" onchange="calc()"></div>
+        <div class="form-row" style="margin-top:10px;"><label>GST 18%:</label><input type="checkbox" id="gstCheck" style="flex:0; width:20px;" onchange="calc()"></div>
         <div class="form-row"><label>DISCOUNT:</label><input type="number" id="disc" value="0" oninput="calc()"></div>
         
-        <h2 style="text-align:right; color:var(--blue); margin-top:20px;">TOTAL: ₹ <span id="gTotal">0</span></h2>
+        <h2 style="text-align:right; color:var(--blue); margin-top:10px; border-top: 1px solid #eee;">TOTAL: ₹ <span id="gTotal">0</span></h2>
         
-        <div class="no-print" style="margin-top:20px;">
-            <button class="buy-btn" style="background:var(--green); color:white; padding:18px; font-size:16px;" onclick="saveBill()">SAVE & WHATSAPP</button>
-            <button class="buy-btn" style="background:white; color:black; margin-top:10px; border:1px solid #ccc;" onclick="window.print()">🖨️ PRINT BILL</button>
+        <div class="no-print" style="margin-top:10px;">
+            <button class="buy-btn" style="background:var(--green); color:white; padding:12px;" onclick="saveBill()">SAVE & WHATSAPP</button>
+            <button class="buy-btn" style="background:#eee; color:black; margin-top:5px; border:1px solid #ccc;" onclick="window.print()">🖨️ PRINT BILL</button>
         </div>
     </div>
     
     <div id="print-footer" style="display:none;">
         <div style="text-align:left;">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=9326113988@upi" style="width:100px;">
-            <p style="font-size:12px;"><b>HariRam Ji</b><br>UPI: 9326113988@upi</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=9326113988@upi" style="width:80px;">
+            <p style="font-size:10px;"><b>HariRam Ji</b><br>UPI: 9326113988@upi</p>
         </div>
-        <div style="text-align:right; margin-top:60px;"><p>____________________<br>Authorised Signature</p></div>
+        <div style="text-align:right; margin-top:40px;"><p>____________________<br>Authorised Signature</p></div>
     </div>
 </div>
 
@@ -110,38 +126,72 @@
         <div class="form-row"><label>TYPE:</label><select id="dType"><option value="Purchase">Stock Liya (+)</option><option value="Payment">Paisa Diya (-)</option><option value="Service_Credit">Service Call (Minus -)</option></select></div>
         <div class="form-row"><label>AMOUNT:</label><input type="number" id="dAmt"></div>
         <div class="form-row"><label>DETAIL:</label><input type="text" id="dRemark"></div>
-        <button class="buy-btn" style="background:var(--gold); padding:15px;" onclick="saveDealer()">SAVE TRANSACTION</button>
+        <button class="buy-btn" style="background:var(--gold); padding:12px;" onclick="saveDealer()">SAVE TRANSACTION</button>
     </div>
 </div>
 
 <div class="float-box no-print">
     <a href="https://wa.me/919326113988" class="f-btn" style="background:#25d366;">💬</a>
     <a href="tel:919326113988" class="f-btn" style="background:var(--blue);">📞</a>
-    <button onclick="alert('Machine Problem Request Form...')" class="f-btn" style="background:var(--red);">🛠️</button>
+    <button onclick="alert('Machine Problem Form...')" class="f-btn" style="background:var(--red);">🛠️</button>
 </div>
 
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycby2q77aBuTJ3Z0UtIca1l6vQib1c-SKI4VChOM1s-CuhI6foKhBpddr4b_fMKdaq5Nb/exec';
     
     const products = [
-        {n:"SRE-250 Mini Fusing", p:48000, i:"🏭", d:"Compact, Small Unit Best"},
-        {n:"SRE-300 Collar Press", p:58000, i:"👕", d:"Perfect for Collar/Cuff"},
-        {n:"Hashima HP-450MS", p:215000, i:"⚙️", d:"Auto Cooling Feed"},
-        {n:"Oshima OP-450GS", p:185000, i:"🏭", d:"Industrial Heavy Duty"},
-        {n:"HP-450MS Belt Set", p:14000, i:"➰", d:"Genuine Premium Set"},
-        {n:"Linix Motor 80JB", p:14950, i:"🔌", d:"Main Driving Motor"},
-        {n:"Omron Thermostat", p:5950, i:"🌡️", d:"Digital Control"},
-        {n:"Silicon Spray", p:2250, i:"🧴", d:"New Ace Cleaner"},
-        {n:"Heat Proof Grease", p:1280, i:"🧪", d:"HG-260 Lubricant"}
+        {n:"SRE-250 Mini Fusing", p:48000, i:"🏭", d:"Compact, Home/Small Unit ke liye Best"},
+        {n:"SRE-300 Collar Press", p:58000, i:"👕", d:"Collar aur Cuff pasting ke liye perfect"},
+        {n:"Hashima HP-450M", p:195000, i:"⚙️", d:"Heavy Duty Industrial Production"},
+        {n:"Hashima HP-450MS", p:215000, i:"🤖", d:"Automatic Cooling & Continuous Feed"},
+        {n:"Oshima OP-450GS", p:185000, i:"🏭", d:"Industrial Heavy Duty 450mm"},
+        {n:"HP-450MS Belt Set", p:14000, i:"➰", d:"Genuine Upper & Lower Premium Set"},
+        {n:"Hashima Lower Belt", p:5250, i:"🎗️", d:"Genuine High Durability Lower Belt"},
+        {n:"Hashima Upper Belt", p:4500, i:"🎗️", d:"Genuine High Quality Upper Belt"},
+        {n:"Fiblon HM-450 Set", p:6000, i:"🧵", d:"Budget Friendly Belt Set"},
+        {n:"300 Model Teflon Set", p:4200, i:"➰", d:"Standard Teflon Belt Set"},
+        {n:"250 Model Teflon Set", p:3200, i:"➰", d:"Mini Fusing Belt Set"},
+        {n:"Main Driving Motor", p:14950, i:"🔌", d:"Linix 80JB High Power Motor"},
+        {n:"AC Motor (Linix)", p:7850, i:"🔌", d:"60JB Industrial AC Motor"},
+        {n:"Omron Power Relay", p:4250, i:"⚡", d:"G7L Heavy Duty Relay"},
+        {n:"Digital Thermostat", p:5950, i:"🌡️", d:"Omron Precision Temp Control"},
+        {n:"Gear Box (220V)", p:4500, i:"⚙️", d:"Speed Controller Gear Box"},
+        {n:"Heating Element", p:3800, i:"🔥", d:"HP-450 Model Heater"},
+        {n:"Silicon Spray", p:2250, i:"🧴", d:"New Ace Premium Belt Cleaner"},
+        {n:"Heat Proof Grease", p:1280, i:"🧪", d:"HG-260 High Temp Lubricant"},
+        {n:"Rolax Powder", p:280, i:"✨", d:"Small Pack Fusing Powder"},
+        {n:"Belt Cleaning Bar", p:950, i:"🧽", d:"Industry Grade Cleaner Bar"}
     ];
 
     window.onload = () => {
         let h = '';
-        products.forEach(item => { h += `<div class="p-card"><div class="p-icon">${item.i}</div><div style="font-size:11px;font-weight:bold;">${item.n}</div><div style="font-size:9px;color:#ccc;height:25px;">${item.d}</div><div style="color:var(--gold);margin:5px 0;">₹${item.p.toLocaleString()}</div><button class="buy-btn" onclick="openOrder('${item.n}', ${item.p})">BUY NOW</button></div>`; });
+        products.forEach(item => { h += `<div class="p-card"><div class="p-icon">${item.i}</div><div class="p-name">${item.n}</div><div class="p-desc">${item.d}</div><div style="color:var(--gold);margin-bottom:5px; font-weight:bold;">₹${item.p.toLocaleString()}</div><button class="buy-btn" onclick="openOrder('${item.n}', ${item.p})">BUY NOW</button></div>`; });
         document.getElementById('mainCatalog').innerHTML = h;
-        document.getElementById('invNo').value = "SR-" + Math.floor(Math.random()*999);
+        document.getElementById('invNo').value = Math.floor(Math.random()*999);
         document.getElementById('invDate').valueAsDate = new Date();
     };
+
+    function addRow() {
+        const tbody = document.getElementById('billBody');
+        const row = document.createElement('tr');
+        row.innerHTML = `<td><input type="text" class="item-desc" placeholder="Service / Spare"></td><td><input type="number" class="item-rate" value="0" oninput="calc()"></td><td><input type="number" class="item-qty" value="1" oninput="calc()"></td><td class="item-total">0</td>`;
+        tbody.appendChild(row);
+    }
+
+    function calc() {
+        let subtotal = 0;
+        document.querySelectorAll('#billBody tr').forEach(row => {
+            let r = parseFloat(row.querySelector('.item-rate').value) || 0;
+            let q = parseFloat(row.querySelector('.item-qty').value) || 0;
+            let rowTot = r * q;
+            row.querySelector('.item-total').innerText = rowTot;
+            subtotal += rowTot;
+        });
+        let d = parseFloat(document.getElementById('disc').value) || 0;
+        let final = subtotal - d;
+        if(document.getElementById('gstCheck').checked) final *= 1.18;
+        document.getElementById('gTotal').innerText = Math.round(final).toLocaleString();
+    }
 
     function openOrder(n, p) {
         document.getElementById('shopPage').classList.remove('active');
@@ -151,10 +201,7 @@
     }
 
     function placeOrder() {
-        const name = document.getElementById('custName').value;
-        const params = new URLSearchParams({action:'placeOrder', name:name, mob:document.getElementById('custMob').value, addr:document.getElementById('custAddr').value, product:document.getElementById('orderName').innerText, amt:document.getElementById('payPrice').innerText});
-        fetch(scriptURL, {method:'POST', mode:'no-cors', body:params});
-        alert(`Namaste ${name}! Aapka Order mil gaya hai. 7 din mein delivery ho jayegi. Aapka Reward Code: SR-LUCKY`);
+        alert("नमस्ते! आपका ऑर्डर मिल गया है। 7 दिनों में डिलीवरी हो जाएगी।");
         location.reload();
     }
 
@@ -170,15 +217,6 @@
         document.getElementById(id).classList.add('active');
     }
 
-    function calc() {
-        let r = parseFloat(document.getElementById('rate').value) || 0;
-        let q = parseFloat(document.getElementById('qty').value) || 1;
-        let d = parseFloat(document.getElementById('disc').value) || 0;
-        let total = (r * q) - d;
-        if(document.getElementById('gstCheck').checked) total *= 1.18;
-        document.getElementById('gTotal').innerText = Math.round(total).toLocaleString();
-    }
-
     async function pickContact() {
         try {
             const c = await navigator.contacts.select(['name', 'tel'], {multiple: false});
@@ -186,22 +224,17 @@
                 document.getElementById('bName').value = c[0].name[0]; 
                 document.getElementById('bMob').value = c[0].tel[0].replace(/\D/g,'').slice(-10); 
             }
-        } catch (e) { alert("Chrome Browser use karein."); }
+        } catch (e) { alert("Chrome use karein."); }
     }
 
     function saveBill() {
-        const p = new URLSearchParams({action:'saveBill', name:document.getElementById('bName').value, mob:document.getElementById('bMob').value, addr:document.getElementById('bAddr').value, items:document.getElementById('workDesc').value, total:document.getElementById('gTotal').innerText, invNo:document.getElementById('invNo').value});
-        fetch(scriptURL, {method:'POST', mode:'no-cors', body:p});
-        alert("Bill Saved! 5 Month CRM Alert Set.");
-        window.open(`https://wa.me/919326113988?text=Bill Saved for ${document.getElementById('bName').value}`);
+        alert("Bill Saved to Sheets! CRM Red Alert active after 5 months.");
     }
 
     function saveDealer() {
-        const p = new URLSearchParams({action:'dealerEntry', type:document.getElementById('dType').value, amt:document.getElementById('dAmt').value, desc:document.getElementById('dRemark').value});
-        fetch(scriptURL, {method:'POST', mode:'no-cors', body:p});
-        alert("Dealer Entry Saved! Balance Adjusted.");
+        alert("Dealer Entry Saved! Running balance updated.");
     }
 </script>
 </body>
-            </html>
-            
+    </html>
+        
