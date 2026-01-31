@@ -26,7 +26,11 @@
         .form-box { background: white; color: black; padding: 20px; border-radius: 12px; max-width: 850px; margin: auto; }
         .form-row { display: flex; align-items: center; margin-bottom: 10px; gap: 8px; }
         .form-row label { flex: 1; font-weight: bold; font-size: 11px; color: #333; text-transform: uppercase; }
-        .form-row input, .form-row select, .form-row textarea { flex: 2; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-weight: bold; box-sizing: border-box; }
+        .form-row input, .form-row select, .form-row textarea { flex: 2; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-weight: bold; box-sizing: border-box; font-size: 14px; }
+        
+        /* Larger Checkbox & Discount for usability */
+        #gstCheck { width: 25px; height: 25px; cursor: pointer; }
+        #disc { font-size: 18px !important; padding: 10px !important; }
 
         /* FIXED BILL TABLE BOXES */
         .excel-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10px; background: white; color: black; border: 1px solid #ddd; table-layout: fixed; }
@@ -48,13 +52,13 @@
             .no-print, .float-box, .back-nav-bottom, button, .shop-header, .admin-btn { display: none !important; }
             .section.active { display: block !important; position: static !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
             .form-box { box-shadow: none !important; border: none !important; width: 100% !important; padding: 0 !important; text-align: left; }
-            h2 { font-size: 26px !important; color: black !important; text-align: center !important; text-decoration: underline; margin-bottom: 20px !important; }
-            .excel-table { width: 100% !important; font-size: 13px !important; border: 2px solid #000 !important; table-layout: auto !important; }
-            .excel-table th, .excel-table td { border: 1.5px solid #000 !important; padding: 8px !important; font-weight: bold !important; }
+            h2 { font-size: 28px !important; color: black !important; text-align: center !important; text-decoration: underline; margin-bottom: 20px !important; }
+            .excel-table { width: 100% !important; font-size: 14px !important; border: 2.5px solid #000 !important; table-layout: auto !important; }
+            .excel-table th, .excel-table td { border: 1.5px solid #000 !important; padding: 10px !important; font-weight: bold !important; }
             #printFooter { display: flex !important; justify-content: space-between; align-items: flex-start; margin-top: 40px; border-top: 2px solid #000; padding-top: 20px; visibility: visible !important; }
-            .bank-info { width: 60%; text-align: left !important; font-size: 13px !important; }
-            .total-info { width: 35%; text-align: right !important; }
-            .excel-table input { background: transparent !important; border: none !important; font-size: 13px !important; }
+            .bank-area { width: 65%; text-align: left !important; font-size: 14px !important; line-height: 1.6; }
+            .total-area { width: 30%; text-align: right !important; }
+            .words-row { margin-top: 10px; font-style: italic; font-weight: bold; border-top: 1px dashed #ccc; padding-top: 5px; }
         }
         #printFooter { display: none; }
     </style>
@@ -76,13 +80,12 @@
         <button class="buy-btn admin-btn" style="background:var(--green);" onclick="goTo('dealerPage')">🤝 SHASHI DEALER</button>
         <button class="buy-btn admin-btn" style="background:#a855f7;" onclick="goTo('crmPage')">📊 CUSTOMER LOGS</button>
     </div>
-    <div class="back-nav-bottom" onclick="location.reload()">🔒 LOGOUT / HOME</div>
+    <div class="back-nav-bottom" onclick="location.reload()">🔒 LOGOUT</div>
 </div>
 
 <div id="billPage" class="section">
     <div class="form-box">
         <h2 style="text-align:center; color:var(--blue); margin:0;">S.R ENTERPRISES</h2>
-        <p style="text-align:center; font-size:10px; margin-bottom:15px;" class="no-print">FUSING MACHINE SPECIALIST</p>
         <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; margin-bottom:15px; border-bottom: 1.5px solid #000;">
             <span>INV NO: <input type="text" id="invNo" style="width:70px;" value="SR-101"></span>
             <span>DATE: <input type="date" id="invDate"></span>
@@ -113,35 +116,38 @@
 
         <div style="margin-top:20px; display: flex; justify-content: space-between; align-items: flex-start;">
             <div style="text-align: left; width: 60%;">
-                <p id="wordTotal" style="font-weight: bold; font-size: 12px; color: #333; margin: 0;"></p>
+                <p id="wordTotal" class="words-row" style="font-weight: bold; font-size: 14px; color: #000; margin: 0;"></p>
             </div>
             <div style="text-align:right; width: 35%;">
-                <div class="form-row no-print" style="justify-content:flex-end;"><label style="flex:none;">DISCOUNT (₹):</label><input type="number" id="disc" value="0" oninput="calcBill()" style="width:80px;"></div>
+                <div class="form-row no-print" style="justify-content:flex-end;"><label style="flex:none;">DISCOUNT (₹):</label><input type="number" id="disc" value="0" oninput="calcBill()" style="width:100px;"></div>
                 <div class="form-row" style="justify-content:flex-end;"><label style="flex:none;">GST 18%:</label><input type="checkbox" id="gstCheck" onchange="calcBill()"></div>
-                <h2 style="color:var(--blue); font-size: 22px !important; margin: 5px 0;">GRAND TOTAL: ₹ <span id="gTotal">0</span></h2>
+                <h2 style="color:var(--blue); font-size: 24px !important; margin: 5px 0;">TOTAL: ₹ <span id="gTotal">0</span></h2>
             </div>
         </div>
         
         <div class="no-print" style="margin-top:10px; display:flex; gap:10px;">
-            <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="alert('Record Saved!')">SAVE & WHATSAPP</button>
+            <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="alert('Saving...')">SAVE & WHATSAPP</button>
             <button class="buy-btn" style="background:#eee; color:black;" onclick="window.print()">🖨️ PRINT BILL</button>
         </div>
 
         <div id="printFooter">
-            <div class="bank-info">
-                <p style="margin:2px 0;"><b>BENEFICIARY: HARIRAM SITARAM RAJBHAR</b></p>
-                <p style="margin:2px 0;">BANK: STATE BANK OF INDIA (A/C: ....9584)</p>
-                <p style="margin:2px 0;">IFSC CODE: SBIN0000000</p>
-                <p style="margin:2px 0;">UPI ID: 7021733860@sbi</p>
-                <div style="margin-top:10px;">
-                   <img src="https://img.icons8.com/color/48/000000/google-pay.png" width="25">
-                   <img src="https://img.icons8.com/color/48/000000/phone-pe.png" width="25">
-                   <img src="https://img.icons8.com/color/48/000000/paytm.png" width="25">
+            <div class="bank-area">
+                <div style="display: flex; align-items: flex-start; gap: 15px;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=7021733860@sbi&pn=HariRam" style="width:120px; border:2px solid #000; padding: 2px;">
+                    <div>
+                        <p style="margin:2px 0;"><b>BENEFICIARY: HARIRAM SITARAM RAJBHAR</b></p>
+                        <p style="margin:2px 0;">BANK: STATE BANK OF INDIA (A/C: ....9584)</p>
+                        <p style="margin:2px 0;">IFSC: SBIN0000000 | UPI ID: 7021733860@sbi</p>
+                        <div style="margin-top:5px;">
+                           <img src="https://img.icons8.com/color/48/000000/google-pay.png" width="30">
+                           <img src="https://img.icons8.com/color/48/000000/phone-pe.png" width="30">
+                           <img src="https://img.icons8.com/color/48/000000/paytm.png" width="30">
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div style="text-align:right; width: 35%;">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=7021733860@sbi&pn=HariRam" style="width:110px; border:1.5px solid #000;">
-                <p style="margin-top:20px; font-weight:bold;">____________________<br>Authorised Signature</p>
+            <div class="total-area">
+                <p style="margin-top:50px; font-weight:bold; border-top: 1px solid #000; text-align: center;">Authorised Signature</p>
             </div>
         </div>
     </div>
@@ -167,7 +173,6 @@
         <h3 style="color:#f97316;">🤝 DEALER: SHASHI JI</h3>
         <div class="form-row"><label>CAT:</label><select id="dCat"><option value="Purchase Items (+)">Purchase Items (+)</option><option value="Call Attend (-)">Call Attend (-)</option></select></div>
         <div class="form-row"><label>ADDR:</label><input type="text" id="dAddr" placeholder="Location"></div>
-        <div class="form-row"><label>DETAIL:</label><input type="text" id="dDetail" placeholder="Description"></div>
         <div class="form-row"><label>AMT:</label><input type="number" id="dAmt" placeholder="₹"></div>
         <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="addDealerEntry()">SAVE ENTRY</button>
         <table class="excel-table"><thead><tr><th>DATE</th><th>CAT</th><th>ADDR</th><th>AMT</th></tr></thead><tbody id="dealerBody"></tbody></table>
@@ -209,7 +214,7 @@
     window.onload = () => {
         let h = '';
         products.forEach(p => { 
-            h += `<div class="p-card"><div class="p-icon">${p.i}</div><div class="p-name">${p.n}</div><div style="color:var(--gold);font-weight:bold;">₹${p.p.toLocaleString()}</div><button class="buy-btn" onclick="alert('Opening Order Checkout...')">BUY NOW</button></div>`; 
+            h += `<div class="p-card"><div class="p-icon">${p.i}</div><div class="p-name">${p.n}</div><div style="color:var(--gold);font-weight:bold;">₹${p.p.toLocaleString()}</div><button class="buy-btn" onclick="alert('Checkout Open')">BUY NOW</button></div>`; 
         });
         document.getElementById('catalog').innerHTML = h;
         document.getElementById('invDate').valueAsDate = new Date();
@@ -254,5 +259,5 @@
     async function pickContact() { try { const c = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if(c.length) { document.getElementById('bName').value = c[0].name[0]; document.getElementById('bMob').value = c[0].tel[0].replace(/\D/g,'').slice(-10); } } catch (e) { alert("Use Chrome Mobile."); } }
 </script>
 </body>
-                                                            </html>
-                
+                              </html>
+                               
