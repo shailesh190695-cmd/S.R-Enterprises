@@ -27,9 +27,11 @@
         .calc-item { display: flex; align-items: center; gap: 10px; justify-content: flex-end; width: 320px; }
         .calc-item label { font-weight: bold; font-size: 13px; color: #333; flex: 1; text-align: right; }
         .calc-item input { width: 130px; padding: 10px; font-weight: bold; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; }
+        .back-nav-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #131921; padding: 18px; text-align: center; border-top: 2px solid var(--gold); cursor: pointer; color: var(--gold); font-weight: bold; z-index: 1000; font-size: 14px; }
         .float-box { position: fixed; bottom: 85px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
         .f-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 25px; color: white; border:none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; cursor:pointer; }
         
+        /* 🔥 MASTER PRINT FIX 🔥 */
         @media print {
             @page { size: A4; margin: 5mm; }
             html, body { background: white !important; color: black !important; overflow: visible !important; height: auto !important; }
@@ -60,7 +62,7 @@
         <button class="buy-btn admin-btn" style="background:#a855f7;" onclick="goTo('crmPage')">📊 CUSTOMER RECORDS</button>
         <button class="buy-btn admin-btn" style="background:#f97316;" onclick="goTo('inventoryPage')">📦 INVENTORY STOCK</button>
     </div>
-    <div class="back-nav-bottom" onclick="location.reload()" style="position:fixed; bottom:0; width:100%; background:#131921; padding:18px; text-align:center; color:var(--gold); font-weight:bold; cursor:pointer; z-index:1000;">🔒 LOGOUT / HOME</div>
+    <div class="back-nav-bottom" onclick="location.reload()">🔒 LOGOUT / HOME</div>
 </div>
 
 <div id="billPage" class="section">
@@ -118,8 +120,8 @@
         <div class="form-row"><label>ADDR:</label><input type="text" id="dAddr" placeholder="Location"></div>
         <div class="form-row"><label>DETAIL:</label><input type="text" id="dDetail" placeholder="Work Detail"></div>
         <div class="form-row"><label>AMT:</label><input type="number" id="dAmt" placeholder="₹"></div>
-        <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="saveToSheet('dealer')">SAVE TO GOOGLE SHEET</button>
-        <button class="wa-report-btn" onclick="sendWA('dealerBody', 'SHASHI JI LEDGER REPORT')">📤 SEND REPORT ON WHATSAPP</button>
+        <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="saveToSheet('dealer')">SAVE ENTRY</button>
+        <button class="wa-report-btn" onclick="sendWA('dealerBody', 'SHASHI JI LEDGER')">📤 SEND REPORT ON WHATSAPP</button>
         <div class="table-wrap"><table class="excel-table"><thead><tr><th>DATE</th><th>CAT</th><th>ADDR</th><th>DETAIL</th><th>AMT</th></tr></thead><tbody id="dealerBody"></tbody></table></div>
     </div>
     <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
@@ -133,8 +135,8 @@
             <div class="form-row"><input type="text" id="ca" placeholder="Address"> <input type="text" id="cw" placeholder="Work Detail"></div>
             <button class="buy-btn" style="background:var(--green); color:white;" onclick="saveToSheet('crm')">SAVE CUSTOMER</button>
         </div>
-        <input type="text" placeholder="🔍 Search records..." onkeyup="searchTable('crmBody', this.value)" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px;">
-        <button class="wa-report-btn" onclick="sendWA('crmBody', 'CUSTOMER CRM REPORT')">📤 SEND CRM ON WHATSAPP</button>
+        <input type="text" placeholder="🔍 Search CRM records..." onkeyup="searchTable('crmBody', this.value)" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px;">
+        <button class="wa-report-btn" onclick="sendWA('crmBody', 'CUSTOMER CRM')">📤 SEND CRM ON WHATSAPP</button>
         <div class="table-wrap">
             <table class="excel-table">
                 <thead><tr><th>NAME</th><th>MOB</th><th>ADDR</th><th>WORK</th><th>DATE</th><th>NEXT DUE</th><th>STATUS</th></tr></thead>
@@ -147,8 +149,8 @@
 
 <div id="inventoryPage" class="section">
     <div class="form-box">
-        <h3>📦 ADVANCED INVENTORY STOCK</h3>
-        <input type="text" placeholder="🔍 Search Stock (Part Name, Type)..." onkeyup="searchTable('invBody', this.value)" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px;">
+        <h3>📦 INVENTORY STOCK</h3>
+        <input type="text" placeholder="🔍 Search Stock..." onkeyup="searchTable('invBody', this.value)" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px;">
         <div class="table-wrap"><table class="excel-table"><thead><tr><th>PART NAME</th><th>TYPE</th><th>RATE</th><th>STOCK</th><th>STATUS</th></tr></thead><tbody id="invBody"></tbody></table></div>
     </div>
     <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
@@ -172,7 +174,7 @@
     };
 
     function loadCatalog() {
-        const p = [{n:"SRE-250 Mini Fusing", p:48000, i:"🏭"}, {n:"Hashima HP-450MS", p:215000, i:"🤖"}, {n:"HP-450MS Belt Set", p:14000, i:"➰"}, {n:"Heating Element", p:3800, i:"🔥"}, {n:"Thermostat Omron", p:5950, i:"🌡️"}, {n:"Linix Motor AC 220V", p:14950, i:"🔌"}, {n:"Silicon Spray", p:2250, i:"🧴"}, {n:"Machine Service", p:1500, i:"🛠️"}];
+        const p = [{n:"SRE-250 Mini Fusing", p:48000, i:"🏭"}, {n:"SRE-300 Collar Press", p:58000, i:"👕"}, {n:"Hashima HP-450MS", p:215000, i:"🤖"}, {n:"Oshima OP-450GS", p:185000, i:"🏭"}, {n:"HP-450MS Belt Set", p:14000, i:"➰"}, {n:"Heating Industrial", p:3800, i:"🔥"}, {n:"Silicon Spray", p:2250, i:"🧴"}, {n:"Machine Service", p:1500, i:"🛠️"}];
         let h = ''; p.forEach(item => { h += `<div class="p-card"><div class="p-icon">${item.i}</div><div class="p-name">${item.n}</div><div style="color:var(--gold);font-weight:bold;">₹${item.p.toLocaleString()}</div><button class="buy-btn">BUY NOW</button></div>`; });
         document.getElementById('catalog').innerHTML = h;
     }
@@ -251,8 +253,8 @@
         else { words += a[num]; }
         return words + "Rupees Only";
     }
-    async function pickContact() { try { const c = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if(c.length) { document.getElementById('bName').value = c[0].name[0]; document.getElementById('bMob').value = c[0].tel[0].replace(/\D/g,'').slice(-10); } } catch (e) { alert("Use Chrome Mobile."); } }
+    async function pickContact() { try { const c = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if(c.length) { document.getElementById('bName').value = c[0].name[0]; document.getElementById('bMob').value = c[0].tel[0].replace(/\D/g,'').slice(-10); } } catch (e) { alert("Use Mobile."); } }
 </script>
 </body>
-                                                                                                                                                                                            </html>
-                                                                                                                                                        
+    </html>
+    
