@@ -11,17 +11,19 @@
         .section { display: none; padding: 15px; padding-bottom: 100px; }
         .active { display: block; }
 
-        /* Dashboard Buttons - LARGER TEXT */
+        /* Dashboard Buttons */
         .admin-btn { height: 75px !important; font-size: 16px !important; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; width: 100%; margin-bottom: 10px; cursor: pointer; border-radius: 8px; border: none; color: white; }
 
         /* Shop Styling */
         .shop-header { background: #131921; padding: 15px; text-align: center; border-bottom: 3px solid var(--gold); cursor:pointer; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
         .p-card { background: var(--card); border-radius: 12px; padding: 10px; border: 1px solid #334155; text-align: center; display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; }
+        .p-icon { font-size: 28px; }
+        .p-name { font-size: 11px; font-weight: bold; height: 35px; overflow: hidden; margin: 5px 0; }
         .buy-btn { background: var(--gold); color: black; border: none; width: 100%; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
 
         /* Form Design */
-        .form-box { background: white; color: black; padding: 15px; border-radius: 12px; max-width: 800px; margin: auto; }
+        .form-box { background: white; color: black; padding: 20px; border-radius: 12px; max-width: 850px; margin: auto; }
         .form-row { display: flex; align-items: center; margin-bottom: 10px; gap: 8px; }
         .form-row label { flex: 1; font-weight: bold; font-size: 11px; color: #333; text-transform: uppercase; }
         .form-row input, .form-row select, .form-row textarea { flex: 2; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-weight: bold; box-sizing: border-box; }
@@ -38,21 +40,21 @@
         .float-box { position: fixed; bottom: 85px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
         .f-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 25px; color: white; border:none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; cursor:pointer; }
 
-        /* 🔥 MASTER PRINT ENGINE: BOLD FONTS & CENTRE ALIGN 🔥 */
+        /* 🔥 MASTER PRINT ENGINE 🔥 */
         @media print {
             @page { size: A4; margin: 5mm; }
             html, body { background: white !important; color: black !important; overflow: visible !important; height: auto !important; }
             body > *:not(.active) { display: none !important; }
             .no-print, .float-box, .back-nav-bottom, button, .shop-header, .admin-btn { display: none !important; }
             .section.active { display: block !important; position: static !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
-            .form-box { box-shadow: none !important; border: none !important; width: 100% !important; padding: 0 !important; text-align: center; }
-            h2 { font-size: 28px !important; color: black !important; text-align: center !important; text-decoration: underline; margin-bottom: 20px !important; }
-            .excel-table { width: 100% !important; font-size: 14px !important; border: 2px solid #000 !important; table-layout: auto !important; }
-            .excel-table th, .excel-table td { border: 1px solid #000 !important; padding: 10px !important; font-weight: bold !important; }
-            .form-row label { font-size: 14px !important; }
-            .excel-table input { background: transparent !important; border: none !important; font-size: 14px !important; }
-            #printFooter { display: flex !important; justify-content: space-between; align-items: flex-end; margin-top: 50px; border-top: 2px solid #000; padding-top: 20px; visibility: visible !important; }
-            .bank-details { font-size: 14px !important; text-align: left !important; line-height: 1.6; }
+            .form-box { box-shadow: none !important; border: none !important; width: 100% !important; padding: 0 !important; text-align: left; }
+            h2 { font-size: 26px !important; color: black !important; text-align: center !important; text-decoration: underline; margin-bottom: 20px !important; }
+            .excel-table { width: 100% !important; font-size: 13px !important; border: 2px solid #000 !important; table-layout: auto !important; }
+            .excel-table th, .excel-table td { border: 1.5px solid #000 !important; padding: 8px !important; font-weight: bold !important; }
+            #printFooter { display: flex !important; justify-content: space-between; align-items: flex-start; margin-top: 40px; border-top: 2px solid #000; padding-top: 20px; visibility: visible !important; }
+            .bank-info { width: 60%; text-align: left !important; font-size: 13px !important; }
+            .total-info { width: 35%; text-align: right !important; }
+            .excel-table input { background: transparent !important; border: none !important; font-size: 13px !important; }
         }
         #printFooter { display: none; }
     </style>
@@ -81,7 +83,7 @@
     <div class="form-box">
         <h2 style="text-align:center; color:var(--blue); margin:0;">S.R ENTERPRISES</h2>
         <p style="text-align:center; font-size:10px; margin-bottom:15px;" class="no-print">FUSING MACHINE SPECIALIST</p>
-        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; margin-bottom:15px; border-bottom: 1px solid #ddd;">
+        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; margin-bottom:15px; border-bottom: 1.5px solid #000;">
             <span>INV NO: <input type="text" id="invNo" style="width:70px;" value="SR-101"></span>
             <span>DATE: <input type="date" id="invDate"></span>
         </div>
@@ -109,10 +111,15 @@
         </table>
         <button class="buy-btn no-print" style="background:var(--blue); color:white; margin-top:10px;" onclick="addRow()">+ ADD ITEM</button>
 
-        <div style="margin-top:20px; text-align:right;">
-            <div class="form-row" style="justify-content:flex-end;"><label style="flex:none;">DISCOUNT (₹):</label><input type="number" id="disc" value="0" oninput="calcBill()" style="width:100px;"></div>
-            <div class="form-row" style="justify-content:flex-end;"><label style="flex:none;">GST 18%:</label><input type="checkbox" id="gstCheck" onchange="calcBill()"></div>
-            <h2 style="color:var(--blue);">GRAND TOTAL: ₹ <span id="gTotal">0</span></h2>
+        <div style="margin-top:20px; display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="text-align: left; width: 60%;">
+                <p id="wordTotal" style="font-weight: bold; font-size: 12px; color: #333; margin: 0;"></p>
+            </div>
+            <div style="text-align:right; width: 35%;">
+                <div class="form-row no-print" style="justify-content:flex-end;"><label style="flex:none;">DISCOUNT (₹):</label><input type="number" id="disc" value="0" oninput="calcBill()" style="width:80px;"></div>
+                <div class="form-row" style="justify-content:flex-end;"><label style="flex:none;">GST 18%:</label><input type="checkbox" id="gstCheck" onchange="calcBill()"></div>
+                <h2 style="color:var(--blue); font-size: 22px !important; margin: 5px 0;">GRAND TOTAL: ₹ <span id="gTotal">0</span></h2>
+            </div>
         </div>
         
         <div class="no-print" style="margin-top:10px; display:flex; gap:10px;">
@@ -121,21 +128,20 @@
         </div>
 
         <div id="printFooter">
-            <div class="bank-details">
-                <p><b>BENEFICIARY: HARIRAM SITARAM RAJBHAR</b></p>
-                <p>BANK: STATE BANK OF INDIA (A/C: ....9584)</p>
-                <p>IFSC CODE: SBIN0000000</p>
-                <p>UPI ID: 7021733860@sbi</p>
+            <div class="bank-info">
+                <p style="margin:2px 0;"><b>BENEFICIARY: HARIRAM SITARAM RAJBHAR</b></p>
+                <p style="margin:2px 0;">BANK: STATE BANK OF INDIA (A/C: ....9584)</p>
+                <p style="margin:2px 0;">IFSC CODE: SBIN0000000</p>
+                <p style="margin:2px 0;">UPI ID: 7021733860@sbi</p>
                 <div style="margin-top:10px;">
-                   <img src="https://img.icons8.com/color/48/000000/google-pay.png" width="30">
-                   <img src="https://img.icons8.com/color/48/000000/phone-pe.png" width="30">
-                   <img src="https://img.icons8.com/color/48/000000/paytm.png" width="30">
+                   <img src="https://img.icons8.com/color/48/000000/google-pay.png" width="25">
+                   <img src="https://img.icons8.com/color/48/000000/phone-pe.png" width="25">
+                   <img src="https://img.icons8.com/color/48/000000/paytm.png" width="25">
                 </div>
             </div>
-            <div style="text-align:right;">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=7021733860@sbi&pn=HariRam" style="width:110px; border:1px solid #000;">
-                <p style="margin-top:20px;">____________________</p>
-                <p style="font-size:12px;">Authorised Signature</p>
+            <div style="text-align:right; width: 35%;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=7021733860@sbi&pn=HariRam" style="width:110px; border:1.5px solid #000;">
+                <p style="margin-top:20px; font-weight:bold;">____________________<br>Authorised Signature</p>
             </div>
         </div>
     </div>
@@ -179,23 +185,68 @@
         {n:"SRE-250 Mini Fusing", p:48000, i:"🏭", d:"Best for Small Units"},
         {n:"SRE-300 Collar Press", p:58000, i:"👕", d:"Collar/Cuff Pasting"},
         {n:"Hashima HP-450MS", p:215000, i:"🤖", d:"Auto Cooling Industrial"},
-        {n:"Oshima OP-450GS", p:185000, i:"🏭", d:"Industrial Heavy 450mm"},
-        {n:"HP-450MS Belt Set", p:14000, i:"➰", d:"Premium Lower/Upper"},
-        {n:"Machine Service", p:1500, i:"🛠️", d:"Service Call"}
+        {n:"Oshima OP-450GS", p:185000, i:"🏭", d:"Heavy Duty Industrial"},
+        {n:"HP-450MS Belt Set", p:14000, i:"➰", d:"Premium Upper/Lower"},
+        {n:"Hashima Lower Belt", p:5250, i:"🎗️", d:"Genuine High Quality"},
+        {n:"Hashima Upper Belt", p:4500, i:"🎗️", d:"Genuine High Quality"},
+        {n:"Linix Motor 80JB", p:14950, i:"🔌", d:"Main Driving Motor"},
+        {n:"Omron Thermostat", p:5950, i:"🌡️", d:"Digital Precision"},
+        {n:"Omron Power Relay", p:4250, i:"⚡", d:"G7L Heavy Duty"},
+        {n:"Heating Element", p:3800, i:"🔥", d:"Industrial Heater"},
+        {n:"Silicon Spray", p:2250, i:"🧴", d:"New Ace Cleaner"},
+        {n:"Heat Proof Grease", p:1280, i:"🧪", d:"HG-260 Lubricant"},
+        {n:"Teflon Sheet Roll", p:8500, i:"📜", d:"High Temp Resistance"},
+        {n:"Pressure Roller", p:6200, i:"🥖", d:"Silicon Coated"},
+        {n:"Carbon Brush Set", p:250, i:"🖌️", d:"For Linix Motors"},
+        {n:"Fusing Powder", p:350, i:"✨", d:"Rolax Premium"},
+        {n:"Belt Guide Sensor", p:3200, i:"👁️", d:"Alignment Correction"},
+        {n:"Cooling Fan 220V", p:1200, i:"❄️", d:"High Speed Exhaust"},
+        {n:"Gear Box Unit", p:4500, i:"⚙️", d:"Speed Controller"},
+        {n:"Limit Switch", p:450, i:"🔘", d:"Safety Stop"},
+        {n:"Machine Service", p:1500, i:"🛠️", d:"Professional Service"}
     ];
 
     window.onload = () => {
         let h = '';
         products.forEach(p => { 
-            h += `<div class="p-card"><div class="p-icon">${p.i}</div><div class="p-name">${p.n}</div><div style="color:var(--gold);font-weight:bold;">₹${p.p.toLocaleString()}</div><button class="buy-btn" onclick="alert('Checkout Open')">BUY NOW</button></div>`; 
+            h += `<div class="p-card"><div class="p-icon">${p.i}</div><div class="p-name">${p.n}</div><div style="color:var(--gold);font-weight:bold;">₹${p.p.toLocaleString()}</div><button class="buy-btn" onclick="alert('Opening Order Checkout...')">BUY NOW</button></div>`; 
         });
         document.getElementById('catalog').innerHTML = h;
         document.getElementById('invDate').valueAsDate = new Date();
     };
 
+    function numberToWords(num) {
+        if (num === 0) return "Zero Rupees Only";
+        const a = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ', 'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ', 'Eighteen ', 'Nineteen '];
+        const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+        let words = '';
+        if (num > 999) { words += a[Math.floor(num / 1000)] + 'Thousand '; num %= 1000; }
+        if (num > 99) { words += a[Math.floor(num / 100)] + 'Hundred '; num %= 100; }
+        if (num > 19) { words += b[Math.floor(num / 10)] + ' ' + a[num % 10]; }
+        else { words += a[num]; }
+        return words + "Rupees Only";
+    }
+
     function goTo(id) { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
     function addRow() { const tr = document.createElement('tr'); tr.innerHTML = `<td class="col-desc"><input type="text" class="i-desc"></td><td class="col-rate"><input type="number" class="i-rate" value="0" oninput="calcBill()"></td><td class="col-qty"><input type="number" class="i-qty" value="1" oninput="calcBill()"></td><td class="col-tot">₹ 0</td>`; document.getElementById('billBody').appendChild(tr); }
-    function calcBill() { let sub = 0; document.querySelectorAll('#billBody tr').forEach(r => { let rt = parseFloat(r.querySelector('.i-rate').value)||0; let qt = parseFloat(r.querySelector('.i-qty').value)||0; let rowTot = rt*qt; r.querySelector('td:last-child').innerText = "₹ " + rowTot; sub += rowTot; }); let d = parseFloat(document.getElementById('disc').value)||0; let f = sub - d; if(document.getElementById('gstCheck').checked) f *= 1.18; document.getElementById('gTotal').innerText = Math.round(f).toLocaleString(); }
+    
+    function calcBill() { 
+        let sub = 0; 
+        document.querySelectorAll('#billBody tr').forEach(r => { 
+            let rt = parseFloat(r.querySelector('.i-rate').value)||0; 
+            let qt = parseFloat(r.querySelector('.i-qty').value)||0; 
+            let rowTot = rt*qt; 
+            r.querySelector('td:last-child').innerText = "₹ " + rowTot; 
+            sub += rowTot; 
+        }); 
+        let d = parseFloat(document.getElementById('disc').value)||0; 
+        let f = sub - d; 
+        if(document.getElementById('gstCheck').checked) f *= 1.18; 
+        let final = Math.round(f);
+        document.getElementById('gTotal').innerText = final.toLocaleString(); 
+        document.getElementById('wordTotal').innerText = "Amount in words: " + numberToWords(final);
+    }
+
     function addCRMRecord() { const row = `<tr><td>${document.getElementById('cn').value}</td><td>${document.getElementById('cm').value}</td><td>${document.getElementById('ca').value}</td><td style="color:green;font-weight:bold;">ACTIVE</td></tr>`; document.getElementById('crmBody').innerHTML += row; alert("Record Added!"); }
     function addDealerEntry() { document.getElementById('dealerBody').innerHTML += `<tr><td>${new Date().toLocaleDateString()}</td><td>${document.getElementById('dCat').value}</td><td>${document.getElementById('dAddr').value}</td><td>₹${document.getElementById('dAmt').value}</td></tr>`; alert("Saved!"); }
     function searchTable(id, val) { let rows = document.querySelectorAll(`#${id} tr`); rows.forEach(r => r.style.display = r.innerText.toLowerCase().includes(val.toLowerCase()) ? '' : 'none'); }
@@ -203,5 +254,5 @@
     async function pickContact() { try { const c = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if(c.length) { document.getElementById('bName').value = c[0].name[0]; document.getElementById('bMob').value = c[0].tel[0].replace(/\D/g,'').slice(-10); } } catch (e) { alert("Use Chrome Mobile."); } }
 </script>
 </body>
-    </html>
-                                             
+                                                            </html>
+                
