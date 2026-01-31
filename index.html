@@ -12,7 +12,7 @@
         .active { display: block; }
 
         /* Dashboard Buttons - LARGER TEXT */
-        .admin-btn { height: 75px !important; font-size: 16px !important; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; width: 100%; margin-bottom: 10px; cursor: pointer; border-radius: 8px; border: none; }
+        .admin-btn { height: 75px !important; font-size: 16px !important; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; width: 100%; margin-bottom: 10px; cursor: pointer; border-radius: 8px; border: none; color: white; }
 
         /* Shop Styling */
         .shop-header { background: #131921; padding: 15px; text-align: center; border-bottom: 3px solid var(--gold); cursor:pointer; }
@@ -33,28 +33,26 @@
         .excel-table input { width: 100%; border: none; font-size: 11px; padding: 2px; box-sizing: border-box; font-weight: bold; background: #f9f9f9; }
         .col-desc { width: 45%; } .col-rate { width: 20%; } .col-qty { width: 15%; } .col-tot { width: 20%; }
 
-        /* CRM & Dealer Table Fix */
-        .smart-table-container { overflow-x: auto; width: 100%; background: white; border-radius: 8px; }
-        .red-row { background-color: #ffebee !important; color: #c62828 !important; font-weight: bold; }
-
         /* Navigation */
         .back-nav-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #131921; padding: 18px; text-align: center; border-top: 2px solid var(--gold); cursor: pointer; color: var(--gold); font-weight: bold; z-index: 1000; font-size: 14px; }
         .float-box { position: fixed; bottom: 85px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
         .f-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 25px; color: white; border:none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; cursor:pointer; }
 
-        /* 🔥 STRICT PRINT ENGINE: FIXING OVERLAP & 5-PAGE ISSUE 🔥 */
+        /* 🔥 MASTER PRINT ENGINE: BOLD FONTS & CENTRE ALIGN 🔥 */
         @media print {
-            @page { size: A4; margin: 10mm; }
+            @page { size: A4; margin: 5mm; }
             html, body { background: white !important; color: black !important; overflow: visible !important; height: auto !important; }
-            /* Hide EVERYTHING except the Active Section */
             body > *:not(.active) { display: none !important; }
             .no-print, .float-box, .back-nav-bottom, button, .shop-header, .admin-btn { display: none !important; }
             .section.active { display: block !important; position: static !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
-            .form-box { box-shadow: none !important; border: none !important; width: 100% !important; padding: 0 !important; }
-            .excel-table { width: 100% !important; font-size: 12px; border: 1px solid #000 !important; table-layout: auto !important; }
-            .excel-table input { background: transparent !important; border: none !important; }
-            #printFooter { display: flex !important; justify-content: space-between; align-items: flex-end; margin-top: 50px; border-top: 1px solid #000; padding-top: 10px; }
-            h2 { color: black !important; }
+            .form-box { box-shadow: none !important; border: none !important; width: 100% !important; padding: 0 !important; text-align: center; }
+            h2 { font-size: 28px !important; color: black !important; text-align: center !important; text-decoration: underline; margin-bottom: 20px !important; }
+            .excel-table { width: 100% !important; font-size: 14px !important; border: 2px solid #000 !important; table-layout: auto !important; }
+            .excel-table th, .excel-table td { border: 1px solid #000 !important; padding: 10px !important; font-weight: bold !important; }
+            .form-row label { font-size: 14px !important; }
+            .excel-table input { background: transparent !important; border: none !important; font-size: 14px !important; }
+            #printFooter { display: flex !important; justify-content: space-between; align-items: flex-end; margin-top: 50px; border-top: 2px solid #000; padding-top: 20px; visibility: visible !important; }
+            .bank-details { font-size: 14px !important; text-align: left !important; line-height: 1.6; }
         }
         #printFooter { display: none; }
     </style>
@@ -72,17 +70,18 @@
 <div id="adminPanel" class="section no-print">
     <h2 style="color:var(--gold); text-align:center;">SR ADMIN DASHBOARD</h2>
     <div style="padding: 10px;">
-        <button class="buy-btn admin-btn" onclick="goTo('billPage')">📝 NEW BILLING</button>
-        <button class="buy-btn admin-btn" style="background:var(--blue);" onclick="goTo('dealerPage')">🤝 SHASHI DEALER</button>
+        <button class="buy-btn admin-btn" style="background:var(--blue);" onclick="goTo('billPage')">📝 NEW BILLING</button>
+        <button class="buy-btn admin-btn" style="background:var(--green);" onclick="goTo('dealerPage')">🤝 SHASHI DEALER</button>
         <button class="buy-btn admin-btn" style="background:#a855f7;" onclick="goTo('crmPage')">📊 CUSTOMER LOGS</button>
     </div>
-    <div class="back-nav-bottom" onclick="location.reload()">🔒 LOGOUT</div>
+    <div class="back-nav-bottom" onclick="location.reload()">🔒 LOGOUT / HOME</div>
 </div>
 
 <div id="billPage" class="section">
     <div class="form-box">
         <h2 style="text-align:center; color:var(--blue); margin:0;">S.R ENTERPRISES</h2>
-        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:11px; margin-bottom:15px; border-bottom: 1px solid #ddd;">
+        <p style="text-align:center; font-size:10px; margin-bottom:15px;" class="no-print">FUSING MACHINE SPECIALIST</p>
+        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; margin-bottom:15px; border-bottom: 1px solid #ddd;">
             <span>INV NO: <input type="text" id="invNo" style="width:70px;" value="SR-101"></span>
             <span>DATE: <input type="date" id="invDate"></span>
         </div>
@@ -108,7 +107,7 @@
                 </tr>
             </tbody>
         </table>
-        <button class="buy-btn no-print" style="background:var(--blue); color:white; margin-top:10px;" onclick="addRow()">+ ADD ITEM / WORK</button>
+        <button class="buy-btn no-print" style="background:var(--blue); color:white; margin-top:10px;" onclick="addRow()">+ ADD ITEM</button>
 
         <div style="margin-top:20px; text-align:right;">
             <div class="form-row" style="justify-content:flex-end;"><label style="flex:none;">DISCOUNT (₹):</label><input type="number" id="disc" value="0" oninput="calcBill()" style="width:100px;"></div>
@@ -117,16 +116,27 @@
         </div>
         
         <div class="no-print" style="margin-top:10px; display:flex; gap:10px;">
-            <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="alert('Saving to Sheet...')">SAVE & WHATSAPP</button>
+            <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="alert('Record Saved!')">SAVE & WHATSAPP</button>
             <button class="buy-btn" style="background:#eee; color:black;" onclick="window.print()">🖨️ PRINT BILL</button>
         </div>
 
         <div id="printFooter">
-            <div>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=9326113988@upi&pn=HariRam" style="width:100px;">
-                <p style="font-size:11px; margin:0;"><b>HariRam Ji</b><br>UPI ID: 9326113988@upi</p>
+            <div class="bank-details">
+                <p><b>BENEFICIARY: HARIRAM SITARAM RAJBHAR</b></p>
+                <p>BANK: STATE BANK OF INDIA (A/C: ....9584)</p>
+                <p>IFSC CODE: SBIN0000000</p>
+                <p>UPI ID: 7021733860@sbi</p>
+                <div style="margin-top:10px;">
+                   <img src="https://img.icons8.com/color/48/000000/google-pay.png" width="30">
+                   <img src="https://img.icons8.com/color/48/000000/phone-pe.png" width="30">
+                   <img src="https://img.icons8.com/color/48/000000/paytm.png" width="30">
+                </div>
             </div>
-            <div style="text-align:right;"><p>____________________</p><p style="font-size:12px;">Authorised Signature</p></div>
+            <div style="text-align:right;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=7021733860@sbi&pn=HariRam" style="width:110px; border:1px solid #000;">
+                <p style="margin-top:20px;">____________________</p>
+                <p style="font-size:12px;">Authorised Signature</p>
+            </div>
         </div>
     </div>
     <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
@@ -138,17 +148,10 @@
         <div style="background:#f1f5f9; padding:15px; border-radius:10px; margin-bottom:15px; border: 1px solid #ddd;" class="no-print">
             <div class="form-row"><input type="text" id="cn" placeholder="Name"> <input type="number" id="cm" placeholder="Mobile"></div>
             <div class="form-row"><input type="text" id="ca" placeholder="Address"> <input type="text" id="cw" placeholder="Machine"></div>
-            <button class="buy-btn" style="background:var(--green); color:white; margin-top:5px;" onclick="addCRMRecord()">+ SAVE NEW RECORD</button>
+            <button class="buy-btn" style="background:var(--green); color:white; padding: 12px;" onclick="addCRMRecord()">+ SAVE TO RECORD</button>
         </div>
         <input type="text" id="crmSearch" placeholder="🔍 Search records..." onkeyup="searchTable('crmBody', this.value)" style="width:100%; padding:15px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc;">
-        <div class="smart-table-container">
-            <table class="excel-table">
-                <thead><tr style="background:#334155; color:white;"><th>NAME</th><th>MOBILE</th><th>ADDRESS</th><th>MACHINE</th><th>DATE</th><th>NEXT DUE</th><th>STATUS</th></tr></thead>
-                <tbody id="crmBody">
-                    <tr class="red-row"><td>Rajesh Hadal</td><td>9820012345</td><td>Boisar</td><td>HP-450</td><td>20/08/2025</td><td>20/01/2026</td><td>DUE 🚨</td></tr>
-                </tbody>
-            </table>
-        </div>
+        <table class="excel-table"><thead><tr><th>NAME</th><th>MOBILE</th><th>ADDRESS</th><th>STATUS</th></tr></thead><tbody id="crmBody"></tbody></table>
     </div>
     <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
 </div>
@@ -156,34 +159,29 @@
 <div id="dealerPage" class="section">
     <div class="form-box">
         <h3 style="color:#f97316;">🤝 DEALER: SHASHI JI</h3>
-        <div class="form-row"><label>CAT:</label><select id="dCat"><option value="Purchase Items (+)">Purchase Items (+)</option><option value="Call Attend (-)">Call Attend (-)</option><option value="Business Payment (-)">Business Payment (-)</option></select></div>
+        <div class="form-row"><label>CAT:</label><select id="dCat"><option value="Purchase Items (+)">Purchase Items (+)</option><option value="Call Attend (-)">Call Attend (-)</option></select></div>
         <div class="form-row"><label>ADDR:</label><input type="text" id="dAddr" placeholder="Location"></div>
-        <div class="form-row"><label>WORK:</label><input type="text" id="dDetail" placeholder="Description"></div>
+        <div class="form-row"><label>DETAIL:</label><input type="text" id="dDetail" placeholder="Description"></div>
         <div class="form-row"><label>AMT:</label><input type="number" id="dAmt" placeholder="₹"></div>
         <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="addDealerEntry()">SAVE ENTRY</button>
-        <div class="smart-table-container"><table class="excel-table"><thead><tr><th>DATE</th><th>CAT</th><th>ADDR</th><th>WORK</th><th>AMT</th></tr></thead><tbody id="dealerBody"></tbody></table></div>
+        <table class="excel-table"><thead><tr><th>DATE</th><th>CAT</th><th>ADDR</th><th>AMT</th></tr></thead><tbody id="dealerBody"></tbody></table>
     </div>
     <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
 </div>
 
 <div class="float-box no-print">
-    <a href="https://wa.me/919326113988" class="f-btn" style="background:#25d366;">💬</a>
-    <a href="tel:919326113988" class="f-btn" style="background:var(--blue);">📞</a>
+    <a href="https://wa.me/917021733860" class="f-btn" style="background:#25d366;">💬</a>
+    <a href="tel:917021733860" class="f-btn" style="background:var(--blue);">📞</a>
 </div>
 
 <script>
     const products = [
         {n:"SRE-250 Mini Fusing", p:48000, i:"🏭", d:"Best for Small Units"},
         {n:"SRE-300 Collar Press", p:58000, i:"👕", d:"Collar/Cuff Pasting"},
-        {n:"Hashima HP-450M", p:195000, i:"⚙️", d:"Industrial 450mm"},
         {n:"Hashima HP-450MS", p:215000, i:"🤖", d:"Auto Cooling Industrial"},
         {n:"Oshima OP-450GS", p:185000, i:"🏭", d:"Industrial Heavy 450mm"},
         {n:"HP-450MS Belt Set", p:14000, i:"➰", d:"Premium Lower/Upper"},
-        {n:"Hashima Lower Belt", p:5250, i:"🎗️", d:"Genuine High Quality"},
-        {n:"Hashima Upper Belt", p:4500, i:"🎗️", d:"Genuine High Quality"},
-        {n:"Linix Motor 80JB", p:14950, i:"🔌", d:"Main Driving Motor"},
-        {n:"Digital Thermostat", p:5950, i:"🌡️", d:"Precision Temp Control"},
-        {n:"Machine Service", p:1500, i:"🛠️", d:"Professional Service"}
+        {n:"Machine Service", p:1500, i:"🛠️", d:"Service Call"}
     ];
 
     window.onload = () => {
@@ -195,45 +193,15 @@
         document.getElementById('invDate').valueAsDate = new Date();
     };
 
-    function goTo(id) { 
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); 
-        document.getElementById(id).classList.add('active'); 
-        window.scrollTo(0,0); 
-    }
-
+    function goTo(id) { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
     function addRow() { const tr = document.createElement('tr'); tr.innerHTML = `<td class="col-desc"><input type="text" class="i-desc"></td><td class="col-rate"><input type="number" class="i-rate" value="0" oninput="calcBill()"></td><td class="col-qty"><input type="number" class="i-qty" value="1" oninput="calcBill()"></td><td class="col-tot">₹ 0</td>`; document.getElementById('billBody').appendChild(tr); }
-    
-    function calcBill() { 
-        let sub = 0; 
-        document.querySelectorAll('#billBody tr').forEach(r => { 
-            let rt = parseFloat(r.querySelector('.i-rate').value)||0; 
-            let qt = parseFloat(r.querySelector('.i-qty').value)||0; 
-            let rowTot = rt*qt; 
-            r.querySelector('td:last-child').innerText = "₹ " + rowTot; 
-            sub += rowTot; 
-        }); 
-        let d = parseFloat(document.getElementById('disc').value)||0; 
-        let f = sub - d; 
-        if(document.getElementById('gstCheck').checked) f *= 1.18; 
-        document.getElementById('gTotal').innerText = Math.round(f).toLocaleString(); 
-    }
-
-    function addCRMRecord() { 
-        const date = new Date().toLocaleDateString(); 
-        let nx = new Date(); nx.setMonth(nx.getMonth() + 5); 
-        const row = `<tr><td>${document.getElementById('cn').value}</td><td>${document.getElementById('cm').value}</td><td>${document.getElementById('ca').value}</td><td>${document.getElementById('cw').value}</td><td>${date}</td><td>${nx.toLocaleDateString()}</td><td style="color:green;font-weight:bold;">ACTIVE</td></tr>`; 
-        document.getElementById('crmBody').innerHTML += row; 
-        alert("Smart Table Updated!"); 
-    }
-
-    function addDealerEntry() { 
-        document.getElementById('dealerBody').innerHTML += `<tr><td>${new Date().toLocaleDateString()}</td><td>${document.getElementById('dCat').value}</td><td>${document.getElementById('dAddr').value}</td><td>${document.getElementById('dDetail').value}</td><td>₹${document.getElementById('dAmt').value}</td></tr>`; 
-        alert("Saved!"); 
-    }
-
+    function calcBill() { let sub = 0; document.querySelectorAll('#billBody tr').forEach(r => { let rt = parseFloat(r.querySelector('.i-rate').value)||0; let qt = parseFloat(r.querySelector('.i-qty').value)||0; let rowTot = rt*qt; r.querySelector('td:last-child').innerText = "₹ " + rowTot; sub += rowTot; }); let d = parseFloat(document.getElementById('disc').value)||0; let f = sub - d; if(document.getElementById('gstCheck').checked) f *= 1.18; document.getElementById('gTotal').innerText = Math.round(f).toLocaleString(); }
+    function addCRMRecord() { const row = `<tr><td>${document.getElementById('cn').value}</td><td>${document.getElementById('cm').value}</td><td>${document.getElementById('ca').value}</td><td style="color:green;font-weight:bold;">ACTIVE</td></tr>`; document.getElementById('crmBody').innerHTML += row; alert("Record Added!"); }
+    function addDealerEntry() { document.getElementById('dealerBody').innerHTML += `<tr><td>${new Date().toLocaleDateString()}</td><td>${document.getElementById('dCat').value}</td><td>${document.getElementById('dAddr').value}</td><td>₹${document.getElementById('dAmt').value}</td></tr>`; alert("Saved!"); }
     function searchTable(id, val) { let rows = document.querySelectorAll(`#${id} tr`); rows.forEach(r => r.style.display = r.innerText.toLowerCase().includes(val.toLowerCase()) ? '' : 'none'); }
     function adminLogin() { if(prompt("Password:") === "1234") goTo('adminPanel'); }
     async function pickContact() { try { const c = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if(c.length) { document.getElementById('bName').value = c[0].name[0]; document.getElementById('bMob').value = c[0].tel[0].replace(/\D/g,'').slice(-10); } } catch (e) { alert("Use Chrome Mobile."); } }
 </script>
 </body>
-                </html>
+    </html>
+                                             
