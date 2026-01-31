@@ -3,46 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>S.R ENTERPRISES | MASTER ERP</title>
     <style>
-        :root { --dark-bg: #0f172a; --card-bg: #1e293b; --gold: #fbbf24; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--dark-bg); margin: 0; color: white; overflow-x: hidden; }
-        header { background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); padding: 25px; text-align: center; border-bottom: 3px solid var(--gold); }
-        .brand-name { font-size: 26px; font-weight: 700; color: var(--gold); letter-spacing: 1px; cursor: pointer; }
-        .section-title { padding: 20px; color: var(--gold); font-size: 14px; font-weight: 600; display: flex; align-items: center; }
-        .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(251,191,36,0.2); margin-left: 10px; }
-        .machine-gallery { display: flex; overflow-x: auto; gap: 15px; padding: 0 20px 20px; scrollbar-width: none; }
-        .product-card { background: var(--card-bg); min-width: 200px; border-radius: 18px; padding: 15px; border: 1px solid rgba(255,255,255,0.05); position: relative; }
-        .icon-box { background: rgba(255,255,255,0.03); height: 100px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 50px; margin-bottom: 12px; }
-        .price-tag { color: #4ade80; font-size: 18px; font-weight: 700; display: block; margin-bottom: 15px; }
-        .buy-btn { background: linear-gradient(180deg, #fcd34d 0%, #fbbf24 100%); color: #000; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700; display: block; box-shadow: 0 4px 0 #b45309; }
-        .action-card { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 15px; padding: 20px; text-decoration: none; color: white; text-align: center; border: 1px solid rgba(255,255,255,0.1); display: block; margin-bottom: 10px; }
-        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 20px 20px; }
-        #admin-office { display: none; }
-        footer { text-align: center; padding: 30px; font-size: 10px; color: #64748b; }
+        :root { --bg: #0b1120; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; --blue: #3b82f6; --red: #ef4444; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 10px; }
+        .dashboard-header { text-align: center; border-bottom: 2px solid var(--gold); padding: 15px 0; margin-bottom: 20px; cursor: pointer; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .btn { padding: 20px 5px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; text-align: center; font-size: 13px; }
+        .section { display: none; background: var(--card); padding: 20px; border-radius: 15px; margin-top: 15px; border: 1px solid #334155; }
+        .active { display: block; }
+        .form-row { display: flex; align-items: center; margin-bottom: 12px; gap: 10px; }
+        .form-row label { flex: 1; color: var(--gold); font-size: 11px; font-weight: bold; }
+        input, select { flex: 2; padding: 12px; border-radius: 8px; border: 1px solid #475569; background: white; color: black; font-weight: bold; }
+        #adminArea { display: none; }
     </style>
 </head>
 <body>
-    <header><div class="brand-name" onclick="unlockAdmin()">S.R ENTERPRISES</div></header>
-    <div class="section-title">⭐ OUR MACHINES</div>
-    <div class="machine-gallery">
-        <div class="product-card"><div class="icon-box">🏗️</div><div>HASHIMA HP-450</div><span class="price-tag">₹1,55,000</span><a href="https://wa.me/918850813765?text=I+want+Hashima" class="buy-btn">🛒 BUY NOW</a></div>
-        <div class="product-card"><div class="icon-box">⚙️</div><div>GEARED MOTOR</div><span class="price-tag">₹3,500</span><a href="https://wa.me/918850813765?text=I+want+Motor" class="buy-btn">🛒 BUY NOW</a></div>
-    </div>
-    <div class="section-title">💬 SUPPORT</div>
-    <div style="padding: 0 20px;"><a href="https://wa.me/918850813765" class="action-card" style="border: 1px solid #25D366;">📲 WHATSAPP CHAT</a></div>
-    <div id="admin-office">
-        <div class="section-title">💼 ADMIN</div>
-        <div class="grid-container">
-            <a href="bill.html" class="action-card">📝 BILLING</a>
-            <a href="https://docs.google.com/spreadsheets/d/1Xy_Jp9E9gS1A_nU0Y0X6_K3yU9P-L6oX-m-E-rX9Xw/edit" class="action-card">📊 REPORTS</a>
+
+<div class="dashboard-header" onclick="unlockAdmin()">
+    <h1 style="color: var(--gold); margin: 0;">S.R ENTERPRISES</h1>
+    <p id="statusTxt" style="font-size: 10px; color: #94a3b8;">CLICK TO LOGIN ADMIN PANEL</p>
+</div>
+
+<div id="adminArea">
+    <div id="menu" class="section active no-print">
+        <div class="menu-grid">
+            <button class="btn" style="background:var(--gold);" onclick="showSection('billPage')">🧾 NEW BILLING</button>
+            <button class="btn" style="background:var(--blue); color:white;" onclick="showSection('searchPage')">🔍 SEARCH HISTORY</button>
+            <button class="btn" style="background:#a855f7; color:white;" onclick="showSection('invPage')">📦 STOCK ADD</button>
+            <button class="btn" style="background:#f97316; color:white;" onclick="showSection('dealerPage')">🤝 SHASHI (DEALER)</button>
         </div>
     </div>
-    <script>
-        function unlockAdmin() {
-            if(prompt("Password?") === "1234") { document.getElementById('admin-office').style.display = 'block'; }
-        }
-    </script>
+
+    <div id="billPage" class="section">
+        <h3 style="color:var(--gold);">NEW BILLING</h3>
+        <div class="form-row"><label>Customer:</label><input type="text" id="cName"></div>
+        <div class="form-row"><label>Mobile:</label><div style="flex:2; display:flex; gap:5px;"><input type="text" id="cMob"><button onclick="pickContact()" style="background:var(--gold); border:none; border-radius:8px; padding:0 12px;">👤</button></div></div>
+        <div class="form-row"><label>Address:</label><input type="text" id="cAddr"></div>
+        <hr style="border:0.5px solid #444;">
+        <div class="form-row"><label>Service Charges:</label><input type="number" id="servCharge" value="0" oninput="calcTotal()"></div>
+        <div class="form-row"><label>Spare Part:</label><input type="text" id="spareItem" placeholder="e.g. Teflon Belt"></div>
+        <div class="form-row"><label>Spare Price:</label><input type="number" id="sparePrice" value="0" oninput="calcTotal()"></div>
+        <h2 style="color:var(--gold); text-align:center;">Total: <span id="grandTot">₹ 0</span></h2>
+        <button class="btn" style="width:100%; background:var(--green); color:white; margin-top:10px;" onclick="saveBill()">SAVE & WHATSAPP</button>
+    </div>
+
+    <div id="dealerPage" class="section">
+        <h3 style="color:#f97316;">SHASHI JI LEDGER</h3>
+        <select id="dType" style="width:100%; margin-bottom:10px;">
+            <option value="Purchase">Purchase (Maal Liya +)</option>
+            <option value="Payment">Payment (Paisa Diya -)</option>
+            <option value="Service_Credit">Dealer Service Work (Auto-Minus -)</option>
+        </select>
+        <input type="number" id="dAmt" placeholder="Amount (₹)" style="width:94%; margin-bottom:10px;">
+        <input type="text" id="dRemark" placeholder="Call/Work Details" style="width:94%; margin-bottom:15px;">
+        <button onclick="saveDealer()" style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:10px; font-weight:bold;">SAVE TRANSACTION</button>
+    </div>
+
+    <div id="invPage" class="section">
+        <h3 style="color:#a855f7;">INVENTORY MANAGEMENT</h3>
+        <div class="form-row"><label>Item Name:</label><input type="text" id="iName"></div>
+        <div class="form-row"><label>Add Qty:</label><input type="number" id="iQty"></div>
+        <div class="form-row"><label>Purchase ₹:</label><input type="number" id="iPur"></div>
+        <div class="form-row"><label>Sale Price ₹:</label><input type="number" id="iSale"></div>
+        <button onclick="saveStock()" style="width:100%; padding:15px; background:#a855f7; color:white; border:none; border-radius:10px; font-weight:bold;">UPDATE STOCK</button>
+    </div>
+
+    <div id="searchPage" class="section">
+        <h3 style="color:var(--blue);">SEARCH HISTORY</h3>
+        <input type="text" id="sQuery" placeholder="Enter Name or Number" style="width:94%; margin-bottom:10px;">
+        <button class="btn" style="width:100%; background:var(--blue); color:white;" onclick="alert('Checking Sheet Records...')">SEARCH DATA</button>
+    </div>
+</div>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzXvTSibdzC-ETdc5c3GD7RD1gwD4_xLWpBmQR4gMzpxZfZbAwLt5Wewzt3osDfTgUf/exec';
+
+    function unlockAdmin() {
+        let pass = prompt("Enter Admin Password:");
+        if (pass === "1234") {
+            document.getElementById('adminArea').style.display = 'block';
+            document.getElementById('statusTxt').innerText = "ADMIN LOGGED IN ✅";
+            document.getElementById('statusTxt').style.color = "#22c55e";
+            showSection('menu');
+        } else { alert("Wrong Password!"); }
+    }
+
+    function showSection(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function calcTotal() {
+        let s = parseFloat(document.getElementById('servCharge').value) || 0;
+        let p = parseFloat(document.getElementById('sparePrice').value) || 0;
+        document.getElementById('grandTot').innerText = "₹ " + (s + p);
+    }
+
+    async function pickContact() {
+        try {
+            const props = ['name', 'tel'];
+            const contacts = await navigator.contacts.select(props, {multiple: false});
+            if (contacts.length) {
+                document.getElementById('cName').value = contacts[0].name[0];
+                document.getElementById('cMob').value = contacts[0].tel[0].replace(/\s/g, '').replace('+91', '');
+            }
+        } catch (ex) { alert("Please use Chrome browser for contact picker."); }
+    }
+
+    function saveBill() {
+        const params = new URLSearchParams({
+            action: 'saveBill',
+            name: document.getElementById('cName').value,
+            mob: document.getElementById('cMob').value,
+            addr: document.getElementById('cAddr').value,
+            items: document.getElementById('spareItem').value,
+            service: document.getElementById('servCharge').value,
+            total: document.getElementById('grandTot').innerText,
+            invNo: "SR-" + Date.now().toString().slice(-4)
+        });
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: params });
+        alert("Bill Saved! CRM Updated.");
+        window.open(`https://wa.me/919326113988?text=S.R ENTERPRISES New Bill Saved`);
+    }
+
+    function saveDealer() {
+        const params = new URLSearchParams({
+            action: 'dealerEntry',
+            type: document.getElementById('dType').value,
+            amt: document.getElementById('dAmt').value,
+            desc: document.getElementById('dRemark').value
+        });
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: params });
+        alert("Dealer Record Updated! Balance Adjusted.");
+    }
+
+    function saveStock() {
+        const params = new URLSearchParams({
+            action: 'updateStock',
+            itemName: document.getElementById('iName').value,
+            qty: document.getElementById('iQty').value,
+            purPrice: document.getElementById('iPur').value,
+            salePrice: document.getElementById('iSale').value
+        });
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: params });
+        alert("Inventory Updated!");
+    }
+</script>
 </body>
-</html>
+            </html>
+            
