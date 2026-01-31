@@ -8,10 +8,10 @@
         :root { --bg: #0b1120; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; --blue: #3b82f6; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 0; }
         
-        /* Amazon Style Shop Layout */
+        /* Shop Layout */
         .shop-header { background: #131921; padding: 15px; text-align: center; border-bottom: 3px solid var(--gold); cursor:pointer; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
-        .p-card { background: var(--card); border-radius: 12px; padding: 12px; border: 1px solid #334155; text-align: center; }
+        .p-card { background: var(--card); border-radius: 12px; padding: 12px; border: 1px solid #334155; text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
         .p-icon { font-size: 30px; margin-bottom: 5px; }
         .p-name { font-size: 11px; font-weight: bold; height: 30px; overflow: hidden; }
         .p-desc { font-size: 9px; color: #94a3b8; height: 25px; margin-bottom: 8px; }
@@ -25,14 +25,14 @@
         .form-row label { flex: 1; font-weight: bold; font-size: 11px; }
         .form-row input, select { flex: 2; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-weight: bold; }
 
-        /* Bill Table Fix */
+        /* Bill Table */
         .bill-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12px; }
         .bill-table th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         .add-btn { background: var(--blue); color: white; border: none; padding: 10px; border-radius: 6px; width: 100%; font-weight: bold; margin-top: 10px; cursor: pointer; }
 
-        /* PRINT SETTINGS (Single Page) */
+        /* PRINT SETTINGS (Single Page A4) */
         @media print {
-            .no-print, .float-box, .buy-btn, .add-btn { display: none !important; }
+            .no-print, .float-box, .buy-btn, .add-btn, .shop-header { display: none !important; }
             body, .section, .form-box { background: white !important; color: black !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
             .bill-table { width: 100% !important; font-size: 10px; }
             #print-footer { display: flex !important; justify-content: space-between; margin-top: 30px; border-top: 1px solid #000; padding: 15px; }
@@ -53,19 +53,6 @@
     <div class="product-grid" id="mainCatalog"></div>
 </div>
 
-<div id="checkoutPage" class="section no-print" style="background:white; color:black; min-height:100vh;">
-    <h2 style="border-bottom:2px solid #ddd; padding-bottom:10px;">Order Details</h2>
-    <p id="oTitle" style="font-weight:bold; font-size:18px; color:var(--blue);"></p>
-    <input type="text" id="custName" placeholder="Full Name">
-    <input type="text" id="custMob" placeholder="Mobile">
-    <textarea id="custAddr" placeholder="Delivery Address" style="width:100%; height:80px; margin-bottom:10px; padding:10px; border-radius:8px; border:1px solid #ccc;"></textarea>
-    <div style="background:#f9f9f9; padding:15px; border-radius:10px; text-align:center;">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=9326113988@upi&pn=HariRam" style="width:130px;">
-        <p><b>Payable: <span id="oPrice"></span></b></p>
-    </div>
-    <button onclick="placeOrder()" class="buy-btn" style="background:var(--green); color:white; padding:18px; font-size:16px; margin-top:10px;">PLACE ORDER</button>
-</div>
-
 <div id="adminPanel" class="section no-print">
     <h2 style="color:var(--gold); text-align:center;">SR ADMIN DASHBOARD</h2>
     <div class="product-grid">
@@ -83,7 +70,7 @@
         </div>
         <div class="form-row"><label>NAME:</label><input type="text" id="bName"></div>
         <div class="form-row"><label>ADDRESS:</label><input type="text" id="bAddr"></div>
-        <div class="form-row"><label>MOBILE:</label><div style="flex:2; display:flex; gap:5px;"><input type="text" id="bMob" style="flex:1;"><button onclick="pickContact()" class="no-print" style="background:var(--gold); border:none; border-radius:5px; padding:0 10px;">👤</button></div></div>
+        <div class="form-row"><label>MOBILE:</label><input type="text" id="bMob"></div>
         
         <table class="bill-table">
             <thead><tr style="background:#eee;"><th>DESCRIPTION</th><th>RATE</th><th>QTY</th><th>TOTAL</th></tr></thead>
@@ -114,39 +101,47 @@
 <div id="dealerPage" class="section">
     <div class="form-box">
         <h3 style="color:#f97316; margin-top:0;">DEALER: SHASHI JI</h3>
-        <div class="form-row"><label>TRANSACTION:</label><select id="dType"><option value="Purchase">Stock Kharida (+)</option><option value="Payment">Paisa Diya (-)</option><option value="Service_Credit">Hamne Call Attend Ki (Minus -)</option></select></div>
-        <div class="form-row"><label>AMOUNT (₹):</label><input type="number" id="dAmt"></div>
-        <div class="form-row"><label>DETAIL:</label><input type="text" id="dRemark" placeholder="Part name ya Call detail"></div>
-        <button class="buy-btn" style="background:var(--gold); padding:15px;" onclick="saveDealer()">SAVE TO DEALER SHEET</button>
+        <div class="form-row"><label>TYPE:</label><select id="dType"><option value="Purchase">Stock Kharida (+)</option><option value="Payment">Paisa Diya (-)</option><option value="Service_Credit">Call Attend Ki (Minus -)</option></select></div>
+        <div class="form-row"><label>AMOUNT:</label><input type="number" id="dAmt"></div>
+        <div class="form-row"><label>DETAIL:</label><input type="text" id="dRemark" placeholder="Work detail"></div>
+        <button class="buy-btn" style="background:var(--gold); padding:15px;" onclick="saveDealer()">SAVE ENTRY</button>
     </div>
 </div>
 
 <div class="float-box no-print">
     <a href="https://wa.me/919326113988" class="f-btn" style="background:#25d366;">💬</a>
     <a href="tel:919326113988" class="f-btn" style="background:var(--blue);">📞</a>
-    <button onclick="alert('Opening Service Request Form...')" class="f-btn" style="background:var(--red);">🛠️</button>
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycby2q77aBuTJ3Z0UtIca1l6vQib1c-SKI4VChOM1s-CuhI6foKhBpddr4b_fMKdaq5Nb/exec';
-    
     const products = [
-        {n:"SRE-250 Mini Fusing", p:48000, i:"🏭", d:"Compact, Home/Small Unit Best"},
-        {n:"SRE-300 Collar Press", p:58000, i:"👕", d:"Perfect for Collar aur Cuff"},
-        {n:"Hashima HP-450MS", p:215000, i:"🤖", d:"Automatic Cooling Industrial"},
-        {n:"HP-450MS Belt Set", p:14000, i:"➰", d:"Premium Genuine Upper/Lower"},
-        {n:"Linix Motor 80JB", p:14950, i:"🔌", d:"Main Driving High Power"},
-        {n:"Silicon Spray", p:2250, i:"🧴", d:"New Ace Premium Belt Cleaner"},
+        {n:"SRE-250 Mini Fusing", p:48000, i:"🏭", d:"Compact Best for Home"},
+        {n:"SRE-300 Collar Press", p:58000, i:"👕", d:"Perfect Collar/Cuff"},
+        {n:"Hashima HP-450MS", p:215000, i:"🤖", d:"Auto Cooling Industrial"},
+        {n:"Oshima OP-450GS", p:185000, i:"🏭", d:"Heavy Duty Industrial"},
+        {n:"HP-450MS Belt Set", p:14000, i:"➰", d:"Premium Upper/Lower"},
+        {n:"Hashima Lower Belt", p:5250, i:"🎗️", d:"Genuine High Quality"},
+        {n:"Hashima Upper Belt", p:4500, i:"🎗️", d:"Genuine High Quality"},
+        {n:"Linix Motor 80JB", p:14950, i:"🔌", d:"Main Driving 220V"},
         {n:"Omron Thermostat", p:5950, i:"🌡️", d:"Digital Precision Control"},
-        {n:"Heat Proof Grease", p:1280, i:"🧪", d:"HG-260 Lubricant Grease"},
-        {n:"Heating Element", p:3800, i:"🔥", d:"HP-450 Model Industrial Heater"},
-        {n:"250 Model Teflon Set", p:3200, i:"➰", d:"Budget Friendly Belt Set"},
-        {n:"Belt Cleaning Bar", p:950, i:"🧽", d:"Heavy Duty Cleaner Bar"}
+        {n:"Silicon Spray", p:2250, i:"🧴", d:"New Ace Belt Cleaner"},
+        {n:"Heat Proof Grease", p:1280, i:"🧪", d:"HG-260 Lubricant"},
+        {n:"Heating Element", p:3800, i:"🔥", d:"Industrial Heater 450mm"},
+        {n:"Omron Power Relay", p:4250, i:"⚡", d:"G7L Heavy Duty Relay"},
+        {n:"Gear Box (220V)", p:4500, i:"⚙️", d:"Speed Controller Unit"},
+        {n:"Teflon Sheet Roll", p:8500, i:"📜", d:"High Temp Resistance"},
+        {n:"Pressure Roller", p:6200, i:"🥖", d:"Silicon Coated Roller"},
+        {n:"Limit Switch", p:450, i:"🔘", d:"Safety Stop Switch"},
+        {n:"Carbon Brush Set", p:250, i:"🖌️", d:"For Linix Motors"},
+        {n:"Fusing Powder", p:350, i:"✨", d:"Rolax Premium Quality"},
+        {n:"Belt Guide Sensor", p:3200, i:"👁️", d:"Alignment Correction"},
+        {n:"Cooling Fan 220V", p:1200, i:"❄️", d:"High Speed Exhaust"},
+        {n:"Service Charge", p:1500, i:"🛠️", d:"General Machine Service"}
     ];
 
     window.onload = () => {
         let h = '';
-        products.forEach(p => { h += `<div class="p-card"><div class="p-icon">${p.i}</div><div class="p-name">${p.n}</div><div class="p-desc">${p.d}</div><div style="color:var(--gold);font-weight:bold;margin-bottom:5px;">₹${p.p.toLocaleString()}</div><button class="buy-btn" onclick="openOrder('${p.n}', ${p.p})">BUY NOW</button></div>`; });
+        products.forEach(p => { h += `<div class="p-card"><div class="p-icon">${p.i}</div><div class="p-name">${p.n}</div><div class="p-desc">${p.d}</div><div style="color:var(--gold);font-weight:bold;">₹${p.p.toLocaleString()}</div><button class="buy-btn">BUY NOW</button></div>`; });
         document.getElementById('mainCatalog').innerHTML = h;
         document.getElementById('invNo').value = Math.floor(Math.random()*999);
         document.getElementById('invDate').valueAsDate = new Date();
@@ -170,24 +165,11 @@
         document.getElementById('finalAmt').innerText = Math.round(f).toLocaleString();
     }
 
-    function openOrder(n, p) {
-        document.getElementById('shopPage').classList.remove('active');
-        document.getElementById('checkoutPage').classList.add('active');
-        document.getElementById('oTitle').innerText = n;
-        document.getElementById('oPrice').innerText = "₹" + p.toLocaleString();
-    }
-
-    function placeOrder() {
-        alert("नमस्ते! आपका ऑर्डर मिल गया है। 7 दिनों में डिलीवरी हो जाएगी।");
-        location.reload();
-    }
-
     function adminLogin() { if(prompt("Password:") === "1234") { document.getElementById('shopPage').style.display = 'none'; document.getElementById('adminPanel').classList.add('active'); } }
     function showSection(id) { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-    async function pickContact() { const c = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if(c.length) { document.getElementById('bName').value = c[0].name[0]; document.getElementById('bMob').value = c[0].tel[0].replace(/\D/g,'').slice(-10); } }
-
-    function saveBill() { alert("Saved to Sheets! 5 Month CRM alert active."); }
-    function saveDealer() { alert("Dealer Entry Saved! Running balance updated."); }
+    function saveBill() { alert("Saved to Sheets!"); }
+    function saveDealer() { alert("Dealer Entry Saved!"); }
 </script>
 </body>
-</html>
+    </html>
+    
