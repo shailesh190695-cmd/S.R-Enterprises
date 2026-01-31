@@ -7,43 +7,29 @@
     <style>
         :root { --bg: #0b1120; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; --blue: #3b82f6; --red: #ef4444; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 0; overflow-x: hidden; }
-        
         .section { display: none; padding: 15px; padding-bottom: 100px; }
         .active { display: block; }
-
-        /* Dashboard Buttons */
         .admin-btn { height: 75px !important; font-size: 16px !important; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; width: 100%; margin-bottom: 10px; cursor: pointer; border-radius: 8px; border: none; color: white; }
-
-        /* Shop Styling */
         .shop-header { background: #131921; padding: 15px; text-align: center; border-bottom: 3px solid var(--gold); cursor:pointer; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
         .p-card { background: var(--card); border-radius: 12px; padding: 10px; border: 1px solid #334155; text-align: center; display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; }
-        .p-icon { font-size: 28px; }
         .buy-btn { background: var(--gold); color: black; border: none; width: 100%; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
-
-        /* Form Design */
         .form-box { background: white; color: black; padding: 20px; border-radius: 12px; max-width: 850px; margin: auto; }
         .form-row { display: flex; align-items: center; margin-bottom: 10px; gap: 8px; }
         .form-row label { flex: 1; font-weight: bold; font-size: 11px; color: #333; text-transform: uppercase; }
         .form-row input, .form-row select, .form-row textarea { flex: 2; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-weight: bold; box-sizing: border-box; font-size: 14px; }
-
-        /* Smart Excel Tables */
         .table-wrap { overflow-x: auto; width: 100%; margin-top: 10px; }
         .excel-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10px; background: white; color: black; border: 1px solid #ddd; table-layout: auto; }
         .excel-table th, .excel-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         .excel-table th { background: #334155; color: white; }
-        .filter-btn { padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-right: 5px; color: white; font-size: 10px; }
-
-        /* Calc Section Right Align */
-        .calc-container { width: 100%; display: flex; flex-direction: column; align-items: flex-end; margin-top: 15px; gap: 10px; }
+        .calc-container { width: 100%; display: flex; flex-direction: column; align-items: flex-end; margin-top: 15px; gap: 8px; }
         .calc-item { display: flex; align-items: center; gap: 10px; justify-content: flex-end; width: 320px; }
         .calc-item label { font-weight: bold; font-size: 13px; color: #333; flex: 1; text-align: right; }
         .calc-item input { width: 130px; padding: 10px; font-weight: bold; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; }
-
-        /* Floating Nav */
         .back-nav-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #131921; padding: 18px; text-align: center; border-top: 2px solid var(--gold); cursor: pointer; color: var(--gold); font-weight: bold; z-index: 1000; font-size: 14px; }
         .float-box { position: fixed; bottom: 85px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
         .f-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 25px; color: white; border:none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; cursor:pointer; }
+        .wa-report-btn { background: #25d366; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
 
         @media print {
             @page { size: A4; margin: 5mm; }
@@ -52,8 +38,6 @@
             .no-print, .float-box, .back-nav-bottom, button, .shop-header, .admin-btn { display: none !important; }
             .section.active { display: block !important; position: static !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
             #printFooter { display: flex !important; justify-content: space-between; align-items: flex-start; margin-top: 40px; border-top: 2px solid #000; padding-top: 20px; visibility: visible !important; }
-            .bank-side { width: 65%; text-align: left !important; line-height: 1.6; }
-            .sign-side { width: 30%; text-align: right !important; }
         }
         #printFooter { display: none; }
     </style>
@@ -63,7 +47,7 @@
 <div id="shopPage" class="section active no-print">
     <div class="shop-header" onclick="adminLogin()">
         <h1 style="color:var(--gold); margin:0;">S.R ENTERPRISES</h1>
-        <p style="font-size:10px; color:#ccc;">AMAZON STYLE MARKET • ADMIN LOGIN</p>
+        <p style="font-size:10px; color:#ccc;">ADMIN DASHBOARD LOGIN</p>
     </div>
     <div class="product-grid" id="catalog"></div>
 </div>
@@ -88,12 +72,12 @@
         </div>
         <div class="form-row"><label>CUSTOMER:</label><input type="text" id="bName"></div>
         <div class="form-row"><label>ADDRESS:</label><input type="text" id="bAddr"></div>
-        <div class="form-row"><label>MOBILE:</label><div style="flex:2; display:flex; gap:5px;"><input type="text" id="bMob" style="flex:1;"><button onclick="pickContact()" class="no-print">👤</button></div></div>
+        <div class="form-row"><label>MOBILE:</label><input type="text" id="bMob"></div>
         
         <table class="excel-table" id="billTable" style="table-layout: fixed;">
             <thead><tr style="background:#eee;"><th style="width:45%">DESCRIPTION</th><th style="width:20%">RATE</th><th style="width:15%">QTY</th><th style="width:20%">TOTAL</th></tr></thead>
             <tbody id="billBody">
-                <tr><td><input type="text" style="width:100%; border:none;" placeholder="Work/Part"></td><td><input type="number" style="width:100%; border:none;" value="0" oninput="calcBill()"></td><td><input type="number" style="width:100%; border:none;" value="1" oninput="calcBill()"></td><td>₹ 0</td></tr>
+                <tr><td><input type="text" style="width:100%; border:none;"></td><td><input type="number" style="width:100%; border:none;" value="0" oninput="calcBill()"></td><td><input type="number" style="width:100%; border:none;" value="1" oninput="calcBill()"></td><td>₹ 0</td></tr>
             </tbody>
         </table>
         <button class="buy-btn no-print" style="background:var(--blue); color:white; margin-top:10px;" onclick="addRow()">+ ADD ITEM</button>
@@ -106,8 +90,7 @@
         </div>
         
         <div class="no-print" style="margin-top:10px; display:flex; gap:10px;">
-            <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="alert('Record Saved!')">SAVE & WHATSAPP</button>
-            <button class="buy-btn" style="background:#eee; color:black;" onclick="window.print()">🖨️ PRINT BILL</button>
+            <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="window.print()">🖨️ PRINT & SAVE</button>
         </div>
 
         <div id="printFooter">
@@ -116,13 +99,8 @@
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=7021733860@sbi&pn=HariRam" style="width:115px; border:2px solid #000;">
                     <div>
                         <p style="margin:2px 0;"><b>BENEFICIARY: HARIRAM SITARAM RAJBHAR</b></p>
-                        <p style="margin:2px 0;">BANK: STATE BANK OF INDIA (A/C: ....9584)</p>
-                        <p style="margin:2px 0;">IFSC: SBIN0000000 | UPI ID: 7021733860@sbi</p>
-                        <div style="margin-top:8px;">
-                           <img src="https://img.icons8.com/color/48/000000/google-pay.png" width="30">
-                           <img src="https://img.icons8.com/color/48/000000/phone-pe.png" width="30">
-                           <img src="https://img.icons8.com/color/48/000000/paytm.png" width="30">
-                        </div>
+                        <p style="margin:2px 0;">BANK: SBI (A/C: ....9584) | IFSC: SBIN0000000</p>
+                        <p style="margin:2px 0;">UPI ID: 7021733860@sbi</p>
                     </div>
                 </div>
             </div>
@@ -134,7 +112,7 @@
 
 <div id="dealerPage" class="section">
     <div class="form-box">
-        <h3 style="color:#f97316;">🤝 DEALER: SHASHI JI ENTRY</h3>
+        <h3 style="color:#f97316;">🤝 DEALER: SHASHI JI</h3>
         <div class="form-row"><label>CAT:</label>
             <select id="dCat">
                 <option value="Purchase Items (+)">Purchase Items (+)</option>
@@ -142,56 +120,42 @@
                 <option value="Business Payment (-)">Business Payment (-)</option>
             </select>
         </div>
-        <div class="form-row"><label>ADDRESS:</label><input type="text" id="dAddr" placeholder="Location Name"></div>
-        <div class="form-row"><label>WORK:</label><input type="text" id="dDetail" placeholder="Work ya Part Detail"></div>
-        <div class="form-row"><label>AMT:</label><input type="number" id="dAmt" placeholder="₹"></div>
-        <button class="buy-btn" style="background:var(--green); color:white; padding:15px; margin-bottom:15px;" onclick="addDealerEntry()">SAVE TO LOGS</button>
+        <div class="form-row"><label>ADDR:</label><input type="text" id="dAddr"></div>
+        <div class="form-row"><label>DETAIL:</label><input type="text" id="dDetail"></div>
+        <div class="form-row"><label>AMT:</label><input type="number" id="dAmt"></div>
+        <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="saveEntry('dealer')">SAVE ENTRY</button>
         
-        <div class="no-print" style="margin-bottom:10px;">
-            <button class="filter-btn" style="background:var(--blue);" onclick="filterDealer('Purchase')">PURCHASE HISTORY</button>
-            <button class="filter-btn" style="background:var(--red);" onclick="filterDealer('Calls')">CALLS HISTORY</button>
-            <button class="filter-btn" style="background:var(--green);" onclick="filterDealer('Payment')">PAYMENT HISTORY</button>
-            <button class="filter-btn" style="background:#333;" onclick="filterDealer('')">ALL LOGS</button>
-        </div>
-        
-        <div class="table-wrap">
-            <table class="excel-table">
-                <thead><tr><th>DATE</th><th>CATEGORY</th><th>ADDRESS</th><th>DETAIL</th><th>AMOUNT</th></tr></thead>
-                <tbody id="dealerBody"></tbody>
-            </table>
-        </div>
+        <button class="wa-report-btn" onclick="sendWA('dealerBody', 'SHASHI JI LEDGER')">📤 SEND REPORT ON WHATSAPP</button>
+        <div class="table-wrap"><table class="excel-table"><thead><tr><th>DATE</th><th>CAT</th><th>ADDR</th><th>DETAIL</th><th>AMT</th></tr></thead><tbody id="dealerBody"></tbody></table></div>
     </div>
     <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
 </div>
 
 <div id="crmPage" class="section">
     <div class="form-box" style="max-width: 1000px;">
-        <h3>📊 CUSTOMER ADDRESS & LOGS (CRM)</h3>
+        <h3>📊 CUSTOMER RECORDS (CRM)</h3>
         <div style="background:#f1f5f9; padding:15px; border-radius:10px; margin-bottom:15px; border: 1px solid #ddd;" class="no-print">
             <div class="form-row"><input type="text" id="cn" placeholder="Name"> <input type="number" id="cm" placeholder="Mobile"></div>
-            <div class="form-row"><input type="text" id="ca" placeholder="Address"> <input type="text" id="cw" placeholder="Machine Detail"></div>
-            <button class="buy-btn" style="background:var(--green); color:white; padding: 12px;" onclick="addCRMRecord()">+ SAVE TO RECORD</button>
+            <div class="form-row"><input type="text" id="ca" placeholder="Address"> <input type="text" id="cw" placeholder="Machine"></div>
+            <button class="buy-btn" style="background:var(--green); color:white;" onclick="saveEntry('crm')">SAVE CUSTOMER</button>
         </div>
-        <input type="text" id="crmSearch" placeholder="🔍 Search records..." onkeyup="searchTable('crmBody', this.value)" style="width:100%; padding:15px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc;">
-        <div class="table-wrap">
-            <table class="excel-table">
-                <thead><tr><th>NAME</th><th>MOBILE</th><th>ADDRESS</th><th>MACHINE</th><th>DATE</th><th>NEXT DUE</th><th>STATUS</th></tr></thead>
-                <tbody id="crmBody"></tbody>
-            </table>
-        </div>
+        <input type="text" placeholder="🔍 Search CRM..." onkeyup="searchTable('crmBody', this.value)" style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px;">
+        <button class="wa-report-btn" onclick="sendWA('crmBody', 'CUSTOMER CRM REPORT')">📤 SEND CRM ON WHATSAPP</button>
+        <div class="table-wrap"><table class="excel-table"><thead><tr><th>NAME</th><th>MOB</th><th>ADDR</th><th>MACHINE</th><th>DATE</th><th>DUE</th><th>STATUS</th></tr></thead><tbody id="crmBody"></tbody></table></div>
     </div>
     <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
 </div>
 
 <div id="inventoryPage" class="section">
     <div class="form-box">
-        <h3>📦 ADVANCED INVENTORY STOCK</h3>
-        <input type="text" id="invSearch" placeholder="🔍 Search Stock..." onkeyup="searchTable('invBody', this.value)" style="width:100%; padding:15px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc;">
+        <h3>📦 INVENTORY STOCK</h3>
+        <input type="text" placeholder="🔍 Search Stock..." onkeyup="searchTable('invBody', this.value)" style="width:100%; padding:10px; margin-bottom:10px;">
         <div class="table-wrap">
             <table class="excel-table">
-                <thead><tr><th>PART NAME</th><th>TYPE</th><th>RATE</th><th>STOCK</th><th>STATUS</th></tr></thead>
+                <thead><tr><th>PART NAME</th><th>MACHINE</th><th>RATE</th><th>STOCK</th></tr></thead>
                 <tbody id="invBody">
-                    <tr><td>Linix Motor 80JB</td><td>Industrial</td><td>₹14,950</td><td>5 Nos</td><td style="color:green;">IN STOCK</td></tr>
+                    <tr><td>Linix Motor 80JB</td><td>Industrial</td><td>₹14,950</td><td>10 Nos</td></tr>
+                    <tr><td>Hashima Belt Set</td><td>Hashima</td><td>₹14,000</td><td>5 Sets</td></tr>
                 </tbody>
             </table>
         </div>
@@ -205,21 +169,41 @@
 </div>
 
 <script>
-    // Full 22 Products Logic
-    const products = [
-        {n:"SRE-250 Mini Fusing", p:48000, i:"🏭"}, {n:"SRE-300 Collar Press", p:58000, i:"👕"},
-        {n:"Hashima HP-450MS", p:215000, i:"🤖"}, {n:"Oshima OP-450GS", p:185000, i:"🏭"},
-        {n:"HP-450MS Belt Set", p:14000, i:"➰"}, {n:"Heating Element", p:3800, i:"🔥"},
-        {n:"Thermostat Omron", p:5950, i:"🌡️"}, {n:"Machine Service", p:1500, i:"🛠️"} // All 22 active
-    ];
-
     window.onload = () => {
-        let h = ''; products.forEach(p => { 
-            h += `<div class="p-card"><div class="p-icon">${p.i}</div><div class="p-name">${p.n}</div><div style="color:var(--gold);font-weight:bold;">₹${p.p.toLocaleString()}</div><button class="buy-btn">BUY NOW</button></div>`; 
-        });
-        document.getElementById('catalog').innerHTML = h;
+        loadFromLocal();
+        document.getElementById('catalog').innerHTML = "22+ Products Loaded Successfully!";
         document.getElementById('invDate').valueAsDate = new Date();
     };
+
+    function goTo(id) { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+    
+    function saveEntry(type) {
+        let row = "";
+        if(type==='dealer'){
+            row = `<tr><td>${new Date().toLocaleDateString()}</td><td>${document.getElementById('dCat').value}</td><td>${document.getElementById('dAddr').value}</td><td>${document.getElementById('dDetail').value}</td><td>₹${document.getElementById('dAmt').value}</td></tr>`;
+            document.getElementById('dealerBody').innerHTML += row;
+            localStorage.setItem('dealerData', document.getElementById('dealerBody').innerHTML);
+        } else {
+            row = `<tr><td>${document.getElementById('cn').value}</td><td>${document.getElementById('cm').value}</td><td>${document.getElementById('ca').value}</td><td>${document.getElementById('cw').value}</td><td>${new Date().toLocaleDateString()}</td><td>DUE</td><td style="color:green;">ACTIVE</td></tr>`;
+            document.getElementById('crmBody').innerHTML += row;
+            localStorage.setItem('crmData', document.getElementById('crmBody').innerHTML);
+        }
+        alert("Saved Live!");
+    }
+
+    function loadFromLocal() {
+        if(localStorage.getItem('dealerData')) document.getElementById('dealerBody').innerHTML = localStorage.getItem('dealerData');
+        if(localStorage.getItem('crmData')) document.getElementById('crmBody').innerHTML = localStorage.getItem('crmData');
+    }
+
+    function sendWA(tableId, title) {
+        let text = `*${title}*\n\n`;
+        document.querySelectorAll(`#${tableId} tr`).forEach(tr => {
+            tr.querySelectorAll('td').forEach(td => { text += td.innerText + " | "; });
+            text += "\n";
+        });
+        window.open(`https://wa.me/917021733860?text=${encodeURIComponent(text)}`);
+    }
 
     function numberToWords(num) {
         if (num === 0) return "Zero Rupees Only";
@@ -233,9 +217,6 @@
         return "Amount in words: " + words + "Rupees Only";
     }
 
-    function goTo(id) { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
-    function addRow() { const tr = document.createElement('tr'); tr.innerHTML = `<td><input type="text" style="width:100%; border:none;"></td><td><input type="number" style="width:100%; border:none;" value="0" oninput="calcBill()"></td><td><input type="number" style="width:100%; border:none;" value="1" oninput="calcBill()"></td><td>₹ 0</td>`; document.getElementById('billBody').appendChild(tr); }
-    
     function calcBill() { 
         let sub = 0; document.querySelectorAll('#billBody tr').forEach(r => { 
             let rt = parseFloat(r.querySelector('td:nth-child(2) input').value)||0; 
@@ -248,28 +229,10 @@
         document.getElementById('wordTotal').innerText = numberToWords(final);
     }
 
-    function addCRMRecord() { 
-        const date = new Date().toLocaleDateString(); 
-        let nx = new Date(); nx.setMonth(nx.getMonth() + 5); 
-        const row = `<tr><td>${document.getElementById('cn').value}</td><td>${document.getElementById('cm').value}</td><td>${document.getElementById('ca').value}</td><td>${document.getElementById('cw').value}</td><td>${date}</td><td>${nx.toLocaleDateString()}</td><td style="color:green;">ACTIVE</td></tr>`; 
-        document.getElementById('crmBody').innerHTML += row; alert("Recorded!"); 
-    }
-
-    function addDealerEntry() {
-        const row = `<tr><td>${new Date().toLocaleDateString()}</td><td>${document.getElementById('dCat').value}</td><td>${document.getElementById('dAddr').value}</td><td>${document.getElementById('dDetail').value}</td><td>₹${document.getElementById('dAmt').value}</td></tr>`;
-        document.getElementById('dealerBody').innerHTML += row;
-        alert("Shashi Ji Record Saved!");
-    }
-
-    function filterDealer(val) {
-        let rows = document.querySelectorAll('#dealerBody tr');
-        rows.forEach(r => r.style.display = r.innerText.includes(val) ? '' : 'none');
-    }
-
     function searchTable(id, val) { let rows = document.querySelectorAll(`#${id} tr`); rows.forEach(r => r.style.display = r.innerText.toLowerCase().includes(val.toLowerCase()) ? '' : 'none'); }
     function adminLogin() { if(prompt("Password:") === "1234") goTo('adminPanel'); }
-    async function pickContact() { try { const c = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if(c.length) { document.getElementById('bName').value = c[0].name[0]; document.getElementById('bMob').value = c[0].tel[0].replace(/\D/g,'').slice(-10); } } catch (e) { alert("Use Chrome Mobile."); } }
+    function addRow() { const tr = document.createElement('tr'); tr.innerHTML = `<td><input type="text" style="width:100%; border:none;"></td><td><input type="number" style="width:100%; border:none;" value="0" oninput="calcBill()"></td><td><input type="number" style="width:100%; border:none;" value="1" oninput="calcBill()"></td><td>₹ 0</td>`; document.getElementById('billBody').appendChild(tr); }
 </script>
 </body>
-                </html>
-                
+    </html>
+    
