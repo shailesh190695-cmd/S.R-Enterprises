@@ -6,36 +6,43 @@
     <title>S.R ENTERPRISES | MASTER ERP</title>
     <style>
         :root { --bg: #0b1120; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; --blue: #3b82f6; --red: #ef4444; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 0; }
-        .section { display: none; padding: 15px; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 0; overflow-x: hidden; }
+        .section { display: none; padding: 15px; padding-bottom: 100px; }
         .active { display: block; }
-        .no-print { display: block; }
-
-        /* 🔥 PRINT ENGINE FIX 🔥 */
-        @media print {
-            @page { size: A4; margin: 5mm; }
-            body { background: white !important; color: black !important; }
-            /* Hide EVERYTHING except the section with class "active" */
-            body > *:not(.active) { display: none !important; }
-            /* Inside active section, hide UI elements */
-            .no-print, .float-box, .back-nav-bottom, button, .shop-header, .admin-btn, .inventory-form { display: none !important; }
-            .section.active { display: block !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
-            .form-box { box-shadow: none !important; border: none !important; width: 100% !important; color: black !important; }
-            .excel-table { width: 100% !important; border: 2px solid #000 !important; color: black !important; }
-            .excel-table th, .excel-table td { border: 1.5px solid #000 !important; padding: 10px !important; color: black !important; font-weight: bold !important; }
-            #printFooter { display: flex !important; justify-content: space-between; visibility: visible !important; margin-top: 30px; border-top: 2px solid #000; padding-top: 15px; }
-            input { border: none !important; background: transparent !important; color: black !important; font-weight: bold !important; font-size: 14px !important; }
-        }
-
-        /* Dashboard & UI Styling */
-        .admin-btn { height: 70px; width: 100%; margin-bottom: 10px; cursor: pointer; border-radius: 8px; border: none; color: white; font-weight: bold; }
-        .shop-header { background: #131921; padding: 15px; text-align: center; border-bottom: 3px solid var(--gold); }
+        .admin-btn { height: 75px !important; font-size: 16px !important; width: 100%; margin-bottom: 10px; cursor: pointer; border-radius: 8px; border: none; color: white; font-weight: bold; }
+        .shop-header { background: #131921; padding: 15px; text-align: center; border-bottom: 3px solid var(--gold); cursor:pointer; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
-        .p-card { background: var(--card); border-radius: 12px; padding: 10px; text-align: center; }
+        .p-card { background: var(--card); border-radius: 12px; padding: 10px; border: 1px solid #334155; text-align: center; display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; }
+        .buy-btn { background: var(--gold); color: black; border: none; width: 100%; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
         .form-box { background: white; color: black; padding: 20px; border-radius: 12px; max-width: 850px; margin: auto; }
         .form-row { display: flex; align-items: center; margin-bottom: 10px; gap: 8px; }
-        .calc-container { display: flex; flex-direction: column; align-items: flex-end; margin-top: 15px; gap: 5px; }
-        .back-nav-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #131921; padding: 15px; text-align: center; border-top: 2px solid var(--gold); cursor: pointer; color: var(--gold); font-weight: bold; z-index: 1000; }
+        .form-row label { flex: 1; font-weight: bold; font-size: 11px; color: #333; text-transform: uppercase; }
+        .form-row input, .form-row select { flex: 2; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-weight: bold; }
+        .excel-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10px; background: white; color: black; border: 1px solid #ddd; table-layout: auto; }
+        .excel-table th, .excel-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .excel-table th { background: #334155; color: white; }
+        .calc-container { width: 100%; display: flex; flex-direction: column; align-items: flex-end; margin-top: 15px; gap: 8px; }
+        .calc-item { display: flex; align-items: center; gap: 10px; justify-content: flex-end; width: 320px; }
+        .calc-item label { font-weight: bold; font-size: 13px; color: #333; flex: 1; text-align: right; }
+        .calc-item input { width: 130px; padding: 10px; font-weight: bold; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; }
+        .back-nav-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #131921; padding: 18px; text-align: center; border-top: 2px solid var(--gold); cursor: pointer; color: var(--gold); font-weight: bold; z-index: 1000; font-size: 14px; }
+        .float-box { position: fixed; bottom: 85px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
+        .f-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 25px; color: white; border:none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; cursor:pointer; }
+
+        @media print {
+            @page { size: A4; margin: 10mm; }
+            body { background: white !important; color: black !important; }
+            body > *:not(.section.active) { display: none !important; }
+            .section.active { display: block !important; position: absolute; top: 0; left: 0; width: 100% !important; padding: 0 !important; margin: 0 !important; }
+            .no-print, .float-box, .back-nav-bottom, button, .shop-header, .admin-btn, .inventory-form { display: none !important; }
+            .form-box { box-shadow: none !important; border: none !important; width: 100% !important; }
+            .excel-table { width: 100% !important; border: 2px solid #000 !important; font-size: 13px !important; }
+            .excel-table th, .excel-table td { border: 1.5px solid #000 !important; font-weight: bold !important; padding: 10px !important; color: black !important; }
+            #printFooter { display: flex !important; justify-content: space-between; align-items: flex-start; margin-top: 40px; border-top: 2px solid #000; padding-top: 20px; visibility: visible !important; }
+            .bank-side { width: 65%; text-align: left !important; }
+            .sign-side { width: 30%; text-align: right !important; }
+            input { border: none !important; background: transparent !important; color: black !important; font-weight: bold !important; font-size: 14px !important; }
+        }
         #printFooter { display: none; }
     </style>
 </head>
@@ -49,10 +56,10 @@
 <div id="adminPanel" class="section no-print">
     <h2 style="color:var(--gold); text-align:center;">SR ADMIN DASHBOARD</h2>
     <div style="padding: 10px;">
-        <button class="admin-btn" style="background:var(--blue);" onclick="goTo('billPage')">📝 NEW BILLING</button>
-        <button class="admin-btn" style="background:var(--green);" onclick="goTo('dealerPage')">🤝 SHASHI DEALER</button>
-        <button class="admin-btn" style="background:#a855f7;" onclick="goTo('crmPage')">📊 CUSTOMER RECORDS</button>
-        <button class="admin-btn" style="background:#f97316;" onclick="goTo('inventoryPage')">📦 INVENTORY & STOCK</button>
+        <button class="buy-btn admin-btn" style="background:var(--blue);" onclick="goTo('billPage')">📝 NEW BILLING</button>
+        <button class="buy-btn admin-btn" style="background:var(--green);" onclick="goTo('dealerPage')">🤝 SHASHI DEALER</button>
+        <button class="buy-btn admin-btn" style="background:#a855f7;" onclick="goTo('crmPage')">📊 CUSTOMER RECORDS</button>
+        <button class="buy-btn admin-btn" style="background:#f97316;" onclick="goTo('inventoryPage')">📦 INVENTORY STOCK</button>
     </div>
     <div class="back-nav-bottom" onclick="location.reload()">🔒 LOGOUT / HOME</div>
 </div>
@@ -60,71 +67,116 @@
 <div id="billPage" class="section">
     <div class="form-box">
         <h2 style="text-align:center; color:var(--blue); margin:0;">S.R ENTERPRISES</h2>
-        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; margin-bottom:10px; border-bottom: 1.5px solid #000;">
-            <span>INV NO: <input type="text" id="invNo" value="SR-101"></span>
+        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; margin-bottom:15px; border-bottom: 1.5px solid #000;">
+            <span>INV NO: <input type="text" id="invNo" style="width:100px;" value="SR-101"></span>
             <span>DATE: <input type="date" id="invDate"></span>
         </div>
         <div class="form-row"><label>CUSTOMER:</label><input type="text" id="bName"></div>
         <div class="form-row"><label>ADDRESS:</label><input type="text" id="bAddr"></div>
         <div class="form-row"><label>MOBILE:</label><input type="text" id="bMob"></div>
         
-        <table class="excel-table" id="billTable">
-            <thead><tr style="background:#eee;"><th>DESCRIPTION</th><th>RATE</th><th>QTY</th><th>TOTAL</th></tr></thead>
+        <table class="excel-table" id="billTable" style="table-layout: fixed;">
+            <thead><tr style="background:#eee;"><th style="width:45%">DESCRIPTION</th><th style="width:20%">RATE</th><th style="width:15%">QTY</th><th style="width:20%">TOTAL</th></tr></thead>
             <tbody id="billBody">
-                <tr><td><input type="text" placeholder="Item Name"></td><td><input type="number" value="0" oninput="calcBill()"></td><td><input type="number" value="1" oninput="calcBill()"></td><td>₹ 0</td></tr>
+                <tr><td><input type="text" style="width:100%; border:none; background:transparent;" placeholder="Item Name"></td><td><input type="number" style="width:100%; border:none;" value="0" oninput="calcBill()"></td><td><input type="number" style="width:100%; border:none;" value="1" oninput="calcBill()"></td><td>₹ 0</td></tr>
             </tbody>
         </table>
-        <button class="buy-btn no-print" onclick="addRow()">+ ADD ITEM</button>
+        <button class="buy-btn no-print" style="background:var(--blue); color:white; margin-top:10px;" onclick="addRow()">+ ADD ITEM</button>
 
         <div class="calc-container">
-            <div class="no-print"><label>GST 18%:</label><input type="checkbox" id="gstCheck" onchange="calcBill()"></div>
-            <div class="no-print"><label>DISCOUNT:</label><input type="number" id="disc" value="0" oninput="calcBill()"></div>
-            <h2 style="margin:5px 0;">GRAND TOTAL: ₹ <span id="gTotal">0</span></h2>
-            <p id="wordTotal" style="font-weight: bold; font-style: italic;"></p>
+            <div class="calc-item no-print"><label>GST 18%:</label><input type="checkbox" id="gstCheck" onchange="calcBill()"></div>
+            <div class="calc-item no-print"><label>DISCOUNT:</label><input type="number" id="disc" value="0" oninput="calcBill()"></div>
+            <div class="calc-item"><label style="color:var(--blue); font-size: 18px;">GRAND TOTAL:</label><div style="font-size: 22px; font-weight: bold; border-bottom: 2.5px solid #000;">₹ <span id="gTotal">0</span></div></div>
+            <p id="wordTotal" style="font-weight: bold; font-size: 13px; color: #000; margin-top: 5px; font-style: italic;"></p>
         </div>
         
-        <button class="buy-btn no-print" style="background:var(--green); color:white; padding:15px;" onclick="saveSalesWithStock()">🖨️ PRINT & SAVE BILL</button>
+        <button class="buy-btn no-print" style="background:var(--green); color:white; padding:15px; margin-top:10px;" onclick="window.print()">🖨️ PRINT BILL</button>
 
         <div id="printFooter">
             <div class="bank-side">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=7021733860@sbi&pn=HariRam" style="width:110px; border:2px solid #000;">
-                <p><b>SBI A/C: ....9584 | IFSC: SBIN0000000</b></p>
+                <div style="display: flex; gap: 15px; align-items: flex-start;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=7021733860@sbi&pn=HariRam" style="width:115px; border:2px solid #000;">
+                    <div><p><b>BENEFICIARY: HARIRAM SITARAM RAJBHAR</b></p><p>BANK: SBI (A/C: ....9584) | IFSC: SBIN0000000</p></div>
+                </div>
             </div>
             <div class="sign-side"><p style="margin-top:50px; font-weight:bold;">Authorised Signature</p></div>
         </div>
     </div>
-    <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
+    <div class="back-nav-bottom" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
 </div>
 
 <div id="inventoryPage" class="section">
     <div class="form-box">
-        <h3>📦 INVENTORY STOCK & ADD QTY</h3>
-        <div class="inventory-form no-print" style="background:#f1f5f9; padding:15px; border-radius:8px; margin-bottom:15px;">
-            <div class="form-row"><input type="text" id="partName" placeholder="Part Name"> <input type="number" id="partQty" placeholder="Add Quantity"></div>
-            <button class="buy-btn" style="background:var(--green); color:white;" onclick="updateStock('add')">+ ADD STOCK</button>
+        <h3>📦 INVENTORY STOCK & NEW ENTRY</h3>
+        <div class="inventory-form no-print" style="background:#f1f5f9; padding:15px; border-radius:10px; margin-bottom:15px;">
+            <div class="form-row"><input type="text" id="pName" placeholder="Part Name"> <input type="text" id="pType" placeholder="Type (Hashima/Oshima)"></div>
+            <div class="form-row"><input type="number" id="pRate" placeholder="Rate ₹"> <input type="number" id="pStock" placeholder="Stock Qty"></div>
+            <button class="buy-btn" style="background:var(--green); color:white;" onclick="saveToSheet('inventory')">+ SAVE TO INVENTORY</button>
         </div>
-        <input type="text" placeholder="🔍 Search Spare Parts..." onkeyup="searchTable('invBody', this.value)" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px;">
-        <div class="table-wrap"><table class="excel-table"><thead><tr><th>PART NAME</th><th>TYPE</th><th>RATE</th><th>STOCK</th></tr></thead><tbody id="invBody"></tbody></table></div>
+        <input type="text" placeholder="🔍 Search spare parts..." onkeyup="searchTable('invBody', this.value)" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px;">
+        <div class="table-wrap"><table class="excel-table"><thead><tr><th>PART NAME</th><th>TYPE</th><th>RATE</th><th>STOCK</th><th>STATUS</th></tr></thead><tbody id="invBody"></tbody></table></div>
     </div>
-    <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
+    <div class="back-nav-bottom" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
+</div>
+
+<div class="float-box no-print">
+    <a href="https://wa.me/917021733860" class="f-btn" style="background:#25d366;">💬</a>
+    <a href="tel:917021733860" class="f-btn" style="background:var(--blue);">📞</a>
 </div>
 
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwy11W8yIHNmRU4X1LxKR6CaSF6WCBZDxDgN6zmKhP2Cq9q4d_wiy22kxhRxs1WLCle/exec';
 
-    function goTo(id) { 
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); 
-        document.getElementById(id).classList.add('active'); 
-        window.scrollTo(0,0); 
+    window.onload = () => {
+        loadData('Dealer_Ledger', 'dealerBody');
+        loadData('Customer_CRM', 'crmBody');
+        loadData('Inventory', 'invBody');
+        loadCatalog();
+    };
+
+    async function saveToSheet(type) {
+        const p = new URLSearchParams();
+        if(type==='inventory') {
+            p.append('action', 'saveInventory');
+            p.append('name', document.getElementById('pName').value);
+            p.append('type', document.getElementById('pType').value);
+            p.append('rate', document.getElementById('pRate').value);
+            p.append('stock', document.getElementById('pStock').value);
+        }
+        await fetch(scriptURL, {method: 'POST', body: p, mode: 'no-cors'});
+        alert("SYNC SUCCESSFUL!");
+        location.reload();
     }
 
-    async function saveSalesWithStock() {
-        // [Logic to send Sales and Deduct Stock in one go]
-        window.print(); // Ab sirf active bill hi print hoga!
+    async function loadData(sheet, tableId) {
+        const resp = await fetch(`${scriptURL}?sheet=${sheet}`);
+        const data = await resp.json();
+        let rows = "";
+        data.forEach((r, i) => { if(i>0) rows += `<tr>${r.map(td => `<td>${td}</td>`).join('')}</tr>`; });
+        if(document.getElementById(tableId)) document.getElementById(tableId).innerHTML = rows;
     }
 
-    // Baki functions (calcBill, loadData, searchTable) sahi se map kiye gaye hain
+    function goTo(id) { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+    function searchTable(id, val) { let rows = document.querySelectorAll(`#${id} tr`); rows.forEach(r => r.style.display = r.innerText.toLowerCase().includes(val.toLowerCase()) ? '' : 'none'); }
+    function adminLogin() { if(prompt("Password:") === "1234") goTo('adminPanel'); }
+    function addRow() { const tr = document.createElement('tr'); tr.innerHTML = `<td><input type="text" style="width:100%; border:none; background:transparent;"></td><td><input type="number" style="width:100%; border:none;" value="0" oninput="calcBill()"></td><td><input type="number" style="width:100%; border:none;" value="1" oninput="calcBill()"></td><td>₹ 0</td>`; document.getElementById('billBody').appendChild(tr); }
+    
+    function calcBill() { 
+        let sub = 0; 
+        document.querySelectorAll('#billBody tr').forEach(r => { 
+            let rt = parseFloat(r.querySelector('td:nth-child(2) input').value)||0; let qt = parseFloat(r.querySelector('td:nth-child(3) input').value)||0; 
+            let rowTot = rt*qt; r.querySelector('td:last-child').innerText = "₹ " + rowTot; sub += rowTot; 
+        }); 
+        let d = parseFloat(document.getElementById('disc').value)||0; let f = sub - d; 
+        if(document.getElementById('gstCheck').checked) f *= 1.18; 
+        document.getElementById('gTotal').innerText = Math.round(f).toLocaleString();
+    }
+
+    function loadCatalog() {
+        const p = [{n:"SRE-250 Mini Fusing", p:48000, i:"🏭"}, {n:"Hashima HP-450MS", p:215000, i:"🤖"}, {n:"HP-450MS Belt Set", p:14000, i:"➰"}, {n:"Heating Industrial", p:3800, i:"🔥"}, {n:"Silicon Spray", p:2250, i:"🧴"}];
+        let h = ''; p.forEach(item => { h += `<div class="p-card"><div class="p-icon">${item.i}</div><div class="p-name">${item.n}</div><div style="color:var(--gold);font-weight:bold;">₹${item.p.toLocaleString()}</div><button class="buy-btn">BUY NOW</button></div>`; });
+        document.getElementById('catalog').innerHTML = h;
+    }
 </script>
 </body>
-        </html>
-        
+</html>
