@@ -11,42 +11,44 @@
         .section { display: none; padding: 10px; padding-bottom: 100px; }
         .active { display: block; }
 
-        /* Shop Grid */
+        /* Shop Styling */
         .shop-header { background: #131921; padding: 15px; text-align: center; border-bottom: 3px solid var(--gold); cursor:pointer; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 5px; }
-        .p-card { background: var(--card); border-radius: 10px; padding: 8px; border: 1px solid #334155; text-align: center; display: flex; flex-direction: column; justify-content: space-between; min-height: 180px; }
+        .p-card { background: var(--card); border-radius: 10px; padding: 10px; border: 1px solid #334155; text-align: center; display: flex; flex-direction: column; justify-content: space-between; min-height: 180px; }
         .p-icon { font-size: 24px; }
-        .p-name { font-size: 10px; font-weight: bold; margin: 5px 0; color: #fff; }
+        .p-name { font-size: 10px; font-weight: bold; margin: 5px 0; height: 30px; overflow: hidden; }
         .buy-btn { background: var(--gold); color: black; border: none; width: 100%; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 10px; }
 
-        /* Form & Tablet View Fix */
+        /* Form Styling - Mobile Responsive Fix */
         .form-box { background: white; color: black; padding: 15px; border-radius: 12px; max-width: 800px; margin: auto; box-sizing: border-box; }
         .form-row { display: flex; align-items: center; margin-bottom: 8px; gap: 5px; flex-wrap: wrap; }
-        .form-row label { flex: 1; font-weight: bold; font-size: 11px; color: #333; min-width: 80px; }
-        .form-row input, .form-row select, .form-row textarea { flex: 2; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-weight: bold; box-sizing: border-box; min-width: 150px; }
+        .form-row label { flex: 1; font-weight: bold; font-size: 11px; color: #333; min-width: 90px; }
+        .form-row input, .form-row select, .form-row textarea { flex: 2; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-weight: bold; font-size: 14px; min-width: 150px; }
 
-        /* Excel Table for Mobile */
-        .table-container { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 10px; }
-        .excel-table { width: 100%; border-collapse: collapse; font-size: 10px; background: white; border: 1px solid #ddd; min-width: 400px; }
-        .excel-table th, .excel-table td { border: 1px solid #ddd; padding: 6px; text-align: left; }
+        /* Tablet/Mobile Excel View */
+        .table-responsive { width: 100%; overflow-x: auto; margin-top: 10px; border: 1px solid #ddd; }
+        .excel-table { width: 100%; border-collapse: collapse; font-size: 11px; background: white; min-width: 450px; }
+        .excel-table th, .excel-table td { border: 1px solid #ddd; padding: 8px; text-align: left; color: black; }
         .excel-table th { background: #334155; color: white; }
+        .red-row { background-color: #ffebee !important; color: #c62828 !important; font-weight: bold; }
 
-        /* Navigation */
-        .back-nav-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #131921; padding: 15px; text-align: center; border-top: 2px solid var(--gold); cursor: pointer; color: var(--gold); font-weight: bold; z-index: 1000; font-size: 14px; }
+        /* Bottom Navigation */
+        .back-nav-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #131921; padding: 15px; text-align: center; border-top: 2px solid var(--gold); cursor: pointer; color: var(--gold); font-weight: bold; z-index: 1000; }
         .float-box { position: fixed; bottom: 80px; right: 15px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
         .f-btn { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; color: white; border:none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; cursor:pointer; }
 
-        /* 🔥 ULTIMATE PRINT FIX: FORCE SINGLE PAGE 🔥 */
+        /* 🔥 MASTER PRINT FIX - NO CUTTING, SINGLE PAGE 🔥 */
         @media print {
             @page { size: A4; margin: 5mm; }
-            html, body { height: 99%; overflow: hidden; background: white !important; color: black !important; }
-            .no-print, .float-box, .back-nav-bottom, button, .shop-header { display: none !important; }
-            .section { display: block !important; padding: 0 !important; margin: 0 !important; width: 100% !important; }
-            .form-box { box-shadow: none !important; border: none !important; width: 100% !important; padding: 0 !important; transform: scale(0.95); transform-origin: top center; }
-            .table-container { overflow: visible !important; }
-            .excel-table { width: 100% !important; font-size: 12px; border: 1px solid #000; }
-            #printFooter { display: flex !important; justify-content: space-between; align-items: flex-end; margin-top: 30px; border-top: 1px solid #000; padding-top: 10px; }
-            input { border: none !important; background: transparent !important; color: black !important; font-size: 12px !important; }
+            html, body { height: 100%; background: white !important; color: black !important; overflow: hidden; }
+            .no-print, .float-box, .back-nav-bottom, button, .shop-header, .section:not(.active) { display: none !important; }
+            .section.active { display: block !important; padding: 0 !important; width: 100% !important; height: auto !important; position: static !important; }
+            .form-box { box-shadow: none !important; border: none !important; width: 100% !important; padding: 0 !important; transform: scale(1); }
+            .table-responsive { overflow: visible !important; border: none !important; }
+            .excel-table { width: 100% !important; font-size: 13px; border: 1px solid #000 !important; }
+            .excel-table th, .excel-table td { border: 1px solid #000 !important; }
+            #printFooter { display: flex !important; justify-content: space-between; align-items: flex-end; margin-top: 30px; border-top: 1px solid #000; padding-top: 10px; visibility: visible !important; }
+            input, textarea, select { border: none !important; background: transparent !important; color: black !important; font-size: 14px !important; }
         }
         #printFooter { display: none; }
     </style>
@@ -55,8 +57,8 @@
 
 <div id="shopPage" class="section active no-print">
     <div class="shop-header" onclick="adminLogin()">
-        <h1 style="color:var(--gold); margin:0; font-size: 22px;">S.R ENTERPRISES</h1>
-        <p style="font-size:9px; color:#ccc;">AMAZON STYLE MARKET • ADMIN LOGIN</p>
+        <h1 style="color:var(--gold); margin:0; font-size: 24px;">S.R ENTERPRISES</h1>
+        <p style="font-size:10px; color:#ccc;">AMAZON STYLE MARKET • ADMIN LOGIN</p>
     </div>
     <div class="product-grid" id="catalog"></div>
 </div>
@@ -74,8 +76,8 @@
 <div id="billPage" class="section">
     <div class="form-box">
         <h2 style="text-align:center; color:var(--blue); margin:0;">S.R ENTERPRISES</h2>
-        <p style="text-align:center; font-size:9px; margin-bottom:10px;">FUSING MACHINE SPECIALIST</p>
-        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:11px; margin-bottom:10px;">
+        <p style="text-align:center; font-size:10px; margin-bottom:10px;">FUSING MACHINE SPECIALIST</p>
+        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; margin-bottom:15px; border-bottom: 1px solid #eee;">
             <span>INV: <input type="text" id="invNo" style="width:60px; border:none;" value="SR-101"></span>
             <span>DATE: <input type="date" id="invDate"></span>
         </div>
@@ -83,35 +85,35 @@
         <div class="form-row"><label>ADDRESS:</label><input type="text" id="bAddr"></div>
         <div class="form-row"><label>MOBILE:</label><div style="flex:2; display:flex; gap:5px;"><input type="text" id="bMob" style="flex:1;"><button onclick="pickContact()" class="no-print">👤</button></div></div>
         
-        <div class="table-container">
+        <div class="table-responsive">
             <table class="excel-table" id="billTable">
                 <thead><tr><th>DESCRIPTION</th><th>RATE</th><th>QTY</th><th>TOTAL</th></tr></thead>
                 <tbody id="billBody">
-                    <tr><td><input type="text" class="i-desc"></td><td><input type="number" class="i-rate" value="0" oninput="calcBill()"></td><td><input type="number" class="i-qty" value="1" oninput="calcBill()"></td><td class="i-tot">₹0</td></tr>
+                    <tr><td><input type="text" class="i-desc" placeholder="Service/Part"></td><td><input type="number" class="i-rate" value="0" oninput="calcBill()"></td><td><input type="number" class="i-qty" value="1" oninput="calcBill()"></td><td class="i-tot">₹ 0</td></tr>
                 </tbody>
             </table>
         </div>
-        <button class="buy-btn no-print" style="background:var(--blue); color:white; margin-top:8px;" onclick="addRow()">+ ADD ITEM / WORK</button>
+        <button class="buy-btn no-print" style="background:var(--blue); color:white; margin-top:10px;" onclick="addRow()">+ ADD ITEM / WORK</button>
 
-        <div style="margin-top:10px; text-align:right;">
-            <div class="form-row" style="justify-content:flex-end;"><label style="flex:none;">DISCOUNT (₹):</label><input type="number" id="disc" value="0" oninput="calcBill()" style="width:80px;"></div>
+        <div style="margin-top:20px; text-align:right;">
+            <div class="form-row" style="justify-content:flex-end;"><label style="flex:none;">DISCOUNT (₹):</label><input type="number" id="disc" value="0" oninput="calcBill()" style="width:100px;"></div>
             <div class="form-row" style="justify-content:flex-end;"><label style="flex:none;">GST 18%:</label><input type="checkbox" id="gstCheck" onchange="calcBill()"></div>
-            <h3 style="color:var(--blue); margin: 5px 0;">TOTAL: ₹ <span id="gTotal">0</span></h3>
+            <h2 style="color:var(--blue);">GRAND TOTAL: ₹ <span id="gTotal">0</span></h2>
         </div>
         
-        <div class="no-print" style="margin-top:10px; display:flex; gap:8px;">
-            <button class="buy-btn" style="background:var(--green); color:white; padding:12px;" onclick="alert('Saving to Sheet...')">SAVE & WHATSAPP</button>
-            <button class="buy-btn" style="background:#eee; color:black; padding:12px;" onclick="window.print()">🖨️ PRINT BILL</button>
+        <div class="no-print" style="margin-top:10px; display:flex; gap:10px;">
+            <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="alert('Sheet saved!')">SAVE & WHATSAPP</button>
+            <button class="buy-btn" style="background:#eee; color:black;" onclick="window.print()">🖨️ PRINT BILL</button>
         </div>
 
         <div id="printFooter">
             <div>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=9326113988@upi&pn=HariRam" style="width:80px;">
-                <p style="font-size:10px; margin:0;"><b>HariRam Ji</b><br>UPI ID: 9326113988@upi</p>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=9326113988@upi&pn=HariRam" style="width:100px;">
+                <p style="font-size:11px; margin:0;"><b>HariRam Ji</b><br>UPI ID: 9326113988@upi</p>
             </div>
             <div style="text-align:right;">
-                <p style="margin-top:30px;">____________________</p>
-                <p style="font-size:10px;">Authorised Signature</p>
+                <p style="margin-top:40px;">____________________</p>
+                <p style="font-size:12px;">Authorised Signature</p>
             </div>
         </div>
     </div>
@@ -120,18 +122,24 @@
 
 <div id="crmPage" class="section">
     <div class="form-box" style="max-width: 950px;">
-        <h3 style="color:var(--blue);">📊 CUSTOMER ADDRESS & LOGS</h3>
-        <div style="background:#f1f5f9; padding:10px; border-radius:8px; margin-bottom:10px; border: 1px solid #ddd;" class="no-print">
-            <div class="form-row"><input type="text" id="cn" placeholder="Name"> <input type="number" id="cm" placeholder="Mobile"></div>
-            <div class="form-row"><input type="text" id="ca" placeholder="Address"> <input type="text" id="cw" placeholder="Work/Machine"></div>
-            <button class="buy-btn" style="background:var(--green); color:white; margin-top:5px;" onclick="addCRMRecord()">+ SAVE TO RECORD</button>
+        <h3>📊 CUSTOMER ADDRESS & LOGS</h3>
+        <div style="background:#f1f5f9; padding:12px; border-radius:10px; margin-bottom:15px; border: 1px solid #ddd;" class="no-print">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 5px;">
+                <input type="text" id="cn" placeholder="Customer Name">
+                <input type="number" id="cm" placeholder="Mobile Number">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <input type="text" id="ca" placeholder="Address">
+                <input type="text" id="cw" placeholder="Work/Machine">
+            </div>
+            <button class="buy-btn" style="background:var(--green); color:white; padding: 12px; margin-top:10px;" onclick="addCRMRecord()">+ SAVE NEW CUSTOMER</button>
         </div>
-        <input type="text" id="crmSearch" placeholder="🔍 Search records..." onkeyup="searchTable('crmBody', this.value)" style="width:100%; padding:10px; margin-bottom:10px; border-radius:6px; border:1px solid #ccc;">
-        <div class="table-container">
+        <input type="text" id="crmSearch" placeholder="🔍 Search records..." onkeyup="searchTable('crmBody', this.value)" style="width:100%; padding:15px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; background: white; color: black; font-weight: bold;">
+        <div class="table-responsive">
             <table class="excel-table">
                 <thead><tr style="background:#334155; color:white;"><th>NAME</th><th>MOBILE</th><th>ADDRESS</th><th>WORK</th><th>DATE</th><th>NEXT DUE</th><th>STATUS</th></tr></thead>
                 <tbody id="crmBody">
-                    <tr class="red-row"><td>Rajesh Hadal</td><td>9820012345</td><td>Boisar</td><td>HP-450</td><td>20/08/2025</td><td>20/01/2026</td><td>DUE 🚨</td></tr>
+                    <tr class="red-row"><td>Rajesh Hadal</td><td>9820012345</td><td>Boisar East</td><td>HP-450 Service</td><td>20/08/2025</td><td>20/01/2026</td><td>DUE 🚨</td></tr>
                 </tbody>
             </table>
         </div>
@@ -144,17 +152,31 @@
         <h3 style="color:#f97316;">🤝 DEALER: SHASHI JI</h3>
         <div class="form-row"><label>CATEGORY:</label><select id="dCat"><option value="Purchase Items (+)">Purchase Items (+)</option><option value="Call Attend (-)">Call Attend (-)</option><option value="Business Payment (-)">Business Payment (-)</option></select></div>
         <div class="form-row"><label>ADDRESS:</label><input type="text" id="dAddr" placeholder="Location"></div>
-        <div class="form-row"><label>WORK DETAIL:</label><input type="text" id="dDetail" placeholder="Description"></div>
+        <div class="form-row"><label>DETAIL:</label><input type="text" id="dDetail" placeholder="Description"></div>
         <div class="form-row"><label>AMOUNT:</label><input type="number" id="dAmt" placeholder="₹"></div>
         <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="addDealerEntry()">SAVE ENTRY</button>
-        <div class="table-container">
+        <div class="table-responsive">
             <table class="excel-table">
-                <thead><tr><th>DATE</th><th>CATEGORY</th><th>ADDRESS</th><th>DETAIL</th><th>AMOUNT</th></tr></thead>
+                <thead><tr><th>DATE</th><th>CATEGORY</th><th>ADDRESS</th><th>WORK</th><th>AMOUNT</th></tr></thead>
                 <tbody id="dealerBody"></tbody>
             </table>
         </div>
     </div>
     <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
+</div>
+
+<div id="checkoutPage" class="section no-print" style="background:white; color:black; min-height:100vh;">
+    <h2 style="border-bottom:2px solid #ddd; padding-bottom: 10px;">📦 Checkout Details</h2>
+    <p id="oTitle" style="font-weight:bold; color:var(--blue); font-size:18px;"></p>
+    <div class="form-row"><label>NAME:</label><input type="text" id="on"></div>
+    <div class="form-row"><label>MOBILE:</label><input type="number" id="om"></div>
+    <div class="form-row"><label>ADDRESS:</label><textarea id="oa" placeholder="Delivery Address"></textarea></div>
+    <div style="text-align:center; background:#fef3c7; padding:20px; border-radius:12px; border: 1px dashed #f59e0b;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=9326113988@upi&pn=HariRam" style="width:130px;">
+        <p><b>Payable: <span id="oPrice"></span></b></p>
+    </div>
+    <button onclick="confirmOrder()" class="buy-btn" style="background:var(--green); color:white; padding:18px; font-size:16px; margin-top:15px;">PLACE ORDER</button>
+    <div class="back-nav-bottom" onclick="goTo('shopPage')">⬅️ BACK TO SHOP</div>
 </div>
 
 <div class="float-box no-print">
@@ -164,33 +186,57 @@
 
 <script>
     const products = [
-        {n:"SRE-250 Mini Fusing", p:48000, i:"🏭", d:"Best for Small Units"},
-        {n:"SRE-300 Collar Press", p:58000, i:"👕", d:"Collar Pasting"},
+        {n:"SRE-250 Mini Fusing", p:48000, i:"🏭", d:"Small Units"},
+        {n:"SRE-300 Collar Press", p:58000, i:"👕", d:"Collar/Cuff Pasting"},
+        {n:"Hashima HP-450M", p:195000, i:"⚙️", d:"Industrial 450mm"},
         {n:"Hashima HP-450MS", p:215000, i:"🤖", d:"Auto Cooling Industrial"},
-        {n:"HP-450MS Belt Set", p:14000, i:"➰", d:"Premium Lower/Upper"},
+        {n:"Oshima OP-450GS", p:185000, i:"🏭", d:"Industrial Heavy 450mm"},
+        {n:"HP-450MS Belt Set", p:14000, i:"➰", d:"Premium Upper/Lower"},
+        {n:"Hashima Lower Belt", p:5250, i:"🎗️", d:"Genuine High Quality"},
+        {n:"Hashima Upper Belt", p:4500, i:"🎗️", d:"Genuine High Quality"},
+        {n:"Fiblon HM-450 Set", p:6000, i:"🧵", d:"Budget Friendly Set"},
         {n:"Linix Motor 80JB", p:14950, i:"🔌", d:"Main Driving Motor"},
-        {n:"Digital Thermostat", p:5950, i:"🌡️", d:"Precision Control"},
+        {n:"AC Motor (Linix)", p:7850, i:"🔌", d:"60JB Industrial Motor"},
+        {n:"Omron Power Relay", p:4250, i:"⚡", d:"G7L Heavy Duty Relay"},
+        {n:"Digital Thermostat", p:5950, i:"🌡️", d:"Digital Control"},
+        {n:"Heating Element", p:3800, i:"🔥", d:"Industrial Heater"},
         {n:"Silicon Spray", p:2250, i:"🧴", d:"New Ace Cleaner"},
-        {n:"Machine Service", p:1500, i:"🛠️", d:"Service Call"}
+        {n:"Heat Proof Grease", p:1280, i:"🧪", d:"HG-260 Lubricant"},
+        {n:"Rolax Powder", p:350, i:"✨", d:"Fusing Powder Premium"},
+        {n:"Cooling Fan 220V", p:1200, i:"❄️", d:"Exhaust High Speed"},
+        {n:"Machine Service", p:1500, i:"🛠️", d:"Full Service Call"}
     ];
 
     window.onload = () => {
         let h = '';
         products.forEach(p => { 
-            h += `<div class="p-card"><div class="p-icon">${p.i}</div><div class="p-name">${p.n}</div><div style="color:var(--gold);font-weight:bold; font-size:11px;">₹${p.p.toLocaleString()}</div><button class="buy-btn" onclick="alert('Opening Checkout...')">BUY NOW</button></div>`; 
+            h += `<div class="p-card"><div class="p-icon">${p.i}</div><div class="p-name">${p.n}</div><div style="color:var(--gold);font-weight:bold;">₹${p.p.toLocaleString()}</div><button class="buy-btn" onclick="openOrder('${p.n}', ${p.p})">BUY NOW</button></div>`; 
         });
         document.getElementById('catalog').innerHTML = h;
         document.getElementById('invDate').valueAsDate = new Date();
     };
 
-    function goTo(id) { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
-    function addRow() { const tr = document.createElement('tr'); tr.innerHTML = `<td><input type="text" class="i-desc"></td><td><input type="number" class="i-rate" value="0" oninput="calcBill()"></td><td><input type="number" class="i-qty" value="1" oninput="calcBill()"></td><td class="i-tot">₹0</td>`; document.getElementById('billBody').appendChild(tr); }
-    function calcBill() { let sub = 0; document.querySelectorAll('#billBody tr').forEach(r => { let rowTot = (parseFloat(r.querySelector('.i-rate').value)||0)*(parseFloat(r.querySelector('.i-qty').value)||0); r.querySelector('.i-tot').innerText = "₹" + rowTot; sub += rowTot; }); let disc = parseFloat(document.getElementById('disc').value)||0; let final = sub - disc; if(document.getElementById('gstCheck').checked) final *= 1.18; document.getElementById('gTotal').innerText = Math.round(final).toLocaleString(); }
-    function addCRMRecord() { const row = `<tr><td>${document.getElementById('cn').value}</td><td>${document.getElementById('cm').value}</td><td>${document.getElementById('ca').value}</td><td>${document.getElementById('cw').value}</td><td>${new Date().toLocaleDateString()}</td><td>DUE</td><td style="color:green;font-weight:bold;">ACTIVE</td></tr>`; document.getElementById('crmBody').innerHTML += row; alert("Recorded!"); }
-    function addDealerEntry() { document.getElementById('dealerBody').innerHTML += `<tr><td>${new Date().toLocaleDateString()}</td><td>${document.getElementById('dCat').value}</td><td>${document.getElementById('dAddr').value}</td><td>${document.getElementById('dDetail').value}</td><td>₹${document.getElementById('dAmt').value}</td></tr>`; alert("Saved!"); }
+    function goTo(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    function openOrder(n, p) { goTo('checkoutPage'); document.getElementById('oTitle').innerText = n; document.getElementById('oPrice').innerText = "₹" + p.toLocaleString(); }
+    function addRow() { const tr = document.createElement('tr'); tr.innerHTML = `<td><input type="text" class="i-desc"></td><td><input type="number" class="i-rate" value="0" oninput="calcBill()"></td><td><input type="number" class="i-qty" value="1" oninput="calcBill()"></td><td class="i-tot">₹ 0</td>`; document.getElementById('billBody').appendChild(tr); }
+    function calcBill() { let sub = 0; document.querySelectorAll('#billBody tr').forEach(r => { let rt = parseFloat(r.querySelector('.i-rate').value)||0; let qt = parseFloat(r.querySelector('.i-qty').value)||0; let rowTot = rt*qt; r.querySelector('.i-tot').innerText = "₹ " + rowTot; sub += rowTot; }); let d = parseFloat(document.getElementById('disc').value)||0; let f = sub - d; if(document.getElementById('gstCheck').checked) f *= 1.18; document.getElementById('gTotal').innerText = Math.round(f).toLocaleString(); }
+    function addCRMRecord() { 
+        const date = new Date().toLocaleDateString(); 
+        let nx = new Date(); nx.setMonth(nx.getMonth() + 5); 
+        const row = `<tr><td>${document.getElementById('cn').value}</td><td>${document.getElementById('cm').value}</td><td>${document.getElementById('ca').value}</td><td>${document.getElementById('cw').value}</td><td>${date}</td><td>${nx.toLocaleDateString()}</td><td style="color:green;font-weight:bold;">ACTIVE</td></tr>`; 
+        document.getElementById('crmBody').innerHTML += row; 
+        alert("Smart Table Updated!"); 
+    }
+    function addDealerEntry() { const d = new Date().toLocaleDateString(); document.getElementById('dealerBody').innerHTML += `<tr><td>${d}</td><td>${document.getElementById('dCat').value}</td><td>${document.getElementById('dAddr').value}</td><td>${document.getElementById('dDetail').value}</td><td>₹${document.getElementById('dAmt').value}</td></tr>`; alert("Entry Saved!"); }
     function searchTable(id, val) { let rows = document.querySelectorAll(`#${id} tr`); rows.forEach(r => r.style.display = r.innerText.toLowerCase().includes(val.toLowerCase()) ? '' : 'none'); }
     function adminLogin() { if(prompt("Password:") === "1234") goTo('adminPanel'); }
-    async function pickContact() { try { const c = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if(c.length) { document.getElementById('bName').value = c[0].name[0]; document.getElementById('bMob').value = c[0].tel[0].replace(/\D/g,'').slice(-10); } } catch (e) { alert("Use Chrome."); } }
+    function confirmOrder() { if(!document.getElementById('on').value || !document.getElementById('oa').value) { alert("Please enter Name and Address!"); return; } alert("✅ Order Confirm! Delivery in 7 Days."); location.reload(); }
+    async function pickContact() { try { const c = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if(c.length) { document.getElementById('bName').value = c[0].name[0]; document.getElementById('bMob').value = c[0].tel[0].replace(/\D/g,'').slice(-10); } } catch (e) { alert("Use Chrome Mobile browser."); } }
 </script>
 </body>
-            </html>
+                        </html>
