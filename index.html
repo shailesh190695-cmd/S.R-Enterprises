@@ -3,87 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | AI ERP</title>
+    <title>S.R ENTERPRISES | AI MASTER ERP</title>
     <style>
-        :root { --bg: #0b1120; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; --red: #ef4444; }
+        :root { --bg: #0b1120; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; --red: #ef4444; --blue: #3b82f6; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 10px; }
         .header { text-align: center; border-bottom: 2px solid var(--gold); padding: 10px; cursor: pointer; }
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
-        .btn-menu { padding: 20px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; color: white; }
-        .section { display: none; background: #1e293b; padding: 20px; border-radius: 15px; border: 1px solid #334155; }
+        .btn-menu { padding: 22px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer; color: white; text-transform: uppercase; font-size: 12px; }
+        .section { display: none; background: #1e293b; padding: 20px; border-radius: 15px; border: 1px solid #334155; margin-bottom: 20px; }
         .active { display: block; }
         .form-group { margin-bottom: 12px; }
-        .form-group label { display: block; color: var(--gold); font-size: 11px; font-weight: bold; margin-bottom: 5px; }
-        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #475569; background: white; color: black; font-weight: bold; }
-        .mic-btn { background: var(--red); border: none; border-radius: 50%; width: 40px; height: 40px; color: white; cursor: pointer; font-size: 18px; }
+        .form-group label { display: block; color: var(--gold); font-size: 11px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
+        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #475569; background: white; color: black; font-weight: bold; font-size: 14px; box-sizing: border-box; }
+        .mic-btn { background: var(--red); border: none; border-radius: 50%; width: 45px; height: 45px; color: white; cursor: pointer; font-size: 20px; }
         .flex-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #444; padding-bottom: 10px; }
-        #voiceStatus { color: var(--green); font-size: 10px; font-weight: bold; text-align: center; display: none; margin-bottom: 10px; }
-        @media print { .no-print { display: none !important; } .section { display: block !important; background: white; color: black; border: none; } }
+        #vStatus { color: var(--green); font-size: 10px; font-weight: bold; text-align: center; display: none; }
+        .excel-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12px; background: white; color: black; }
+        .excel-table th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        #payment-info { display: none; }
+        @media print {
+            .no-print { display: none !important; }
+            .section { display: block !important; background: white; color: black; border: none; }
+            #payment-info { display: flex; align-items: center; gap: 20px; position: fixed; bottom: 30px; left: 30px; }
+            .qr-img { width: 100px; height: 100px; border: 1px solid #000; }
+        }
     </style>
 </head>
 <body>
 
 <div class="header" onclick="unlockAdmin()">
-    <h1 style="color:var(--gold); margin:0;">S.R ENTERPRISES</h1>
-    <p id="hint" style="font-size:10px; color:#94a3b8;">Click for AI Admin Panel</p>
+    <h1 style="color:var(--gold); margin:0; letter-spacing:1px;">S.R ENTERPRISES</h1>
+    <p id="hint" style="font-size:10px; color:#94a3b8; margin-top:5px;">AI ASSISTANT ACTIVE • CLICK TO LOGIN</p>
 </div>
 
 <div id="dashboard" class="no-print">
     <div class="menu-grid">
         <button class="btn-menu" style="background:var(--gold);" onclick="showSection('billPage')">🧾 NEW BILL</button>
-        <button class="btn-menu" style="background:#a855f7;" onclick="showSection('invPage')">📦 STOCK</button>
-        <button class="btn-menu" style="background:#f97316;" onclick="showSection('dealerPage')">🤝 DEALER</button>
+        <button class="btn-menu" style="background:var(--blue);" onclick="showSection('invPage')">📦 STOCK ADD</button>
+        <button class="btn-menu" style="background:#f97316;" onclick="showSection('dealerPage')">🤝 SHASHI HISAB</button>
         <button class="btn-menu" style="background:var(--green);" onclick="window.open('https://wa.me/919326113988')">📲 WHATSAPP</button>
     </div>
 </div>
 
 <div id="adminArea" style="display:none;">
-    <div id="voiceStatus">🎙️ Listening... Speak Now</div>
+    <div id="vStatus">🎙️ AI Listening... Please speak clearly</div>
 
     <div id="billPage" class="section active">
         <div class="flex-header">
-            <h3 style="color:var(--gold); margin:0;">BILLING FORM</h3>
+            <h3 style="color:var(--gold); margin:0;">BILLING & SERVICE</h3>
             <button class="mic-btn no-print" onclick="startAI('bill')">🎙️</button>
         </div>
-        <div class="form-group"><label>Customer Name:</label><input type="text" id="cName"></div>
-        <div class="form-group"><label>Mobile:</label><input type="text" id="cMob"></div>
-        <div class="form-group"><label>Service Price:</label><input type="number" id="servPrice" value="0" oninput="calc()"></div>
-        <div class="form-group"><label>Spare Price:</label><input type="number" id="sparePrice" value="0" oninput="calc()"></div>
-        <h2 style="text-align:center; color:var(--gold);">TOTAL: ₹ <span id="grand">0</span></h2>
-        <button class="no-print" style="width:100%; padding:15px; background:var(--green); color:white; font-weight:bold; border:none; border-radius:10px;" onclick="saveBill()">SAVE & WHATSAPP</button>
-    </div>
-
-    <div id="invPage" class="section">
-        <div class="flex-header">
-            <h3 style="color:#a855f7; margin:0;">STOCK UPDATE</h3>
-            <button class="mic-btn no-print" onclick="startAI('stock')">🎙️</button>
+        <div style="display:flex; justify-content:space-between; color:var(--gold); font-size:11px; margin-bottom:10px;">
+            <span id="invNo">SR-0000</span> <span id="curDate"></span>
         </div>
-        <div class="form-group"><label>Item Name:</label><input type="text" id="iName"></div>
-        <div class="form-group"><label>Qty:</label><input type="number" id="iQty"></div>
-        <div class="form-group"><label>Sale Price:</label><input type="number" id="iSale"></div>
-        <button style="width:100%; background:#a855f7; padding:12px; border:none; font-weight:bold; border-radius:10px; color:white;" onclick="saveStock()">ADD STOCK</button>
+        <div class="form-group"><label>Customer Name:</label><input type="text" id="cName"></div>
+        <div class="form-group"><label>Mobile:</label><div style="display:flex; gap:5px;"><input type="text" id="cMob"><button class="no-print" onclick="pickContact()" style="background:var(--gold); border:none; border-radius:8px; padding:10px;">👤</button></div></div>
+        <div class="form-group"><label>Service Charges:</label><input type="number" id="servPrice" value="0" oninput="calc()"></div>
+        <div class="form-group"><label>Spare Name & Price:</label><div style="display:flex; gap:5px;"><input type="text" id="spareName" placeholder="Item"><input type="number" id="sparePrice" value="0" oninput="calc()"></div></div>
+        <h2 style="text-align:center; color:var(--gold); margin:20px 0;">TOTAL: ₹ <span id="grand">0</span></h2>
+        
+        <button class="no-print" style="width:100%; padding:16px; background:var(--green); color:white; font-weight:bold; border:none; border-radius:12px; font-size:16px;" onclick="saveBill()">SAVE & WHATSAPP</button>
+        <button class="no-print" style="width:100%; margin-top:10px; padding:12px; border-radius:12px; background:white; color:black; font-weight:bold; border:none;" onclick="window.print()">🖨️ PRINT BILL</button>
+
+        <div id="payment-info">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=9326113988@upi&pn=HariRam" class="qr-img">
+            <div><p style="margin:0; font-weight:bold;">HariRam Ji (S.R Enterprises)</p><p style="margin:0;">UPI: 9326113988</p></div>
+        </div>
     </div>
 
     <div id="dealerPage" class="section">
         <div class="flex-header">
-            <h3 style="color:#f97316; margin:0;">DEALER HISAB</h3>
+            <h3 style="color:#f97316; margin:0;">SHASHI DEALER HISAB</h3>
             <button class="mic-btn no-print" onclick="startAI('dealer')">🎙️</button>
         </div>
-        <div class="form-group"><label>Type:</label><select id="dType"><option value="Purchase">Purchase (+)</option><option value="Payment">Payment (-)</option><option value="Service_Work">Service Work (Minus)</option></select></div>
-        <div class="form-group"><label>Amount:</label><input type="number" id="dAmt"></div>
-        <div class="form-group"><label>Detail:</label><input type="text" id="dDetail"></div>
-        <button style="width:100%; background:var(--gold); padding:12px; border:none; font-weight:bold; border-radius:10px;" onclick="saveDealer()">SAVE ENTRY</button>
+        <div class="form-group"><label>Type:</label><select id="dType"><option value="Purchase">Stock Liya (+)</option><option value="Payment">Paisa Diya (-)</option><option value="Service_Work">Service Work (Minus -)</option></select></div>
+        <div class="form-group"><label>Amount (₹):</label><input type="number" id="dAmt"></div>
+        <div class="form-group"><label>Detail/Remark:</label><input type="text" id="dDetail"></div>
+        <button style="width:100%; background:var(--gold); padding:15px; border:none; font-weight:bold; border-radius:10px;" onclick="saveDealer()">SAVE ENTRY</button>
+        <button style="width:100%; margin-top:10px; background:var(--green); color:white; padding:15px; border:none; border-radius:10px;" onclick="window.open('https://wa.me/919326113988?text=Dealer Report Sent')">SEND WHATSAPP PDF</button>
+        <table class="excel-table"><thead><tr><th>Date</th><th>Type</th><th>Detail</th><th>Amount</th></tr></thead><tbody id="dTable"></tbody></table>
+    </div>
+
+    <div id="invPage" class="section">
+        <div class="flex-header">
+            <h3 style="color:#a855f7; margin:0;">INVENTORY UPDATE</h3>
+            <button class="mic-btn no-print" onclick="startAI('stock')">🎙️</button>
+        </div>
+        <div class="form-group"><label>Item Name:</label><input type="text" id="iName"></div>
+        <div class="form-group"><label>Qty to Add:</label><input type="number" id="iQty"></div>
+        <div class="form-group"><label>Sale Price:</label><input type="number" id="iSale"></div>
+        <button style="width:100%; background:#a855f7; padding:15px; border:none; font-weight:bold; border-radius:10px; color:white;" onclick="saveStock()">UPDATE STOCK</button>
     </div>
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzXvTSibdzC-ETdc5c3GD7RD1gwD4_xLWpBmQR4gMzpxZfZbAwLt5Wewzt3osDfTgUf/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxmUJL_P3HfDeATa5ayg91A8iDvrun6bOyfELgo02b7CzZBoxZhRriXZCd9IwruPRdN/exec';
+    
+    window.onload = () => {
+        document.getElementById('curDate').innerText = new Date().toLocaleDateString();
+        document.getElementById('invNo').innerText = "SR-" + Math.floor(1000 + Math.random() * 9000);
+    };
 
     function unlockAdmin() {
-        if(prompt("Password:") === "1234") {
+        if(prompt("Enter Admin Password:") === "1234") {
             document.getElementById('adminArea').style.display = 'block';
             document.getElementById('hint').innerText = "AI ADMIN LOGGED IN ✅";
-        }
+            document.getElementById('hint').style.color = "#22c55e";
+        } else { alert("Wrong Password!"); }
     }
 
     function showSection(id) {
@@ -91,15 +117,21 @@
         document.getElementById(id).classList.add('active');
     }
 
-    // --- AI VOICE LOGIC ---
+    function calc() {
+        let s = parseFloat(document.getElementById('servPrice').value) || 0;
+        let p = parseFloat(document.getElementById('sparePrice').value) || 0;
+        document.getElementById('grand').innerText = (s + p);
+    }
+
+    // AI VOICE LOGIC
     function startAI(type) {
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.lang = 'hi-IN';
-        document.getElementById('voiceStatus').style.display = 'block';
+        document.getElementById('vStatus').style.display = 'block';
         
         recognition.onresult = function(event) {
             const text = event.results[0][0].transcript.toLowerCase();
-            document.getElementById('voiceStatus').style.display = 'none';
+            document.getElementById('vStatus').style.display = 'none';
             const nums = text.match(/\d+/g);
 
             if(type === 'bill') {
@@ -124,17 +156,34 @@
         recognition.start();
     }
 
-    function calc() {
-        let s = parseFloat(document.getElementById('servPrice').value) || 0;
-        let p = parseFloat(document.getElementById('sparePrice').value) || 0;
-        document.getElementById('grand').innerText = (s + p);
+    async function pickContact() {
+        try {
+            const c = await navigator.contacts.select(['name', 'tel'], {multiple: false});
+            if(c.length) { 
+                document.getElementById('cName').value = c[0].name[0]; 
+                document.getElementById('cMob').value = c[0].tel[0].replace(/\D/g,'').slice(-10); 
+            }
+        } catch (e) { alert("Mobile Chrome use karein."); }
     }
 
-    // Save Functions (Same as before)
-    function saveBill() { alert("Saving Bill..."); }
-    function saveDealer() { alert("Dealer Entry Saved!"); }
-    function saveStock() { alert("Stock Updated!"); }
+    function saveBill() {
+        const p = new URLSearchParams({action:'saveBill', name:document.getElementById('cName').value, mob:document.getElementById('cMob').value, items:document.getElementById('spareName').value, service:document.getElementById('servPrice').value, total:document.getElementById('grand').innerText, invNo:document.getElementById('invNo').innerText});
+        fetch(scriptURL, {method:'POST', mode:'no-cors', body:p});
+        alert("Bill Saved to Google Sheet! 5 Month Alert Set.");
+        window.open(`https://wa.me/919326113988?text=New Bill Generated for ${document.getElementById('cName').value}`);
+    }
+
+    function saveDealer() {
+        const p = new URLSearchParams({action:'dealerEntry', type:document.getElementById('dType').value, amt:document.getElementById('dAmt').value, desc:document.getElementById('dDetail').value});
+        fetch(scriptURL, {method:'POST', mode:'no-cors', body:p});
+        alert("Dealer Transaction Added!");
+    }
+
+    function saveStock() {
+        const p = new URLSearchParams({action:'updateStock', itemName:document.getElementById('iName').value, qty:document.getElementById('iQty').value, salePrice:document.getElementById('iSale').value});
+        fetch(scriptURL, {method:'POST', mode:'no-cors', body:p});
+        alert("Inventory Updated!");
+    }
 </script>
 </body>
-                                                       </html>
-                                                       
+</html>
