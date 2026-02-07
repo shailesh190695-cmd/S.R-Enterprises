@@ -3,258 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R ENTERPRISES | MASTER ERP</title>
+    <title>SRE Admin | Master Control</title>
     <style>
-        :root { --bg: #0b1120; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; --blue: #3b82f6; --red: #ef4444; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 0; overflow-x: hidden; }
-        .section { display: none; padding: 15px; padding-bottom: 100px; }
-        .active { display: block !important; }
-        .admin-btn { height: 75px !important; font-size: 16px !important; width: 100%; margin-bottom: 10px; cursor: pointer; border-radius: 8px; border: none; color: white; font-weight: bold; }
-        .shop-header { background: #131921; padding: 15px; text-align: center; border-bottom: 3px solid var(--gold); cursor:pointer; }
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
-        .p-card { background: var(--card); border-radius: 12px; padding: 10px; border: 1px solid #334155; text-align: center; display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; }
-        .p-icon { font-size: 28px; }
-        .p-name { font-size: 11px; font-weight: bold; height: 35px; overflow: hidden; margin: 5px 0; }
-        .buy-btn { background: var(--gold); color: black; border: none; width: 100%; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
-        .form-box { background: white; color: black; padding: 20px; border-radius: 12px; max-width: 850px; margin: auto; }
-        .form-row { display: flex; align-items: center; margin-bottom: 10px; gap: 8px; }
-        .form-row label { flex: 1; font-weight: bold; font-size: 11px; color: #333; text-transform: uppercase; }
-        .form-row input, .form-row select { flex: 2; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-weight: bold; }
-        .excel-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10px; background: white; color: black; border: 1px solid #ddd; table-layout: auto; }
-        .excel-table th, .excel-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        .excel-table th { background: #334155; color: white; }
-        .calc-container { width: 100%; display: flex; flex-direction: column; align-items: flex-end; margin-top: 15px; gap: 10px; }
-        .back-nav-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #131921; padding: 18px; text-align: center; border-top: 2px solid var(--gold); cursor: pointer; color: var(--gold); font-weight: bold; z-index: 1000; font-size: 14px; }
-        .float-box { position: fixed; bottom: 85px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
-        .f-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 25px; color: white; border:none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; cursor:pointer; }
+        :root { --bg: #0f172a; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; --red: #ef4444; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; }
+        
+        /* Professional Header */
+        .header { background: var(--card); padding: 20px; text-align: center; border-bottom: 3px solid var(--gold); }
+        .header h1 { margin: 0; color: var(--gold); font-size: 22px; }
+        
+        /* Dashboard Grid */
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
+        .mod-card { background: var(--card); padding: 25px 10px; border-radius: 15px; border: 1px solid #334155; text-align: center; cursor: pointer; }
+        
+        /* Modules Section */
+        .section { display: none; padding: 15px; animation: slideUp 0.3s ease; }
+        .active-section { display: block; }
+        .form-card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #475569; }
+        
+        /* Inputs & Search */
+        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
+        .search-bar { border: 2px solid var(--gold) !important; border-radius: 50px !important; margin-bottom: 15px; }
+        
+        /* Buttons */
+        .btn-main { background: var(--gold); color: black; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .btn-pick { background: var(--gold); border: none; width: 50px; border-radius: 8px; cursor: pointer; }
+        .btn-view { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 10px; width: 100%; margin-top: 15px; border-radius: 8px; cursor: pointer; }
+        
+        /* Hidden Excel Table */
+        .hidden-table { display: none; margin-top: 15px; overflow-x: auto; background: #000; border-radius: 10px; padding: 10px; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th, td { border: 1px solid #334155; padding: 8px; text-align: left; }
+        th { background: var(--gold); color: black; }
 
-        @media print {
-            @page { size: A4; margin: 10mm; }
-            body { background: white !important; color: black !important; }
-            body > *:not(.section.active) { display: none !important; }
-            .section.active { display: block !important; position: absolute; top: 0; left: 0; width: 100% !important; padding: 0 !important; margin: 0 !important; }
-            .no-print, .float-box, .back-nav-bottom, button, .shop-header, .admin-btn, .inventory-form, .crm-form { display: none !important; }
-            .form-box { box-shadow: none !important; border: none !important; width: 100% !important; padding: 0 !important; color: black !important; }
-            .excel-table { width: 100% !important; border: 2.5px solid #000 !important; font-size: 13px !important; }
-            .excel-table th, .excel-table td { border: 1.5px solid #000 !important; font-weight: bold !important; padding: 10px !important; color: black !important; }
-            #printFooter { display: flex !important; justify-content: space-between; align-items: flex-start; margin-top: 40px; border-top: 2px solid #000; padding-top: 20px; visibility: visible !important; }
-            .bank-side { width: 65%; text-align: left !important; }
-            .sign-side { width: 30%; text-align: right !important; }
-            input { border: none !important; background: transparent !important; color: black !important; font-weight: bold !important; font-size: 14px !important; }
-        }
-        #printFooter { display: none; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div id="shopPage" class="section active no-print">
-    <div class="shop-header" onclick="adminLogin()"><h1 style="color:var(--gold); margin:0;">S.R ENTERPRISES</h1><p>ADMIN LOGIN</p></div>
-    <div class="product-grid" id="catalog"></div>
+<div class="header">
+    <h1>S.R. ENTERPRISES</h1>
+    <p style="margin:5px 0 0; font-weight:bold;">Shailesh Rajbhar (Proprietor)</p>
 </div>
 
-<div id="adminPanel" class="section no-print">
-    <h2 style="color:var(--gold); text-align:center;">SR ADMIN DASHBOARD</h2>
-    <div style="padding: 10px;">
-        <button class="buy-btn admin-btn" style="background:var(--blue);" onclick="goTo('billPage')">📝 NEW BILLING</button>
-        <button class="buy-btn admin-btn" style="background:var(--green);" onclick="goTo('dealerPage')">🤝 SHASHI DEALER</button>
-        <button class="buy-btn admin-btn" style="background:#a855f7;" onclick="goTo('crmPage')">📊 CUSTOMER RECORDS</button>
-        <button class="buy-btn admin-btn" style="background:#f97316;" onclick="goTo('inventoryPage')">📦 INVENTORY STOCK</button>
-    </div>
-    <div class="back-nav-bottom" onclick="location.reload()">🔒 LOGOUT / HOME</div>
+<div id="main-menu" class="menu-grid">
+    <div class="mod-card" onclick="showPage('billing')">🧾<br>BILLING</div>
+    <div class="mod-card" onclick="showPage('stock')">📦<br>STOCK</div>
+    <div class="mod-card" onclick="showPage('dealer')">🤝<br>DEALERS</div>
+    <div class="mod-card" onclick="showPage('customer')">👥<br>CUSTOMERS</div>
+    <div class="mod-card" onclick="showPage('staff')">👷<br>STAFF & EXP</div>
+    <div class="mod-card" onclick="showPage('report')">📊<br>REPORTS</div>
 </div>
 
-<div id="billPage" class="section">
-    <div class="form-box">
-        <h2 style="text-align:center; color:var(--blue); margin:0;">S.R ENTERPRISES</h2>
-        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; margin-bottom:15px; border-bottom: 1.5px solid #000;">
-            <span>INV NO: <input type="text" id="invNo" style="width:100px;" value="SR-101"></span>
-            <span>DATE: <input type="date" id="invDate"></span>
+<div id="billing" class="section">
+    <button onclick="goHome()" style="color:var(--gold); background:none; border:none; cursor:pointer; margin-bottom:10px;">← Back</button>
+    <div class="form-card">
+        <h3>🧾 Smart Billing</h3>
+        <div style="display:flex; gap:5px;">
+            <input type="tel" id="bill-phone" style="flex:1;" placeholder="Customer Number">
+            <button class="btn-pick" onclick="pickContact('bill-phone')">📱</button>
         </div>
-        <div class="form-row"><label>CUSTOMER:</label><input type="text" id="bName"></div>
-        <div class="form-row"><label>ADDRESS:</label><input type="text" id="bAddr"></div>
-        <div class="form-row"><label>MOBILE:</label><div style="flex:2; display:flex; gap:5px;"><input type="text" id="bMob" style="flex:1;"><button onclick="pickContact()" class="no-print">👤</button></div></div>
+        <input type="text" placeholder="Customer Name">
+        <input type="text" placeholder="Machine Model No.">
+        <input type="number" placeholder="Amount (₹)">
+        <input type="number" placeholder="Old Balance (Dues)">
+        <button class="btn-main">GENERATE BILL 🚀</button>
         
-        <table class="excel-table" id="billTable" style="table-layout: fixed;">
-            <thead><tr style="background:#eee;"><th style="width:45%">DESCRIPTION</th><th style="width:20%">RATE</th><th style="width:15%">QTY</th><th style="width:20%">TOTAL</th></tr></thead>
-            <tbody id="billBody">
-                <tr><td><input type="text" style="width:100%; border:none; background:transparent;"></td><td><input type="number" style="width:100%; border:none;" value="0" oninput="calcBill()"></td><td><input type="number" style="width:100%; border:none;" value="1" oninput="calcBill()"></td><td>₹ 0</td></tr>
-            </tbody>
-        </table>
-        <button class="buy-btn no-print" style="background:var(--blue); color:white; margin-top:10px;" onclick="addRow()">+ ADD ITEM</button>
-
-        <div class="calc-container">
-            <div class="no-print"><label>GST 18%:</label><input type="checkbox" id="gstCheck" onchange="calcBill()"></div>
-            <div class="no-print"><label>DISC:</label><input type="number" id="disc" value="0" oninput="calcBill()" style="width:100px;"></div>
-            <h2 style="margin:5px 0;">TOTAL: ₹ <span id="gTotal">0</span></h2>
-            <p id="wordTotal" style="font-weight: bold; font-size:13px; color:black; font-style: italic;"></p>
-        </div>
-        
-        <button class="buy-btn no-print" style="background:var(--green); color:white; padding:15px; margin-top:10px;" onclick="window.print()">🖨️ PRINT BILL</button>
-
-        <div id="printFooter">
-            <div class="bank-side">
-                <div style="display: flex; gap: 15px; align-items: flex-start;">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=7021733860@sbi&pn=HariRam" style="width:115px; border:2px solid #000;">
-                    <div>
-                        <p style="margin:2px 0;"><b>BENEFICIARY: HARIRAM SITARAM RAJBHAR</b></p>
-                        <p style="margin:2px 0;">BANK: SBI (A/C: ....9584)</p>
-                        <p style="margin:2px 0;">IFSC: SBIN0000000 | UPI ID: 7021733860@sbi</p>
-                        <div style="margin-top:8px;">
-                           <img src="https://img.icons8.com/color/48/000000/google-pay.png" width="25">
-                           <img src="https://img.icons8.com/color/48/000000/phone-pe.png" width="25">
-                           <img src="https://img.icons8.com/color/48/000000/paytm.png" width="25">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="sign-side"><p style="margin-top:60px; font-weight:bold;">Authorised Signature</p></div>
-        </div>
-    </div>
-    <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
-</div>
-
-<div id="dealerPage" class="section">
-    <div class="form-box">
-        <h3 style="color:#f97316;">🤝 DEALER: SHASHI JI ENTRY</h3>
-        <div class="form-row"><label>DATE:</label><input type="date" id="dDate"></div>
-        <div class="form-row"><label>CAT:</label>
-            <select id="dCat"><option value="Purchase Items (+)">Purchase Items (+)</option><option value="Calls Attend (-)">Calls Attend (-)</option></select>
-        </div>
-        <div class="form-row"><label>ADDR:</label><input type="text" id="dAddr" placeholder="Location"></div>
-        <div class="form-row"><label>DETAIL:</label><input type="text" id="dDetail" placeholder="Work Detail"></div>
-        <div class="form-row"><label>AMT:</label><input type="number" id="dAmt" placeholder="₹"></div>
-        <button class="buy-btn" style="background:var(--green); color:white; padding:15px;" onclick="saveToSheet('dealer')">SAVE TO GOOGLE SHEET</button>
-        <div class="table-wrap"><table class="excel-table"><thead><tr><th>DATE</th><th>CAT</th><th>ADDR</th><th>DETAIL</th><th>AMT</th></tr></thead><tbody id="dealerBody"></tbody></table></div>
-    </div>
-    <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
-</div>
-
-<div id="crmPage" class="section">
-    <div class="form-box" style="max-width: 1000px;">
-        <h3>📊 CUSTOMER RECORDS (CRM)</h3>
-        <div class="crm-form no-print" style="background:#f1f5f9; padding:15px; border-radius:10px; margin-bottom:15px;">
-            <div class="form-row"><input type="text" id="cn" placeholder="Customer Name"> <input type="number" id="cm" placeholder="Mobile"></div>
-            <div class="form-row"><input type="text" id="ca" placeholder="Address"> <input type="text" id="cw" placeholder="Work Done"></div>
-            <button class="buy-btn" style="background:var(--green); color:white;" onclick="saveToSheet('crm')">SAVE CUSTOMER</button>
-        </div>
-        <div class="table-wrap">
-            <table class="excel-table">
-                <thead><tr><th>NAME</th><th>MOB</th><th>ADDR</th><th>WORK</th><th>DATE</th><th>NEXT DUE</th><th>STATUS</th></tr></thead>
-                <tbody id="crmBody"></tbody>
+        <button class="btn-view" onclick="toggleTable('bill-data')">📂 VIEW RECENT BILLS</button>
+        <div id="bill-data" class="hidden-table">
+            <table>
+                <tr><th>Date</th><th>Customer</th><th>Total</th><th>Action</th></tr>
+                <tr><td>07-Feb</td><td>Rajesh ji</td><td>₹2500</td><td>✏️ 🗑️</td></tr>
             </table>
         </div>
     </div>
-    <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
 </div>
 
-<div id="inventoryPage" class="section">
-    <div class="form-box">
-        <h3>📦 INVENTORY STOCK ENTRY</h3>
-        <div class="inventory-form no-print" style="background:#f1f5f9; padding:15px; border-radius:10px; margin-bottom:15px;">
-            <div class="form-row"><input type="text" id="pName" placeholder="Part Name"> <input type="text" id="pType" placeholder="Type"></div>
-            <div class="form-row"><input type="number" id="pRate" placeholder="Rate ₹"> <input type="number" id="pStock" placeholder="Stock Qty"></div>
-            <button class="buy-btn" style="background:var(--green); color:white;" onclick="saveToSheet('inventory')">ADD STOCK TO SHEET</button>
+<div id="report" class="section">
+    <button onclick="goHome()" style="color:var(--gold); background:none; border:none; cursor:pointer; margin-bottom:10px;">← Back</button>
+    <div class="form-card" style="text-align:center;">
+        <h3>📊 Monthly Profit Report</h3>
+        <div style="background:var(--bg); padding:15px; border-radius:10px; margin-bottom:10px;">
+            <p style="margin:0; opacity:0.7;">Total Sales (Feb)</p>
+            <h2 style="color:var(--green); margin:5px 0;">₹ 85,000</h2>
         </div>
-        <div class="table-wrap"><table class="excel-table"><thead><tr><th>PART NAME</th><th>TYPE</th><th>RATE</th><th>STOCK</th><th>STATUS</th></tr></thead><tbody id="invBody"></tbody></table></div>
+        <div style="background:var(--bg); padding:15px; border-radius:10px; margin-bottom:10px;">
+            <p style="margin:0; opacity:0.7;">Total Expenses</p>
+            <h2 style="color:var(--red); margin:5px 0;">₹ 12,500</h2>
+        </div>
+        <hr style="border:0; border-top:1px solid #334155;">
+        <h2 style="color:var(--gold);">Net Profit: ₹ 72,500</h2>
+        <p style="font-size:11px; opacity:0.6;">(Auto-calculated from Billing & Expenses)</p>
     </div>
-    <div class="back-nav-bottom no-print" onclick="goTo('adminPanel')">⬅️ BACK TO ADMIN</div>
-</div>
-
-<div class="float-box no-print">
-    <a href="https://wa.me/919326113988" class="f-btn" style="background:#25d366;">💬</a>
-    <a href="tel:919326113988" class="f-btn" style="background:var(--blue);">📞</a>
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwy11W8yIHNmRU4X1LxKR6CaSF6WCBZDxDgN6zmKhP2Cq9q4d_wiy22kxhRxs1WLCle/exec';
-
-    const pList = [
-        {n:"SRE-250 Mini Fusing", p:48000, i:"🏭"}, {n:"SRE-300 Collar Press", p:58000, i:"👕"},
-        {n:"Hashima HP-450MS", p:215000, i:"🤖"}, {n:"Oshima OP-450GS", p:185000, i:"🏭"},
-        {n:"HP-450MS Belt Set", p:14000, i:"➰"}, {n:"Heating Element", p:3800, i:"🔥"},
-        {n:"Thermostat Omron", p:5950, i:"🌡️"}, {n:"Linix Motor AC", p:14950, i:"🔌"},
-        {n:"Silicon Spray", p:2250, i:"🧴"}, {n:"Carbon Brush Set", p:450, i:"🖌️"},
-        {n:"Pressure Roller", p:6500, i:"🥖"}, {n:"Teflon Sheet Roll", p:8500, i:"📜"},
-        {n:"Cooling Fan 220V", p:1200, i:"❄️"}, {n:"OMRON Power Relay", p:4250, i:"⚡"},
-        {n:"Fusing Powder", p:350, i:"✨"}, {n:"Gear Box Unit", p:4500, i:"⚙️"},
-        {n:"Machine Service", p:1500, i:"🛠️"}, {n:"Emergency Switch", p:850, i:"🚨"},
-        {n:"Limit Switch", p:650, i:"🔘"}, {n:"Temperature Sensor", p:1250, i:"📏"},
-        {n:"Main Drive Chain", p:2800, i:"⛓️"}, {n:"Upper Belt Teflon", p:4200, i:"🔝"}
-    ];
-
-    window.onload = () => {
-        let h = ''; pList.forEach(p => { h += `<div class="p-card"><div class="p-icon">${p.i}</div><div class="p-name">${p.n}</div><div style="color:var(--gold);font-weight:bold;">₹${p.p.toLocaleString()}</div><button class="buy-btn">BUY NOW</button></div>`; });
-        document.getElementById('catalog').innerHTML = h;
-        loadData('Dealer_Ledger', 'dealerBody');
-        loadData('Customer_CRM', 'crmBody');
-        loadData('Inventory', 'invBody');
-        document.getElementById('invDate').valueAsDate = new Date();
-        document.getElementById('dDate').valueAsDate = new Date();
-    };
-
-    async function saveToSheet(type) {
-        const p = new URLSearchParams();
-        if(type==='dealer') {
-            p.append('action', 'saveDealer');
-            p.append('date', document.getElementById('dDate').value);
-            p.append('cat', document.getElementById('dCat').value);
-            p.append('addr', document.getElementById('dAddr').value);
-            p.append('detail', document.getElementById('dDetail').value);
-            p.append('amt', document.getElementById('dAmt').value);
-        } else if(type==='crm') {
-            p.append('action', 'saveCRM');
-            p.append('name', document.getElementById('cn').value);
-            p.append('mob', document.getElementById('cm').value);
-            p.append('addr', document.getElementById('ca').value);
-            p.append('work', document.getElementById('cw').value);
-        } else if(type==='inventory') {
-            p.append('action', 'saveInventory');
-            p.append('name', document.getElementById('pName').value);
-            p.append('type', document.getElementById('pType').value);
-            p.append('rate', document.getElementById('pRate').value);
-            p.append('stock', document.getElementById('pStock').value);
-        }
-        await fetch(scriptURL, {method: 'POST', body: p, mode: 'no-cors'});
-        alert("SYNC SUCCESSFUL!");
-        location.reload();
+    function showPage(id) {
+        document.getElementById('main-menu').style.display = 'none';
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active-section'));
+        document.getElementById(id).classList.add('active-section');
     }
-
-    async function loadData(sheet, tableId) {
+    function goHome() {
+        document.getElementById('main-menu').style.display = 'grid';
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active-section'));
+    }
+    function toggleTable(id) {
+        let table = document.getElementById(id);
+        table.style.display = (table.style.display === "block") ? "none" : "block";
+    }
+    async function pickContact(targetId) {
+        if (!('contacts' in navigator)) return alert("Contact Pickup not supported.");
         try {
-            const resp = await fetch(`${scriptURL}?sheet=${sheet}`);
-            const data = await resp.json();
-            let rows = "";
-            data.forEach((r, i) => { if(i>0) rows += `<tr>${r.map(td => `<td>${td}</td>`).join('')}</tr>`; });
-            if(document.getElementById(tableId)) document.getElementById(tableId).innerHTML = rows;
-        } catch(e) { console.log("Load Error"); }
+            const contact = await navigator.contacts.select(['tel'], {multiple: false});
+            if (contact.length) document.getElementById(targetId).value = contact[0].tel[0].replace(/\D/g,'');
+        } catch (e) {}
     }
-
-    function goTo(id) { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
-    function adminLogin() { if(prompt("Password:") === "1234") goTo('adminPanel'); }
-    function addRow() { const tr = document.createElement('tr'); tr.innerHTML = `<td><input type="text" style="width:100%; border:none; background:transparent;"></td><td><input type="number" style="width:100%; border:none;" value="0" oninput="calcBill()"></td><td><input type="number" style="width:100%; border:none;" value="1" oninput="calcBill()"></td><td>₹ 0</td>`; document.getElementById('billBody').appendChild(tr); }
-    
-    function calcBill() { 
-        let sub = 0; document.querySelectorAll('#billBody tr').forEach(r => { 
-            let rt = parseFloat(r.querySelector('td:nth-child(2) input').value)||0; let qt = parseFloat(r.querySelector('td:nth-child(3) input').value)||0; 
-            let rowTot = rt*qt; r.querySelector('td:last-child').innerText = "₹ " + rowTot; sub += rowTot; 
-        }); 
-        let d = parseFloat(document.getElementById('disc').value)||0; let f = sub - d; 
-        if(document.getElementById('gstCheck').checked) f *= 1.18; 
-        let final = Math.round(f); document.getElementById('gTotal').innerText = final.toLocaleString(); 
-        document.getElementById('wordTotal').innerText = "Amount in words: " + numberToWords(final);
-    }
-
-    function numberToWords(num) {
-        const a = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ', 'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ', 'Eighteen ', 'Nineteen '];
-        const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-        let words = '';
-        if (num >= 1000) { words += a[Math.floor(num / 1000)] + 'Thousand '; num %= 1000; }
-        if (num >= 100) { words += a[Math.floor(num / 100)] + 'Hundred '; num %= 100; }
-        if (num > 19) { words += b[Math.floor(num / 10)] + ' ' + a[num % 10]; } else { words += a[num]; }
-        return words + "Rupees Only";
-    }
-    async function pickContact() { try { const c = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if(c.length) { document.getElementById('bName').value = c[0].name[0]; document.getElementById('bMob').value = c[0].tel[0].replace(/\D/g,'').slice(-10); } } catch (e) { alert("Use Mobile."); } }
 </script>
 </body>
-                </html>
-            
+    </html>
+    
