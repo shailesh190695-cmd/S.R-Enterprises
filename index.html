@@ -3,122 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SRE Admin | Master Control</title>
+    <title>S.R. ENTERPRISES</title>
     <style>
-        :root { --bg: #0f172a; --card: #1e293b; --gold: #fbbf24; --green: #22c55e; --red: #ef4444; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; }
+        /* NORMAL PROFESSIONAL THEME */
+        :root { --main-bg: #f8fafc; --header-bg: #ffffff; --primary: #1e40af; --gold: #b45309; --text: #334155; }
+        body { font-family: 'Arial', sans-serif; background: var(--main-bg); color: var(--text); margin: 0; padding: 0; }
         
-        /* Professional Header */
-        .header { background: var(--card); padding: 20px; text-align: center; border-bottom: 3px solid var(--gold); }
-        .header h1 { margin: 0; color: var(--gold); font-size: 22px; }
-        
-        /* Dashboard Grid */
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
-        .mod-card { background: var(--card); padding: 25px 10px; border-radius: 15px; border: 1px solid #334155; text-align: center; cursor: pointer; }
-        
-        /* Modules Section */
-        .section { display: none; padding: 15px; animation: slideUp 0.3s ease; }
-        .active-section { display: block; }
-        .form-card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #475569; }
-        
-        /* Inputs & Search */
-        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
-        .search-bar { border: 2px solid var(--gold) !important; border-radius: 50px !important; margin-bottom: 15px; }
-        
-        /* Buttons */
-        .btn-main { background: var(--gold); color: black; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        .btn-pick { background: var(--gold); border: none; width: 50px; border-radius: 8px; cursor: pointer; }
-        .btn-view { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 10px; width: 100%; margin-top: 15px; border-radius: 8px; cursor: pointer; }
-        
-        /* Hidden Excel Table */
-        .hidden-table { display: none; margin-top: 15px; overflow-x: auto; background: #000; border-radius: 10px; padding: 10px; }
-        table { width: 100%; border-collapse: collapse; font-size: 12px; }
-        th, td { border: 1px solid #334155; padding: 8px; text-align: left; }
-        th { background: var(--gold); color: black; }
+        /* HEADER */
+        .header { background: var(--header-bg); padding: 20px; text-align: center; border-bottom: 2px solid #e2e8f0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .header h1 { margin: 0; color: var(--primary); font-size: 24px; letter-spacing: 1px; }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* PRODUCT GALLERY (22 ITEMS) */
+        .container { padding: 15px; max-width: 1200px; margin: auto; }
+        .search-bar { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; box-sizing: border-box; }
+        
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .product-card { background: white; border-radius: 10px; padding: 10px; border: 1px solid #e2e8f0; text-align: center; }
+        .product-card img { width: 100%; height: 120px; object-fit: contain; background: #f1f5f9; border-radius: 8px; }
+        .product-card h3 { font-size: 14px; margin: 10px 0 5px; color: #1e293b; }
+        .product-card .price { color: #059669; font-weight: bold; margin-bottom: 10px; }
+        .wa-btn { background: #25d366; color: white; text-decoration: none; padding: 8px; border-radius: 5px; display: block; font-size: 12px; font-weight: bold; }
+
+        /* ADMIN BUTTON */
+        .admin-entry { text-align: center; margin: 40px 0; }
+        .admin-btn { background: none; border: 1px solid #cbd5e1; color: #94a3b8; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
 
 <div class="header">
     <h1>S.R. ENTERPRISES</h1>
-    <p style="margin:5px 0 0; font-weight:bold;">Shailesh Rajbhar (Proprietor)</p>
 </div>
 
-<div id="main-menu" class="menu-grid">
-    <div class="mod-card" onclick="showPage('billing')">🧾<br>BILLING</div>
-    <div class="mod-card" onclick="showPage('stock')">📦<br>STOCK</div>
-    <div class="mod-card" onclick="showPage('dealer')">🤝<br>DEALERS</div>
-    <div class="mod-card" onclick="showPage('customer')">👥<br>CUSTOMERS</div>
-    <div class="mod-card" onclick="showPage('staff')">👷<br>STAFF & EXP</div>
-    <div class="mod-card" onclick="showPage('report')">📊<br>REPORTS</div>
-</div>
-
-<div id="billing" class="section">
-    <button onclick="goHome()" style="color:var(--gold); background:none; border:none; cursor:pointer; margin-bottom:10px;">← Back</button>
-    <div class="form-card">
-        <h3>🧾 Smart Billing</h3>
-        <div style="display:flex; gap:5px;">
-            <input type="tel" id="bill-phone" style="flex:1;" placeholder="Customer Number">
-            <button class="btn-pick" onclick="pickContact('bill-phone')">📱</button>
-        </div>
-        <input type="text" placeholder="Customer Name">
-        <input type="text" placeholder="Machine Model No.">
-        <input type="number" placeholder="Amount (₹)">
-        <input type="number" placeholder="Old Balance (Dues)">
-        <button class="btn-main">GENERATE BILL 🚀</button>
-        
-        <button class="btn-view" onclick="toggleTable('bill-data')">📂 VIEW RECENT BILLS</button>
-        <div id="bill-data" class="hidden-table">
-            <table>
-                <tr><th>Date</th><th>Customer</th><th>Total</th><th>Action</th></tr>
-                <tr><td>07-Feb</td><td>Rajesh ji</td><td>₹2500</td><td>✏️ 🗑️</td></tr>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div id="report" class="section">
-    <button onclick="goHome()" style="color:var(--gold); background:none; border:none; cursor:pointer; margin-bottom:10px;">← Back</button>
-    <div class="form-card" style="text-align:center;">
-        <h3>📊 Monthly Profit Report</h3>
-        <div style="background:var(--bg); padding:15px; border-radius:10px; margin-bottom:10px;">
-            <p style="margin:0; opacity:0.7;">Total Sales (Feb)</p>
-            <h2 style="color:var(--green); margin:5px 0;">₹ 85,000</h2>
-        </div>
-        <div style="background:var(--bg); padding:15px; border-radius:10px; margin-bottom:10px;">
-            <p style="margin:0; opacity:0.7;">Total Expenses</p>
-            <h2 style="color:var(--red); margin:5px 0;">₹ 12,500</h2>
-        </div>
-        <hr style="border:0; border-top:1px solid #334155;">
-        <h2 style="color:var(--gold);">Net Profit: ₹ 72,500</h2>
-        <p style="font-size:11px; opacity:0.6;">(Auto-calculated from Billing & Expenses)</p>
-    </div>
-</div>
-
-<script>
-    function showPage(id) {
-        document.getElementById('main-menu').style.display = 'none';
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active-section'));
-        document.getElementById(id).classList.add('active-section');
-    }
-    function goHome() {
-        document.getElementById('main-menu').style.display = 'grid';
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active-section'));
-    }
-    function toggleTable(id) {
-        let table = document.getElementById(id);
-        table.style.display = (table.style.display === "block") ? "none" : "block";
-    }
-    async function pickContact(targetId) {
-        if (!('contacts' in navigator)) return alert("Contact Pickup not supported.");
-        try {
-            const contact = await navigator.contacts.select(['tel'], {multiple: false});
-            if (contact.length) document.getElementById(targetId).value = contact[0].tel[0].replace(/\D/g,'');
-        } catch (e) {}
-    }
-</script>
-</body>
-    </html>
+<div class="container">
+    <input type="text" class="search-bar" placeholder="🔍 Search Spare Parts (Belt, Roller, Heater)...">
     
+    <div class="product-grid">
+        <div class="product-card">
+            <img src="https://via.placeholder.com/150?text=Teflon+Belt" alt="Teflon Belt">
+            <h3>Teflon Belt 450</h3>
+            <div class="price">₹ 1,200</div>
+            <a href="https://wa.me/919324545155?text=Mujhe Teflon Belt 450 chahiye" class="wa-btn">WhatsApp Order 📲</a>
+        </div>
+        
+        <div class="product-card">
+            <img src="https://via.placeholder.com/150?text=Silicon+Roller" alt="Silicon Roller">
+            <h3>Silicon Roller</h3>
+            <div class="price">₹ 2,500</div>
+            <a href="https://wa.me/919324545155?text=Mujhe Silicon Roller chahiye" class="wa-btn">WhatsApp Order 📲</a>
+        </div>
+
+        </div>
+
+    <div class="admin-entry">
+        <button class="admin-btn" onclick="location.href='admin.html'">Admin Login</button>
+    </div>
+</div>
+
+</body>
+</html>
