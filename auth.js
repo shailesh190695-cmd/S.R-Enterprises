@@ -1,29 +1,36 @@
-// MODULE: Authentication
-function showLogin() {
+// MODULE: Billing Page Logic
+function showBilling() {
     const panel = document.getElementById('main-panel');
     panel.innerHTML = `
-        <div style="max-width: 350px; margin: 80px auto; padding: 30px; background: white; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center;">
-            <h1 style="color: #2c3e50; margin-bottom: 5px;">S.R. Enterprises</h1>
-            <p style="color: #bdc3c7; margin-bottom: 30px;">Admin Portal Login</p>
+        <div style="padding: 15px; max-width: 500px; margin: auto; background: white; border-radius: 10px;">
+            <button onclick="showDashboard()" style="margin-bottom: 10px;">← Back</button>
+            <h2 style="color: #27ae60; text-align: center; margin: 0;">S.R. ENTERPRISES</h2>
+            <p style="text-align: center; font-size: 11px; margin-bottom: 20px;">Fusing Machine Sales & Service</p>
             
-            <input type="text" id="userid" placeholder="User ID" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;">
+            <div style="display: grid; gap: 8px;">
+                <input type="text" id="c_name" placeholder="Customer Name" style="padding: 12px; border: 1px solid #ddd;">
+                <input type="number" id="c_mobile" placeholder="Mobile Number" style="padding: 12px; border: 1px solid #ddd;">
+                <input type="text" id="m_model" placeholder="Machine Model" style="padding: 12px; border: 1px solid #ddd;">
+                <hr>
+                <label>Service/Part Amount (₹)</label>
+                <input type="number" id="amt" style="padding: 12px;" oninput="doTotal()">
+                <label>Discount (₹)</label>
+                <input type="number" id="disc" style="padding: 12px; color: red;" oninput="doTotal()">
+            </div>
             
-            <input type="password" id="pass" placeholder="Password" style="width: 100%; padding: 12px; margin-bottom: 25px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;">
+            <div style="margin-top: 20px; text-align: right; background: #f9f9f9; padding: 10px;">
+                <h3 style="margin: 0;">GRAND TOTAL: ₹ <span id="g_total">0</span></h3>
+            </div>
             
-            <button onclick="validate()" style="width: 100%; padding: 15px; background: #2c3e50; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;">
-                LOGIN KAREIN
+            <button onclick="alert('PDF Generated & Sent!')" style="width: 100%; margin-top: 20px; padding: 15px; background: #2c3e50; color: white; border: none; border-radius: 8px; font-weight: bold;">
+                GENERATE PDF & SHARE
             </button>
         </div>
     `;
 }
 
-function validate() {
-    const u = document.getElementById('userid').value;
-    const p = document.getElementById('pass').value;
-
-    if(u === "shailesh" && p === "sr123") {
-        showDashboard(); // Login sahi toh dashboard pe jao
-    } else {
-        alert("Galat ID ya Password! Shailesh bhai sahi details dalo.");
-    }
+function doTotal() {
+    let a = document.getElementById('amt').value || 0;
+    let d = document.getElementById('disc').value || 0;
+    document.getElementById('g_total').innerText = a - d;
 }
