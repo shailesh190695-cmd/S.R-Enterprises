@@ -1,4 +1,4 @@
-// MODULE: S.R. Enterprises Final Billing Form
+// MODULE: S.R. Enterprises Professional Billing (v2.0)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -8,106 +8,111 @@ function showBilling() {
     panel.style.background = "#1a2233";
 
     panel.innerHTML = `
-        <div style="padding: 15px; color: white; font-family: sans-serif; min-height: 100vh; box-sizing: border-box;">
-            <div style="width: 100%; max-width: 1100px; margin: auto; border: 2px solid #edb92e; border-radius: 15px; padding: 20px; background: #1a2233; box-sizing: border-box;">
+        <div id="print-area" style="padding: 15px; color: white; font-family: sans-serif; min-height: 100vh; box-sizing: border-box;">
+            <div style="width: 100%; max-width: 1100px; margin: auto; border: 2px solid #edb92e; border-radius: 15px; padding: 20px; background: #1a2233; box-sizing: border-box; position: relative;">
                 
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                     <div>
                         <h2 style="color: #4cd137; margin: 0; font-size: 28px;">S.R Enterprises</h2>
-                        <p style="font-size: 12px; margin: 0; color: #dcdde1; letter-spacing: 1px;">FUSING MACHINE SPECIALIST</p>
+                        <p style="font-size: 12px; margin: 0; color: #dcdde1;">FUSING MACHINE SPECIALIST</p>
                     </div>
                     <div style="display: flex; gap: 15px;">
                         <div style="text-align: center;">
-                            <label style="font-size: 11px; color: #edb92e; font-weight: bold;">INVOICE NO</label><br>
-                            <input type="text" id="inv_no" value="${autoInv}" style="width: 100px; padding: 10px; border-radius: 8px; border: none; font-weight: bold; text-align: center;">
+                            <label style="font-size: 11px; color: #edb92e;">INVOICE NO</label><br>
+                            <input type="text" id="inv_no" value="${autoInv}" style="width: 100px; padding: 8px; border-radius: 5px; text-align: center; border:none;">
                         </div>
                         <div style="text-align: center;">
-                            <label style="font-size: 11px; color: #edb92e; font-weight: bold;">DATE</label><br>
-                            <input type="date" id="inv_date" value="${today}" style="width: 150px; padding: 10px; border-radius: 8px; border: none; font-weight: bold;">
+                            <label style="font-size: 11px; color: #edb92e;">DATE</label><br>
+                            <input type="date" id="inv_date" value="${today}" style="width: 140px; padding: 8px; border-radius: 5px; border:none;">
                         </div>
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 15px;">
-                    <div>
-                        <label style="color: #edb92e; font-size: 13px; font-weight: bold;">CUSTOMER NAME:</label>
-                        <input type="text" id="c_name" placeholder="Enter Name" style="width: 100%; padding: 12px; border-radius: 8px; border: none; margin-top: 5px; box-sizing: border-box;">
-                    </div>
-                    <div>
-                        <label style="color: #edb92e; font-size: 13px; font-weight: bold;">MACHINE MODEL:</label>
-                        <input type="text" id="m_model" placeholder="Model No." style="width: 100%; padding: 12px; border-radius: 8px; border: none; margin-top: 5px; box-sizing: border-box;">
-                    </div>
+                <div style="display: grid; grid-template-columns: 2fr 1.2fr; gap: 15px; margin-bottom: 12px;">
+                    <input type="text" id="c_name" placeholder="Customer Name" style="padding: 12px; border-radius: 8px; border:none;">
+                    <input type="text" id="m_model" placeholder="Machine Model No." style="padding: 12px; border-radius: 8px; border:none;">
+                </div>
+                <div style="display: grid; grid-template-columns: 2fr 1.2fr; gap: 15px; margin-bottom: 12px;">
+                    <input type="text" id="c_addr" placeholder="Full Address" style="padding: 12px; border-radius: 8px; border:none;">
+                    <input type="text" id="m_remark" placeholder="Work Remark" style="padding: 12px; border-radius: 8px; border:none;">
                 </div>
 
-                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 15px;">
-                    <div>
-                        <label style="color: #edb92e; font-size: 13px; font-weight: bold;">ADDRESS:</label>
-                        <input type="text" id="c_addr" placeholder="Full Address" style="width: 100%; padding: 12px; border-radius: 8px; border: none; margin-top: 5px; box-sizing: border-box;">
-                    </div>
-                    <div>
-                        <label style="color: #edb92e; font-size: 13px; font-weight: bold;">REMARK:</label>
-                        <input type="text" id="m_remark" placeholder="Work Note" style="width: 100%; padding: 12px; border-radius: 8px; border: none; margin-top: 5px; box-sizing: border-box;">
-                    </div>
+                <div style="margin-bottom: 25px; display: flex; gap: 10px; max-width: 450px;">
+                    <input type="number" id="c_mobile" placeholder="Phone Number" style="flex: 1; padding: 12px; border-radius: 8px; border:none;">
+                    <button onclick="pickPhone()" style="background: #edb92e; color: black; border: none; padding: 0 25px; border-radius: 8px; font-weight: bold; cursor: pointer;">PICK</button>
                 </div>
 
-                <div style="margin-bottom: 25px;">
-                    <label style="color: #edb92e; font-size: 13px; font-weight: bold;">MOBILE NO:</label>
-                    <div style="display: flex; gap: 10px; margin-top: 5px; max-width: 400px;">
-                        <input type="number" id="c_mobile" placeholder="Phone Number" style="flex: 1; padding: 12px; border-radius: 8px; border: none;">
-                        <button onclick="pickContact()" style="background: #edb92e; color: black; border: none; padding: 0 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">PICK</button>
-                    </div>
+                <div style="background: #252e42; padding: 12px; border-radius: 10px 10px 0 0; display: grid; grid-template-columns: 4fr 1.2fr 70px 1.2fr; gap: 12px; text-align: center; color: #edb92e; font-size: 13px; font-weight: bold;">
+                    <div>WORK DESCRIPTION</div><div>RATE</div><div>QTY</div><div style="text-align: right;">TOTAL</div>
                 </div>
-
-                <div style="background: #252e42; padding: 12px; border-radius: 10px 10px 0 0; border: 1px solid #3d4a6d; display: grid; grid-template-columns: 4fr 1.5fr 80px 1.5fr; gap: 15px; text-align: center; color: #edb92e; font-size: 13px; font-weight: bold;">
-                    <div>WORK DESCRIPTION</div>
-                    <div>RATE (₹)</div>
-                    <div>QTY</div>
-                    <div style="text-align: right;">TOTAL</div>
-                </div>
-                
-                <div id="items_container" style="background: #252e42; padding: 12px; border: 1px solid #3d4a6d; border-top: none;">
-                    </div>
-                
-                <button onclick="addNewRow()" style="width: 100%; background: none; border: 1px dashed #edb92e; color: #edb92e; padding: 15px; border-radius: 0 0 10px 10px; font-weight: bold; cursor: pointer; margin-bottom: 25px;">+ ADD ITEM / WORK DESCRIPTION</button>
+                <div id="items_container" style="background: #252e42; padding: 12px; border-bottom: 1px solid #3d4a6d;"></div>
+                <button onclick="addNewRow()" style="width: 100%; background: none; border: 1px dashed #edb92e; color: #edb92e; padding: 12px; border-radius: 0 0 10px 10px; font-weight: bold; cursor: pointer; margin-bottom: 20px;">+ ADD ITEM / WORK DESCRIPTION</button>
 
                 <div style="display: flex; justify-content: flex-end;">
-                    <div style="width: 100%; max-width: 400px; border: 2px solid #edb92e; padding: 20px; border-radius: 15px; background: #252e42; box-sizing: border-box;">
+                    <div style="width: 100%; max-width: 380px; border: 2px solid #edb92e; padding: 20px; border-radius: 15px; background: #252e42;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                            <span>Sub-Total:</span>
-                            <span id="tax_amt" style="font-weight: bold;">₹0.00</span>
+                            <span>Sub-Total:</span><span id="tax_amt">₹0.00</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; color: #4cd137;">
-                            <span>GST (18%):</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="gst_check" onchange="calculateTotal()" style="width:18px; height:18px; cursor:pointer;">
+                                <span style="color: #4cd137;">GST (18%):</span>
+                            </div>
                             <span id="gst_amt">₹0.00</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #e74c3c;">Discount (₹):</span>
+                            <input type="number" id="w_disc" value="0" oninput="calculateTotal()" style="width: 80px; padding: 5px; border-radius: 5px; border: none; text-align: right;">
                         </div>
                         <hr style="border: 0.5px solid #3d4a6d;">
                         <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-                            <span style="font-size: 20px; font-weight: bold; color: #edb92e;">GRAND TOTAL:</span>
-                            <span id="grand_total" style="font-size: 24px; font-weight: bold; color: #4cd137;">₹0.00</span>
+                            <span style="font-size: 18px; font-weight: bold; color: #edb92e;">GRAND TOTAL:</span>
+                            <span id="grand_total" style="font-size: 22px; font-weight: bold; color: #4cd137;">₹0.00</span>
                         </div>
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
-                    <button onclick="window.print()" style="background: #edb92e; color: black; padding: 20px; border: none; border-radius: 12px; font-weight: bold; font-size: 18px; cursor: pointer;">🖨️ PRINT BILL / PDF</button>
-                    <button onclick="alert('Saving to Google Sheets & Opening WhatsApp...')" style="background: #4cd137; color: white; padding: 20px; border: none; border-radius: 12px; font-weight: bold; font-size: 18px; cursor: pointer;">📲 SAVE & WHATSAPP</button>
+                <div id="signature-area" style="margin-top: 50px; display: flex; justify-content: space-between; padding: 0 20px;">
+                    <div style="text-align: center;">
+                        <p style="margin-bottom: 40px; border-top: 1px solid #ccc; width: 150px;"></p>
+                        <p style="font-size: 12px; color: #aaa;">Customer Signature</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <p style="margin-bottom: 40px; border-top: 1px solid #ccc; width: 150px;"></p>
+                        <p style="font-size: 12px; color: #aaa;">For S.R. Enterprises</p>
+                    </div>
                 </div>
-                <button onclick="showDashboard()" style="width: 100%; margin-top: 20px; background: #7f8c8d; color: white; padding: 12px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">← BACK TO DASHBOARD</button>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px;" id="no-print">
+                    <button onclick="window.print()" style="background: #edb92e; color: black; padding: 18px; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer;">🖨️ PRINT BILL / PDF</button>
+                    <button onclick="alert('Saving to Sheets & WhatsApp...')" style="background: #4cd137; color: white; padding: 18px; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer;">📲 SAVE & WHATSAPP</button>
+                </div>
+                <button onclick="showDashboard()" id="no-print-back" style="width: 100%; margin-top: 15px; background: #7f8c8d; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer;">← BACK</button>
             </div>
         </div>
+        
+        <style>
+            @media print {
+                #no-print, #no-print-back, button, .no-print { display: none !important; }
+                #print-area { background: white !important; color: black !important; padding: 0; }
+                div { background: white !important; border-color: #333 !important; color: black !important; }
+                input { border: none !important; color: black !important; background: transparent !important; }
+                #signature-area { display: flex !important; margin-top: 100px !important; }
+            }
+        </style>
     `;
-    addNewRow(); 
+    addNewRow();
 }
 
 function addNewRow() {
     const container = document.getElementById('items_container');
     const row = document.createElement('div');
-    row.style = "display: grid; grid-template-columns: 4fr 1.5fr 80px 1.5fr; gap: 15px; margin-bottom: 12px; align-items: center;";
+    row.style = "display: grid; grid-template-columns: 4fr 1.2fr 70px 1.2fr; gap: 12px; margin-bottom: 10px; align-items: center;";
     row.innerHTML = `
-        <input type="text" class="item-desc" placeholder="Work name / Parts" style="padding: 12px; border-radius: 8px; border: none; width: 100%; box-sizing: border-box;">
-        <input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding: 12px; border-radius: 8px; border: none; text-align: center; width: 100%; box-sizing: border-box;">
-        <input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding: 12px; border-radius: 8px; border: none; text-align: center; width: 80px; box-sizing: border-box;">
-        <div class="item-total" style="color: #edb92e; font-weight: bold; text-align: right; font-size: 16px;">₹0.00</div>
+        <input type="text" placeholder="Work/Part name" style="padding: 10px; border-radius: 5px; border:none; width: 100%; box-sizing: border-box;">
+        <input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding: 10px; border-radius: 5px; border:none; text-align: center; width: 100%; box-sizing: border-box;">
+        <input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding: 10px; border-radius: 5px; border:none; text-align: center; width: 70px;">
+        <div class="item-total" style="color: #edb92e; font-weight: bold; text-align: right;">₹0.00</div>
     `;
     container.appendChild(row);
 }
@@ -115,7 +120,6 @@ function addNewRow() {
 function calculateTotal() {
     let subtotal = 0;
     const rows = document.querySelectorAll('#items_container > div');
-    
     rows.forEach(row => {
         const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
         const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
@@ -124,11 +128,30 @@ function calculateTotal() {
         subtotal += total;
     });
 
-    // Humne abhi GST calculation ko simple rakha hai, aap zaroorat padne par toggle kar sakte hain
+    const disc = parseFloat(document.getElementById('w_disc').value) || 0;
+    const isGst = document.getElementById('gst_check').checked;
+    const taxable = subtotal - disc;
+    const gst = isGst ? (taxable * 0.18) : 0;
+    const grand = taxable + gst;
+
     document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2);
-    document.getElementById('grand_total').innerText = "₹" + subtotal.toFixed(2);
+    document.getElementById('gst_amt').innerText = "₹" + gst.toFixed(2);
+    document.getElementById('grand_total').innerText = "₹" + (grand > 0 ? grand : 0).toFixed(2);
 }
 
-async function pickContact() {
-    alert("Mobile Contact Picker Tablet browser mein manually number daalne ko kehta hai.");
+async function pickPhone() {
+    if (!('contacts' in navigator)) {
+        alert("Mobile contact picker aapke device par support nahi hai.");
+        return;
+    }
+    try {
+        const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false});
+        if (contacts.length) {
+            document.getElementById('c_name').value = contacts[0].name[0];
+            document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, '');
+        }
+    } catch (ex) {
+        alert("Picker nahi khul raha. Manually number daalein.");
+    }
 }
+    
