@@ -3,62 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R. ENTERPRISES</title>
+    <title>S.R. Enterprises - Admin Access</title>
     <style>
-        /* NORMAL PROFESSIONAL THEME */
-        :root { --main-bg: #f8fafc; --header-bg: #ffffff; --primary: #1e40af; --gold: #b45309; --text: #334155; }
-        body { font-family: 'Arial', sans-serif; background: var(--main-bg); color: var(--text); margin: 0; padding: 0; }
-        
-        /* HEADER */
-        .header { background: var(--header-bg); padding: 20px; text-align: center; border-bottom: 2px solid #e2e8f0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .header h1 { margin: 0; color: var(--primary); font-size: 24px; letter-spacing: 1px; }
+        /* Design jo sirf Login ke liye hai */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #000000); /* Professional Dark Theme */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-        /* PRODUCT GALLERY (22 ITEMS) */
-        .container { padding: 15px; max-width: 1200px; margin: auto; }
-        .search-bar { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; box-sizing: border-box; }
-        
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .product-card { background: white; border-radius: 10px; padding: 10px; border: 1px solid #e2e8f0; text-align: center; }
-        .product-card img { width: 100%; height: 120px; object-fit: contain; background: #f1f5f9; border-radius: 8px; }
-        .product-card h3 { font-size: 14px; margin: 10px 0 5px; color: #1e293b; }
-        .product-card .price { color: #059669; font-weight: bold; margin-bottom: 10px; }
-        .wa-btn { background: #25d366; color: white; text-decoration: none; padding: 8px; border-radius: 5px; display: block; font-size: 12px; font-weight: bold; }
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+        }
 
-        /* ADMIN BUTTON */
-        .admin-entry { text-align: center; margin: 40px 0; }
-        .admin-btn { background: none; border: 1px solid #cbd5e1; color: #94a3b8; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .login-card h2 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-size: 24px;
+        }
+
+        .login-card p {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .input-group input:focus {
+            border-color: #3498db;
+        }
+
+        .login-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #34495e;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .footer-text {
+            margin-top: 20px;
+            font-size: 11px;
+            color: #bdc3c7;
+        }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>S.R. ENTERPRISES</h1>
-</div>
-
-<div class="container">
-    <input type="text" class="search-bar" placeholder="🔍 Search Spare Parts (Belt, Roller, Heater)...">
-    
-    <div class="product-grid">
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150?text=Teflon+Belt" alt="Teflon Belt">
-            <h3>Teflon Belt 450</h3>
-            <div class="price">₹ 1,200</div>
-            <a href="https://wa.me/919324545155?text=Mujhe Teflon Belt 450 chahiye" class="wa-btn">WhatsApp Order 📲</a>
-        </div>
+    <div class="login-card">
+        <h2>S.R. Enterprises</h2>
+        <p>Private Admin Portal</p>
         
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150?text=Silicon+Roller" alt="Silicon Roller">
-            <h3>Silicon Roller</h3>
-            <div class="price">₹ 2,500</div>
-            <a href="https://wa.me/919324545155?text=Mujhe Silicon Roller chahiye" class="wa-btn">WhatsApp Order 📲</a>
+        <div class="input-group">
+            <label>USER ID</label>
+            <input type="text" id="userid" placeholder="Apna ID dalein">
         </div>
 
+        <div class="input-group">
+            <label>PASSWORD</label>
+            <input type="password" id="pass" placeholder="Apna Password dalein">
         </div>
 
-    <div class="admin-entry">
-        <button class="admin-btn" onclick="location.href='admin.html'">Admin Login</button>
+        <button class="login-btn" onclick="validateLogin()">DASHBOARD KHOLIYE</button>
+
+        <div class="footer-text">
+            © 2024 Shailesh Services | Secured by Firebase
+        </div>
     </div>
-</div>
+
+    <script>
+        function validateLogin() {
+            var u = document.getElementById('userid').value;
+            var p = document.getElementById('pass').value;
+
+            // Modular Logic: Abhi hum isko simple rakh rahe hain, 
+            // baad mein isko Firebase se connect karenge.
+            if(u === "shailesh" && p === "sr123") {
+                alert("Login Successful! Ab Dashboard khulega.");
+                // Yahan se hum Dashboard page par redirect karenge
+                // window.location.href = "dashboard.html"; 
+            } else {
+                alert("Galat ID ya Password! Phir se koshish karein.");
+            }
+        }
+    </script>
 
 </body>
 </html>
