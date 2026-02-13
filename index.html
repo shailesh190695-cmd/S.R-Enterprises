@@ -1,10 +1,45 @@
-<style>
-    body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
-    #main-panel { width: 100%; min-height: 100vh; display: block; overflow-x: hidden; }
-    /* Dashboard Buttons ka Design */
-    .box { background: white; padding: 35px 15px; text-align: center; border-radius: 15px; cursor: pointer; 
-           box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-bottom: 5px solid #2c3e50; font-weight: bold; font-size: 18px; transition: 0.3s; }
-    .box:hover { transform: translateY(-5px); background: #fdfdfd; }
-    .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px; box-sizing: border-box; }
-    @media (max-width: 600px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
-</style>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.R. Enterprises Portal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; }
+        #main-panel { width: 100%; min-height: 100vh; display: block; position: relative; }
+        
+        /* Dashboard Buttons */
+        .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px; box-sizing: border-box; }
+        .box { background: white; padding: 40px 10px; text-align: center; border-radius: 15px; cursor: pointer; 
+               box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-bottom: 6px solid #2c3e50; font-weight: bold; font-size: 20px; transition: 0.3s; }
+        .box:hover { transform: translateY(-5px); background: #f9f9f9; }
+        
+        @media (max-width: 768px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+
+    <div id="main-panel">
+        <h2 style="text-align: center; padding-top: 50px;">Loading System...</h2>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="billing.js"></script>
+
+    <script>
+        // System ko force-start karne ke liye
+        window.onload = function() {
+            setTimeout(function() {
+                if (typeof showLogin === "function") {
+                    showLogin();
+                } else {
+                    document.getElementById('main-panel').innerHTML = 
+                    "<h2 style='color:red; text-align:center; padding:20px;'>Error: auth.js nahi mil raha! Files check karein.</h2>";
+                }
+            }, 500); // 0.5 second ka delay taki files load ho jayein
+        };
+    </script>
+</body>
+</html>
