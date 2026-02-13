@@ -1,4 +1,4 @@
-// MODULE: S.R. Enterprises Original Layout (Total in Words Added)
+// MODULE: S.R. Enterprises Full System (Billing + WhatsApp)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -90,7 +90,7 @@ function showBilling() {
 
                 <div id="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px;">
                     <button onclick="window.print()" style="background: #edb92e; color: black; padding: 18px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">🖨️ PRINT BILL / PDF</button>
-                    <button onclick="alert('Saving...')" style="background: #4cd137; color: white; padding: 18px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">📲 SAVE & WHATSAPP</button>
+                    <button onclick="sendToWhatsApp()" style="background: #4cd137; color: white; padding: 18px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">📲 SAVE & WHATSAPP</button>
                 </div>
                 <button id="no-print-back" onclick="showDashboard()" style="width: 100%; margin-top: 15px; background: #7f8c8d; color: white; padding: 10px; border: none; border-radius: 8px; cursor: pointer;">← BACK</button>
             </div>
@@ -128,6 +128,31 @@ function calculateTotal() {
     document.getElementById('amount_in_words').innerText = "Rupees " + numberToWords(grand > 0 ? grand : 0) + " Only";
 }
 
+function sendToWhatsApp() {
+    const name = document.getElementById('c_name').value;
+    const mobile = document.getElementById('c_mobile').value;
+    const invNo = document.getElementById('inv_no').value;
+    const total = document.getElementById('grand_total').innerText;
+    const model = document.getElementById('m_model').value;
+
+    if(!mobile || !name) {
+        alert("Pehle Customer ka Name aur Mobile Number daalein!");
+        return;
+    }
+
+    const message = `*S.R. ENTERPRISES - SERVICE REPORT*%0A` +
+                    `--------------------------------%0A` +
+                    `*Invoice:* ${invNo}%0A` +
+                    `*Customer:* ${name}%0A` +
+                    `*Machine:* ${model}%0A` +
+                    `*Total Amount:* ${total}%0A` +
+                    `--------------------------------%0A` +
+                    `Thank you for choosing S.R. Enterprises!%0A` +
+                    `_Fusing Machine Specialist_`;
+
+    window.open(`https://wa.me/91${mobile}?text=${message}`, '_blank');
+}
+
 function numberToWords(num) {
     if (num === 0) return "Zero";
     const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
@@ -158,4 +183,5 @@ async function pickPhone() {
             document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, '');
         }
     } catch (e) { alert("Contact Picker not supported."); }
-}
+        }
+        
