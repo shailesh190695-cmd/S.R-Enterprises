@@ -1,155 +1,24 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html>
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R. Enterprises - Admin Login</title>
+    <title>S.R. Enterprises</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #2c3e50, #000000); /* Dark, professional background */
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-card {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5); /* Deeper shadow for professional look */
-            width: 100%;
-            max-width: 380px; /* Thoda bada card for logo */
-            text-align: center;
-            animation: fadeIn 1s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .logo-container {
-            margin-bottom: 25px;
-        }
-
-        /* Yahan aapka SR Enterprises ka Logo aayega */
-        .logo-container img {
-            max-width: 150px; /* Logo size control */
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        .logo-container h1 {
-            color: #2c3e50;
-            font-size: 28px;
-            margin: 0;
-            font-weight: 700;
-        }
-
-        .login-card p {
-            color: #7f8c8d;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 12px;
-            color: #2c3e50;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            outline: none;
-            font-size: 16px;
-        }
-
-        .input-group input:focus {
-            border-color: #3498db;
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
-        }
-
-        .login-btn {
-            background: #3498db; /* Blue button for action */
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .login-btn:hover {
-            background: #2980b9;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .footer-text {
-            margin-top: 25px;
-            font-size: 11px;
-            color: #bdc3c7;
-        }
+        body { font-family: sans-serif; background: #f4f4f4; margin: 0; }
+        .box { background: white; padding: 20px; text-align: center; border-radius: 10px; cursor: pointer; border-bottom: 5px solid #2c3e50; font-weight: bold; }
+        .box:hover { background: #e8f4fd; }
     </style>
 </head>
 <body>
 
-    <div class="login-card">
-        <div class="logo-container">
-            <img src="https://via.placeholder.com/150x50?text=SR+Enterprises+Logo" alt="SR Enterprises Logo">
-            <h1>S.R. Enterprises</h1>
-        </div>
-        
-        <p>Private Admin Portal</p>
-        
-        <div class="input-group">
-            <label for="userid">USER ID</label>
-            <input type="text" id="userid" placeholder="Apna ID dalein" value="shailesh">
+    <div id="main-panel">
         </div>
 
-        <div class="input-group">
-            <label for="pass">PASSWORD</label>
-            <input type="password" id="pass" placeholder="Apna Password dalein" value="sr123">
-        </div>
-
-        <button class="login-btn" onclick="validateLogin()">DASHBOARD KHOLIYE</button>
-
-        <div class="footer-text">
-            © 2024 Shailesh Services | Secured by Firebase
-        </div>
-    </div>
-
+    <script src="auth.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="billing.js"></script>
     <script>
-        // Module: Authentication Logic (auth.js se aayega)
-        function validateLogin() {
-            var u = document.getElementById('userid').value;
-            var p = document.getElementById('pass').value;
-
-            if(u === "shailesh" && p === "sr123") {
-                // Ab hum yahan se seedha dashboard.html par jayenge
-                window.location.href = "dashboard.html"; 
-            } else {
-                alert("Galat ID ya Password! Phir se koshish karein.");
-            }
-        }
+        window.onload = function() { showLogin(); };
     </script>
-
 </body>
 </html>
