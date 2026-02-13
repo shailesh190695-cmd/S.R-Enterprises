@@ -1,24 +1,22 @@
-// MODULE: Dashboard Menu
 function showDashboard() {
     const panel = document.getElementById('main-panel');
-    panel.style.justifyContent = "flex-start"; // Page ko upar se shuru karne ke liye
     panel.innerHTML = `
-        <div style="padding: 20px; width: 100%; max-width: 800px; margin: auto;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2 style="color: #2c3e50;">SR Control Panel</h2>
-                <button onclick="showLogin()" style="background: red; color: white; border: none; padding: 10px; border-radius: 5px;">Logout</button>
+        <div style="width: 100%; box-sizing: border-box; padding: 10px;">
+            <div style="background: #2c3e50; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-radius: 0 0 15px 15px; margin-bottom: 20px;">
+                <h2 style="margin: 0;">S.R. Control Panel</h2>
+                <button onclick="showLogin()" style="background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold;">Logout</button>
             </div>
 
             <div class="grid-container">
                 <div class="box" onclick="showBilling()">💰 Billing</div>
-                <div class="box" onclick="alert('Stock jald hi aayega')">📦 Stock</div>
-                <div class="box" onclick="alert('Dealer section jald hi aayega')">🤝 Dealer</div>
-                <div class="box" onclick="alert('Expenses jald hi aayega')">💸 Expenses</div>
-                <div class="box" onclick="alert('Customer list jald hi aayega')">👤 Customer</div>
-                <div class="box" onclick="alert('Reports jald hi aayega')">📊 Reports</div>
-                <div class="box" onclick="alert('Summary jald hi aayega')">📅 Summary</div>
-                <div class="box" onclick="alert('Orders jald hi aayega')">📝 Orders</div>
-                <div class="box" onclick="alert('Settings jald hi aayega')">⚙️ Settings</div>
+                <div class="box" onclick="alert('Stock coming soon')">📦 Stock</div>
+                <div class="box" onclick="alert('Dealer coming soon')">🤝 Dealer</div>
+                <div class="box" onclick="alert('Expenses coming soon')">💸 Expenses</div>
+                <div class="box" onclick="alert('Customer coming soon')">👤 Customer</div>
+                <div class="box" onclick="alert('Reports coming soon')">📊 Reports</div>
+                <div class="box" onclick="alert('Summary coming soon')">📅 Summary</div>
+                <div class="box" onclick="alert('Orders coming soon')">📝 Orders</div>
+                <div class="box" onclick="alert('Settings coming soon')">⚙️ Settings</div>
             </div>
         </div>
     `;
