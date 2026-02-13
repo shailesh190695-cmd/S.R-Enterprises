@@ -1,4 +1,98 @@
-if(u === "shailesh" && p === "sr123") {
-    alert("Login Successful! Ab Dashboard khulega.");
-    // window.location.href = "dashboard.html"; 
-}
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.R. Enterprises - Modular Admin</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f4; margin: 0; }
+        .hidden { display: none; }
+        .module-container { padding: 20px; }
+        .nav-bar { background: #2c3e50; color: white; padding: 15px; display: flex; justify-content: space-between; }
+        .grid-9 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 20px; }
+        .box { background: white; padding: 20px; border-radius: 8px; text-align: center; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+    <div id="login-module">
+        <div style="width: 300px; margin: 100px auto; background: white; padding: 30px; border-radius: 10px; text-align: center;">
+            <h2>SR Login</h2>
+            <input type="text" id="user" placeholder="User ID" style="width:100%; padding:10px; margin-bottom:10px;">
+            <input type="password" id="pass" placeholder="Password" style="width:100%; padding:10px; margin-bottom:10px;">
+            <button onclick="loginProcess()" style="width:100%; padding:10px; background:#2c3e50; color:white; border:none;">Login</button>
+        </div>
+    </div>
+
+    <div id="dashboard-module" class="hidden">
+        <div class="nav-bar">
+            <span>S.R. Enterprises - Control Panel</span>
+            <button onclick="logout()" style="color:white; background:red; border:none;">Logout</button>
+        </div>
+        <div class="grid-9">
+            <div class="box" onclick="openModule('billing')">💰 Billing</div>
+            <div class="box" onclick="openModule('stock')">📦 Stock Master</div>
+            <div class="box" onclick="openModule('dealer')">🤝 Dealer Ledger</div>
+            <div class="box" onclick="openModule('expenses')">💸 Expenses</div>
+            <div class="box" onclick="openModule('customer')">👤 Customers & Network</div>
+            <div class="box" onclick="openModule('reports')">📊 Reports</div>
+            <div class="box" onclick="openModule('summary')">📅 Summary</div>
+            <div class="box" onclick="openModule('orders')">📝 Orders</div>
+            <div class="box" onclick="openModule('settings')">⚙️ Settings</div>
+        </div>
+    </div>
+
+    <div id="content-module" class="hidden module-container">
+        <button onclick="backToDash()" style="margin-bottom:20px;">← Back to Dashboard</button>
+        <div id="module-body">
+            </div>
+    </div>
+
+    <script>
+        // LOGIN LOGIC
+        function loginProcess() {
+            if(document.getElementById('user').value === "shailesh" && document.getElementById('pass').value === "sr123") {
+                document.getElementById('login-module').classList.add('hidden');
+                document.getElementById('dashboard-module').classList.remove('hidden');
+            } else { alert("Galat Password!"); }
+        }
+
+        function logout() { location.reload(); }
+
+        function backToDash() {
+            document.getElementById('content-module').classList.add('hidden');
+            document.getElementById('dashboard-module').classList.remove('hidden');
+        }
+
+        // MODULAR SWITCHER: Isse sirf body badlegi
+        function openModule(name) {
+            document.getElementById('dashboard-module').classList.add('hidden');
+            document.getElementById('content-module').classList.remove('hidden');
+            
+            if(name === 'customer') { loadCustomerBody(); }
+            else if(name === 'billing') { loadBillingBody(); }
+            else { document.getElementById('module-body').innerHTML = "<h3>Is module par kaam chal raha hai...</h3>"; }
+        }
+
+        // --- MODULE BODY: CUSTOMER ---
+        function loadCustomerBody() {
+            document.getElementById('module-body').innerHTML = `
+                <h2>Network Control</h2>
+                <div style="background:blue; color:white; padding:10px; margin-bottom:10px;">Total Network: 150 | Location: Mumbai</div>
+                <input type="text" placeholder="Area Name">
+                <button>Save Network</button>
+            `;
+        }
+
+        // --- MODULE BODY: BILLING ---
+        function loadBillingBody() {
+            document.getElementById('module-body').innerHTML = `
+                <h2>New Bill (GST & Discount)</h2>
+                <input type="number" placeholder="Basic Amount">
+                <input type="number" placeholder="Discount">
+                <button>Calculate Total</button>
+            `;
+        }
+    </script>
+</body>
+</html>
