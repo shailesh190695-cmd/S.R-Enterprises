@@ -1,4 +1,4 @@
-// MODULE: S.R. Enterprises Original Layout (Fixed Alignment)
+// MODULE: S.R. Enterprises Original Layout (Header Updated)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -11,10 +11,12 @@ function showBilling() {
         <div id="print-area" style="padding: 10px; color: white; font-family: sans-serif; min-height: 100vh; box-sizing: border-box;">
             <div style="width: 100%; max-width: 1000px; margin: auto; border: 2px solid #edb92e; border-radius: 15px; padding: 20px; background: #1a2233; box-sizing: border-box;">
                 
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
                     <div>
-                        <h2 style="color: #4cd137; margin: 0; font-size: 26px;">S.R Enterprises</h2>
-                        <p style="font-size: 11px; margin: 0; color: #dcdde1;">FUSING MACHINE SPECIALIST</p>
+                        <h2 style="color: #4cd137; margin: 0; font-size: 28px;">S.R Enterprises</h2>
+                        <p style="font-size: 12px; margin: 2px 0; color: #dcdde1; font-weight: bold;">FUSING MACHINE SPECIALIST</p>
+                        <p style="font-size: 11px; margin: 0; color: #fff;">Malad East, Mumbai, Maharashtra</p>
+                        <p style="font-size: 13px; margin: 5px 0 0 0; color: #edb92e; font-weight: bold;">📞 +91 9326113988</p>
                     </div>
                     <div style="display: flex; gap: 10px;">
                         <div style="text-align: center;">
@@ -162,4 +164,4 @@ async function pickPhone() {
             document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, '');
         }
     } catch (e) { alert("Contact Picker not supported."); }
-    }
+}
