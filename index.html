@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S.R. Enterprises</title>
     <style>
-        body { font-family: sans-serif; background: #f4f4f4; margin: 0; }
-        .box { background: white; padding: 20px; text-align: center; border-radius: 10px; cursor: pointer; border-bottom: 5px solid #2c3e50; font-weight: bold; }
-        .box:hover { background: #e8f4fd; }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+        #main-panel { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .box { background: white; padding: 25px; text-align: center; border-radius: 12px; cursor: pointer; 
+               box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-bottom: 5px solid #2c3e50; font-weight: bold; transition: 0.3s; width: 150px; }
+        .box:hover { transform: translateY(-5px); background: #eef2f3; }
+        .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px; }
+        @media (max-width: 600px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
@@ -17,8 +22,16 @@
     <script src="auth.js"></script>
     <script src="dashboard.js"></script>
     <script src="billing.js"></script>
+
     <script>
-        window.onload = function() { showLogin(); };
+        // Website khulte hi sabse pehle Login dikhao
+        window.onload = function() {
+            if (typeof showLogin === "function") {
+                showLogin();
+            } else {
+                document.getElementById('main-panel').innerHTML = "<h2>Loading System...</h2>";
+            }
+        };
     </script>
 </body>
 </html>
