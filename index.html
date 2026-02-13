@@ -1,26 +1,10 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.R. Enterprises</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
-        /* Isse saaman center ke bajaye poore page pe failega */
-        #main-panel { min-height: 100vh; width: 100%; display: block; }
-        .box { background: white; padding: 30px; text-align: center; border-radius: 12px; cursor: pointer; 
-               box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-bottom: 5px solid #2c3e50; font-weight: bold; font-size: 18px; }
-        .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 15px; }
-        @media (max-width: 600px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
-    </style>
-</head>
-<body>
-    <div id="main-panel"></div>
-    <script src="auth.js"></script>
-    <script src="dashboard.js"></script>
-    <script src="billing.js"></script>
-    <script>
-        window.onload = function() { showLogin(); };
-    </script>
-</body>
-</html>
+<style>
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+    #main-panel { width: 100%; min-height: 100vh; display: block; overflow-x: hidden; }
+    /* Dashboard Buttons ka Design */
+    .box { background: white; padding: 35px 15px; text-align: center; border-radius: 15px; cursor: pointer; 
+           box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-bottom: 5px solid #2c3e50; font-weight: bold; font-size: 18px; transition: 0.3s; }
+    .box:hover { transform: translateY(-5px); background: #fdfdfd; }
+    .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px; box-sizing: border-box; }
+    @media (max-width: 600px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
+</style>
