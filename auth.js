@@ -42,7 +42,7 @@ function validate() {
     const u = document.getElementById('userid').value;
     const p = document.getElementById('pass').value;
 
-    if(u === "shailesh" && p === "sr123") {
+    if(u === "Shailesh" && p === "123") {
         showDashboard(); 
     } else {
         alert("Galat details! Shailesh bhai sahi details dalo.");
