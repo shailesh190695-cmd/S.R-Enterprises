@@ -1,4 +1,4 @@
-// MODULE: S.R. Enterprises Standard A4 System (Overflow & Multi-line Address Fix)
+// MODULE: S.R. Enterprises Standard A4 System (Final Form Alignment & Zero Gap Fix)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -12,19 +12,17 @@ function showBilling() {
             /* Auto Capital for all text inputs */
             input[type="text"], textarea { text-transform: uppercase; }
 
-            /* Standard Alignment Fix */
-            .info-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
-            .info-row label { font-weight: 900; font-size: 13px; color: #000; white-space: nowrap; min-width: 135px; display: inline-block; }
-            .info-row input { flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 2px; background: transparent; outline: none; width: 100%; }
-            
-            /* Address Multi-line Fix */
-            .info-row textarea { flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 2px; background: transparent; outline: none; width: 100%; resize: none; font-family: sans-serif; overflow: hidden; }
+            /* Standard Alignment Fix for Form (Labels aligned to start of boxes) */
+            .info-row { display: flex; align-items: baseline; gap: 5px; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
+            .info-row label { font-weight: 900; font-size: 13px; color: #000; white-space: nowrap; min-width: 125px; display: inline-block; }
+            .info-row input, .info-row textarea { flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 2px; background: transparent; outline: none; width: 100%; resize: none; font-family: sans-serif; }
 
-            .grid-system { display: grid; grid-template-columns: 1.6fr 1fr; gap: 25px; padding-right: 5px; }
+            /* Grid: Model/Remark shifted fully to boundary as requested */
+            .grid-system { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
 
             @media screen and (max-width: 600px) {
-                .info-row label { min-width: 110px; font-size: 11px; }
-                .grid-system { grid-template-columns: 1fr !important; gap: 0; padding-right: 0; }
+                .info-row label { min-width: 100px; font-size: 11px; }
+                .grid-system { grid-template-columns: 1fr !important; gap: 0; }
             }
 
             @media print {
@@ -32,7 +30,7 @@ function showBilling() {
                 .no-print, #no-print, #no-print-back, button { display: none !important; }
                 body { background: white !important; margin: 0; padding: 0; }
                 #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; box-shadow: none !important; border-radius: 0 !important; }
-                #customer-boundary { border: 2px solid black !important; border-radius: 0 !important; }
+                #customer-boundary { border: 2px solid black !important; border-radius: 0 !important; padding: 15px !important; }
                 .info-row { border-bottom: none !important; }
                 input, textarea { border: none !important; font-weight: 900 !important; }
                 #bank-details { display: block !important; border: 2px solid black !important; }
@@ -63,7 +61,7 @@ function showBilling() {
 
                 <hr style="border: 1.5px solid #1e3a8a; margin-bottom: 20px;">
 
-                <div id="customer-boundary" style="border: 1.5px solid #000; padding: 20px; border-radius: 8px; margin-bottom: 20px; background: #fff;">
+                <div id="customer-boundary" style="border: 1.5px solid #000; padding: 15px; border-radius: 8px; margin-bottom: 20px; background: #fff;">
                     <div class="grid-system">
                         <div class="col">
                             <div class="info-row">
@@ -84,11 +82,11 @@ function showBilling() {
                         </div>
                         <div class="col">
                             <div class="info-row">
-                                <label>MACHINE MODEL:</label>
+                                <label style="min-width: 115px;">MACHINE MODEL:</label>
                                 <input type="text" id="m_model" placeholder="MACHINE & SIZE">
                             </div>
                             <div class="info-row">
-                                <label>REMARK:</label>
+                                <label style="min-width: 115px;">REMARK:</label>
                                 <textarea id="m_remark" rows="2" placeholder="WORK REMARK"></textarea>
                             </div>
                         </div>
@@ -158,9 +156,8 @@ function addNewRow() {
     row.innerHTML = `<input type="text" placeholder="WORK DESCRIPTION" style="padding:5px; border:none; background:transparent; font-weight:700; width:100%; font-size:12px;"><input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700; width:100%; font-size:12px;"><input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700; width:60px; font-size:12px;"><div class="item-total" style="color: #000; font-weight: 900; text-align: right; font-size:12px;">₹0.00</div><button class="no-print" onclick="deleteRow('${id}')" style="background:none; border:none; color:#ef4444; font-size: 16px; cursor:pointer;">❌</button>`;
     container.appendChild(row);
 }
-
+// Baaki sab calculateTotal, deleteRow, numberToWords etc functions same rahenge.
 function deleteRow(id) { const row = document.getElementById('row-' + id); if(row) { row.remove(); calculateTotal(); } }
-
 function calculateTotal() {
     let subtotal = 0; document.querySelectorAll('#items_container > div').forEach(row => {
         const r = parseFloat(row.querySelector('.item-rate').value) || 0;
@@ -173,7 +170,6 @@ function calculateTotal() {
     document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2); document.getElementById('gst_amt').innerText = "₹" + gst.toFixed(2); document.getElementById('grand_total').innerText = "₹" + (grand > 0 ? grand : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(grand > 0 ? grand : 0) + " Only";
 }
-
 function numberToWords(num) {
     if (num === 0) return "Zero";
     const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
@@ -187,14 +183,12 @@ function numberToWords(num) {
     let words = '', groupIdx = 0; while (num > 0) { let group = num % 1000; if (group !== 0) { words = makeGroup(group) + g[groupIdx] + ' ' + words; } num = Math.floor(num / 1000); groupIdx++; }
     return words.trim();
 }
-
 function sendToWhatsApp() {
     const name = document.getElementById('c_name').value; const mobile = document.getElementById('c_mobile').value; const invNo = document.getElementById('inv_no').value; const total = document.getElementById('grand_total').innerText; const model = document.getElementById('m_model').value;
     if(!mobile || !name) { alert("Customer Name aur Mobile Number zaroori hai!"); return; }
     const message = `*S.R. ENTERPRISES SERVICE REPORT*%0A--------------------------------%0A*Invoice:* ${invNo}%0A*Customer:* ${name}%0A*Machine:* ${model}%0A*Total Amount:* ${total}%0A--------------------------------%0AThank you!`;
     window.open(`https://wa.me/91${mobile}?text=${message}`, '_blank');
 }
-
 async function pickPhone() {
     try { const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if (contacts.length) { document.getElementById('c_name').value = contacts[0].name[0]; document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); } } catch (e) { alert("Contact Picker not supported."); }
-        }
+}
