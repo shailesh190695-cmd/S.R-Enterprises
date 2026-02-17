@@ -1,4 +1,4 @@
-// MODULE: S.R. Enterprises Original Layout (Old Pending Balance Integrated)
+// MODULE: S.R. Enterprises Original Layout (Fixed Headers & Calculation)
 const scriptURL = 'https://script.google.com/macros/s/AKfycbwkxcAdRCz2iAzkOV0eaeo5HvpknvSRHk_VsJdpErFZAXgWztf3Dbz0lTjJ3S78eCINog/exec';
 let fetchedOldBalance = 0;
 
@@ -6,7 +6,7 @@ function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
     const autoInv = "SR-" + Math.floor(1000 + Math.random() * 9000);
-    fetchedOldBalance = 0;
+    fetchedOldBalance = 0; 
 
     panel.style.display = "block";
     panel.style.background = "#f1f5f9"; 
@@ -82,7 +82,10 @@ function showBilling() {
                     </div>
                 </div>
 
-                <div id="items_container"></div>
+                <div style="background: #1e3a8a; padding: 12px; border: 2px solid #000; border-radius: 5px 5px 0 0; display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; text-align: center; color: #fff; font-size: 13px; font-weight: 900; margin-top: 10px;">
+                    <div>DESCRIPTION</div><div>RATE</div><div>QTY</div><div>TOTAL</div><div class="no-print">X</div>
+                </div>
+                <div id="items_container" style="background: #fff; border: 2px solid #000; border-top: none; padding: 10px; min-width: 100%;"></div>
                 <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f8fafc; border: 2px dashed #1e3a8a; color: #1e3a8a; padding: 12px; font-weight: 900; cursor: pointer; margin-bottom: 15px;">+ ADD ITEM</button>
 
                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; gap: 15px;">
@@ -116,8 +119,8 @@ function showBilling() {
                 </div>
                 
                 <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;">
-                    <button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900; cursor: pointer;">🖨️ PRINT BILL / PDF</button>
-                    <button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900; cursor: pointer;">📲 SAVE & WHATSAPP</button>
+                    <button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900; cursor: pointer; font-size: 16px;">🖨️ PRINT BILL / PDF</button>
+                    <button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900; cursor: pointer; font-size: 16px;">📲 SAVE & WHATSAPP</button>
                 </div>
             </div>
         </div>
@@ -145,33 +148,46 @@ async function checkOldBalance(mobile) {
 
 function calculateTotal() {
     let subtotal = 0;
-    document.querySelectorAll('.item-total').forEach(el => subtotal += parseFloat(el.innerText.replace('₹','')) || 0);
+    document.querySelectorAll('.item-row').forEach(row => {
+        const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
+        const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+        const total = rate * qty;
+        row.querySelector('.item-total').innerText = "₹" + total.toFixed(2);
+        subtotal += total;
+    });
+
     const disc = parseFloat(document.getElementById('w_disc').value) || 0;
     const isGst = document.getElementById('gst_check').checked;
     const addOldDues = document.getElementById('add_old_dues')?.checked;
-    const gstAmt = isGst ? (subtotal - disc) * 0.18 : 0;
-    const oldDueToAdd = addOldDues ? fetchedOldBalance : 0;
-    const grand = Math.round(subtotal - disc + gstAmt + oldDueToAdd);
-    const paid = parseFloat(document.getElementById('paid_amt').value) || 0;
     
+    const taxableTotal = subtotal - disc;
+    const gstAmt = isGst ? (taxableTotal * 0.18) : 0;
+    const currentBillTotal = taxableTotal + gstAmt;
+    
+    const oldDueToAdd = addOldDues ? fetchedOldBalance : 0;
+    const finalGrandTotal = Math.round(currentBillTotal + oldDueToAdd);
+    
+    const paid = parseFloat(document.getElementById('paid_amt').value) || 0;
+    const balance = finalGrandTotal - paid;
+
     document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2);
     document.getElementById('gst_amt').innerText = "₹" + gstAmt.toFixed(2);
     document.getElementById('display_old_due').innerText = "₹" + oldDueToAdd.toFixed(2);
-    document.getElementById('grand_total').innerText = "₹" + grand.toFixed(2);
-    document.getElementById('balance_due').innerText = "₹" + (grand - paid).toFixed(2);
+    document.getElementById('grand_total').innerText = "₹" + finalGrandTotal.toFixed(2);
+    document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
 }
 
 function addNewRow() {
     const container = document.getElementById('items_container');
-    const id = Date.now();
     const row = document.createElement('div');
+    row.className = "item-row";
     row.style = "display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; margin-bottom: 8px; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px;";
     row.innerHTML = `
         <input type="text" placeholder="WORK DESCRIPTION" style="padding:5px; border:none; font-weight:700;" class="item-desc">
-        <input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center;">
-        <input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center;">
+        <input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700;">
+        <input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700;">
         <div class="item-total" style="font-weight:900; text-align:right;">₹0.00</div>
-        <button onclick="this.parentElement.remove(); calculateTotal();" style="color:red; border:none; background:none; cursor:pointer;">❌</button>
+        <button class="no-print" onclick="this.parentElement.remove(); calculateTotal();" style="color:red; border:none; background:none; cursor:pointer;">❌</button>
     `;
     container.appendChild(row);
 }
@@ -184,7 +200,7 @@ async function saveAndWhatsApp() {
         mobile: document.getElementById('c_mobile').value,
         model: document.getElementById('m_model').value.toUpperCase(),
         address: document.getElementById('c_addr').value.toUpperCase(),
-        description: document.querySelector('.item-desc')?.value.toUpperCase() || "REPAIRING SERVICE",
+        description: document.querySelector('.item-desc')?.value.toUpperCase() || "SERVICE",
         subtotal: document.getElementById('tax_amt').innerText.replace('₹',''),
         gst: document.getElementById('gst_amt').innerText.replace('₹',''),
         total: document.getElementById('grand_total').innerText.replace('₹',''),
@@ -202,4 +218,4 @@ async function saveAndWhatsApp() {
 
 async function pickPhone() {
     try { const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if (contacts.length) { document.getElementById('c_name').value = contacts[0].name[0]; document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); checkOldBalance(document.getElementById('c_mobile').value); } } catch (e) { alert("Contact Picker not supported."); }
-}
+    }
