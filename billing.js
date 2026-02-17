@@ -1,4 +1,4 @@
-// MASTER FIX: S.R. Enterprises Original Layout (Centered Page Fix)
+// MASTER FIX: S.R. Enterprises Original Layout (Single Page Print Fix)
 const scriptURL = 'https://script.google.com/macros/s/AKfycbwkxcAdRCz2iAzkOV0eaeo5HvpknvSRHk_VsJdpErFZAXgWztf3Dbz0lTjJ3S78eCINog/exec';
 let fetchedOldBalance = 0;
 
@@ -97,16 +97,17 @@ function showBilling() {
                 @page { size: A4; margin: 10mm; }
                 .no-print, #no-print, #no-print-back, button { display: none !important; }
                 body { background: white !important; margin: 0; padding: 0; }
+                #print-area { display: block !important; padding: 0 !important; }
                 #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; box-shadow: none !important; border-radius: 0 !important; margin: 0 !important; }
                 .info-row { border-bottom: none !important; }
                 input, textarea { border: none !important; font-weight: 900 !important; }
                 #old_due_alert { display: none !important; }
                 #bank-details { display: block !important; border: 2px solid black !important; }
-                #signature-area { margin-top: 50px !important; display: flex !important; }
+                #signature-area { margin-top: 40px !important; display: flex !important; }
             }
         </style>
 
-        <div id="print-area" style="padding: 15px; color: #000; font-family: sans-serif; min-height: 100vh; box-sizing: border-box; display: flex; justify-content: center;">
+        <div id="print-area" style="padding: 10px; color: #000; font-family: sans-serif; box-sizing: border-box; display: flex; justify-content: center;">
             <div id="bill-container" style="width: 100%; max-width: 1050px; border: 2px solid #1e3a8a; border-radius: 12px; padding: 25px; background: #ffffff; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                 
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 15px;">
@@ -127,7 +128,7 @@ function showBilling() {
                     </div>
                 </div>
 
-                <hr style="border: 1.5px solid #1e3a8a; margin-bottom: 20px;">
+                <hr style="border: 1.5px solid #1e3a8a; margin-bottom: 15px;">
                 
                 <div id="old_due_alert" class="due-msg">
                     <span>⚠️ OLD PENDING BALANCE: ₹<span id="due_amt_val">0</span></span>
@@ -136,7 +137,7 @@ function showBilling() {
                     </label>
                 </div>
 
-                <div id="customer-boundary" style="border: 1.5px solid #000; padding: 15px; border-radius: 8px; margin-bottom: 20px; background: #fff;">
+                <div id="customer-boundary" style="border: 1.5px solid #000; padding: 15px; border-radius: 8px; margin-bottom: 15px; background: #fff;">
                     <div class="grid-system">
                         <div class="col">
                             <div class="info-row"><label>CUSTOMER NAME:</label><input type="text" id="c_name"></div>
@@ -167,7 +168,7 @@ function showBilling() {
                 </div>
                 <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f8fafc; border: 2px dashed #1e3a8a; color: #1e3a8a; padding: 12px; font-weight: 900; cursor: pointer; margin-bottom: 15px; margin-top: 10px;">+ ADD ITEM</button>
 
-                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; gap: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px; gap: 15px;">
                     <div id="bank-details" style="font-size: 11px; border: 1.5px solid #000; padding: 10px; border-radius: 8px;">
                         <p style="margin:0; font-weight: 900; color: #1e3a8a;">BANK: SBI | NAME: MR. HARIRAM SITARAM RAJBHAR</p>
                         <p style="margin:2px 0; font-weight: 900;">A/C: 44695199584 | IFSC: SBIN0008373</p>
@@ -182,7 +183,7 @@ function showBilling() {
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800; color: #dc2626;">
                             <span>OLD PENDING BALANCE:</span><span id="display_old_due">₹0.00</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800;">
                             <span>DISCOUNT (₹):</span>
                             <input type="number" id="w_disc" value="0" oninput="calculateTotal()" style="width: 70px; padding: 4px; border: 1.5px solid #000; text-align: right; font-weight: 900; border-radius: 5px;">
                         </div>
@@ -200,9 +201,9 @@ function showBilling() {
                     </div>
                 </div>
 
-                <div id="signature-area" style="margin-top: 40px; display: flex; justify-content: space-between; padding: 0 20px;">
-                    <div style="text-align: center;"><p style="margin-bottom: 35px; border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">Customer Signature</p></div>
-                    <div style="text-align: center;"><p style="margin-bottom: 35px; border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">For S.R. ENTERPRISES</p></div>
+                <div id="signature-area" style="margin-top: 35px; display: flex; justify-content: space-between; padding: 0 20px;">
+                    <div style="text-align: center;"><p style="margin-bottom: 30px; border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">Customer Signature</p></div>
+                    <div style="text-align: center;"><p style="margin-bottom: 30px; border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">For S.R. ENTERPRISES</p></div>
                 </div>
                 
                 <div id="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;">
@@ -273,3 +274,4 @@ async function pickPhone() {
 
 // Start
 showBilling();
+            
