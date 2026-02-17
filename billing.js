@@ -1,4 +1,4 @@
-// MODULE: S.R. Enterprises Professional System (Single Page Print Fix)
+// MODULE: S.R. Enterprises Professional System (Compact Box Layout)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -34,24 +34,32 @@ function showBilling() {
 
                 <div id="customer-boundary" style="border: 1.5px solid #000; padding: 10px; border-radius: 8px; margin-bottom: 10px; background: #fff;">
                     <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-bottom: 8px;">
-                        <div><label style="color: #000; font-size: 12px; font-weight: 900;">CUSTOMER NAME:</label>
-                        <input type="text" id="c_name" style="width: 100%; padding: 5px; margin-top: 2px; border: none; border-bottom: 1px solid #000; font-weight: 700;"></div>
-                        <div><label style="color: #000; font-size: 12px; font-weight: 900;">MACHINE MODEL:</label>
-                        <input type="text" id="m_model" placeholder="Model No." style="width: 100%; padding: 5px; margin-top: 2px; border: none; border-bottom: 1px solid #000; font-weight: 700;"></div>
+                        <div>
+                            <label style="color: #000; font-size: 11px; font-weight: 900;">CUSTOMER NAME:</label>
+                            <input type="text" id="c_name" style="width: 100%; padding: 8px; margin-top: 2px; border-radius: 5px; border: 1.5px solid #000; font-weight: 700; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="color: #000; font-size: 11px; font-weight: 900;">MACHINE MODEL:</label>
+                            <input type="text" id="m_model" placeholder="Model No." style="width: 100%; padding: 8px; margin-top: 2px; border-radius: 5px; border: 1.5px solid #000; font-weight: 700; box-sizing: border-box;">
+                        </div>
                     </div>
 
                     <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-bottom: 8px;">
-                        <div><label style="color: #000; font-size: 12px; font-weight: 900;">ADDRESS:</label>
-                        <input type="text" id="c_addr" style="width: 100%; padding: 5px; margin-top: 2px; border: none; border-bottom: 1px solid #000; font-weight: 700;"></div>
-                        <div><label style="color: #000; font-size: 12px; font-weight: 900;">REMARK:</label>
-                        <input type="text" id="m_remark" placeholder="Note" style="width: 100%; padding: 5px; margin-top: 2px; border: none; border-bottom: 1px solid #000; font-weight: 700;"></div>
+                        <div>
+                            <label style="color: #000; font-size: 11px; font-weight: 900;">ADDRESS:</label>
+                            <input type="text" id="c_addr" style="width: 100%; padding: 8px; margin-top: 2px; border-radius: 5px; border: 1.5px solid #000; font-weight: 700; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="color: #000; font-size: 11px; font-weight: 900;">REMARK:</label>
+                            <input type="text" id="m_remark" placeholder="Note" style="width: 100%; padding: 8px; margin-top: 2px; border-radius: 5px; border: 1.5px solid #000; font-weight: 700; box-sizing: border-box;">
+                        </div>
                     </div>
 
-                    <div style="width: 50%;">
-                        <label style="color: #000; font-size: 12px; font-weight: 900;">MOBILE NO:</label>
-                        <div style="display: flex; gap: 10px;">
-                            <input type="number" id="c_mobile" style="flex: 1; padding: 5px; border: none; border-bottom: 1px solid #000; font-weight: 700;">
-                            <button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 0 15px; border-radius: 5px; font-weight: 900; cursor: pointer; font-size: 11px;">PICK</button>
+                    <div style="width: 100%; max-width: 400px;">
+                        <label style="color: #000; font-size: 11px; font-weight: 900;">MOBILE NO:</label>
+                        <div style="display: flex; gap: 5px; margin-top: 2px;">
+                            <input type="number" id="c_mobile" style="flex: 1; padding: 8px; border-radius: 5px; border: 1.5px solid #000; font-weight: 700; box-sizing: border-box;">
+                            <button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 0 12px; border-radius: 5px; font-weight: 900; cursor: pointer; font-size: 11px;">PICK</button>
                         </div>
                     </div>
                 </div>
@@ -64,37 +72,37 @@ function showBilling() {
 
                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px; gap: 10px;">
                     <div id="bank-details" style="font-size: 11px; color: #000; font-weight: 800; border: 1.5px solid #000; padding: 8px; border-radius: 8px; display: none; background: #fff; line-height: 1.2;">
-                        <p style="margin:0; font-weight: 900; text-decoration: underline; color: #1e3a8a; font-size: 12px;">BANK DETAILS:</p>
+                        <p style="margin:0; font-weight: 900; text-decoration: underline; color: #1e3a8a; font-size: 11px;">BANK DETAILS:</p>
                         <p style="margin:2px 0;">NAME: MR. HARIRAM SITARAM RAJBHAR</p>
                         <p style="margin:2px 0;">BANK: SBI | A/C: 44695199584</p>
                         <p style="margin:2px 0;">IFSC: SBIN0008373</p>
                     </div>
 
                     <div style="width: 100%; max-width: 350px; border: 2px solid #000; padding: 12px; border-radius: 10px; background: #fff;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 800; font-size: 13px;"><span>SUB-TOTAL:</span><span id="tax_amt">₹0.00</span></div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800; font-size: 13px;">
-                            <div style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" id="gst_check" onchange="calculateTotal()" style="width:15px; height:15px;"><span style="color: #000;">GST (18%):</span></div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 800; font-size: 12px;"><span>SUB-TOTAL:</span><span id="tax_amt">₹0.00</span></div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800; font-size: 12px;">
+                            <div style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" id="gst_check" onchange="calculateTotal()" style="width:14px; height:14px;"><span style="color: #000;">GST (18%):</span></div>
                             <span id="gst_amt">₹0.00</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: 800; font-size: 13px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: 800; font-size: 12px;">
                             <span>DISCOUNT (₹):</span>
                             <input type="number" id="w_disc" value="0" oninput="calculateTotal()" style="width: 70px; padding: 4px; border: 1.5px solid #000; text-align: right; font-weight: 900;">
                         </div>
                         <hr style="border: 0.5px solid #1e3a8a; margin: 5px 0;">
                         <div style="display: flex; justify-content: space-between;">
-                            <span style="font-size: 16px; font-weight: 900;">GRAND TOTAL:</span>
-                            <span id="grand_total" style="font-size: 20px; font-weight: 900; color: #16a34a;">₹0.00</span>
+                            <span style="font-size: 15px; font-weight: 900;">GRAND TOTAL:</span>
+                            <span id="grand_total" style="font-size: 18px; font-weight: 900; color: #16a34a;">₹0.00</span>
                         </div>
                     </div>
                 </div>
 
                 <div style="margin-top: 8px; text-align: right; padding-right: 10px;">
-                    <p id="amount_in_words" style="color: #000; font-size: 13px; font-style: italic; margin: 0; font-weight: 900; text-decoration: underline;">Zero Only</p>
+                    <p id="amount_in_words" style="color: #000; font-size: 12px; font-style: italic; margin: 0; font-weight: 900; text-decoration: underline;">Zero Only</p>
                 </div>
 
-                <div id="signature-area" style="margin-top: 35px; display: flex; justify-content: space-between; padding: 0 20px;">
-                    <div style="text-align: center;"><p style="margin-bottom: 25px; border-top: 2px solid #000; width: 140px;"></p><p style="font-size: 12px; font-weight: 900;">Customer Signature</p></div>
-                    <div style="text-align: center;"><p style="margin-bottom: 25px; border-top: 2px solid #000; width: 140px;"></p><p style="font-size: 12px; font-weight: 900;">For S.R. ENTERPRISES</p></div>
+                <div id="signature-area" style="margin-top: 30px; display: flex; justify-content: space-between; padding: 0 20px;">
+                    <div style="text-align: center;"><p style="margin-bottom: 25px; border-top: 2px solid #000; width: 140px;"></p><p style="font-size: 11px; font-weight: 900;">Customer Signature</p></div>
+                    <div style="text-align: center;"><p style="margin-bottom: 25px; border-top: 2px solid #000; width: 140px;"></p><p style="font-size: 11px; font-weight: 900;">For S.R. ENTERPRISES</p></div>
                 </div>
 
                 <div id="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;">
@@ -113,24 +121,23 @@ function showBilling() {
                 #bill-container { border: 2px solid black !important; border-radius: 0 !important; width: 100% !important; padding: 10px !important; margin: 0 !important; }
                 #customer-boundary { border: 2px solid black !important; padding: 8px !important; }
                 div{border-color:black!important; color:black!important;}
-                input{border:none!important; font-weight: 900!important; background:transparent!important;}
+                input{border:1px solid black !important; font-weight: 900!important; background:transparent!important;}
                 #bank-details{display: block !important; border: 1.5px solid black !important;}
             }
         </style>
     `;
     addNewRow();
 }
-
+//functions (deleteRow, calculateTotal, numberToWords, sendToWhatsApp, pickPhone) same as before.
 function addNewRow() {
     const container = document.getElementById('items_container');
     const row = document.createElement('div');
     const id = Date.now();
     row.id = 'row-' + id;
     row.style = "display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 5px; margin-bottom: 5px; align-items: center; border-bottom: 1px solid #ddd; padding-bottom: 2px;";
-    row.innerHTML = `<input type="text" placeholder="Work description" style="padding:5px; border:none; background:transparent; font-weight:700; width:100%; font-size:12px;"><input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700; width:100%; font-size:12px;"><input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700; width:60px; font-size:12px;"><div class="item-total" style="color: #000; font-weight: 900; text-align: right; font-size:12px;">₹0.00</div><button class="no-print" onclick="deleteRow('${id}')" style="background:none; border:none; color:#ef4444; font-size: 14px; cursor:pointer;">❌</button>`;
+    row.innerHTML = `<input type="text" placeholder="Work description" style="padding:5px; border:none; background:transparent; font-weight:700; width:100%; font-size:11px;"><input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700; width:100%; font-size:11px;"><input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700; width:60px; font-size:11px;"><div class="item-total" style="color: #000; font-weight: 900; text-align: right; font-size:11px;">₹0.00</div><button class="no-print" onclick="deleteRow('${id}')" style="background:none; border:none; color:#ef4444; font-size: 14px; cursor:pointer;">❌</button>`;
     container.appendChild(row);
 }
-//functions (deleteRow, calculateTotal, numberToWords, sendToWhatsApp, pickPhone) same as before.
 function deleteRow(id) { const row = document.getElementById('row-' + id); if(row) { row.remove(); calculateTotal(); } }
 function calculateTotal() {
     let subtotal = 0; document.querySelectorAll('#items_container > div').forEach(row => {
@@ -165,5 +172,4 @@ function sendToWhatsApp() {
 }
 async function pickPhone() {
     try { const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if (contacts.length) { document.getElementById('c_name').value = contacts[0].name[0]; document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); } } catch (e) { alert("Contact Picker not supported."); }
-        }
-            
+}
