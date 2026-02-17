@@ -1,4 +1,4 @@
-// MODULE: S.R. Enterprises Universal System (Perfect Label Alignment Fix)
+// MODULE: S.R. Enterprises Universal System (Sateek Alignment & Customer Border Fix)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -9,17 +9,16 @@ function showBilling() {
 
     panel.innerHTML = `
         <style>
-            /* Sateek Alignment Fix */
-            .info-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
-            .info-table td { padding: 5px 2px; vertical-align: baseline; }
-            .info-label { font-weight: 900; font-size: 13px; color: #000; white-space: nowrap; width: 135px; display: inline-block; }
-            .info-input { border: none; border-bottom: 1px solid #ddd; font-weight: 700; font-size: 14px; padding: 2px; width: 100%; background: transparent; outline: none; }
+            /* Sateek Alignment Style */
+            .row-aligned { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+            .row-aligned label { font-weight: 900; font-size: 13px; color: #000; white-space: nowrap; min-width: 130px; display: inline-block; }
+            .row-aligned input { flex: 1; border: none; border-bottom: 1px solid #ddd; font-weight: 700; font-size: 14px; padding: 2px; background: transparent; outline: none; }
             
             .main-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; }
 
             @media screen and (max-width: 600px) {
-                .info-label { width: 110px; font-size: 11px; }
-                .info-input { font-size: 12px; }
+                .row-aligned label { min-width: 100px; font-size: 11px; }
+                .row-aligned input { font-size: 12px; }
                 .main-grid { grid-template-columns: 1fr; gap: 0; }
             }
 
@@ -28,7 +27,8 @@ function showBilling() {
                 .no-print, #no-print, #no-print-back, button { display: none !important; }
                 body { background: white !important; margin: 0; padding: 0; }
                 #bill-container { border: 2px solid black !important; width: 100% !important; padding: 10px !important; box-shadow: none !important; }
-                .info-input { border-bottom: none !important; }
+                #customer-boundary { border: 2px solid black !important; }
+                .row-aligned input { border-bottom: none !important; }
                 #bank-details { display: block !important; border: 2px solid black !important; }
             }
         </style>
@@ -57,32 +57,34 @@ function showBilling() {
 
                 <hr style="border: 1px solid #1e3a8a; margin-bottom: 15px;">
 
-                <div class="main-grid">
-                    <div class="info-column">
-                        <div class="row-aligned" style="display: flex; align-items: baseline; margin-bottom: 10px; border-bottom: 1px solid #ddd;">
-                            <span class="info-label">CUSTOMER NAME:</span>
-                            <input type="text" id="c_name" class="info-input">
-                        </div>
-                        <div class="row-aligned" style="display: flex; align-items: baseline; margin-bottom: 10px; border-bottom: 1px solid #ddd;">
-                            <span class="info-label">ADDRESS:</span>
-                            <input type="text" id="c_addr" class="info-input">
-                        </div>
-                        <div class="row-aligned" style="display: flex; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #ddd;">
-                            <span class="info-label">MOBILE NO:</span>
-                            <div style="display: flex; gap: 5px; flex: 1;">
-                                <input type="number" id="c_mobile" class="info-input">
-                                <button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 4px 10px; border-radius: 5px; font-weight: 900; cursor: pointer; font-size: 11px;">PICK</button>
+                <div id="customer-boundary" style="border: 1.5px solid #000; padding: 15px; border-radius: 8px; margin-bottom: 15px; background: #fff;">
+                    <div class="main-grid">
+                        <div class="info-column">
+                            <div class="row-aligned">
+                                <label>CUSTOMER NAME:</label>
+                                <input type="text" id="c_name">
+                            </div>
+                            <div class="row-aligned">
+                                <label>ADDRESS:</label>
+                                <input type="text" id="c_addr">
+                            </div>
+                            <div class="row-aligned" style="border-bottom: none; margin-bottom: 0;">
+                                <label>MOBILE NO:</label>
+                                <div style="display: flex; gap: 5px; flex: 1;">
+                                    <input type="number" id="c_mobile" style="border-bottom: 1px solid #ddd;">
+                                    <button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 4px 10px; border-radius: 5px; font-weight: 900; cursor: pointer; font-size: 11px;">PICK</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="info-column">
-                        <div class="row-aligned" style="display: flex; align-items: baseline; margin-bottom: 10px; border-bottom: 1px solid #ddd;">
-                            <span class="info-label">MACHINE MODEL:</span>
-                            <input type="text" id="m_model" placeholder="Model No." class="info-input">
-                        </div>
-                        <div class="row-aligned" style="display: flex; align-items: baseline; margin-bottom: 10px; border-bottom: 1px solid #ddd;">
-                            <span class="info-label">REMARK:</span>
-                            <input type="text" id="m_remark" placeholder="Note" class="info-input">
+                        <div class="info-column">
+                            <div class="row-aligned">
+                                <label>MACHINE MODEL:</label>
+                                <input type="text" id="m_model" placeholder="Model No.">
+                            </div>
+                            <div class="row-aligned">
+                                <label>REMARK:</label>
+                                <input type="text" id="m_remark" placeholder="Note">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -96,14 +98,14 @@ function showBilling() {
                 <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f1f5f9; border: 2px dashed #1e3a8a; color: #1e3a8a; padding: 10px; font-weight: 900; cursor: pointer; margin-bottom: 10px; font-size: 12px;">+ ADD ITEM</button>
 
                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px; gap: 15px;">
-                    <div id="bank-details" style="font-size: 11px; color: #000; font-weight: 800; border: 1.5px solid #000; padding: 12px; border-radius: 8px; display: none; background: #fff; line-height: 1.2;">
+                    <div id="bank-details" style="font-size: 11px; color: #000; font-weight: 800; border: 1.5px solid #000; padding: 8px; border-radius: 8px; display: none; background: #fff; line-height: 1.2;">
                         <p style="margin:0; font-weight: 900; text-decoration: underline; color: #1e3a8a;">BANK ACCOUNT DETAILS:</p>
-                        <p style="margin:4px 0;">NAME: MR. HARIRAM SITARAM RAJBHAR</p>
+                        <p style="margin:2px 0;">NAME: MR. HARIRAM SITARAM RAJBHAR</p>
                         <p style="margin:2px 0;">BANK: STATE BANK OF INDIA (SBI)</p>
                         <p style="margin:2px 0;">A/C NO: 44695199584 | IFSC: SBIN0008373</p>
                     </div>
 
-                    <div style="width: 100%; max-width: 320px; border: 2.5px solid #000; padding: 12px; border-radius: 10px; background: #fff;">
+                    <div style="width: 100%; max-width: 350px; border: 2.5px solid #000; padding: 12px; border-radius: 10px; background: #fff;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 800; font-size: 13px;"><span>SUB-TOTAL:</span><span id="tax_amt">₹0.00</span></div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800; font-size: 13px;">
                             <div style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" id="gst_check" onchange="calculateTotal()" style="width:16px; height:16px;"><span style="color: #000;">GST (18%):</span></div>
@@ -115,14 +117,14 @@ function showBilling() {
                         </div>
                         <hr style="border: 1px solid #1e3a8a; margin: 5px 0;">
                         <div style="display: flex; justify-content: space-between;">
-                            <span style="font-size: 16px; font-weight: 900;">GRAND TOTAL:</span>
+                            <span style="font-size: 18px; font-weight: 900;">GRAND TOTAL:</span>
                             <span id="grand_total" style="font-size: 24px; font-weight: 900; color: #16a34a;">₹0.00</span>
                         </div>
                     </div>
                 </div>
 
                 <div style="margin-top: 10px; text-align: right; padding-right: 15px;">
-                    <p id="amount_in_words" style="color: #000; font-size: 13px; font-style: italic; margin: 0; font-weight: 900; text-decoration: underline;">Zero Only</p>
+                    <p id="amount_in_words" style="color: #000; font-size: 14px; font-style: italic; margin: 0; font-weight: 900; text-decoration: underline;">Zero Only</p>
                 </div>
 
                 <div id="signature-area" style="margin-top: 40px; display: flex; justify-content: space-between; padding: 0 20px;">
@@ -131,7 +133,7 @@ function showBilling() {
                 </div>
 
                 <div id="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;">
-                    <button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border: none; border-radius: 10px; font-weight: 900; font-size: 16px; cursor: pointer;">🖨️ PRINT BILL / PDF</button>
+                    <button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border: none; border-radius: 10px; font-weight: 900; font-size: 16px; cursor: pointer;">🖨️ PRINT</button>
                     <button onclick="sendToWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border: none; border-radius: 10px; font-weight: 900; font-size: 16px; cursor: pointer;">📲 SAVE & WHATSAPP</button>
                 </div>
                 <button id="no-print-back" class="no-print" onclick="showDashboard()" style="width: 100%; margin-top: 15px; background: #64748b; color: white; padding: 10px; border: none; border-radius: 8px; font-weight: 900; cursor: pointer;">← BACK</button>
