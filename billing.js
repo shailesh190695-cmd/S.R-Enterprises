@@ -1,4 +1,4 @@
-// MODULE: S.R. Enterprises Original Layout (Fixed Headers & Calculation)
+// MODULE: S.R. Enterprises Original Layout MASTER FIX
 const scriptURL = 'https://script.google.com/macros/s/AKfycbwkxcAdRCz2iAzkOV0eaeo5HvpknvSRHk_VsJdpErFZAXgWztf3Dbz0lTjJ3S78eCINog/exec';
 let fetchedOldBalance = 0;
 
@@ -27,6 +27,8 @@ function showBilling() {
                 #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; box-shadow: none !important; border-radius: 0 !important; }
                 .info-row { border-bottom: none !important; }
                 input, textarea { border: none !important; font-weight: 900 !important; }
+                #old_due_alert, #signature-area { display: block !important; }
+                #signature-area { margin-top: 50px !important; }
                 #old_due_alert { display: none !important; }
                 #bank-details { display: block !important; border: 2px solid black !important; }
             }
@@ -82,11 +84,13 @@ function showBilling() {
                     </div>
                 </div>
 
-                <div style="background: #1e3a8a; padding: 12px; border: 2px solid #000; border-radius: 5px 5px 0 0; display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; text-align: center; color: #fff; font-size: 13px; font-weight: 900; margin-top: 10px;">
-                    <div>DESCRIPTION</div><div>RATE</div><div>QTY</div><div>TOTAL</div><div class="no-print">X</div>
+                <div style="overflow: hidden; border: 2px solid #000; border-radius: 8px;">
+                    <div style="background: #1e3a8a; padding: 12px; display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; text-align: center; color: #fff; font-size: 13px; font-weight: 900;">
+                        <div>DESCRIPTION</div><div>RATE</div><div>QTY</div><div>TOTAL</div><div class="no-print">X</div>
+                    </div>
+                    <div id="items_container" style="background: #fff; padding: 10px;"></div>
                 </div>
-                <div id="items_container" style="background: #fff; border: 2px solid #000; border-top: none; padding: 10px; min-width: 100%;"></div>
-                <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f8fafc; border: 2px dashed #1e3a8a; color: #1e3a8a; padding: 12px; font-weight: 900; cursor: pointer; margin-bottom: 15px;">+ ADD ITEM</button>
+                <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f8fafc; border: 2px dashed #1e3a8a; color: #1e3a8a; padding: 12px; font-weight: 900; cursor: pointer; margin-bottom: 15px; margin-top: 10px;">+ ADD ITEM</button>
 
                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; gap: 15px;">
                     <div id="bank-details" style="font-size: 11px; border: 1.5px solid #000; padding: 10px; border-radius: 8px;">
@@ -109,6 +113,9 @@ function showBilling() {
                         </div>
                         <hr style="border: 1px solid #1e3a8a; margin: 8px 0;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 900;"><span>GRAND TOTAL:</span><span id="grand_total" style="font-size: 24px; color: #1e3a8a;">₹0.00</span></div>
+                        <div style="margin-bottom: 5px; text-align: right;">
+                             <p id="amount_in_words" style="color: #000; font-size: 13px; font-style: italic; margin: 0; font-weight: 900; text-decoration: underline;">Zero Only</p>
+                        </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; color: #16a34a; font-weight: 900;">
                             <span>PAID AMOUNT:</span><input type="number" id="paid_amt" value="0" oninput="calculateTotal()" style="width: 80px; padding: 5px; border: 1.5px solid #16a34a; text-align: right; font-weight: 900; border-radius: 5px; color: #16a34a;">
                         </div>
@@ -117,10 +124,15 @@ function showBilling() {
                         </div>
                     </div>
                 </div>
+
+                <div id="signature-area" style="margin-top: 40px; display: flex; justify-content: space-between; padding: 0 20px;">
+                    <div style="text-align: center;"><p style="margin-bottom: 35px; border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">Customer Signature</p></div>
+                    <div style="text-align: center;"><p style="margin-bottom: 35px; border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">For S.R. ENTERPRISES</p></div>
+                </div>
                 
-                <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;">
-                    <button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900; cursor: pointer; font-size: 16px;">🖨️ PRINT BILL / PDF</button>
-                    <button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900; cursor: pointer; font-size: 16px;">📲 SAVE & WHATSAPP</button>
+                <div id="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;">
+                    <button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border: none; border-radius: 10px; font-weight: 900; font-size: 16px; cursor: pointer;">🖨️ PRINT BILL / PDF</button>
+                    <button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border: none; border-radius: 10px; font-weight: 900; font-size: 16px; cursor: pointer;">📲 SAVE & WHATSAPP</button>
                 </div>
             </div>
         </div>
@@ -175,6 +187,7 @@ function calculateTotal() {
     document.getElementById('display_old_due').innerText = "₹" + oldDueToAdd.toFixed(2);
     document.getElementById('grand_total').innerText = "₹" + finalGrandTotal.toFixed(2);
     document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
+    document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
 }
 
 function addNewRow() {
@@ -187,9 +200,23 @@ function addNewRow() {
         <input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700;">
         <input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700;">
         <div class="item-total" style="font-weight:900; text-align:right;">₹0.00</div>
-        <button class="no-print" onclick="this.parentElement.remove(); calculateTotal();" style="color:red; border:none; background:none; cursor:pointer;">❌</button>
+        <button onclick="this.parentElement.remove(); calculateTotal();" style="color:red; border:none; background:none; cursor:pointer;">❌</button>
     `;
     container.appendChild(row);
+}
+
+function numberToWords(num) {
+    if (num === 0) return "Zero";
+    const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+    const g = ['', 'Thousand', 'Million', 'Billion'];
+    const makeGroup = (n) => {
+        let s = ''; if (n >= 100) { s += a[Math.floor(n / 100)] + ' Hundred '; n %= 100; }
+        if (n >= 20) { s += b[Math.floor(n / 10)] + ' '; n %= 10; }
+        if (n > 0) { s += a[n] + ' '; } return s;
+    };
+    let words = '', groupIdx = 0; while (num > 0) { let group = num % 1000; if (group !== 0) { words = makeGroup(group) + g[groupIdx] + ' ' + words; } num = Math.floor(num / 1000); groupIdx++; }
+    return words.trim();
 }
 
 async function saveAndWhatsApp() {
@@ -201,21 +228,5 @@ async function saveAndWhatsApp() {
         model: document.getElementById('m_model').value.toUpperCase(),
         address: document.getElementById('c_addr').value.toUpperCase(),
         description: document.querySelector('.item-desc')?.value.toUpperCase() || "SERVICE",
-        subtotal: document.getElementById('tax_amt').innerText.replace('₹',''),
-        gst: document.getElementById('gst_amt').innerText.replace('₹',''),
-        total: document.getElementById('grand_total').innerText.replace('₹',''),
-        paid: document.getElementById('paid_amt').value,
-        balance: document.getElementById('balance_due').innerText.replace('₹',''),
-        pending: document.getElementById('balance_due').innerText.replace('₹','')
-    };
-    try {
-        await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Data Saved Successfully!");
-        const msg = `*S.R. ENTERPRISES REPORT*%0A---------------------------%0A*Invoice:* ${data.invoice}%0A*Date:* ${data.date}%0A*Customer:* ${data.name}%0A*OLD PENDING BALANCE:* ₹${data.balance}%0A---------------------------%0A*Thank you!*`;
-        window.open(`https://wa.me/91${data.mobile}?text=${msg}`, '_blank');
-    } catch(e) { alert("Error saving to sheet!"); }
-}
-
-async function pickPhone() {
-    try { const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if (contacts.length) { document.getElementById('c_name').value = contacts[0].name[0]; document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); checkOldBalance(document.getElementById('c_mobile').value); } } catch (e) { alert("Contact Picker not supported."); }
-    }
+        subtotal
+        
