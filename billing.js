@@ -1,4 +1,4 @@
-// MASTER FIX: S.R. Enterprises Original Layout (All Features Restored)
+// MASTER FIX: S.R. Enterprises Original Layout (Self-Executing Fix)
 const scriptURL = 'https://script.google.com/macros/s/AKfycbwkxcAdRCz2iAzkOV0eaeo5HvpknvSRHk_VsJdpErFZAXgWztf3Dbz0lTjJ3S78eCINog/exec';
 let fetchedOldBalance = 0;
 
@@ -140,7 +140,10 @@ function showBilling() {
                     <div class="grid-system">
                         <div class="col">
                             <div class="info-row"><label>CUSTOMER NAME:</label><input type="text" id="c_name"></div>
-                            <div class="info-row"><label>ADDRESS:</label><textarea id="c_addr" rows="2" placeholder="ENTER FULL ADDRESS"></textarea></div>
+                            <div class="info-row">
+                                <label>ADDRESS:</label>
+                                <textarea id="c_addr" rows="2" placeholder="ENTER FULL ADDRESS"></textarea>
+                            </div>
                             <div class="info-row" style="border-bottom: none; margin-bottom: 0;">
                                 <label>MOBILE NO:</label>
                                 <div style="display: flex; gap: 8px; flex: 1;">
@@ -267,3 +270,6 @@ async function pickPhone() {
         } 
     } catch (e) { alert("Contact Picker not supported."); }
 }
+
+// Ye line sabse zaruri hai portal ko chalu karne ke liye
+showBilling();
