@@ -1,4 +1,4 @@
-// MODULE: S.R. Enterprises Professional System (Auto-Fill & Pending Balance Fixed)
+// MODULE: S.R. Enterprises Professional System (Auto-Fill & Old Pending Balance Final)
 const scriptURL = 'https://script.google.com/macros/s/AKfycbw7OimhdjMEh5dkxx-kCSv9VjHEQyOc1gVeR75C19Mj_QtvYpSqqSfZm2SZkbAFKDwTxg/exec';
 let fetchedOldBalance = 0;
 
@@ -18,6 +18,8 @@ function showBilling() {
             .info-row label { font-weight: 900; font-size: 13px; color: #000; white-space: nowrap; min-width: 130px; display: inline-block; }
             .info-row input, .info-row textarea { flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 2px; background: transparent; outline: none; width: 100%; resize: none; font-family: sans-serif; }
             .grid-system { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
+            
+            /* Old Pending Balance Alert Branding */
             .due-msg { color: #dc2626; font-weight: 900; font-size: 14px; margin-bottom: 10px; display: none; background: #fee2e2; padding: 10px; border-radius: 8px; border: 1px solid #ef4444; align-items: center; justify-content: space-between; }
 
             @media screen and (max-width: 600px) {
@@ -62,7 +64,7 @@ function showBilling() {
                 <hr style="border: 1.5px solid #1e3a8a; margin-bottom: 20px;">
                 
                 <div id="old_due_alert" class="due-msg">
-                    <span>⚠️ PENDING BALANCE: ₹<span id="due_amt_val">0</span></span>
+                    <span>⚠️ OLD PENDING BALANCE: ₹<span id="due_amt_val">0</span></span>
                     <label class="due-checkbox-area" style="font-size: 12px; color: #000; cursor:pointer;">
                         <input type="checkbox" id="add_old_dues" onchange="calculateTotal()" style="width:16px; height:16px; vertical-align:middle;"> ADD TO THIS BILL
                     </label>
@@ -109,7 +111,7 @@ function showBilling() {
                             <span id="gst_amt">₹0.00</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800; color: #dc2626;">
-                            <span>PENDING BALANCE:</span><span id="display_old_due">₹0.00</span>
+                            <span>OLD PENDING BALANCE:</span><span id="display_old_due">₹0.00</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800;">
                             <span>DISCOUNT (₹):</span>
@@ -146,7 +148,7 @@ async function checkOldBalance(mobile) {
         const response = await fetch(`${scriptURL}?mobile=${mobile}`);
         const res = await response.json();
         
-        // AUTO-FILL Name & Address from record
+        // Auto-Fill Details from Sheets
         if(res.name) document.getElementById('c_name').value = res.name;
         if(res.address) document.getElementById('c_addr').value = res.address;
         
@@ -176,7 +178,7 @@ async function saveAndWhatsApp() {
         total: document.getElementById('grand_total').innerText.replace('₹', ''),
         paid: document.getElementById('paid_amt').value,
         balance: document.getElementById('balance_due').innerText.replace('₹', ''),
-        pending: document.getElementById('balance_due').innerText.replace('₹', '') // Column L ke liye
+        pending: document.getElementById('balance_due').innerText.replace('₹', '')
     };
 
     if(!data.name || !data.mobile) { alert("Customer Name aur Mobile Number zaroori hai!"); return; }
@@ -187,10 +189,16 @@ async function saveAndWhatsApp() {
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
         alert("✅ Bill Saved in Google Sheet!");
-        const msg = `*S.R. ENTERPRISES REPORT*%0A---------------------------%0A*Invoice:* ${data.invoice}%0A*Date:* ${data.date}%0A*Customer:* ${data.name}%0A*PENDING BALANCE:* ₹${data.balance}%0A---------------------------%0A*Thank you!*`;
+        
+        const msg = `*S.R. ENTERPRISES REPORT*%0A---------------------------%0A*Invoice:* ${data.invoice}%0A*Date:* ${data.date}%0A*Customer:* ${data.name}%0A*Model:* ${data.model}%0A*Grand Total:* ₹${data.total}%0A*Amount Paid:* ₹${data.paid}%0A*OLD PENDING BALANCE:* ₹${data.balance}%0A---------------------------%0A*Thank you!*`;
         window.open(`https://wa.me/91${data.mobile}?text=${msg}`, '_blank');
-    } catch(e) { alert("❌ Error saving to sheet!"); }
-    finally { saveBtn.innerText = "📲 SAVE & WHATSAPP"; saveBtn.disabled = false; }
+        
+    } catch(e) { 
+        alert("❌ Error saving to sheet!"); 
+    } finally {
+        saveBtn.innerText = "📲 SAVE & WHATSAPP";
+        saveBtn.disabled = false;
+    }
 }
 
 function addNewRow() {
@@ -257,4 +265,5 @@ function numberToWords(num) {
 
 async function pickPhone() {
     try { const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if (contacts.length) { document.getElementById('c_name').value = contacts[0].name[0]; document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); checkOldBalance(document.getElementById('c_mobile').value); } } catch (e) { alert("Contact Picker not supported."); }
-        }
+            }
+    
