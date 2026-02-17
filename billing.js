@@ -1,4 +1,4 @@
-// MASTER FIX: S.R. Enterprises Original Layout (Self-Executing Fix)
+// MASTER FIX: S.R. Enterprises Original Layout (Centered Page Fix)
 const scriptURL = 'https://script.google.com/macros/s/AKfycbwkxcAdRCz2iAzkOV0eaeo5HvpknvSRHk_VsJdpErFZAXgWztf3Dbz0lTjJ3S78eCINog/exec';
 let fetchedOldBalance = 0;
 
@@ -97,7 +97,7 @@ function showBilling() {
                 @page { size: A4; margin: 10mm; }
                 .no-print, #no-print, #no-print-back, button { display: none !important; }
                 body { background: white !important; margin: 0; padding: 0; }
-                #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; box-shadow: none !important; border-radius: 0 !important; }
+                #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; box-shadow: none !important; border-radius: 0 !important; margin: 0 !important; }
                 .info-row { border-bottom: none !important; }
                 input, textarea { border: none !important; font-weight: 900 !important; }
                 #old_due_alert { display: none !important; }
@@ -106,8 +106,8 @@ function showBilling() {
             }
         </style>
 
-        <div id="print-area" style="padding: 15px; color: #000; font-family: sans-serif; min-height: 100vh; box-sizing: border-box;">
-            <div id="bill-container" style="width: 100%; max-width: 1050px; margin: auto; border: 2px solid #1e3a8a; border-radius: 12px; padding: 25px; background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <div id="print-area" style="padding: 15px; color: #000; font-family: sans-serif; min-height: 100vh; box-sizing: border-box; display: flex; justify-content: center;">
+            <div id="bill-container" style="width: 100%; max-width: 1050px; border: 2px solid #1e3a8a; border-radius: 12px; padding: 25px; background: #ffffff; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                 
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 15px;">
                     <div>
@@ -271,5 +271,5 @@ async function pickPhone() {
     } catch (e) { alert("Contact Picker not supported."); }
 }
 
-// Ye line sabse zaruri hai portal ko chalu karne ke liye
+// Start
 showBilling();
