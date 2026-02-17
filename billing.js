@@ -1,4 +1,6 @@
-// MODULE: S.R. Enterprises Standard A4 System (Final Form Alignment & Zero Gap Fix)
+// MODULE: S.R. Enterprises Professional System (Live Sheet Sync + Balance Check)
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwRf621-j7eq7hfwAB-_lfAlJJAe89ymd2ep2hyGTImrJUXZr99JAKuJAg8vqDjG20E9/exec';
+
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -9,16 +11,12 @@ function showBilling() {
 
     panel.innerHTML = `
         <style>
-            /* Auto Capital for all text inputs */
             input[type="text"], textarea { text-transform: uppercase; }
-
-            /* Standard Alignment Fix for Form (Labels aligned to start of boxes) */
             .info-row { display: flex; align-items: baseline; gap: 5px; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
             .info-row label { font-weight: 900; font-size: 13px; color: #000; white-space: nowrap; min-width: 125px; display: inline-block; }
             .info-row input, .info-row textarea { flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 2px; background: transparent; outline: none; width: 100%; resize: none; font-family: sans-serif; }
-
-            /* Grid: Model/Remark shifted fully to boundary as requested */
             .grid-system { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
+            .due-msg { color: #dc2626; font-weight: 900; font-size: 14px; margin-bottom: 10px; display: none; background: #fee2e2; padding: 8px; border-radius: 5px; border: 1px solid #ef4444; }
 
             @media screen and (max-width: 600px) {
                 .info-row label { min-width: 100px; font-size: 11px; }
@@ -33,6 +31,7 @@ function showBilling() {
                 #customer-boundary { border: 2px solid black !important; border-radius: 0 !important; padding: 15px !important; }
                 .info-row { border-bottom: none !important; }
                 input, textarea { border: none !important; font-weight: 900 !important; }
+                #old_due_alert { display: none !important; }
                 #bank-details { display: block !important; border: 2px solid black !important; }
             }
         </style>
@@ -60,35 +59,24 @@ function showBilling() {
                 </div>
 
                 <hr style="border: 1.5px solid #1e3a8a; margin-bottom: 20px;">
+                <div id="old_due_alert" class="due-msg">⚠️ PURANA BAKAYA (DUE): ₹<span id="due_amt_val">0</span></div>
 
                 <div id="customer-boundary" style="border: 1.5px solid #000; padding: 15px; border-radius: 8px; margin-bottom: 20px; background: #fff;">
                     <div class="grid-system">
                         <div class="col">
-                            <div class="info-row">
-                                <label>CUSTOMER NAME:</label>
-                                <input type="text" id="c_name">
-                            </div>
-                            <div class="info-row">
-                                <label>ADDRESS:</label>
-                                <textarea id="c_addr" rows="2" placeholder="ENTER FULL ADDRESS"></textarea>
-                            </div>
+                            <div class="info-row"><label>CUSTOMER NAME:</label><input type="text" id="c_name"></div>
+                            <div class="info-row"><label>ADDRESS:</label><textarea id="c_addr" rows="2" placeholder="ENTER FULL ADDRESS"></textarea></div>
                             <div class="info-row" style="border-bottom: none; margin-bottom: 0;">
                                 <label>MOBILE NO:</label>
                                 <div style="display: flex; gap: 8px; flex: 1;">
-                                    <input type="number" id="c_mobile" style="border-bottom: 1px solid #ddd;">
+                                    <input type="number" id="c_mobile" style="border-bottom: 1px solid #ddd;" onblur="checkOldBalance(this.value)">
                                     <button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 5px 12px; border-radius: 5px; font-weight: 900; cursor: pointer; font-size: 11px;">PICK</button>
                                 </div>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="info-row">
-                                <label style="min-width: 115px;">MACHINE MODEL:</label>
-                                <input type="text" id="m_model" placeholder="MACHINE & SIZE">
-                            </div>
-                            <div class="info-row">
-                                <label style="min-width: 115px;">REMARK:</label>
-                                <textarea id="m_remark" rows="2" placeholder="WORK REMARK"></textarea>
-                            </div>
+                            <div class="info-row"><label style="min-width: 115px;">MACHINE MODEL:</label><input type="text" id="m_model" placeholder="MACHINE & SIZE"></div>
+                            <div class="info-row"><label style="min-width: 115px;">REMARK:</label><textarea id="m_remark" rows="2" placeholder="WORK REMARK"></textarea></div>
                         </div>
                     </div>
                 </div>
@@ -120,9 +108,12 @@ function showBilling() {
                             <input type="number" id="w_disc" value="0" oninput="calculateTotal()" style="width: 80px; padding: 5px; border: 1.5px solid #000; text-align: right; font-weight: 900; border-radius: 5px;">
                         </div>
                         <hr style="border: 1px solid #1e3a8a; margin: 8px 0;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span style="font-size: 18px; font-weight: 900;">GRAND TOTAL:</span>
-                            <span id="grand_total" style="font-size: 24px; font-weight: 900; color: #16a34a;">₹0.00</span>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 900;"><span>GRAND TOTAL:</span><span id="grand_total" style="font-size: 24px; font-weight: 900; color: #1e3a8a;">₹0.00</span></div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; color: #16a34a; font-weight: 900;">
+                            <span>PAID AMOUNT:</span><input type="number" id="paid_amt" value="0" oninput="calculateTotal()" style="width: 80px; padding: 5px; border: 1.5px solid #16a34a; text-align: right; font-weight: 900; border-radius: 5px; color: #16a34a;">
+                        </div>
+                        <div style="display: flex; justify-content: space-between; color: #dc2626; font-weight: 900;">
+                            <span>BALANCE DUE:</span><span id="balance_due" style="font-size: 22px;">₹0.00</span>
                         </div>
                     </div>
                 </div>
@@ -138,7 +129,7 @@ function showBilling() {
 
                 <div id="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;">
                     <button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border: none; border-radius: 10px; font-weight: 900; font-size: 16px; cursor: pointer;">🖨️ PRINT BILL / PDF</button>
-                    <button onclick="sendToWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border: none; border-radius: 10px; font-weight: 900; font-size: 16px; cursor: pointer;">📲 SAVE & WHATSAPP</button>
+                    <button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border: none; border-radius: 10px; font-weight: 900; font-size: 16px; cursor: pointer;">📲 SAVE & WHATSAPP</button>
                 </div>
                 <button id="no-print-back" class="no-print" onclick="showDashboard()" style="width: 100%; margin-top: 15px; background: #64748b; color: white; padding: 10px; border: none; border-radius: 8px; font-weight: 900; cursor: pointer;">← BACK</button>
             </div>
@@ -147,29 +138,98 @@ function showBilling() {
     addNewRow();
 }
 
+async function checkOldBalance(mobile) {
+    if(!mobile || mobile.length < 10) return;
+    try {
+        const response = await fetch(`${scriptURL}?mobile=${mobile}`);
+        const res = await response.json();
+        if(res.oldBalance > 0) {
+            document.getElementById('old_due_alert').style.display = 'block';
+            document.getElementById('due_amt_val').innerText = res.oldBalance;
+        } else {
+            document.getElementById('old_due_alert').style.display = 'none';
+        }
+    } catch(e) { console.log("Balance fetch error"); }
+}
+
+async function saveAndWhatsApp() {
+    const saveBtn = document.getElementById('saveBtn');
+    const data = {
+        invoice: document.getElementById('inv_no').value,
+        date: document.getElementById('inv_date').value,
+        name: document.getElementById('c_name').value.toUpperCase(),
+        mobile: document.getElementById('c_mobile').value,
+        model: document.getElementById('m_model').value.toUpperCase(),
+        address: document.getElementById('c_addr').value.toUpperCase(),
+        description: document.querySelector('.item-desc')?.value.toUpperCase() || "SERVICE",
+        subtotal: document.getElementById('tax_amt').innerText.replace('₹', ''),
+        gst: document.getElementById('gst_amt').innerText.replace('₹', ''),
+        total: document.getElementById('grand_total').innerText.replace('₹', ''),
+        paid: document.getElementById('paid_amt').value,
+        balance: document.getElementById('balance_due').innerText.replace('₹', '')
+    };
+
+    if(!data.name || !data.mobile) { alert("Customer Name aur Mobile Number zaroori hai!"); return; }
+
+    saveBtn.innerText = "⏳ SAVING...";
+    saveBtn.disabled = true;
+
+    try {
+        await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+        alert("✅ Data Saved in Google Sheet!");
+        
+        // WhatsApp Message
+        const msg = `*S.R. ENTERPRISES REPORT*%0A---------------------------%0A*Invoice:* ${data.invoice}%0A*Customer:* ${data.name}%0A*Model:* ${data.model}%0A*Grand Total:* ₹${data.total}%0A*Amount Paid:* ₹${data.paid}%0A*Balance Due:* ₹${data.balance}%0A---------------------------%0A*Thank you!*`;
+        window.open(`https://wa.me/91${data.mobile}?text=${msg}`, '_blank');
+        
+    } catch(e) { 
+        alert("❌ Error saving to sheet!"); 
+    } finally {
+        saveBtn.innerText = "📲 SAVE & WHATSAPP";
+        saveBtn.disabled = false;
+    }
+}
+
 function addNewRow() {
     const container = document.getElementById('items_container');
     const row = document.createElement('div');
     const id = Date.now();
     row.id = 'row-' + id;
     row.style = "display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; margin-bottom: 8px; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 4px; min-width: 550px;";
-    row.innerHTML = `<input type="text" placeholder="WORK DESCRIPTION" style="padding:5px; border:none; background:transparent; font-weight:700; width:100%; font-size:12px;"><input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700; width:100%; font-size:12px;"><input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700; width:60px; font-size:12px;"><div class="item-total" style="color: #000; font-weight: 900; text-align: right; font-size:12px;">₹0.00</div><button class="no-print" onclick="deleteRow('${id}')" style="background:none; border:none; color:#ef4444; font-size: 16px; cursor:pointer;">❌</button>`;
+    row.innerHTML = `
+        <input type="text" class="item-desc" placeholder="WORK DESCRIPTION" style="padding:5px; border:none; background:transparent; font-weight:700; width:100%; font-size:12px;">
+        <input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700; width:100%; font-size:12px;">
+        <input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700; width:60px; font-size:12px;">
+        <div class="item-total" style="color: #000; font-weight: 900; text-align: right; font-size:12px;">₹0.00</div>
+        <button class="no-print" onclick="this.parentElement.remove(); calculateTotal();" style="background:none; border:none; color:#ef4444; font-size: 16px; cursor:pointer;">❌</button>
+    `;
     container.appendChild(row);
 }
-// Baaki sab calculateTotal, deleteRow, numberToWords etc functions same rahenge.
-function deleteRow(id) { const row = document.getElementById('row-' + id); if(row) { row.remove(); calculateTotal(); } }
+
 function calculateTotal() {
-    let subtotal = 0; document.querySelectorAll('#items_container > div').forEach(row => {
+    let subtotal = 0;
+    document.querySelectorAll('#items_container > div').forEach(row => {
         const r = parseFloat(row.querySelector('.item-rate').value) || 0;
         const q = parseFloat(row.querySelector('.item-qty').value) || 0;
-        const total = r * q; row.querySelector('.item-total').innerText = "₹" + total.toFixed(2); subtotal += total;
+        const total = r * q;
+        row.querySelector('.item-total').innerText = "₹" + total.toFixed(2);
+        subtotal += total;
     });
     const disc = parseFloat(document.getElementById('w_disc').value) || 0;
     const isGst = document.getElementById('gst_check').checked;
-    const taxable = subtotal - disc; const gst = isGst ? (taxable * 0.18) : 0; const grand = Math.round(taxable + gst);
-    document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2); document.getElementById('gst_amt').innerText = "₹" + gst.toFixed(2); document.getElementById('grand_total').innerText = "₹" + (grand > 0 ? grand : 0).toFixed(2);
+    const taxable = subtotal - disc;
+    const gst = isGst ? (taxable * 0.18) : 0;
+    const grand = Math.round(taxable + gst);
+    const paid = parseFloat(document.getElementById('paid_amt').value) || 0;
+    const balance = grand - paid;
+
+    document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2);
+    document.getElementById('gst_amt').innerText = "₹" + gst.toFixed(2);
+    document.getElementById('grand_total').innerText = "₹" + grand.toFixed(2);
+    document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(grand > 0 ? grand : 0) + " Only";
 }
+
 function numberToWords(num) {
     if (num === 0) return "Zero";
     const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
@@ -183,12 +243,8 @@ function numberToWords(num) {
     let words = '', groupIdx = 0; while (num > 0) { let group = num % 1000; if (group !== 0) { words = makeGroup(group) + g[groupIdx] + ' ' + words; } num = Math.floor(num / 1000); groupIdx++; }
     return words.trim();
 }
-function sendToWhatsApp() {
-    const name = document.getElementById('c_name').value; const mobile = document.getElementById('c_mobile').value; const invNo = document.getElementById('inv_no').value; const total = document.getElementById('grand_total').innerText; const model = document.getElementById('m_model').value;
-    if(!mobile || !name) { alert("Customer Name aur Mobile Number zaroori hai!"); return; }
-    const message = `*S.R. ENTERPRISES SERVICE REPORT*%0A--------------------------------%0A*Invoice:* ${invNo}%0A*Customer:* ${name}%0A*Machine:* ${model}%0A*Total Amount:* ${total}%0A--------------------------------%0AThank you!`;
-    window.open(`https://wa.me/91${mobile}?text=${message}`, '_blank');
-}
+
 async function pickPhone() {
-    try { const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if (contacts.length) { document.getElementById('c_name').value = contacts[0].name[0]; document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); } } catch (e) { alert("Contact Picker not supported."); }
-}
+    try { const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if (contacts.length) { document.getElementById('c_name').value = contacts[0].name[0]; document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); checkOldBalance(document.getElementById('c_mobile').value); } } catch (e) { alert("Contact Picker not supported."); }
+    }
+            
