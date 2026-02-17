@@ -1,4 +1,4 @@
-// MODULE: S.R. Enterprises Professional System (Final Bordered Layout)
+// MODULE: S.R. Enterprises Professional System (Print Layout Boundary Update)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -9,7 +9,7 @@ function showBilling() {
 
     panel.innerHTML = `
         <div id="print-area" style="padding: 10px; color: #000; font-family: sans-serif; min-height: 100vh; box-sizing: border-box;">
-            <div style="width: 100%; max-width: 1000px; margin: auto; border: 2px solid #1e3a8a; border-radius: 12px; padding: 25px; background: #ffffff; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <div id="bill-container" style="width: 100%; max-width: 1000px; margin: auto; border: 2px solid #1e3a8a; border-radius: 12px; padding: 25px; background: #ffffff; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                 
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 10px;">
                     <div>
@@ -32,7 +32,7 @@ function showBilling() {
 
                 <hr style="border: 1.5px solid #1e3a8a; margin-bottom: 20px;">
 
-                <div style="border: 1.5px solid #000; padding: 15px; border-radius: 8px; margin-bottom: 20px; background: #fff;">
+                <div id="customer-boundary" style="border: 1.5px solid #000; padding: 15px; border-radius: 8px; margin-bottom: 20px; background: #fff;">
                     <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 12px;">
                         <div><label style="color: #000; font-size: 13px; font-weight: 900;">CUSTOMER NAME:</label>
                         <input type="text" id="c_name" style="width: 100%; padding: 10px; margin-top: 5px; border: none; border-bottom: 1px solid #000; box-sizing: border-box; font-weight: 700;"></div>
@@ -51,15 +51,15 @@ function showBilling() {
                         <label style="color: #000; font-size: 13px; font-weight: 900;">MOBILE NO:</label>
                         <div style="display: flex; gap: 10px; margin-top: 5px;">
                             <input type="number" id="c_mobile" style="flex: 1; padding: 10px; border: none; border-bottom: 1px solid #000; font-weight: 700;">
-                            <button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 0 15px; border-radius: 5px; font-weight: 900; cursor: pointer;">PICK</button>
+                            <button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 0 20px; border-radius: 5px; font-weight: 900; cursor: pointer;">PICK</button>
                         </div>
                     </div>
                 </div>
 
-                <div style="background: #1e3a8a; padding: 12px; border-radius: 5px 5px 0 0; display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; text-align: center; color: #fff; font-size: 13px; font-weight: 900;">
+                <div style="background: #1e3a8a; padding: 12px; border: 2px solid #000; border-radius: 5px 5px 0 0; display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; text-align: center; color: #fff; font-size: 13px; font-weight: 900;">
                     <div>DESCRIPTION</div><div>RATE</div><div>QTY</div><div>TOTAL</div><div class="no-print">X</div>
                 </div>
-                <div id="items_container" style="background: #fff; border: 2px solid #1e3a8a; border-top: none; padding: 10px;"></div>
+                <div id="items_container" style="background: #fff; border: 2px solid #000; border-top: none; padding: 10px;"></div>
                 <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f1f5f9; border: 2px dashed #1e3a8a; color: #1e3a8a; padding: 12px; border-radius: 0 0 5px 5px; font-weight: 900; cursor: pointer; margin-bottom: 25px;">+ ADD ITEM / WORK DESCRIPTION</button>
 
                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; gap: 10px;">
@@ -110,6 +110,8 @@ function showBilling() {
                 .no-print, #no-print, #no-print-back, button{display:none!important;}
                 body{background:white!important;}
                 #print-area{color:black!important;background:white!important;padding:0;}
+                #bill-container { border: 2px solid black !important; border-radius: 0 !important; }
+                #customer-boundary { border: 2px solid black !important; border-radius: 0 !important; }
                 div{border-color:black!important; color:black!important;}
                 input{border:none!important; font-weight: 900!important; background:transparent!important;}
                 #bank-details{display: block !important; border: 2px solid black !important;}
@@ -118,7 +120,7 @@ function showBilling() {
     `;
     addNewRow();
 }
-//functions (addNewRow, deleteRow, calculateTotal, numberToWords, sendToWhatsApp, pickPhone) 
+
 function addNewRow() {
     const container = document.getElementById('items_container');
     const row = document.createElement('div');
