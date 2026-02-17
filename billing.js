@@ -1,17 +1,17 @@
-// MODULE: S.R. Enterprises Professional System (White, Blue & Black Theme)
+// MODULE: S.R. Enterprises Professional System (Final Bordered Layout)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
     const autoInv = "SR-" + Math.floor(1000 + Math.random() * 9000);
 
     panel.style.display = "block";
-    panel.style.background = "#f1f5f9"; // Light Professional Background
+    panel.style.background = "#f1f5f9"; 
 
     panel.innerHTML = `
         <div id="print-area" style="padding: 10px; color: #000; font-family: sans-serif; min-height: 100vh; box-sizing: border-box;">
             <div style="width: 100%; max-width: 1000px; margin: auto; border: 2px solid #1e3a8a; border-radius: 12px; padding: 25px; background: #ffffff; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                 
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; gap: 10px; flex-wrap: nowrap;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 10px;">
                     <div>
                         <h1 style="color: #1e3a8a; margin: 0; font-size: 34px; letter-spacing: 1px; font-weight: 900;">S.R ENTERPRISES</h1>
                         <p style="font-size: 14px; margin: 2px 0; color: #000; font-weight: 800; text-transform: uppercase;">Fusing Machine Specialist</p>
@@ -32,36 +32,38 @@ function showBilling() {
 
                 <hr style="border: 1.5px solid #1e3a8a; margin-bottom: 20px;">
 
-                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 12px;">
-                    <div><label style="color: #000; font-size: 13px; font-weight: 900;">CUSTOMER NAME:</label>
-                    <input type="text" id="c_name" style="width: 100%; padding: 12px; margin-top: 5px; border-radius: 5px; border: 1.5px solid #000; box-sizing: border-box; font-weight: 700;"></div>
-                    <div><label style="color: #000; font-size: 13px; font-weight: 900;">MACHINE MODEL:</label>
-                    <input type="text" id="m_model" placeholder="Model No." style="width: 100%; padding: 12px; margin-top: 5px; border-radius: 5px; border: 1.5px solid #000; box-sizing: border-box; font-weight: 700;"></div>
-                </div>
+                <div style="border: 1.5px solid #000; padding: 15px; border-radius: 8px; margin-bottom: 20px; background: #fff;">
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 12px;">
+                        <div><label style="color: #000; font-size: 13px; font-weight: 900;">CUSTOMER NAME:</label>
+                        <input type="text" id="c_name" style="width: 100%; padding: 10px; margin-top: 5px; border: none; border-bottom: 1px solid #000; box-sizing: border-box; font-weight: 700;"></div>
+                        <div><label style="color: #000; font-size: 13px; font-weight: 900;">MACHINE MODEL:</label>
+                        <input type="text" id="m_model" placeholder="Model No." style="width: 100%; padding: 10px; margin-top: 5px; border: none; border-bottom: 1px solid #000; box-sizing: border-box; font-weight: 700;"></div>
+                    </div>
 
-                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 12px;">
-                    <div><label style="color: #000; font-size: 13px; font-weight: 900;">ADDRESS:</label>
-                    <input type="text" id="c_addr" style="width: 100%; padding: 12px; margin-top: 5px; border-radius: 5px; border: 1.5px solid #000; box-sizing: border-box; font-weight: 700;"></div>
-                    <div><label style="color: #000; font-size: 13px; font-weight: 900;">REMARK:</label>
-                    <input type="text" id="m_remark" placeholder="Note" style="width: 100%; padding: 12px; margin-top: 5px; border-radius: 5px; border: 1.5px solid #000; box-sizing: border-box; font-weight: 700;"></div>
-                </div>
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 12px;">
+                        <div><label style="color: #000; font-size: 13px; font-weight: 900;">ADDRESS:</label>
+                        <input type="text" id="c_addr" style="width: 100%; padding: 10px; margin-top: 5px; border: none; border-bottom: 1px solid #000; box-sizing: border-box; font-weight: 700;"></div>
+                        <div><label style="color: #000; font-size: 13px; font-weight: 900;">REMARK:</label>
+                        <input type="text" id="m_remark" placeholder="Note" style="width: 100%; padding: 10px; margin-top: 5px; border: none; border-bottom: 1px solid #000; box-sizing: border-box; font-weight: 700;"></div>
+                    </div>
 
-                <div style="margin-bottom: 25px; width: 50%;">
-                    <label style="color: #000; font-size: 13px; font-weight: 900;">MOBILE NO:</label>
-                    <div style="display: flex; gap: 10px; margin-top: 5px;">
-                        <input type="number" id="c_mobile" style="flex: 1; padding: 12px; border-radius: 5px; border: 1.5px solid #000; font-weight: 700;">
-                        <button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 0 20px; border-radius: 5px; font-weight: 900; cursor: pointer;">PICK</button>
+                    <div style="width: 50%;">
+                        <label style="color: #000; font-size: 13px; font-weight: 900;">MOBILE NO:</label>
+                        <div style="display: flex; gap: 10px; margin-top: 5px;">
+                            <input type="number" id="c_mobile" style="flex: 1; padding: 10px; border: none; border-bottom: 1px solid #000; font-weight: 700;">
+                            <button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 0 15px; border-radius: 5px; font-weight: 900; cursor: pointer;">PICK</button>
+                        </div>
                     </div>
                 </div>
 
                 <div style="background: #1e3a8a; padding: 12px; border-radius: 5px 5px 0 0; display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; text-align: center; color: #fff; font-size: 13px; font-weight: 900;">
                     <div>DESCRIPTION</div><div>RATE</div><div>QTY</div><div>TOTAL</div><div class="no-print">X</div>
                 </div>
-                <div id="items_container" style="background: #fff; border: 1.5px solid #1e3a8a; border-top: none; padding: 10px;"></div>
-                <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f1f5f9; border: 2px dashed #1e3a8a; color: #1e3a8a; padding: 12px; border-radius: 0 0 5px 5px; font-weight: 900; cursor: pointer; margin-bottom: 20px;">+ ADD ITEM / WORK DESCRIPTION</button>
+                <div id="items_container" style="background: #fff; border: 2px solid #1e3a8a; border-top: none; padding: 10px;"></div>
+                <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f1f5f9; border: 2px dashed #1e3a8a; color: #1e3a8a; padding: 12px; border-radius: 0 0 5px 5px; font-weight: 900; cursor: pointer; margin-bottom: 25px;">+ ADD ITEM / WORK DESCRIPTION</button>
 
                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; gap: 10px;">
-                    <div id="bank-details" style="font-size: 13px; color: #000; font-weight: 800; border: 1.5px solid #1e3a8a; padding: 10px; border-radius: 8px; display: none;">
+                    <div id="bank-details" style="font-size: 13px; color: #000; font-weight: 800; border: 1.5px solid #000; padding: 12px; border-radius: 8px; display: none; background: #fff;">
                         <p style="margin:0; font-weight: 900; text-decoration: underline; color: #1e3a8a;">BANK ACCOUNT DETAILS:</p>
                         <p style="margin:4px 0;">NAME: MR. HARIRAM SITARAM RAJBHAR</p>
                         <p style="margin:2px 0;">BANK: STATE BANK OF INDIA (SBI)</p>
@@ -110,93 +112,54 @@ function showBilling() {
                 #print-area{color:black!important;background:white!important;padding:0;}
                 div{border-color:black!important; color:black!important;}
                 input{border:none!important; font-weight: 900!important; background:transparent!important;}
-                #bank-details{display: block !important; border-color: black !important;}
+                #bank-details{display: block !important; border: 2px solid black !important;}
             }
         </style>
     `;
     addNewRow();
 }
-
+//functions (addNewRow, deleteRow, calculateTotal, numberToWords, sendToWhatsApp, pickPhone) 
 function addNewRow() {
     const container = document.getElementById('items_container');
     const row = document.createElement('div');
     const id = Date.now();
     row.id = 'row-' + id;
     row.style = "display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; margin-bottom: 10px; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;";
-    row.innerHTML = `
-        <input type="text" placeholder="Work description" style="padding:10px; border:none; background:transparent; font-weight:700; width:100%; box-sizing:border-box;">
-        <input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding:10px; border:none; text-align:center; font-weight:700; width:100%; box-sizing:border-box;">
-        <input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding:10px; border:none; text-align:center; font-weight:700; width:60px;">
-        <div class="item-total" style="color: #000; font-weight: 900; text-align: right;">₹0.00</div>
-        <button class="no-print" onclick="deleteRow('${id}')" style="background:none; border:none; color:#ef4444; font-size: 18px; font-weight:bold; cursor:pointer;">❌</button>
-    `;
+    row.innerHTML = `<input type="text" placeholder="Work description" style="padding:10px; border:none; background:transparent; font-weight:700; width:100%; box-sizing:border-box;"><input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding:10px; border:none; text-align:center; font-weight:700; width:100%; box-sizing:border-box;"><input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding:10px; border:none; text-align:center; font-weight:700; width:60px;"><div class="item-total" style="color: #000; font-weight: 900; text-align: right;">₹0.00</div><button class="no-print" onclick="deleteRow('${id}')" style="background:none; border:none; color:#ef4444; font-size: 18px; font-weight:bold; cursor:pointer;">❌</button>`;
     container.appendChild(row);
 }
-
-function deleteRow(id) {
-    const row = document.getElementById('row-' + id);
-    if(row) { row.remove(); calculateTotal(); }
-}
-
+function deleteRow(id) { const row = document.getElementById('row-' + id); if(row) { row.remove(); calculateTotal(); } }
 function calculateTotal() {
-    let subtotal = 0;
-    document.querySelectorAll('#items_container > div').forEach(row => {
+    let subtotal = 0; document.querySelectorAll('#items_container > div').forEach(row => {
         const r = parseFloat(row.querySelector('.item-rate').value) || 0;
         const q = parseFloat(row.querySelector('.item-qty').value) || 0;
-        const total = r * q;
-        row.querySelector('.item-total').innerText = "₹" + total.toFixed(2);
-        subtotal += total;
+        const total = r * q; row.querySelector('.item-total').innerText = "₹" + total.toFixed(2); subtotal += total;
     });
     const disc = parseFloat(document.getElementById('w_disc').value) || 0;
     const isGst = document.getElementById('gst_check').checked;
-    const taxable = subtotal - disc;
-    const gst = isGst ? (taxable * 0.18) : 0;
-    const grand = Math.round(taxable + gst);
-    document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2);
-    document.getElementById('gst_amt').innerText = "₹" + gst.toFixed(2);
-    document.getElementById('grand_total').innerText = "₹" + (grand > 0 ? grand : 0).toFixed(2);
+    const taxable = subtotal - disc; const gst = isGst ? (taxable * 0.18) : 0; const grand = Math.round(taxable + gst);
+    document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2); document.getElementById('gst_amt').innerText = "₹" + gst.toFixed(2); document.getElementById('grand_total').innerText = "₹" + (grand > 0 ? grand : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(grand > 0 ? grand : 0) + " Only";
 }
-
-function sendToWhatsApp() {
-    const name = document.getElementById('c_name').value;
-    const mobile = document.getElementById('c_mobile').value;
-    const invNo = document.getElementById('inv_no').value;
-    const total = document.getElementById('grand_total').innerText;
-    const model = document.getElementById('m_model').value;
-    if(!mobile || !name) { alert("Customer Name aur Mobile Number zaroori hai!"); return; }
-    const message = `*S.R. ENTERPRISES SERVICE REPORT*%0A--------------------------------%0A*Invoice:* ${invNo}%0A*Customer:* ${name}%0A*Machine:* ${model}%0A*Total Amount:* ${total}%0A--------------------------------%0AThank you!`;
-    window.open(`https://wa.me/91${mobile}?text=${message}`, '_blank');
-}
-
 function numberToWords(num) {
     if (num === 0) return "Zero";
     const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
     const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
     const g = ['', 'Thousand', 'Million', 'Billion'];
     const makeGroup = (n) => {
-        let s = '';
-        if (n >= 100) { s += a[Math.floor(n / 100)] + ' Hundred '; n %= 100; }
+        let s = ''; if (n >= 100) { s += a[Math.floor(n / 100)] + ' Hundred '; n %= 100; }
         if (n >= 20) { s += b[Math.floor(n / 10)] + ' '; n %= 10; }
-        if (n > 0) { s += a[n] + ' '; }
-        return s;
+        if (n > 0) { s += a[n] + ' '; } return s;
     };
-    let words = '', groupIdx = 0;
-    while (num > 0) {
-        let group = num % 1000;
-        if (group !== 0) { words = makeGroup(group) + g[groupIdx] + ' ' + words; }
-        num = Math.floor(num / 1000);
-        groupIdx++;
-    }
+    let words = '', groupIdx = 0; while (num > 0) { let group = num % 1000; if (group !== 0) { words = makeGroup(group) + g[groupIdx] + ' ' + words; } num = Math.floor(num / 1000); groupIdx++; }
     return words.trim();
 }
-
-async function pickPhone() {
-    try {
-        const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false});
-        if (contacts.length) {
-            document.getElementById('c_name').value = contacts[0].name[0];
-            document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, '');
-        }
-    } catch (e) { alert("Contact Picker not supported."); }
+function sendToWhatsApp() {
+    const name = document.getElementById('c_name').value; const mobile = document.getElementById('c_mobile').value; const invNo = document.getElementById('inv_no').value; const total = document.getElementById('grand_total').innerText; const model = document.getElementById('m_model').value;
+    if(!mobile || !name) { alert("Customer Name aur Mobile Number zaroori hai!"); return; }
+    const message = `*S.R. ENTERPRISES SERVICE REPORT*%0A--------------------------------%0A*Invoice:* ${invNo}%0A*Customer:* ${name}%0A*Machine:* ${model}%0A*Total Amount:* ${total}%0A--------------------------------%0AThank you!`;
+    window.open(`https://wa.me/91${mobile}?text=${message}`, '_blank');
 }
+async function pickPhone() {
+    try { const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if (contacts.length) { document.getElementById('c_name').value = contacts[0].name[0]; document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); } } catch (e) { alert("Contact Picker not supported."); }
+               }
