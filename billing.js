@@ -1,5 +1,5 @@
-// MODULE: S.R. Enterprises Professional System (Live Sheet Sync + Balance Check)
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwRf621-j7eq7hfwAB-_lfAlJJAe89ymd2ep2hyGTImrJUXZr99JAKuJAg8vqDjG20E9/exec';
+// MODULE: S.R. Enterprises Standard A4 System (Final Connection Fixed)
+const scriptURL = 'https://script.google.com/macros/s/AKfycbw6OT1VYJTYdBun97SHmQm4HpIq1ebu5EyyYi0n0FTSrAujfqxILcPypKnQhqCnudivhw/exec';
 
 function showBilling() {
     const panel = document.getElementById('main-panel');
@@ -12,14 +12,14 @@ function showBilling() {
     panel.innerHTML = `
         <style>
             input[type="text"], textarea { text-transform: uppercase; }
-            .info-row { display: flex; align-items: baseline; gap: 5px; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
-            .info-row label { font-weight: 900; font-size: 13px; color: #000; white-space: nowrap; min-width: 125px; display: inline-block; }
+            .info-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
+            .info-row label { font-weight: 900; font-size: 13px; color: #000; white-space: nowrap; min-width: 130px; display: inline-block; }
             .info-row input, .info-row textarea { flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 2px; background: transparent; outline: none; width: 100%; resize: none; font-family: sans-serif; }
             .grid-system { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
             .due-msg { color: #dc2626; font-weight: 900; font-size: 14px; margin-bottom: 10px; display: none; background: #fee2e2; padding: 8px; border-radius: 5px; border: 1px solid #ef4444; }
 
             @media screen and (max-width: 600px) {
-                .info-row label { min-width: 100px; font-size: 11px; }
+                .info-row label { min-width: 110px; font-size: 11px; }
                 .grid-system { grid-template-columns: 1fr !important; gap: 0; }
             }
 
@@ -43,8 +43,7 @@ function showBilling() {
                     <div>
                         <h1 style="color: #1e3a8a; margin: 0; font-size: 32px; letter-spacing: 1px; font-weight: 900;">S.R ENTERPRISES</h1>
                         <p style="font-size: 14px; margin: 2px 0; color: #000; font-weight: 800; text-transform: uppercase;">Fusing Machine Specialist</p>
-                        <p style="font-size: 12px; margin: 0; color: #475569; font-weight: 700;">Malad East, Mumbai, Maharashtra</p>
-                        <p style="font-size: 15px; margin: 5px 0 0 0; color: #1e3a8a; font-weight: 900;">📞 +91 9326113988</p>
+                        <p style="font-size: 12px; margin: 0; color: #475569; font-weight: 700;">Malad East, Mumbai | 📞 +91 9326113988</p>
                     </div>
                     <div style="display: flex; gap: 10px;">
                         <div style="text-align: center;">
@@ -53,7 +52,7 @@ function showBilling() {
                         </div>
                         <div style="text-align: center;">
                             <label style="font-size: 11px; color: #000; font-weight: 900;">DATE</label><br>
-                            <input type="date" id="inv_date" value="${today}" style="width: 125px; padding: 6px; border-radius: 5px; border: 2px solid #1e3a8a; font-weight: 900; font-size: 13px;">
+                            <input type="date" id="inv_date" value="${today}" style="width: 130px; padding: 6px; border-radius: 5px; border: 2px solid #1e3a8a; font-weight: 900; font-size: 13px;">
                         </div>
                     </div>
                 </div>
@@ -82,34 +81,32 @@ function showBilling() {
                 </div>
 
                 <div style="overflow-x: auto;">
-                    <div style="background: #1e3a8a; padding: 12px; border: 2px solid #000; border-radius: 5px 5px 0 0; display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; text-align: center; color: #fff; font-size: 13px; font-weight: 900; min-width: 550px;">
+                    <div style="background: #1e3a8a; padding: 12px; border: 2px solid #000; border-radius: 5px 5px 0 0; display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; text-align: center; color: #fff; font-size: 12px; font-weight: 900; min-width: 550px;">
                         <div>DESCRIPTION</div><div>RATE</div><div>QTY</div><div>TOTAL</div><div class="no-print">X</div>
                     </div>
                     <div id="items_container" style="background: #fff; border: 2px solid #000; border-top: none; padding: 10px; min-width: 550px;"></div>
                 </div>
-                <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f8fafc; border: 2px dashed #1e3a8a; color: #1e3a8a; padding: 12px; font-weight: 900; cursor: pointer; margin-bottom: 15px;">+ ADD ITEM / WORK DESCRIPTION</button>
+                <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f8fafc; border: 2px dashed #1e3a8a; color: #1e3a8a; padding: 12px; font-weight: 900; cursor: pointer; margin-bottom: 15px;">+ ADD ITEM</button>
 
                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; gap: 15px;">
-                    <div id="bank-details" style="font-size: 11px; color: #000; font-weight: 800; border: 1.5px solid #000; padding: 12px; border-radius: 8px; display: none; background: #fff; line-height: 1.3;">
-                        <p style="margin:0; font-weight: 900; text-decoration: underline; color: #1e3a8a; font-size: 12px;">BANK ACCOUNT DETAILS:</p>
-                        <p style="margin:4px 0;">NAME: MR. HARIRAM SITARAM RAJBHAR</p>
-                        <p style="margin:2px 0;">BANK: STATE BANK OF INDIA (SBI)</p>
-                        <p style="margin:2px 0;">A/C NO: 44695199584 | IFSC: SBIN0008373</p>
+                    <div id="bank-details" style="font-size: 11px; border: 1.5px solid #000; padding: 10px; border-radius: 8px;">
+                        <p style="margin:0; font-weight: 900; color: #1e3a8a;">BANK: SBI | NAME: MR. HARIRAM SITARAM RAJBHAR</p>
+                        <p style="margin:2px 0; font-weight: 900;">A/C: 44695199584 | IFSC: SBIN0008373</p>
                     </div>
 
                     <div style="width: 100%; max-width: 380px; border: 2.5px solid #000; padding: 15px; border-radius: 10px; background: #fff;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-weight: 800; font-size: 14px;"><span>SUB-TOTAL:</span><span id="tax_amt">₹0.00</span></div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-weight: 800; font-size: 14px;">
-                            <div style="display: flex; align-items: center; gap: 8px;"><input type="checkbox" id="gst_check" onchange="calculateTotal()" style="width:16px; height:16px;"><span style="color: #000;">GST (18%):</span></div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 800;"><span>SUB-TOTAL:</span><span id="tax_amt">₹0.00</span></div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800;">
+                            <div style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" id="gst_check" onchange="calculateTotal()" style="width:16px; height:16px;"><span>GST (18%):</span></div>
                             <span id="gst_amt">₹0.00</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800; font-size: 14px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800;">
                             <span>DISCOUNT (₹):</span>
-                            <input type="number" id="w_disc" value="0" oninput="calculateTotal()" style="width: 80px; padding: 5px; border: 1.5px solid #000; text-align: right; font-weight: 900; border-radius: 5px;">
+                            <input type="number" id="w_disc" value="0" oninput="calculateTotal()" style="width: 70px; padding: 4px; border: 1.5px solid #000; text-align: right; font-weight: 900; border-radius: 5px;">
                         </div>
                         <hr style="border: 1px solid #1e3a8a; margin: 8px 0;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 900;"><span>GRAND TOTAL:</span><span id="grand_total" style="font-size: 24px; font-weight: 900; color: #1e3a8a;">₹0.00</span></div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; color: #16a34a; font-weight: 900;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 900;"><span>GRAND TOTAL:</span><span id="grand_total" style="font-size: 24px; color: #1e3a8a;">₹0.00</span></div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; color: #16a34a; font-weight: 900;">
                             <span>PAID AMOUNT:</span><input type="number" id="paid_amt" value="0" oninput="calculateTotal()" style="width: 80px; padding: 5px; border: 1.5px solid #16a34a; text-align: right; font-weight: 900; border-radius: 5px; color: #16a34a;">
                         </div>
                         <div style="display: flex; justify-content: space-between; color: #dc2626; font-weight: 900;">
@@ -131,7 +128,6 @@ function showBilling() {
                     <button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border: none; border-radius: 10px; font-weight: 900; font-size: 16px; cursor: pointer;">🖨️ PRINT BILL / PDF</button>
                     <button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border: none; border-radius: 10px; font-weight: 900; font-size: 16px; cursor: pointer;">📲 SAVE & WHATSAPP</button>
                 </div>
-                <button id="no-print-back" class="no-print" onclick="showDashboard()" style="width: 100%; margin-top: 15px; background: #64748b; color: white; padding: 10px; border: none; border-radius: 8px; font-weight: 900; cursor: pointer;">← BACK</button>
             </div>
         </div>
     `;
@@ -161,7 +157,7 @@ async function saveAndWhatsApp() {
         mobile: document.getElementById('c_mobile').value,
         model: document.getElementById('m_model').value.toUpperCase(),
         address: document.getElementById('c_addr').value.toUpperCase(),
-        description: document.querySelector('.item-desc')?.value.toUpperCase() || "SERVICE",
+        description: document.querySelector('.item-desc')?.value.toUpperCase() || "REPAIRING SERVICE",
         subtotal: document.getElementById('tax_amt').innerText.replace('₹', ''),
         gst: document.getElementById('gst_amt').innerText.replace('₹', ''),
         total: document.getElementById('grand_total').innerText.replace('₹', ''),
@@ -176,14 +172,13 @@ async function saveAndWhatsApp() {
 
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Data Saved in Google Sheet!");
+        alert("✅ Bill Saved in Google Sheet!");
         
-        // WhatsApp Message
-        const msg = `*S.R. ENTERPRISES REPORT*%0A---------------------------%0A*Invoice:* ${data.invoice}%0A*Customer:* ${data.name}%0A*Model:* ${data.model}%0A*Grand Total:* ₹${data.total}%0A*Amount Paid:* ₹${data.paid}%0A*Balance Due:* ₹${data.balance}%0A---------------------------%0A*Thank you!*`;
+        const msg = `*S.R. ENTERPRISES SERVICE REPORT*%0A---------------------------%0A*Invoice:* ${data.invoice}%0A*Date:* ${data.date}%0A*Customer:* ${data.name}%0A*Model:* ${data.model}%0A*Grand Total:* ₹${data.total}%0A*Amount Paid:* ₹${data.paid}%0A*Balance Due:* ₹${data.balance}%0A---------------------------%0A*Thank you for choosing S.R. Enterprises!*`;
         window.open(`https://wa.me/91${data.mobile}?text=${msg}`, '_blank');
         
     } catch(e) { 
-        alert("❌ Error saving to sheet!"); 
+        alert("❌ Sheet mein save nahi hua. Link check karein."); 
     } finally {
         saveBtn.innerText = "📲 SAVE & WHATSAPP";
         saveBtn.disabled = false;
@@ -246,5 +241,4 @@ function numberToWords(num) {
 
 async function pickPhone() {
     try { const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if (contacts.length) { document.getElementById('c_name').value = contacts[0].name[0]; document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); checkOldBalance(document.getElementById('c_mobile').value); } } catch (e) { alert("Contact Picker not supported."); }
-    }
-            
+}
