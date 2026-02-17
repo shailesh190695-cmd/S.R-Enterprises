@@ -1,4 +1,4 @@
-// MODULE: S.R. Enterprises Universal System (Mobile + Tablet + Laptop Optimized)
+// MODULE: S.R. Enterprises Universal System (Fixed Side-by-Side Layout)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -8,49 +8,24 @@ function showBilling() {
     panel.style.background = "#f1f5f9"; 
 
     panel.innerHTML = `
-        <style>
-            .bill-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 15px; margin-bottom: 12px; }
-            .label-box { display: flex; align-items: baseline; gap: 8px; }
-            .input-field { flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 4px; border-bottom: 1px solid #ddd; }
-            
-            /* MOBILE OPTIMIZATION */
-            @media screen and (max-width: 600px) {
-                .bill-grid { grid-template-columns: 1fr !important; gap: 10px; }
-                .label-box { flex-direction: column; align-items: flex-start; gap: 2px; }
-                .input-field { width: 100%; border-bottom: 1px solid #1e3a8a; }
-                h1 { font-size: 24px !important; }
-                #header-flex { flex-direction: column !important; align-items: flex-start !important; }
-                #inv-date-flex { width: 100%; justify-content: flex-start !important; margin-top: 10px; }
-            }
-
-            @media print {
-                @page { size: A4; margin: 8mm; }
-                .no-print, button { display: none !important; }
-                body { background: white !important; }
-                #bill-container { border: 2px solid black !important; padding: 5px !important; margin: 0 !important; width: 100% !important; box-shadow: none !important; }
-                .input-field { border: none !important; }
-                #bank-details { display: block !important; border: 2px solid black !important; }
-            }
-        </style>
-
         <div id="print-area" style="padding: 10px; color: #000; font-family: sans-serif; min-height: 100vh; box-sizing: border-box;">
             <div id="bill-container" style="width: 100%; max-width: 950px; margin: auto; border: 2px solid #1e3a8a; border-radius: 12px; padding: 20px; background: #ffffff; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                 
-                <div id="header-flex" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; gap: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; gap: 10px;">
                     <div>
-                        <h1 style="color: #1e3a8a; margin: 0; font-size: 32px; letter-spacing: 1px; font-weight: 900;">S.R ENTERPRISES</h1>
+                        <h1 style="color: #1e3a8a; margin: 0; font-size: 28px; letter-spacing: 1px; font-weight: 900;">S.R ENTERPRISES</h1>
                         <p style="font-size: 13px; margin: 1px 0; color: #000; font-weight: 800; text-transform: uppercase;">Fusing Machine Specialist</p>
                         <p style="font-size: 11px; margin: 0; color: #475569; font-weight: 700;">Malad East, Mumbai, Maharashtra</p>
                         <p style="font-size: 14px; margin: 3px 0 0 0; color: #1e3a8a; font-weight: 900;">📞 +91 9326113988</p>
                     </div>
-                    <div id="inv-date-flex" style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <div style="display: flex; gap: 8px;">
                         <div style="text-align: center;">
                             <label style="font-size: 10px; color: #000; font-weight: 900;">INVOICE NO</label><br>
-                            <input type="text" id="inv_no" value="${autoInv}" style="width: 80px; padding: 5px; border-radius: 5px; text-align: center; border: 2px solid #1e3a8a; font-weight: 900;">
+                            <input type="text" id="inv_no" value="${autoInv}" style="width: 75px; padding: 5px; border-radius: 5px; text-align: center; border: 2px solid #1e3a8a; font-weight: 900;">
                         </div>
                         <div style="text-align: center;">
                             <label style="font-size: 10px; color: #000; font-weight: 900;">DATE</label><br>
-                            <input type="date" id="inv_date" value="${today}" style="width: 125px; padding: 5px; border-radius: 5px; border: 2px solid #1e3a8a; font-weight: 900; font-size: 12px;">
+                            <input type="date" id="inv_date" value="${today}" style="width: 115px; padding: 5px; border-radius: 5px; border: 2px solid #1e3a8a; font-weight: 900; font-size: 12px;">
                         </div>
                     </div>
                 </div>
@@ -58,32 +33,32 @@ function showBilling() {
                 <hr style="border: 1px solid #1e3a8a; margin-bottom: 15px;">
 
                 <div style="margin-bottom: 15px;">
-                    <div class="bill-grid">
-                        <div class="label-box">
+                    <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 15px; margin-bottom: 12px;">
+                        <div style="display: flex; align-items: baseline; gap: 8px; border-bottom: 1px solid #ddd;">
                             <label style="color: #000; font-size: 13px; font-weight: 900; white-space: nowrap;">CUSTOMER NAME:</label>
-                            <input type="text" id="c_name" class="input-field">
+                            <input type="text" id="c_name" style="flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 4px; background: transparent;">
                         </div>
-                        <div class="label-box">
+                        <div style="display: flex; align-items: baseline; gap: 8px; border-bottom: 1px solid #ddd;">
                             <label style="color: #000; font-size: 13px; font-weight: 900; white-space: nowrap;">MACHINE MODEL:</label>
-                            <input type="text" id="m_model" placeholder="Model No." class="input-field">
+                            <input type="text" id="m_model" placeholder="Model No." style="flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 4px; background: transparent;">
                         </div>
                     </div>
 
-                    <div class="bill-grid">
-                        <div class="label-box">
+                    <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 15px; margin-bottom: 12px;">
+                        <div style="display: flex; align-items: baseline; gap: 8px; border-bottom: 1px solid #ddd;">
                             <label style="color: #000; font-size: 13px; font-weight: 900; white-space: nowrap;">ADDRESS:</label>
-                            <input type="text" id="c_addr" class="input-field">
+                            <input type="text" id="c_addr" style="flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 4px; background: transparent;">
                         </div>
-                        <div class="label-box">
+                        <div style="display: flex; align-items: baseline; gap: 8px; border-bottom: 1px solid #ddd;">
                             <label style="color: #000; font-size: 13px; font-weight: 900; white-space: nowrap;">REMARK:</label>
-                            <input type="text" id="m_remark" placeholder="Note" class="input-field">
+                            <input type="text" id="m_remark" placeholder="Note" style="flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 4px; background: transparent;">
                         </div>
                     </div>
 
-                    <div class="label-box" style="width: 100%; max-width: 400px;">
+                    <div style="width: 100%; max-width: 400px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #ddd;">
                         <label style="color: #000; font-size: 13px; font-weight: 900; white-space: nowrap;">MOBILE NO:</label>
-                        <div style="display: flex; gap: 5px; flex: 1; width: 100%;">
-                            <input type="number" id="c_mobile" class="input-field">
+                        <div style="display: flex; gap: 5px; flex: 1;">
+                            <input type="number" id="c_mobile" style="flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 4px; background: transparent;">
                             <button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 4px 10px; border-radius: 5px; font-weight: 900; cursor: pointer; font-size: 11px;">PICK</button>
                         </div>
                     </div>
@@ -95,9 +70,9 @@ function showBilling() {
                     </div>
                     <div id="items_container" style="background: #fff; border: 1.5px solid #000; border-top: none; padding: 5px; min-width: 500px;"></div>
                 </div>
-                <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f1f5f9; border: 1.5px dashed #1e3a8a; color: #1e3a8a; padding: 10px; font-weight: 900; cursor: pointer; margin-bottom: 10px; font-size: 12px;">+ ADD ITEM</button>
+                <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f1f5f9; border: 2px dashed #1e3a8a; color: #1e3a8a; padding: 10px; font-weight: 900; cursor: pointer; margin-bottom: 10px; font-size: 12px;">+ ADD ITEM</button>
 
-                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px; flex-wrap: wrap; gap: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px; gap: 15px;">
                     <div id="bank-details" style="font-size: 11px; color: #000; font-weight: 800; border: 1.5px solid #000; padding: 8px; border-radius: 8px; display: none; background: #fff; line-height: 1.2;">
                         <p style="margin:0; font-weight: 900; text-decoration: underline; color: #1e3a8a;">BANK ACCOUNT DETAILS:</p>
                         <p style="margin:2px 0;">NAME: MR. HARIRAM SITARAM RAJBHAR</p>
@@ -138,6 +113,18 @@ function showBilling() {
                 <button id="no-print-back" class="no-print" onclick="showDashboard()" style="width: 100%; margin-top: 15px; background: #64748b; color: white; padding: 10px; border: none; border-radius: 8px; font-weight: 900; cursor: pointer;">← BACK</button>
             </div>
         </div>
+        <style>
+            @media print{
+                @page { size: A4; margin: 8mm; }
+                .no-print, #no-print, #no-print-back, button{display:none!important;}
+                body{background:white!important; margin: 0; padding: 0;}
+                #print-area{color:black!important; background:white!important; padding:0; width: 100%;}
+                #bill-container { border: 2px solid black !important; border-radius: 0 !important; width: 100% !important; padding: 5px !important; margin: 0 !important; box-shadow: none !important; }
+                div{border-color:black!important; color:black!important;}
+                input{border:none!important; font-weight: 900!important; background:transparent!important;}
+                #bank-details{display: block !important; border: 2px solid black !important;}
+            }
+        </style>
     `;
     addNewRow();
 }
