@@ -1,12 +1,12 @@
-// MODULE: S.R. Enterprises Advance Management (Old Dues Auto-Integration)
-const scriptURL = 'https://script.google.com/macros/s/AKfycbw6OT1VYJTYdBun97SHmQm4HpIq1ebu5EyyYi0n0FTSrAujfqxILcPypKnQhqCnudivhw/exec';
+// MODULE: S.R. Enterprises Professional System (Auto-Fill & Pending Balance Fixed)
+const scriptURL = 'https://script.google.com/macros/s/AKfycbw7OimhdjMEh5dkxx-kCSv9VjHEQyOc1gVeR75C19Mj_QtvYpSqqSfZm2SZkbAFKDwTxg/exec';
 let fetchedOldBalance = 0;
 
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
     const autoInv = "SR-" + Math.floor(1000 + Math.random() * 9000);
-    fetchedOldBalance = 0; 
+    fetchedOldBalance = 0;
 
     panel.style.display = "block";
     panel.style.background = "#f1f5f9"; 
@@ -14,7 +14,7 @@ function showBilling() {
     panel.innerHTML = `
         <style>
             input[type="text"], textarea { text-transform: uppercase; }
-            .info-row { display: flex; align-items: baseline; gap: 5px; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
+            .info-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
             .info-row label { font-weight: 900; font-size: 13px; color: #000; white-space: nowrap; min-width: 130px; display: inline-block; }
             .info-row input, .info-row textarea { flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 2px; background: transparent; outline: none; width: 100%; resize: none; font-family: sans-serif; }
             .grid-system { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
@@ -27,10 +27,13 @@ function showBilling() {
 
             @media print {
                 @page { size: A4; margin: 10mm; }
-                .no-print, button, .due-checkbox-area { display: none !important; }
-                body { background: white !important; }
+                .no-print, #no-print, #no-print-back, button { display: none !important; }
+                body { background: white !important; margin: 0; padding: 0; }
                 #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; box-shadow: none !important; border-radius: 0 !important; }
+                #customer-boundary { border: 2px solid black !important; border-radius: 0 !important; padding: 15px !important; }
                 .info-row { border-bottom: none !important; }
+                input, textarea { border: none !important; font-weight: 900 !important; }
+                #old_due_alert { display: none !important; }
                 #bank-details { display: block !important; border: 2px solid black !important; }
             }
         </style>
@@ -59,7 +62,7 @@ function showBilling() {
                 <hr style="border: 1.5px solid #1e3a8a; margin-bottom: 20px;">
                 
                 <div id="old_due_alert" class="due-msg">
-                    <span>⚠️ PURANA BAKAYA (DUE): ₹<span id="due_amt_val">0</span></span>
+                    <span>⚠️ PENDING BALANCE: ₹<span id="due_amt_val">0</span></span>
                     <label class="due-checkbox-area" style="font-size: 12px; color: #000; cursor:pointer;">
                         <input type="checkbox" id="add_old_dues" onchange="calculateTotal()" style="width:16px; height:16px; vertical-align:middle;"> ADD TO THIS BILL
                     </label>
@@ -105,8 +108,8 @@ function showBilling() {
                             <div style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" id="gst_check" onchange="calculateTotal()" style="width:16px; height:16px;"><span>GST (18%):</span></div>
                             <span id="gst_amt">₹0.00</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800; color: red;">
-                            <span>OLD PENDING:</span><span id="display_old_due">₹0.00</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800; color: #dc2626;">
+                            <span>PENDING BALANCE:</span><span id="display_old_due">₹0.00</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800;">
                             <span>DISCOUNT (₹):</span>
@@ -127,11 +130,6 @@ function showBilling() {
                     <p id="amount_in_words" style="color: #000; font-size: 14px; font-style: italic; margin: 0; font-weight: 900; text-decoration: underline;">Zero Only</p>
                 </div>
 
-                <div id="signature-area" style="margin-top: 50px; display: flex; justify-content: space-between; padding: 0 20px;">
-                    <div style="text-align: center;"><p style="margin-bottom: 35px; border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">Customer Signature</p></div>
-                    <div style="text-align: center;"><p style="margin-bottom: 35px; border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">For S.R. ENTERPRISES</p></div>
-                </div>
-
                 <div id="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;">
                     <button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border: none; border-radius: 10px; font-weight: 900; font-size: 16px; cursor: pointer;">🖨️ PRINT BILL / PDF</button>
                     <button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border: none; border-radius: 10px; font-weight: 900; font-size: 16px; cursor: pointer;">📲 SAVE & WHATSAPP</button>
@@ -147,6 +145,11 @@ async function checkOldBalance(mobile) {
     try {
         const response = await fetch(`${scriptURL}?mobile=${mobile}`);
         const res = await response.json();
+        
+        // AUTO-FILL Name & Address from record
+        if(res.name) document.getElementById('c_name').value = res.name;
+        if(res.address) document.getElementById('c_addr').value = res.address;
+        
         fetchedOldBalance = parseFloat(res.oldBalance) || 0;
         if(fetchedOldBalance > 0) {
             document.getElementById('old_due_alert').style.display = 'flex';
@@ -172,7 +175,8 @@ async function saveAndWhatsApp() {
         gst: document.getElementById('gst_amt').innerText.replace('₹', ''),
         total: document.getElementById('grand_total').innerText.replace('₹', ''),
         paid: document.getElementById('paid_amt').value,
-        balance: document.getElementById('balance_due').innerText.replace('₹', '')
+        balance: document.getElementById('balance_due').innerText.replace('₹', ''),
+        pending: document.getElementById('balance_due').innerText.replace('₹', '') // Column L ke liye
     };
 
     if(!data.name || !data.mobile) { alert("Customer Name aur Mobile Number zaroori hai!"); return; }
@@ -182,17 +186,11 @@ async function saveAndWhatsApp() {
 
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Data Saved in Google Sheet!");
-        
-        const msg = `*S.R. ENTERPRISES SERVICE REPORT*%0A---------------------------%0A*Invoice:* ${data.invoice}%0A*Date:* ${data.date}%0A*Customer:* ${data.name}%0A*Model:* ${data.model}%0A*Grand Total:* ₹${data.total}%0A*Amount Paid:* ₹${data.paid}%0A*Balance Due:* ₹${data.balance}%0A---------------------------%0A*Thank you!*`;
+        alert("✅ Bill Saved in Google Sheet!");
+        const msg = `*S.R. ENTERPRISES REPORT*%0A---------------------------%0A*Invoice:* ${data.invoice}%0A*Date:* ${data.date}%0A*Customer:* ${data.name}%0A*PENDING BALANCE:* ₹${data.balance}%0A---------------------------%0A*Thank you!*`;
         window.open(`https://wa.me/91${data.mobile}?text=${msg}`, '_blank');
-        
-    } catch(e) { 
-        alert("❌ Error saving to sheet!"); 
-    } finally {
-        saveBtn.innerText = "📲 SAVE & WHATSAPP";
-        saveBtn.disabled = false;
-    }
+    } catch(e) { alert("❌ Error saving to sheet!"); }
+    finally { saveBtn.innerText = "📲 SAVE & WHATSAPP"; saveBtn.disabled = false; }
 }
 
 function addNewRow() {
@@ -259,4 +257,4 @@ function numberToWords(num) {
 
 async function pickPhone() {
     try { const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if (contacts.length) { document.getElementById('c_name').value = contacts[0].name[0]; document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); checkOldBalance(document.getElementById('c_mobile').value); } } catch (e) { alert("Contact Picker not supported."); }
-}
+        }
