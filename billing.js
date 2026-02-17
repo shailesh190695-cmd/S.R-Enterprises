@@ -1,7 +1,80 @@
-// MODULE: S.R. Enterprises Original Layout MASTER FIX
+// MASTER FIX: S.R. Enterprises Original Layout (All Features Restored)
 const scriptURL = 'https://script.google.com/macros/s/AKfycbwkxcAdRCz2iAzkOV0eaeo5HvpknvSRHk_VsJdpErFZAXgWztf3Dbz0lTjJ3S78eCINog/exec';
 let fetchedOldBalance = 0;
 
+// 1. Function to convert numbers to words
+function numberToWords(num) {
+    if (num === 0) return "Zero";
+    const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+    const g = ['', 'Thousand', 'Million', 'Billion'];
+    const makeGroup = (n) => {
+        let s = ''; if (n >= 100) { s += a[Math.floor(n / 100)] + ' Hundred '; n %= 100; }
+        if (n >= 20) { s += b[Math.floor(n / 10)] + ' '; n %= 10; }
+        if (n > 0) { s += a[n] + ' '; } return s;
+    };
+    let words = '', groupIdx = 0; 
+    let tempNum = Math.floor(num);
+    while (tempNum > 0) { 
+        let group = tempNum % 1000; 
+        if (group !== 0) { words = makeGroup(group) + g[groupIdx] + ' ' + words; } 
+        tempNum = Math.floor(tempNum / 1000); 
+        groupIdx++; 
+    }
+    return words.trim();
+}
+
+// 2. Function to add a new row in the items table
+function addNewRow() {
+    const container = document.getElementById('items_container');
+    if(!container) return;
+    const row = document.createElement('div');
+    row.className = "item-row";
+    row.style = "display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; margin-bottom: 8px; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px;";
+    row.innerHTML = `
+        <input type="text" placeholder="WORK DESCRIPTION" style="padding:5px; border:none; font-weight:700;" class="item-desc">
+        <input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700;">
+        <input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700;">
+        <div class="item-total" style="font-weight:900; text-align:right;">₹0.00</div>
+        <button class="no-print" onclick="this.parentElement.remove(); calculateTotal();" style="color:red; border:none; background:none; cursor:pointer;">❌</button>
+    `;
+    container.appendChild(row);
+}
+
+// 3. Calculation Logic
+function calculateTotal() {
+    let subtotal = 0;
+    document.querySelectorAll('.item-row').forEach(row => {
+        const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
+        const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+        const total = rate * qty;
+        row.querySelector('.item-total').innerText = "₹" + total.toFixed(2);
+        subtotal += total;
+    });
+
+    const disc = parseFloat(document.getElementById('w_disc').value) || 0;
+    const isGst = document.getElementById('gst_check').checked;
+    const addOldDues = document.getElementById('add_old_dues')?.checked;
+    
+    const taxableTotal = subtotal - disc;
+    const gstAmt = isGst ? (taxableTotal * 0.18) : 0;
+    const currentBillTotal = taxableTotal + gstAmt;
+    
+    const oldDueToAdd = addOldDues ? fetchedOldBalance : 0;
+    const finalGrandTotal = Math.round(currentBillTotal + oldDueToAdd);
+    
+    const paid = parseFloat(document.getElementById('paid_amt').value) || 0;
+    const balance = finalGrandTotal - paid;
+
+    document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2);
+    document.getElementById('gst_amt').innerText = "₹" + gstAmt.toFixed(2);
+    document.getElementById('display_old_due').innerText = "₹" + oldDueToAdd.toFixed(2);
+    document.getElementById('grand_total').innerText = "₹" + finalGrandTotal.toFixed(2);
+    document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
+    document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
+}
+
+// 4. Main Billing UI
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -27,10 +100,9 @@ function showBilling() {
                 #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; box-shadow: none !important; border-radius: 0 !important; }
                 .info-row { border-bottom: none !important; }
                 input, textarea { border: none !important; font-weight: 900 !important; }
-                #old_due_alert, #signature-area { display: block !important; }
-                #signature-area { margin-top: 50px !important; }
                 #old_due_alert { display: none !important; }
                 #bank-details { display: block !important; border: 2px solid black !important; }
+                #signature-area { margin-top: 50px !important; display: flex !important; }
             }
         </style>
 
@@ -140,6 +212,7 @@ function showBilling() {
     addNewRow();
 }
 
+// 5. Google Sheets Integration (Check Balance)
 async function checkOldBalance(mobile) {
     if(!mobile || mobile.length < 10) return;
     try {
@@ -158,67 +231,7 @@ async function checkOldBalance(mobile) {
     } catch(e) { console.log("Balance fetch error"); }
 }
 
-function calculateTotal() {
-    let subtotal = 0;
-    document.querySelectorAll('.item-row').forEach(row => {
-        const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
-        const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
-        const total = rate * qty;
-        row.querySelector('.item-total').innerText = "₹" + total.toFixed(2);
-        subtotal += total;
-    });
-
-    const disc = parseFloat(document.getElementById('w_disc').value) || 0;
-    const isGst = document.getElementById('gst_check').checked;
-    const addOldDues = document.getElementById('add_old_dues')?.checked;
-    
-    const taxableTotal = subtotal - disc;
-    const gstAmt = isGst ? (taxableTotal * 0.18) : 0;
-    const currentBillTotal = taxableTotal + gstAmt;
-    
-    const oldDueToAdd = addOldDues ? fetchedOldBalance : 0;
-    const finalGrandTotal = Math.round(currentBillTotal + oldDueToAdd);
-    
-    const paid = parseFloat(document.getElementById('paid_amt').value) || 0;
-    const balance = finalGrandTotal - paid;
-
-    document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2);
-    document.getElementById('gst_amt').innerText = "₹" + gstAmt.toFixed(2);
-    document.getElementById('display_old_due').innerText = "₹" + oldDueToAdd.toFixed(2);
-    document.getElementById('grand_total').innerText = "₹" + finalGrandTotal.toFixed(2);
-    document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
-    document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
-}
-
-function addNewRow() {
-    const container = document.getElementById('items_container');
-    const row = document.createElement('div');
-    row.className = "item-row";
-    row.style = "display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; margin-bottom: 8px; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px;";
-    row.innerHTML = `
-        <input type="text" placeholder="WORK DESCRIPTION" style="padding:5px; border:none; font-weight:700;" class="item-desc">
-        <input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700;">
-        <input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center; font-weight:700;">
-        <div class="item-total" style="font-weight:900; text-align:right;">₹0.00</div>
-        <button onclick="this.parentElement.remove(); calculateTotal();" style="color:red; border:none; background:none; cursor:pointer;">❌</button>
-    `;
-    container.appendChild(row);
-}
-
-function numberToWords(num) {
-    if (num === 0) return "Zero";
-    const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-    const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-    const g = ['', 'Thousand', 'Million', 'Billion'];
-    const makeGroup = (n) => {
-        let s = ''; if (n >= 100) { s += a[Math.floor(n / 100)] + ' Hundred '; n %= 100; }
-        if (n >= 20) { s += b[Math.floor(n / 10)] + ' '; n %= 10; }
-        if (n > 0) { s += a[n] + ' '; } return s;
-    };
-    let words = '', groupIdx = 0; while (num > 0) { let group = num % 1000; if (group !== 0) { words = makeGroup(group) + g[groupIdx] + ' ' + words; } num = Math.floor(num / 1000); groupIdx++; }
-    return words.trim();
-}
-
+// 6. Save and Send
 async function saveAndWhatsApp() {
     const data = {
         invoice: document.getElementById('inv_no').value,
@@ -228,5 +241,29 @@ async function saveAndWhatsApp() {
         model: document.getElementById('m_model').value.toUpperCase(),
         address: document.getElementById('c_addr').value.toUpperCase(),
         description: document.querySelector('.item-desc')?.value.toUpperCase() || "SERVICE",
-        subtotal
-        
+        subtotal: document.getElementById('tax_amt').innerText.replace('₹',''),
+        gst: document.getElementById('gst_amt').innerText.replace('₹',''),
+        total: document.getElementById('grand_total').innerText.replace('₹',''),
+        paid: document.getElementById('paid_amt').value,
+        balance: (parseFloat(document.getElementById('grand_total').innerText.replace('₹','')) - parseFloat(document.getElementById('paid_amt').value)).toFixed(2),
+        pending: (parseFloat(document.getElementById('grand_total').innerText.replace('₹','')) - parseFloat(document.getElementById('paid_amt').value)).toFixed(2)
+    };
+    try {
+        await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+        alert("✅ Data Saved Successfully!");
+        const msg = `*S.R. ENTERPRISES REPORT*%0A---------------------------%0A*Invoice:* ${data.invoice}%0A*Date:* ${data.date}%0A*Customer:* ${data.name}%0A*OLD PENDING BALANCE:* ₹${data.balance}%0A---------------------------%0A*Thank you!*`;
+        window.open(`https://wa.me/91${data.mobile}?text=${msg}`, '_blank');
+    } catch(e) { alert("Error saving to sheet!"); }
+}
+
+// 7. Contact Picker
+async function pickPhone() {
+    try { 
+        const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); 
+        if (contacts.length) { 
+            document.getElementById('c_name').value = contacts[0].name[0]; 
+            document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); 
+            checkOldBalance(document.getElementById('c_mobile').value); 
+        } 
+    } catch (e) { alert("Contact Picker not supported."); }
+}
