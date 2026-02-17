@@ -1,4 +1,4 @@
-// MODULE: S.R. Enterprises Professional System (Old Pending Balance Branding)
+// MODULE: S.R. Enterprises Original Layout (Old Pending Balance Integrated)
 const scriptURL = 'https://script.google.com/macros/s/AKfycbwkxcAdRCz2iAzkOV0eaeo5HvpknvSRHk_VsJdpErFZAXgWztf3Dbz0lTjJ3S78eCINog/exec';
 let fetchedOldBalance = 0;
 
@@ -116,7 +116,7 @@ function showBilling() {
                 </div>
                 
                 <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;">
-                    <button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900; cursor: pointer;">🖨️ PRINT</button>
+                    <button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900; cursor: pointer;">🖨️ PRINT BILL / PDF</button>
                     <button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900; cursor: pointer;">📲 SAVE & WHATSAPP</button>
                 </div>
             </div>
@@ -166,9 +166,8 @@ function addNewRow() {
     const id = Date.now();
     const row = document.createElement('div');
     row.style = "display: grid; grid-template-columns: 3fr 1fr 60px 1fr 40px; gap: 10px; margin-bottom: 8px; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px;";
-    row.className = "item-row";
     row.innerHTML = `
-        <input type="text" class="item-desc" placeholder="WORK DESCRIPTION" style="padding:5px; border:none; font-weight:700;">
+        <input type="text" placeholder="WORK DESCRIPTION" style="padding:5px; border:none; font-weight:700;" class="item-desc">
         <input type="number" class="item-rate" value="0" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center;">
         <input type="number" class="item-qty" value="1" oninput="calculateTotal()" style="padding:5px; border:none; text-align:center;">
         <div class="item-total" style="font-weight:900; text-align:right;">₹0.00</div>
@@ -195,10 +194,10 @@ async function saveAndWhatsApp() {
     };
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Bill Saved!");
-        const msg = `*S.R. ENTERPRISES REPORT*%0AInvoice: ${data.invoice}%0A*OLD PENDING BALANCE:* ₹${data.balance}%0AThank you!`;
+        alert("✅ Data Saved Successfully!");
+        const msg = `*S.R. ENTERPRISES REPORT*%0A---------------------------%0A*Invoice:* ${data.invoice}%0A*Date:* ${data.date}%0A*Customer:* ${data.name}%0A*OLD PENDING BALANCE:* ₹${data.balance}%0A---------------------------%0A*Thank you!*`;
         window.open(`https://wa.me/91${data.mobile}?text=${msg}`, '_blank');
-    } catch(e) { alert("Error!"); }
+    } catch(e) { alert("Error saving to sheet!"); }
 }
 
 async function pickPhone() {
