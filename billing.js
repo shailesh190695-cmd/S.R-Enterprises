@@ -1,10 +1,12 @@
-// MODULE: S.R. Enterprises Standard A4 System (Final Connection Fixed)
+// MODULE: S.R. Enterprises Advance Management (Old Dues Auto-Integration)
 const scriptURL = 'https://script.google.com/macros/s/AKfycbw6OT1VYJTYdBun97SHmQm4HpIq1ebu5EyyYi0n0FTSrAujfqxILcPypKnQhqCnudivhw/exec';
+let fetchedOldBalance = 0;
 
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
     const autoInv = "SR-" + Math.floor(1000 + Math.random() * 9000);
+    fetchedOldBalance = 0; 
 
     panel.style.display = "block";
     panel.style.background = "#f1f5f9"; 
@@ -12,11 +14,11 @@ function showBilling() {
     panel.innerHTML = `
         <style>
             input[type="text"], textarea { text-transform: uppercase; }
-            .info-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
+            .info-row { display: flex; align-items: baseline; gap: 5px; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
             .info-row label { font-weight: 900; font-size: 13px; color: #000; white-space: nowrap; min-width: 130px; display: inline-block; }
             .info-row input, .info-row textarea { flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 2px; background: transparent; outline: none; width: 100%; resize: none; font-family: sans-serif; }
             .grid-system { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
-            .due-msg { color: #dc2626; font-weight: 900; font-size: 14px; margin-bottom: 10px; display: none; background: #fee2e2; padding: 8px; border-radius: 5px; border: 1px solid #ef4444; }
+            .due-msg { color: #dc2626; font-weight: 900; font-size: 14px; margin-bottom: 10px; display: none; background: #fee2e2; padding: 10px; border-radius: 8px; border: 1px solid #ef4444; align-items: center; justify-content: space-between; }
 
             @media screen and (max-width: 600px) {
                 .info-row label { min-width: 110px; font-size: 11px; }
@@ -25,13 +27,10 @@ function showBilling() {
 
             @media print {
                 @page { size: A4; margin: 10mm; }
-                .no-print, #no-print, #no-print-back, button { display: none !important; }
-                body { background: white !important; margin: 0; padding: 0; }
+                .no-print, button, .due-checkbox-area { display: none !important; }
+                body { background: white !important; }
                 #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; box-shadow: none !important; border-radius: 0 !important; }
-                #customer-boundary { border: 2px solid black !important; border-radius: 0 !important; padding: 15px !important; }
                 .info-row { border-bottom: none !important; }
-                input, textarea { border: none !important; font-weight: 900 !important; }
-                #old_due_alert { display: none !important; }
                 #bank-details { display: block !important; border: 2px solid black !important; }
             }
         </style>
@@ -43,7 +42,7 @@ function showBilling() {
                     <div>
                         <h1 style="color: #1e3a8a; margin: 0; font-size: 32px; letter-spacing: 1px; font-weight: 900;">S.R ENTERPRISES</h1>
                         <p style="font-size: 14px; margin: 2px 0; color: #000; font-weight: 800; text-transform: uppercase;">Fusing Machine Specialist</p>
-                        <p style="font-size: 12px; margin: 0; color: #475569; font-weight: 700;">Malad East, Mumbai | 📞 +91 9326113988</p>
+                        <p style="font-size: 12px; margin: 0; color: #475569;">Malad East, Mumbai | 📞 +91 9326113988</p>
                     </div>
                     <div style="display: flex; gap: 10px;">
                         <div style="text-align: center;">
@@ -58,7 +57,13 @@ function showBilling() {
                 </div>
 
                 <hr style="border: 1.5px solid #1e3a8a; margin-bottom: 20px;">
-                <div id="old_due_alert" class="due-msg">⚠️ PURANA BAKAYA (DUE): ₹<span id="due_amt_val">0</span></div>
+                
+                <div id="old_due_alert" class="due-msg">
+                    <span>⚠️ PURANA BAKAYA (DUE): ₹<span id="due_amt_val">0</span></span>
+                    <label class="due-checkbox-area" style="font-size: 12px; color: #000; cursor:pointer;">
+                        <input type="checkbox" id="add_old_dues" onchange="calculateTotal()" style="width:16px; height:16px; vertical-align:middle;"> ADD TO THIS BILL
+                    </label>
+                </div>
 
                 <div id="customer-boundary" style="border: 1.5px solid #000; padding: 15px; border-radius: 8px; margin-bottom: 20px; background: #fff;">
                     <div class="grid-system">
@@ -100,6 +105,9 @@ function showBilling() {
                             <div style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" id="gst_check" onchange="calculateTotal()" style="width:16px; height:16px;"><span>GST (18%):</span></div>
                             <span id="gst_amt">₹0.00</span>
                         </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800; color: red;">
+                            <span>OLD PENDING:</span><span id="display_old_due">₹0.00</span>
+                        </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800;">
                             <span>DISCOUNT (₹):</span>
                             <input type="number" id="w_disc" value="0" oninput="calculateTotal()" style="width: 70px; padding: 4px; border: 1.5px solid #000; text-align: right; font-weight: 900; border-radius: 5px;">
@@ -139,12 +147,14 @@ async function checkOldBalance(mobile) {
     try {
         const response = await fetch(`${scriptURL}?mobile=${mobile}`);
         const res = await response.json();
-        if(res.oldBalance > 0) {
-            document.getElementById('old_due_alert').style.display = 'block';
-            document.getElementById('due_amt_val').innerText = res.oldBalance;
+        fetchedOldBalance = parseFloat(res.oldBalance) || 0;
+        if(fetchedOldBalance > 0) {
+            document.getElementById('old_due_alert').style.display = 'flex';
+            document.getElementById('due_amt_val').innerText = fetchedOldBalance.toFixed(2);
         } else {
             document.getElementById('old_due_alert').style.display = 'none';
         }
+        calculateTotal();
     } catch(e) { console.log("Balance fetch error"); }
 }
 
@@ -172,13 +182,13 @@ async function saveAndWhatsApp() {
 
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Bill Saved in Google Sheet!");
+        alert("✅ Data Saved in Google Sheet!");
         
-        const msg = `*S.R. ENTERPRISES SERVICE REPORT*%0A---------------------------%0A*Invoice:* ${data.invoice}%0A*Date:* ${data.date}%0A*Customer:* ${data.name}%0A*Model:* ${data.model}%0A*Grand Total:* ₹${data.total}%0A*Amount Paid:* ₹${data.paid}%0A*Balance Due:* ₹${data.balance}%0A---------------------------%0A*Thank you for choosing S.R. Enterprises!*`;
+        const msg = `*S.R. ENTERPRISES SERVICE REPORT*%0A---------------------------%0A*Invoice:* ${data.invoice}%0A*Date:* ${data.date}%0A*Customer:* ${data.name}%0A*Model:* ${data.model}%0A*Grand Total:* ₹${data.total}%0A*Amount Paid:* ₹${data.paid}%0A*Balance Due:* ₹${data.balance}%0A---------------------------%0A*Thank you!*`;
         window.open(`https://wa.me/91${data.mobile}?text=${msg}`, '_blank');
         
     } catch(e) { 
-        alert("❌ Sheet mein save nahi hua. Link check karein."); 
+        alert("❌ Error saving to sheet!"); 
     } finally {
         saveBtn.innerText = "📲 SAVE & WHATSAPP";
         saveBtn.disabled = false;
@@ -210,19 +220,27 @@ function calculateTotal() {
         row.querySelector('.item-total').innerText = "₹" + total.toFixed(2);
         subtotal += total;
     });
+
     const disc = parseFloat(document.getElementById('w_disc').value) || 0;
     const isGst = document.getElementById('gst_check').checked;
-    const taxable = subtotal - disc;
-    const gst = isGst ? (taxable * 0.18) : 0;
-    const grand = Math.round(taxable + gst);
+    const addOldDues = document.getElementById('add_old_dues')?.checked;
+    
+    const taxableTotal = subtotal - disc;
+    const gstAmt = isGst ? (taxableTotal * 0.18) : 0;
+    const currentBillTotal = taxableTotal + gstAmt;
+    
+    const oldDueToAdd = addOldDues ? fetchedOldBalance : 0;
+    const finalGrandTotal = Math.round(currentBillTotal + oldDueToAdd);
+    
     const paid = parseFloat(document.getElementById('paid_amt').value) || 0;
-    const balance = grand - paid;
+    const balance = finalGrandTotal - paid;
 
     document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2);
-    document.getElementById('gst_amt').innerText = "₹" + gst.toFixed(2);
-    document.getElementById('grand_total').innerText = "₹" + grand.toFixed(2);
+    document.getElementById('gst_amt').innerText = "₹" + gstAmt.toFixed(2);
+    document.getElementById('display_old_due').innerText = "₹" + oldDueToAdd.toFixed(2);
+    document.getElementById('grand_total').innerText = "₹" + finalGrandTotal.toFixed(2);
     document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
-    document.getElementById('amount_in_words').innerText = numberToWords(grand > 0 ? grand : 0) + " Only";
+    document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
 }
 
 function numberToWords(num) {
