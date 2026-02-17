@@ -1,4 +1,4 @@
-// MODULE: S.R. Enterprises Standard A4 System (Perfect Alignment & Page Size)
+// MODULE: S.R. Enterprises Standard A4 System (Overflow & Multi-line Address Fix)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -10,18 +10,21 @@ function showBilling() {
     panel.innerHTML = `
         <style>
             /* Auto Capital for all text inputs */
-            input[type="text"] { text-transform: uppercase; }
+            input[type="text"], textarea { text-transform: uppercase; }
 
-            /* Standard Alignment Fix for Form & Print */
-            .info-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
+            /* Standard Alignment Fix */
+            .info-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
             .info-row label { font-weight: 900; font-size: 13px; color: #000; white-space: nowrap; min-width: 135px; display: inline-block; }
             .info-row input { flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 2px; background: transparent; outline: none; width: 100%; }
             
-            .grid-system { display: grid; grid-template-columns: 1.4fr 1fr; gap: 30px; padding-right: 10px; }
+            /* Address Multi-line Fix */
+            .info-row textarea { flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 2px; background: transparent; outline: none; width: 100%; resize: none; font-family: sans-serif; overflow: hidden; }
+
+            .grid-system { display: grid; grid-template-columns: 1.6fr 1fr; gap: 25px; padding-right: 5px; }
 
             @media screen and (max-width: 600px) {
                 .info-row label { min-width: 110px; font-size: 11px; }
-                .grid-system { grid-template-columns: 1fr; gap: 0; padding-right: 0; }
+                .grid-system { grid-template-columns: 1fr !important; gap: 0; padding-right: 0; }
             }
 
             @media print {
@@ -31,7 +34,7 @@ function showBilling() {
                 #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; box-shadow: none !important; border-radius: 0 !important; }
                 #customer-boundary { border: 2px solid black !important; border-radius: 0 !important; }
                 .info-row { border-bottom: none !important; }
-                input { border: none !important; font-weight: 900 !important; }
+                input, textarea { border: none !important; font-weight: 900 !important; }
                 #bank-details { display: block !important; border: 2px solid black !important; }
             }
         </style>
@@ -69,7 +72,7 @@ function showBilling() {
                             </div>
                             <div class="info-row">
                                 <label>ADDRESS:</label>
-                                <input type="text" id="c_addr">
+                                <textarea id="c_addr" rows="2" placeholder="ENTER FULL ADDRESS"></textarea>
                             </div>
                             <div class="info-row" style="border-bottom: none; margin-bottom: 0;">
                                 <label>MOBILE NO:</label>
@@ -82,11 +85,11 @@ function showBilling() {
                         <div class="col">
                             <div class="info-row">
                                 <label>MACHINE MODEL:</label>
-                                <input type="text" id="m_model" placeholder="MODEL NO.">
+                                <input type="text" id="m_model" placeholder="MACHINE & SIZE">
                             </div>
                             <div class="info-row">
                                 <label>REMARK:</label>
-                                <input type="text" id="m_remark" placeholder="NOTE">
+                                <textarea id="m_remark" rows="2" placeholder="WORK REMARK"></textarea>
                             </div>
                         </div>
                     </div>
@@ -194,4 +197,4 @@ function sendToWhatsApp() {
 
 async function pickPhone() {
     try { const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); if (contacts.length) { document.getElementById('c_name').value = contacts[0].name[0]; document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); } } catch (e) { alert("Contact Picker not supported."); }
-}
+        }
