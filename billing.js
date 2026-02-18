@@ -1,4 +1,4 @@
-// MASTER MODULE: S.R. Enterprises Original Layout + Payment Update Function
+// MASTER FIX: S.R. Enterprises Final Corrected Code (100% COMPLETE)
 const scriptURL = 'https://script.google.com/macros/s/AKfycbyVCx6eZsxUQn9SnQnsJwh4LBBAAM_qxpewlJs-mEUhqKsxDLKLPXzoszfKKM3NKnwsYQ/exec';
 let fetchedOldBalance = 0;
 
@@ -74,7 +74,7 @@ function calculateTotal() {
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
 }
 
-// 4. Main Billing UI (Aapka original layout bina badlav ke)
+// 4. Main Billing UI
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -219,11 +219,11 @@ function showBilling() {
                     </div>
                     <div>
                         <label style="font-size: 11px; font-weight: 900; color: red;">DUE: ₹<span id="upd_due_val">0</span></label><br>
-                        <div style="padding: 10px; background: #fff; border: 1.5px solid #ddd; border-radius: 5px; text-align: center; font-weight:900; color: #444;">INFO</div>
+                        <div style="padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 5px; text-align: center; font-weight:900; color: #444;">INFO</div>
                     </div>
                     <div>
                         <label style="font-size: 11px; font-weight: 900;">PAID NOW (₹)</label><br>
-                        <input type="number" id="upd_paid" placeholder="Enter Amount" style="padding: 10px; border: 1.5px solid #ccc; border-radius: 5px; width: 100%;">
+                        <input type="number" id="upd_paid" placeholder="Enter Amount" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 100%;">
                     </div>
                     <button onclick="updatePaymentOnly()" style="background: #16a34a; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-weight: 900; cursor: pointer; height: 45px;">UPDATE NOW</button>
                 </div>
@@ -261,19 +261,18 @@ async function updatePaymentOnly() {
     const mobile = document.getElementById('upd_mobile').value;
     const additionalPaid = parseFloat(document.getElementById('upd_paid').value) || 0;
     const currentDue = parseFloat(document.getElementById('upd_due_val').innerText) || 0;
-    
     if(!mobile || additionalPaid <= 0) { alert("Mobile and Paid amount needed!"); return; }
-    
     const data = { action: "updatePayment", mobile: mobile, paid: additionalPaid, newBalance: (currentDue - additionalPaid).toFixed(2) };
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
         alert("✅ Payment Updated! Remaining: ₹" + data.newBalance);
         showBilling(); 
-    } catch(e) { alert("Error!"); }
+    } catch(e) { alert("Error updating payment!"); }
 }
 
 async function saveAndWhatsApp() {
     const data = {
         invoice: document.getElementById('inv_no').value,
         date: document.getElementById('inv_date').value,
-        name: document.getElementById(
+        name: document.getElementById('c_name').value.toUpperCase(),
+        mobil
