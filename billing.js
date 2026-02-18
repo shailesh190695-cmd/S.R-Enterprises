@@ -132,48 +132,78 @@ function showBilling() {
     `;
     addNewRow();
                             }
-// PART 3: Integration & Start (FIXED: Auto-fill Name & Address)
+// PART 3: Integration & Start (FIXED: Automatic Name & Address Fill)
 async function checkOldBalance(mobile) {
-    if(!mobile || mobile.length < 10) return;
+    if(!mobile || mobile.toString().length < 10) return;
     try {
-        const response = await fetch(`${scriptURL}?mobile=${mobile}`);
+        // Mobile number ko saaf karke bhej rahe hain
+        const cleanMobile = mobile.toString().replace(/\D/g, '');
+        const response = await fetch(`${scriptURL}?mobile=${cleanMobile}`);
         const res = await response.json();
         
-        // --- YE LINES DATA FILL KARENGI ---
-        if(res.name) document.getElementById('c_name').value = res.name;
-        if(res.address) document.getElementById('c_addr').value = res.address;
-        // ----------------------------------
+        // --- DATA AUTOMATIC BHARNE KA LOGIC ---
+        if(res.name) {
+            document.getElementById('c_name').value = res.name.toUpperCase();
+        }
+        if(res.address) {
+            document.getElementById('c_addr').value = res.address.toUpperCase();
+        }
+        // --------------------------------------
 
         fetchedOldBalance = parseFloat(res.oldBalance) || 0;
-        document.getElementById('old_due_alert').style.display = fetchedOldBalance > 0 ? 'flex' : 'none';
-        document.getElementById('due_amt_val').innerText = fetchedOldBalance.toFixed(2);
-        calculateTotal();
-    } catch(e) { console.log("Fetch error"); }
+        
+        // Alert box dikhane ke liye
+        const alertBox = document.getElementById('old_due_alert');
+        if(fetchedOldBalance > 0) {
+            alertBox.style.display = 'flex';
+            document.getElementById('due_amt_val').innerText = fetchedOldBalance.toFixed(2);
+        } else {
+            alertBox.style.display = 'none';
+        }
+        
+        calculateTotal(); // Purana balance aate hi calculation update
+    } catch(e) { 
+        console.log("Data Fetch Error:", e); 
+    }
 }
 
 async function fetchForUpdate(mobile) {
     if(!mobile) return;
     try {
-        const response = await fetch(`${scriptURL}?mobile=${mobile}`);
+        const cleanMobile = mobile.toString().replace(/\D/g, '');
+        const response = await fetch(`${scriptURL}?mobile=${cleanMobile}`);
         const res = await response.json();
         document.getElementById('upd_due_val').innerText = (parseFloat(res.oldBalance) || 0).toFixed(2);
-    } catch(e) { console.log("Update fetch error"); }
+    } catch(e) { 
+        console.log("Update Fetch Error"); 
+    }
 }
 
 async function updatePaymentOnly() {
     const mobile = document.getElementById('upd_mobile').value;
     const additionalPaid = parseFloat(document.getElementById('upd_paid').value) || 0;
     const currentDue = parseFloat(document.getElementById('upd_due_val').innerText) || 0;
-    if(!mobile || additionalPaid <= 0) { alert("Data bhariye!"); return; }
+    
+    if(!mobile || additionalPaid <= 0) { 
+        alert("Mobile Number aur Amount zaruri hai!"); 
+        return; 
+    }
     
     const remainingBalance = (currentDue - additionalPaid).toFixed(2);
-    const data = { action: "updatePayment", mobile: mobile, paid: additionalPaid, pending: remainingBalance };
+    const data = { 
+        action: "updatePayment", 
+        mobile: mobile, 
+        paid: additionalPaid, 
+        pending: remainingBalance 
+    };
     
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
         alert("✅ Hisab Updated! Naya Balance: ₹" + remainingBalance);
         showBilling(); 
-    } catch(e) { alert("Error updating payment!"); }
+    } catch(e) { 
+        alert("Server Error! Update nahi ho paya."); 
+    }
 }
 
 async function saveAndWhatsApp() {
@@ -190,12 +220,15 @@ async function saveAndWhatsApp() {
         balance: (parseFloat(document.getElementById('grand_total').innerText.replace('₹','')) - parseFloat(document.getElementById('paid_amt').value)).toFixed(2),
         pending: (parseFloat(document.getElementById('grand_total').innerText.replace('₹','')) - parseFloat(document.getElementById('paid_amt').value)).toFixed(2)
     };
+    
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Saved!");
+        alert("✅ Bill Sheet mein Save ho gaya!");
         const msg = `*S.R. ENTERPRISES REPORT*%0AInvoice: ${data.invoice}%0A*PENDING BALANCE:* ₹${data.pending}`;
         window.open(`https://wa.me/91${data.mobile}?text=${msg}`, '_blank');
-    } catch(e) { alert("Error!"); }
+    } catch(e) { 
+        alert("Save karne mein galti hui!"); 
+    }
 }
 
 async function pickPhone() {
@@ -203,11 +236,15 @@ async function pickPhone() {
         const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); 
         if (contacts && contacts.length > 0) { 
             document.getElementById('c_name').value = contacts[0].name[0]; 
-            document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); 
-            checkOldBalance(document.getElementById('c_mobile').value); 
+            const phone = contacts[0].tel[0].replace(/\D/g, '');
+            document.getElementById('c_mobile').value = phone; 
+            checkOldBalance(phone); 
         } 
-    } catch (e) { alert("Contact Picker not supported."); }
+    } catch (e) { 
+        alert("Contact Picker support nahi kar raha."); 
+    }
 }
 
+// Chalu karein
 showBilling();
         
