@@ -1,4 +1,4 @@
-// PART 1: S.R. Enterprises Logic & Calculations
+// PART 1: S.R. Enterprises Logic & Calculations (Fixed Minus Logic)
 const scriptURL = 'https://script.google.com/macros/s/AKfycbyVCx6eZsxUQn9SnQnsJwh4LBBAAM_qxpewlJs-mEUhqKsxDLKLPXzoszfKKM3NKnwsYQ/exec';
 let fetchedOldBalance = 0;
 
@@ -58,8 +58,8 @@ function calculateTotal() {
     document.getElementById('grand_total').innerText = "₹" + finalGrandTotal.toFixed(2);
     document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
-            }
-        // PART 2: Original Layout UI
+}
+// PART 2: Original Layout UI (Added Back Button)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -78,7 +78,7 @@ function showBilling() {
             .update-box { border: 2px solid #16a34a; background: #f0fdf4; padding: 15px; border-radius: 10px; margin-top: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
             @media print {
                 @page { size: A4; margin: 10mm; }
-                .no-print, #no-print, button, .update-box { display: none !important; }
+                .no-print, button, .update-box, #back-btn-area { display: none !important; }
                 body { background: white !important; }
                 #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; box-shadow: none !important; margin: 0 !important; }
                 #signature-area { display: flex !important; }
@@ -128,14 +128,15 @@ function showBilling() {
                     </div>
                 </div>
                 <div id="signature-area" style="margin-top: 35px; display: flex; justify-content: space-between; padding: 0 20px;"><div style="text-align: center;"><p style="border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">Customer Signature</p></div><div style="text-align: center;"><p style="border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">For S.R. ENTERPRISES</p></div></div>
-                <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;"><button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">🖨️ PRINT BILL / PDF</button><button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">📲 SAVE & WHATSAPP</button></div>
+                <div id="back-btn-area" class="no-print" style="margin-top: 20px; text-align: center;"><button onclick="location.reload()" style="background: #475569; color: #fff; padding: 10px 30px; border-radius: 8px; font-weight: 900; border: none; cursor: pointer;">🔙 BACK TO MENU</button></div>
+                <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;"><button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">🖨️ PRINT BILL / PDF</button><button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">📲 SAVE & WHATSAPP</button></div>
             </div>
             <div class="no-print update-box" style="width: 100%; max-width: 1050px; box-sizing: border-box;"><h3 style="color: #16a34a; margin: 0 0 10px 0;">💰 UPDATE PENDING PAYMENT (ONLY)</h3><div style="display: flex; gap: 10px; flex-wrap: wrap;"><input type="number" id="upd_mobile" placeholder="MOBILE NO" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;" onblur="fetchForUpdate(this.value)"><div style="padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 5px; font-weight: 900; color: red;">DUE: ₹<span id="upd_due_val">0</span></div><input type="number" id="upd_paid" placeholder="ADD PAYMENT (₹)" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;"><button onclick="updatePaymentOnly()" style="background: #16a34a; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: 900;">UPDATE NOW</button></div></div>
         </div>
     `;
     addNewRow();
                             }
-// PART 3: Integration Functions & Start
+// PART 3: Integration Functions & Start (Fixed Minus Logic)
 async function checkOldBalance(mobile) {
     if(!mobile || mobile.length < 10) return;
     try {
@@ -164,10 +165,14 @@ async function updatePaymentOnly() {
     const additionalPaid = parseFloat(document.getElementById('upd_paid').value) || 0;
     const currentDue = parseFloat(document.getElementById('upd_due_val').innerText) || 0;
     if(!mobile || additionalPaid <= 0) { alert("Data needed!"); return; }
-    const data = { action: "updatePayment", mobile: mobile, paid: additionalPaid, newBalance: (currentDue - additionalPaid).toFixed(2) };
+    
+    // Yahan minus ho raha hai taaki sheet mein sahi balance jaye
+    const remainingBalance = (currentDue - additionalPaid).toFixed(2);
+    const data = { action: "updatePayment", mobile: mobile, paid: additionalPaid, newBalance: remainingBalance };
+    
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Updated! Remaining: ₹" + data.newBalance);
+        alert("✅ Updated! Remaining Balance: ₹" + remainingBalance);
         showBilling(); 
     } catch(e) { alert("Error!"); }
 }
@@ -208,3 +213,4 @@ async function pickPhone() {
 }
 
 showBilling();
+            
