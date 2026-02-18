@@ -1,5 +1,4 @@
 // MASTER MODULE: S.R. Enterprises Original Layout + Payment Update Function
-// Updated Script URL: AKfycbyVCx6eZsxUQn9SnQnsJwh4LBBAAM_qxpewlJs-mEUhqKsxDLKLPXzoszfKKM3NKnwsYQ
 const scriptURL = 'https://script.google.com/macros/s/AKfycbyVCx6eZsxUQn9SnQnsJwh4LBBAAM_qxpewlJs-mEUhqKsxDLKLPXzoszfKKM3NKnwsYQ/exec';
 let fetchedOldBalance = 0;
 
@@ -75,7 +74,7 @@ function calculateTotal() {
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
 }
 
-// 4. Main Billing UI (Original Layout Restored)
+// 4. Main Billing UI
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -99,7 +98,7 @@ function showBilling() {
                 @page { size: A4; margin: 10mm; }
                 .no-print, #no-print, #no-print-back, button, .update-box { display: none !important; }
                 body { background: white !important; margin: 0; padding: 0; }
-                #print-area { display: block !important; padding: 0 !important; }
+                #print-area { display: block !important; }
                 #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; box-shadow: none !important; border-radius: 0 !important; margin: 0 !important; }
                 .info-row { border-bottom: none !important; }
                 input, textarea { border: none !important; font-weight: 900 !important; }
@@ -110,7 +109,6 @@ function showBilling() {
 
         <div id="print-area" style="padding: 10px; color: #000; font-family: sans-serif; box-sizing: border-box; display: flex; flex-direction: column; align-items: center;">
             <div id="bill-container" style="width: 100%; max-width: 1050px; border: 2px solid #1e3a8a; border-radius: 12px; padding: 25px; background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 15px;">
                     <div>
                         <h1 style="color: #1e3a8a; margin: 0; font-size: 32px; letter-spacing: 1px; font-weight: 900;">S.R ENTERPRISES</h1>
@@ -242,9 +240,11 @@ async function checkOldBalance(mobile) {
 
 async function fetchForUpdate(mobile) {
     if(!mobile) return;
-    const response = await fetch(`${scriptURL}?mobile=${mobile}`);
-    const res = await response.json();
-    document.getElementById('upd_due_val').innerText = (parseFloat(res.oldBalance) || 0).toFixed(2);
+    try {
+        const response = await fetch(`${scriptURL}?mobile=${mobile}`);
+        const res = await response.json();
+        document.getElementById('upd_due_val').innerText = (parseFloat(res.oldBalance) || 0).toFixed(2);
+    } catch(e) { alert("Error fetching balance!"); }
 }
 
 async function updatePaymentOnly() {
@@ -262,9 +262,9 @@ async function updatePaymentOnly() {
     };
 
     try {
-        await fetch(scriptURL, { method: 'POST', body: JSON.stringify(data) });
+        await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
         alert("✅ Payment Updated! Remaining: ₹" + data.newBalance);
-        showBilling();
+        showBilling(); // Page reset
     } catch(e) { alert("Error!"); }
 }
 
@@ -285,5 +285,6 @@ async function saveAndWhatsApp() {
         pending: (parseFloat(document.getElementById('grand_total').innerText.replace('₹','')) - parseFloat(document.getElementById('paid_amt').value)).toFixed(2)
     };
     try {
-        await fetch(scriptURL, { method: 'POST', body: JSON.stringify(data) });
-  
+        await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+        alert("✅ Bill Saved!");
+        cons
