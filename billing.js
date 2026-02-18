@@ -32,28 +32,23 @@ function calculateTotal() {
     document.querySelectorAll('.item-row').forEach(row => {
         const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
         const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
-        const total = rate * qty;
-        row.querySelector('.item-total').innerText = "₹" + total.toFixed(2);
-        subtotal += total;
+        row.querySelector('.item-total').innerText = "₹" + (rate * qty).toFixed(2);
+        subtotal += (rate * qty);
     });
-    const disc = parseFloat(document.getElementById('w_disc')?.value || 0);
-    const isGst = document.getElementById('gst_check')?.checked;
     const addOldDues = document.getElementById('add_old_dues')?.checked;
-    const taxableTotal = subtotal - disc;
-    const gstAmt = isGst ? (taxableTotal * 0.18) : 0;
-    const currentBillTotal = taxableTotal + gstAmt;
+    const currentBillTotal = subtotal;
     const oldDueToAdd = addOldDues ? fetchedOldBalance : 0;
     const finalGrandTotal = Math.round(currentBillTotal + oldDueToAdd);
     const paid = parseFloat(document.getElementById('paid_amt')?.value || 0);
     const balance = finalGrandTotal - paid;
+
     document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2);
-    document.getElementById('gst_amt').innerText = "₹" + gstAmt.toFixed(2);
     document.getElementById('display_old_due').innerText = "₹" + oldDueToAdd.toFixed(2);
     document.getElementById('grand_total').innerText = "₹" + finalGrandTotal.toFixed(2);
     document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
-                                                   }
-  // PART 2: Original Layout UI (Form + Back Button)
+        }
+// PART 2: Original Layout UI (Back Button Modular Fix)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -93,7 +88,7 @@ function showBilling() {
                             <div class="info-row"><label>CUSTOMER NAME:</label><input type="text" id="c_name"></div>
                             <div class="info-row"><label>ADDRESS:</label><textarea id="c_addr" rows="2"></textarea></div>
                             <div class="info-row" style="border-bottom: none;"><label>MOBILE NO:</label><div style="display: flex; gap: 8px; flex: 1;">
-                                <input type="number" id="c_mobile" oninput="if(this.value.length >= 10) checkOldBalance(this.value)" onchange="checkOldBalance(this.value)">
+                                <input type="number" id="c_mobile" oninput="if(this.value.length >= 10) checkOldBalance(this.value)">
                                 <button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 5px 12px; border-radius: 5px; font-weight: 900;">PICK</button>
                             </div></div>
                         </div>
@@ -109,7 +104,6 @@ function showBilling() {
                     <div id="bank-details" style="font-size: 11px; border: 1.5px solid #000; padding: 10px; border-radius: 8px;"><p style="margin:0; font-weight: 900;">SBI | MR. HARIRAM SITARAM RAJBHAR</p><p style="margin:2px 0; font-weight: 900;">A/C: 44695199584 | IFSC: SBIN0008373</p></div>
                     <div style="width: 380px; border: 2.5px solid #000; padding: 15px; border-radius: 10px; background: #fff;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 800;"><span>SUB-TOTAL:</span><span id="tax_amt">₹0.00</span></div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800;"><div><input type="checkbox" id="gst_check" onchange="calculateTotal()"> GST (18%):</div><span id="gst_amt">₹0.00</span></div>
                         <div style="display: flex; justify-content: space-between; color: #dc2626; font-weight: 800;"><span>OLD DUE:</span><span id="display_old_due">₹0.00</span></div>
                         <hr style="border: 1px solid #1e3a8a; margin: 8px 0;">
                         <div style="display: flex; justify-content: space-between; font-weight: 900;"><span>GRAND TOTAL:</span><span id="grand_total" style="font-size: 24px; color: #1e3a8a;">₹0.00</span></div>
@@ -124,29 +118,27 @@ function showBilling() {
             <div class="no-print update-box" style="width: 100%; max-width: 1050px; box-sizing: border-box;">
                 <h3 style="color: #16a34a; margin: 0 0 10px 0;">💰 UPDATE PENDING PAYMENT (ONLY)</h3>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <input type="number" id="upd_mobile" placeholder="MOBILE NO" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;" onblur="fetchForUpdate(this.value)">
+                    <input type="number" id="upd_mobile" placeholder="MOBILE NO" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;" oninput="if(this.value.length >= 10) fetchForUpdate(this.value)">
                     <div style="padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 5px; font-weight: 900; color: red;">DUE: ₹<span id="upd_due_val">0</span></div>
                     <input type="number" id="upd_paid" placeholder="PAID NOW (₹)" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;">
                     <button onclick="updatePaymentOnly()" style="background: #16a34a; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: 900;">UPDATE NOW</button>
                 </div>
             </div>
-            <div id="back-btn-area" class="no-print" style="margin-top: 20px;"><button onclick="location.reload()" style="background: #475569; color: #fff; padding: 12px 40px; border-radius: 10px; font-weight: 900; border: none; cursor: pointer;">🔙 BACK TO MENU</button></div>
+            <div id="back-btn-area" class="no-print" style="margin-top: 20px;">
+                <button onclick="showMenu()" style="background: #475569; color: #fff; padding: 12px 40px; border-radius: 10px; font-weight: 900; border: none; cursor: pointer;">🔙 BACK TO MENU</button>
+            </div>
         </div>
     `;
     addNewRow();
-}
-// PART 3: Integration & Start (FIXED: Automatic Fill Logic)
+        }
+// PART 3: Integration & Start
 async function checkOldBalance(mobile) {
     if(!mobile || mobile.toString().length < 10) return;
     try {
-        const cleanMobile = mobile.toString().replace(/\D/g, '');
-        const response = await fetch(`${scriptURL}?mobile=${cleanMobile}`);
+        const response = await fetch(`${scriptURL}?mobile=${mobile}`);
         const res = await response.json();
-        
-        // YE LINE DATA AUTOMATIC BHARENGI
         if(res.name) document.getElementById('c_name').value = res.name.toUpperCase();
         if(res.address) document.getElementById('c_addr').value = res.address.toUpperCase();
-
         fetchedOldBalance = parseFloat(res.oldBalance) || 0;
         const alertBox = document.getElementById('old_due_alert');
         if(fetchedOldBalance > 0) {
@@ -162,8 +154,7 @@ async function checkOldBalance(mobile) {
 async function fetchForUpdate(mobile) {
     if(!mobile) return;
     try {
-        const cleanMobile = mobile.toString().replace(/\D/g, '');
-        const response = await fetch(`${scriptURL}?mobile=${cleanMobile}`);
+        const response = await fetch(`${scriptURL}?mobile=${mobile}`);
         const res = await response.json();
         document.getElementById('upd_due_val').innerText = (parseFloat(res.oldBalance) || 0).toFixed(2);
     } catch(e) { console.log("Update fetch error"); }
@@ -199,7 +190,7 @@ async function saveAndWhatsApp() {
     };
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Bill Sheet mein Save ho gaya!");
+        alert("✅ Saved!");
         const msg = `*S.R. ENTERPRISES REPORT*%0AInvoice: ${data.invoice}%0A*PENDING BALANCE:* ₹${data.pending}`;
         window.open(`https://wa.me/91${data.mobile}?text=${msg}`, '_blank');
     } catch(e) { alert("Error!"); }
