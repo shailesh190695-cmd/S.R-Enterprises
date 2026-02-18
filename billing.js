@@ -47,8 +47,8 @@ function calculateTotal() {
     document.getElementById('grand_total').innerText = "₹" + finalGrandTotal.toFixed(2);
     document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
-}
-// PART 2: Original Layout UI (Back Button Modular Fix)
+        }
+// PART 2: Original Layout UI (Back Button Positioned & Sized)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -88,7 +88,7 @@ function showBilling() {
                             <div class="info-row"><label>CUSTOMER NAME:</label><input type="text" id="c_name"></div>
                             <div class="info-row"><label>ADDRESS:</label><textarea id="c_addr" rows="2"></textarea></div>
                             <div class="info-row" style="border-bottom: none;"><label>MOBILE NO:</label><div style="display: flex; gap: 8px; flex: 1;">
-                                <input type="number" id="c_mobile" oninput="if(this.value.length >= 10) checkOldBalance(this.value)" onchange="checkOldBalance(this.value)">
+                                <input type="number" id="c_mobile" oninput="if(this.value.length >= 10) checkOldBalance(this.value)">
                                 <button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 5px 12px; border-radius: 5px; font-weight: 900;">PICK</button>
                             </div></div>
                         </div>
@@ -104,7 +104,6 @@ function showBilling() {
                     <div id="bank-details" style="font-size: 11px; border: 1.5px solid #000; padding: 10px; border-radius: 8px;"><p style="margin:0; font-weight: 900;">SBI | MR. HARIRAM SITARAM RAJBHAR</p><p style="margin:2px 0; font-weight: 900;">A/C: 44695199584 | IFSC: SBIN0008373</p></div>
                     <div style="width: 380px; border: 2.5px solid #000; padding: 15px; border-radius: 10px; background: #fff;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 800;"><span>SUB-TOTAL:</span><span id="tax_amt">₹0.00</span></div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800;"><div><input type="checkbox" id="gst_check" onchange="calculateTotal()"> GST (18%):</div><span id="gst_amt">₹0.00</span></div>
                         <div style="display: flex; justify-content: space-between; color: #dc2626; font-weight: 800;"><span>OLD DUE:</span><span id="display_old_due">₹0.00</span></div>
                         <hr style="border: 1px solid #1e3a8a; margin: 8px 0;">
                         <div style="display: flex; justify-content: space-between; font-weight: 900;"><span>GRAND TOTAL:</span><span id="grand_total" style="font-size: 24px; color: #1e3a8a;">₹0.00</span></div>
@@ -114,10 +113,7 @@ function showBilling() {
                     </div>
                 </div>
                 <div id="signature-area" style="margin-top: 35px; display: flex; justify-content: space-between; padding: 0 20px;"><div style="text-align: center;"><p style="border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">Customer Signature</p></div><div style="text-align: center;"><p style="border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">For S.R. ENTERPRISES</p></div></div>
-                <div id="back-btn-area" class="no-print" style="margin-top: 15px; text-align: center;">
-                    <button onclick="showDashboard()" style="background: #475569; color: #fff; padding: 8px 25px; border-radius: 8px; font-weight: 900; border: none; cursor: pointer;">🔙 BACK</button>
-                </div>
-                <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;"><button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">🖨️ PRINT BILL / PDF</button><button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">📲 SAVE & WHATSAPP</button></div>
+                <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;"><button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">🖨️ PRINT BILL / PDF</button><button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">📲 SAVE & WHATSAPP</button></div>
             </div>
             <div class="no-print update-box" style="width: 100%; max-width: 1050px; box-sizing: border-box;">
                 <h3 style="color: #16a34a; margin: 0 0 10px 0;">💰 UPDATE PENDING PAYMENT (ONLY)</h3>
@@ -127,6 +123,9 @@ function showBilling() {
                     <input type="number" id="upd_paid" placeholder="PAID NOW (₹)" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;">
                     <button onclick="updatePaymentOnly()" style="background: #16a34a; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: 900;">UPDATE NOW</button>
                 </div>
+            </div>
+            <div id="back-btn-area" class="no-print" style="margin-top: 15px; text-align: center;">
+                <button onclick="showDashboard()" style="background: #475569; color: #fff; padding: 8px 25px; border-radius: 8px; font-weight: 900; border: none; cursor: pointer; font-size: 14px;">🔙 BACK TO MENU</button>
             </div>
         </div>
     `;
@@ -138,6 +137,7 @@ async function checkOldBalance(mobile) {
     try {
         const response = await fetch(`${scriptURL}?mobile=${mobile}`);
         const res = await response.json();
+        // Automatic Fill
         if(res.name) document.getElementById('c_name').value = res.name.toUpperCase();
         if(res.address) document.getElementById('c_addr').value = res.address.toUpperCase();
         fetchedOldBalance = parseFloat(res.oldBalance) || 0;
@@ -209,5 +209,5 @@ async function pickPhone() {
     } catch (e) { alert("Contact Picker not supported."); }
 }
 
-showBilling();
-                                                                                       
+// REMOVED showBilling() FROM HERE TO PREVENT AUTO-START ON REFRESH
+                                
