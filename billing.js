@@ -1,5 +1,5 @@
-// PART 1: S.R. Enterprises Master Logic
-const scriptURL = 'https://script.google.com/macros/s/AKfycbyVCx6eZsxUQn9SnQnsJwh4LBBAAM_qxpewlJs-mEUhqKsxDLKLPXzoszfKKM3NKnwsYQ/exec';
+// PART 1: S.R. Enterprises Master Logic (Fixed Minus & URL)
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxPOez8uPSHlxo2t4nWNNwOU6OD6DzxMB9lsRPhsgQl4qwFT48i-xp5KLDDxhkkMLlwlw/exec';
 let fetchedOldBalance = 0;
 
 function numberToWords(num) {
@@ -12,14 +12,8 @@ function numberToWords(num) {
         if (n >= 20) { s += b[Math.floor(n / 10)] + ' '; n %= 10; }
         if (n > 0) { s += a[n] + ' '; } return s;
     };
-    let words = '', groupIdx = 0; 
-    let tempNum = Math.floor(num);
-    while (tempNum > 0) { 
-        let group = tempNum % 1000; 
-        if (group !== 0) { words = makeGroup(group) + g[groupIdx] + ' ' + words; } 
-        tempNum = Math.floor(tempNum / 1000); 
-        groupIdx++; 
-    }
+    let words = '', groupIdx = 0; let tempNum = Math.floor(num);
+    while (tempNum > 0) { let group = tempNum % 1000; if (group !== 0) { words = makeGroup(group) + g[groupIdx] + ' ' + words; } tempNum = Math.floor(tempNum / 1000); groupIdx++; }
     return words.trim();
 }
 
@@ -42,15 +36,15 @@ function calculateTotal() {
         row.querySelector('.item-total').innerText = "₹" + total.toFixed(2);
         subtotal += total;
     });
-    const disc = parseFloat(document.getElementById('w_disc').value) || 0;
-    const isGst = document.getElementById('gst_check').checked;
+    const disc = parseFloat(document.getElementById('w_disc')?.value || 0);
+    const isGst = document.getElementById('gst_check')?.checked;
     const addOldDues = document.getElementById('add_old_dues')?.checked;
     const taxableTotal = subtotal - disc;
     const gstAmt = isGst ? (taxableTotal * 0.18) : 0;
     const currentBillTotal = taxableTotal + gstAmt;
     const oldDueToAdd = addOldDues ? fetchedOldBalance : 0;
     const finalGrandTotal = Math.round(currentBillTotal + oldDueToAdd);
-    const paid = parseFloat(document.getElementById('paid_amt').value) || 0;
+    const paid = parseFloat(document.getElementById('paid_amt')?.value || 0);
     const balance = finalGrandTotal - paid;
     document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2);
     document.getElementById('gst_amt').innerText = "₹" + gstAmt.toFixed(2);
@@ -59,14 +53,12 @@ function calculateTotal() {
     document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
 }
-// PART 2: Original Layout UI (Back Button Fixed Below)
+    // PART 2: Original Layout (Form + Back Button)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
     const autoInv = "SR-" + Math.floor(1000 + Math.random() * 9000);
-    fetchedOldBalance = 0; 
-    panel.style.display = "block";
-    panel.style.background = "#f1f5f9"; 
+    fetchedOldBalance = 0; panel.style.display = "block"; panel.style.background = "#f1f5f9"; 
     panel.innerHTML = `
         <style>
             input[type="text"], textarea { text-transform: uppercase; }
@@ -139,8 +131,8 @@ function showBilling() {
         </div>
     `;
     addNewRow();
-}
-// PART 3: Integration (Correct Minus Logic)
+                            }
+// PART 3: Integration & Start
 async function checkOldBalance(mobile) {
     if(!mobile || mobile.length < 10) return;
     try {
@@ -168,18 +160,9 @@ async function updatePaymentOnly() {
     const mobile = document.getElementById('upd_mobile').value;
     const additionalPaid = parseFloat(document.getElementById('upd_paid').value) || 0;
     const currentDue = parseFloat(document.getElementById('upd_due_val').innerText) || 0;
-    if(!mobile || additionalPaid <= 0) { alert("Mobile No aur Amount bhariye!"); return; }
-    
-    // YAHAN MINUS HO RAHA HAI: Purane dues mein se naya payment minus kiya
+    if(!mobile || additionalPaid <= 0) { alert("Data bhariye!"); return; }
     const remainingBalance = (currentDue - additionalPaid).toFixed(2);
-    
-    const data = { 
-        action: "updatePayment", 
-        mobile: mobile, 
-        paid: additionalPaid, 
-        pending: remainingBalance // Isse Sheet ke Column L mein naya (kam wala) balance jayega
-    };
-    
+    const data = { action: "updatePayment", mobile: mobile, paid: additionalPaid, pending: remainingBalance };
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
         alert("✅ Hisab Updated! Naya Balance: ₹" + remainingBalance);
@@ -203,7 +186,7 @@ async function saveAndWhatsApp() {
     };
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Data Saved!");
+        alert("✅ Saved!");
         const msg = `*S.R. ENTERPRISES REPORT*%0AInvoice: ${data.invoice}%0A*PENDING BALANCE:* ₹${data.pending}`;
         window.open(`https://wa.me/91${data.mobile}?text=${msg}`, '_blank');
     } catch(e) { alert("Error!"); }
@@ -221,3 +204,4 @@ async function pickPhone() {
 }
 
 showBilling();
+        
