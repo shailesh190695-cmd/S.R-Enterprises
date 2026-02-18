@@ -132,14 +132,18 @@ function showBilling() {
     `;
     addNewRow();
                             }
-// PART 3: Integration & Start
+// PART 3: Integration & Start (FIXED: Auto-fill Name & Address)
 async function checkOldBalance(mobile) {
     if(!mobile || mobile.length < 10) return;
     try {
         const response = await fetch(`${scriptURL}?mobile=${mobile}`);
         const res = await response.json();
+        
+        // --- YE LINES DATA FILL KARENGI ---
         if(res.name) document.getElementById('c_name').value = res.name;
         if(res.address) document.getElementById('c_addr').value = res.address;
+        // ----------------------------------
+
         fetchedOldBalance = parseFloat(res.oldBalance) || 0;
         document.getElementById('old_due_alert').style.display = fetchedOldBalance > 0 ? 'flex' : 'none';
         document.getElementById('due_amt_val').innerText = fetchedOldBalance.toFixed(2);
@@ -161,8 +165,10 @@ async function updatePaymentOnly() {
     const additionalPaid = parseFloat(document.getElementById('upd_paid').value) || 0;
     const currentDue = parseFloat(document.getElementById('upd_due_val').innerText) || 0;
     if(!mobile || additionalPaid <= 0) { alert("Data bhariye!"); return; }
+    
     const remainingBalance = (currentDue - additionalPaid).toFixed(2);
     const data = { action: "updatePayment", mobile: mobile, paid: additionalPaid, pending: remainingBalance };
+    
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
         alert("✅ Hisab Updated! Naya Balance: ₹" + remainingBalance);
@@ -181,8 +187,8 @@ async function saveAndWhatsApp() {
         description: document.querySelector('.item-desc')?.value.toUpperCase() || "SERVICE",
         subtotal: document.getElementById('tax_amt').innerText.replace('₹',''),
         paid: document.getElementById('paid_amt').value,
-        balance: document.getElementById('balance_due').innerText.replace('₹',''),
-        pending: document.getElementById('balance_due').innerText.replace('₹','') 
+        balance: (parseFloat(document.getElementById('grand_total').innerText.replace('₹','')) - parseFloat(document.getElementById('paid_amt').value)).toFixed(2),
+        pending: (parseFloat(document.getElementById('grand_total').innerText.replace('₹','')) - parseFloat(document.getElementById('paid_amt').value)).toFixed(2)
     };
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
