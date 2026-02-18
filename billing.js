@@ -52,8 +52,8 @@ function calculateTotal() {
     document.getElementById('grand_total').innerText = "₹" + finalGrandTotal.toFixed(2);
     document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
-}
-// PART 2: Original Layout UI
+                                                   }
+  // PART 2: Original Layout UI (Form + Back Button)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -92,8 +92,7 @@ function showBilling() {
                         <div class="col">
                             <div class="info-row"><label>CUSTOMER NAME:</label><input type="text" id="c_name"></div>
                             <div class="info-row"><label>ADDRESS:</label><textarea id="c_addr" rows="2"></textarea></div>
-                            <div class="info-row" style="border-bottom: none;"><label>MOBILE NO:</label>
-                            <div style="display: flex; gap: 8px; flex: 1;">
+                            <div class="info-row" style="border-bottom: none;"><label>MOBILE NO:</label><div style="display: flex; gap: 8px; flex: 1;">
                                 <input type="number" id="c_mobile" oninput="if(this.value.length >= 10) checkOldBalance(this.value)" onchange="checkOldBalance(this.value)">
                                 <button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 5px 12px; border-radius: 5px; font-weight: 900;">PICK</button>
                             </div></div>
@@ -135,18 +134,27 @@ function showBilling() {
         </div>
     `;
     addNewRow();
-        }
-// PART 3: Integration & Start
+}
+// PART 3: Integration & Start (FIXED: Automatic Fill Logic)
 async function checkOldBalance(mobile) {
     if(!mobile || mobile.toString().length < 10) return;
     try {
-        const response = await fetch(`${scriptURL}?mobile=${mobile}`);
+        const cleanMobile = mobile.toString().replace(/\D/g, '');
+        const response = await fetch(`${scriptURL}?mobile=${cleanMobile}`);
         const res = await response.json();
+        
+        // YE LINE DATA AUTOMATIC BHARENGI
         if(res.name) document.getElementById('c_name').value = res.name.toUpperCase();
         if(res.address) document.getElementById('c_addr').value = res.address.toUpperCase();
+
         fetchedOldBalance = parseFloat(res.oldBalance) || 0;
-        document.getElementById('old_due_alert').style.display = fetchedOldBalance > 0 ? 'flex' : 'none';
-        document.getElementById('due_amt_val').innerText = fetchedOldBalance.toFixed(2);
+        const alertBox = document.getElementById('old_due_alert');
+        if(fetchedOldBalance > 0) {
+            alertBox.style.display = 'flex';
+            document.getElementById('due_amt_val').innerText = fetchedOldBalance.toFixed(2);
+        } else {
+            alertBox.style.display = 'none';
+        }
         calculateTotal();
     } catch(e) { console.log("Fetch error"); }
 }
@@ -154,7 +162,8 @@ async function checkOldBalance(mobile) {
 async function fetchForUpdate(mobile) {
     if(!mobile) return;
     try {
-        const response = await fetch(`${scriptURL}?mobile=${mobile}`);
+        const cleanMobile = mobile.toString().replace(/\D/g, '');
+        const response = await fetch(`${scriptURL}?mobile=${cleanMobile}`);
         const res = await response.json();
         document.getElementById('upd_due_val').innerText = (parseFloat(res.oldBalance) || 0).toFixed(2);
     } catch(e) { console.log("Update fetch error"); }
