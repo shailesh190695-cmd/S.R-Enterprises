@@ -1,4 +1,4 @@
-// MASTER FIX: S.R. Enterprises Original Layout (Single Page Print Fix)
+// MASTER MODULE: S.R. Enterprises Original Layout + Payment Update Function
 const scriptURL = 'https://script.google.com/macros/s/AKfycbwkxcAdRCz2iAzkOV0eaeo5HvpknvSRHk_VsJdpErFZAXgWztf3Dbz0lTjJ3S78eCINog/exec';
 let fetchedOldBalance = 0;
 
@@ -24,7 +24,7 @@ function numberToWords(num) {
     return words.trim();
 }
 
-// 2. Function to add a new row in the items table
+// 2. Function to add a new row
 function addNewRow() {
     const container = document.getElementById('items_container');
     if(!container) return;
@@ -74,7 +74,7 @@ function calculateTotal() {
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
 }
 
-// 4. Main Billing UI
+// 4. Main Billing UI (Original Layout Restored)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -92,23 +92,21 @@ function showBilling() {
             .info-row input, .info-row textarea { flex: 1; border: none; font-weight: 700; font-size: 14px; padding: 2px; background: transparent; outline: none; width: 100%; resize: none; font-family: sans-serif; }
             .grid-system { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
             .due-msg { color: #dc2626; font-weight: 900; font-size: 14px; margin-bottom: 10px; display: none; background: #fee2e2; padding: 10px; border-radius: 8px; border: 1px solid #ef4444; align-items: center; justify-content: space-between; }
-
+            .update-box { border: 2px solid #16a34a; background: #f0fdf4; padding: 15px; border-radius: 10px; margin-top: 30px; }
             @media print {
                 @page { size: A4; margin: 10mm; }
-                .no-print, #no-print, #no-print-back, button { display: none !important; }
+                .no-print, #no-print, #no-print-back, button, .update-box { display: none !important; }
                 body { background: white !important; margin: 0; padding: 0; }
-                #print-area { display: block !important; padding: 0 !important; }
                 #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; box-shadow: none !important; border-radius: 0 !important; margin: 0 !important; }
                 .info-row { border-bottom: none !important; }
                 input, textarea { border: none !important; font-weight: 900 !important; }
                 #old_due_alert { display: none !important; }
-                #bank-details { display: block !important; border: 2px solid black !important; }
-                #signature-area { margin-top: 40px !important; display: flex !important; }
+                #signature-area { margin-top: 35px !important; display: flex !important; }
             }
         </style>
 
-        <div id="print-area" style="padding: 10px; color: #000; font-family: sans-serif; box-sizing: border-box; display: flex; justify-content: center;">
-            <div id="bill-container" style="width: 100%; max-width: 1050px; border: 2px solid #1e3a8a; border-radius: 12px; padding: 25px; background: #ffffff; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <div id="print-area" style="padding: 10px; color: #000; font-family: sans-serif; box-sizing: border-box; display: flex; flex-direction: column; align-items: center;">
+            <div id="bill-container" style="width: 100%; max-width: 1050px; border: 2px solid #1e3a8a; border-radius: 12px; padding: 25px; background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                 
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 15px;">
                     <div>
@@ -141,10 +139,7 @@ function showBilling() {
                     <div class="grid-system">
                         <div class="col">
                             <div class="info-row"><label>CUSTOMER NAME:</label><input type="text" id="c_name"></div>
-                            <div class="info-row">
-                                <label>ADDRESS:</label>
-                                <textarea id="c_addr" rows="2" placeholder="ENTER FULL ADDRESS"></textarea>
-                            </div>
+                            <div class="info-row"><label>ADDRESS:</label><textarea id="c_addr" rows="2" placeholder="ENTER FULL ADDRESS"></textarea></div>
                             <div class="info-row" style="border-bottom: none; margin-bottom: 0;">
                                 <label>MOBILE NO:</label>
                                 <div style="display: flex; gap: 8px; flex: 1;">
@@ -176,16 +171,8 @@ function showBilling() {
 
                     <div style="width: 100%; max-width: 380px; border: 2.5px solid #000; padding: 15px; border-radius: 10px; background: #fff;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 800;"><span>SUB-TOTAL:</span><span id="tax_amt">₹0.00</span></div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800;">
-                            <div style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" id="gst_check" onchange="calculateTotal()" style="width:16px; height:16px;"><span>GST (18%):</span></div>
-                            <span id="gst_amt">₹0.00</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800; color: #dc2626;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; color: #dc2626; font-weight: 800;">
                             <span>OLD PENDING BALANCE:</span><span id="display_old_due">₹0.00</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800;">
-                            <span>DISCOUNT (₹):</span>
-                            <input type="number" id="w_disc" value="0" oninput="calculateTotal()" style="width: 70px; padding: 4px; border: 1.5px solid #000; text-align: right; font-weight: 900; border-radius: 5px;">
                         </div>
                         <hr style="border: 1px solid #1e3a8a; margin: 8px 0;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 900;"><span>GRAND TOTAL:</span><span id="grand_total" style="font-size: 24px; color: #1e3a8a;">₹0.00</span></div>
@@ -211,12 +198,23 @@ function showBilling() {
                     <button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border: none; border-radius: 10px; font-weight: 900; font-size: 16px; cursor: pointer;">📲 SAVE & WHATSAPP</button>
                 </div>
             </div>
+
+            <div class="no-print update-box" style="width: 100%; max-width: 1050px; box-sizing: border-box;">
+                <h3 style="color: #16a34a; margin: 0 0 10px 0;">💰 UPDATE PENDING PAYMENT (ONLY)</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">Agar customer ne baad mein paisa diya, toh yahan se update karein:</p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="number" id="upd_mobile" placeholder="MOBILE NO" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;" onblur="fetchForUpdate(this.value)">
+                    <div style="padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 5px; font-weight: 900; color: red;">DUE: ₹<span id="upd_due_val">0</span></div>
+                    <input type="number" id="upd_paid" placeholder="ADD PAYMENT (₹)" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;">
+                    <button onclick="updatePaymentOnly()" style="background: #16a34a; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: 900; cursor: pointer;">UPDATE NOW</button>
+                </div>
+            </div>
         </div>
     `;
     addNewRow();
 }
 
-// 5. Google Sheets Integration (Check Balance)
+// 5. Google Sheets Integration
 async function checkOldBalance(mobile) {
     if(!mobile || mobile.length < 10) return;
     try {
@@ -225,17 +223,12 @@ async function checkOldBalance(mobile) {
         if(res.name) document.getElementById('c_name').value = res.name;
         if(res.address) document.getElementById('c_addr').value = res.address;
         fetchedOldBalance = parseFloat(res.oldBalance) || 0;
-        if(fetchedOldBalance > 0) {
-            document.getElementById('old_due_alert').style.display = 'flex';
-            document.getElementById('due_amt_val').innerText = fetchedOldBalance.toFixed(2);
-        } else {
-            document.getElementById('old_due_alert').style.display = 'none';
-        }
+        document.getElementById('old_due_alert').style.display = fetchedOldBalance > 0 ? 'flex' : 'none';
+        document.getElementById('due_amt_val').innerText = fetchedOldBalance.toFixed(2);
         calculateTotal();
     } catch(e) { console.log("Balance fetch error"); }
 }
 
-// 6. Save and Send
 async function saveAndWhatsApp() {
     const data = {
         invoice: document.getElementById('inv_no').value,
@@ -246,21 +239,46 @@ async function saveAndWhatsApp() {
         address: document.getElementById('c_addr').value.toUpperCase(),
         description: document.querySelector('.item-desc')?.value.toUpperCase() || "SERVICE",
         subtotal: document.getElementById('tax_amt').innerText.replace('₹',''),
-        gst: document.getElementById('gst_amt').innerText.replace('₹',''),
-        total: document.getElementById('grand_total').innerText.replace('₹',''),
         paid: document.getElementById('paid_amt').value,
         balance: (parseFloat(document.getElementById('grand_total').innerText.replace('₹','')) - parseFloat(document.getElementById('paid_amt').value)).toFixed(2),
         pending: (parseFloat(document.getElementById('grand_total').innerText.replace('₹','')) - parseFloat(document.getElementById('paid_amt').value)).toFixed(2)
     };
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Data Saved Successfully!");
-        const msg = `*S.R. ENTERPRISES REPORT*%0A---------------------------%0A*Invoice:* ${data.invoice}%0A*Date:* ${data.date}%0A*Customer:* ${data.name}%0A*OLD PENDING BALANCE:* ₹${data.balance}%0A---------------------------%0A*Thank you!*`;
-        window.open(`https://wa.me/91${data.mobile}?text=${msg}`, '_blank');
-    } catch(e) { alert("Error saving to sheet!"); }
+        alert("✅ Bill Saved!");
+        window.open(`https://wa.me/91${data.mobile}?text=*S.R. ENTERPRISES REPORT*%0AInvoice: ${data.invoice}%0A*PENDING BALANCE:* ₹${data.balance}`, '_blank');
+    } catch(e) { alert("Error!"); }
 }
 
-// 7. Contact Picker
+// 6. Payment Only Update Functions
+async function fetchForUpdate(mobile) {
+    if(!mobile) return;
+    const response = await fetch(`${scriptURL}?mobile=${mobile}`);
+    const res = await response.json();
+    document.getElementById('upd_due_val').innerText = (parseFloat(res.oldBalance) || 0).toFixed(2);
+}
+
+async function updatePaymentOnly() {
+    const mobile = document.getElementById('upd_mobile').value;
+    const additionalPaid = parseFloat(document.getElementById('upd_paid').value) || 0;
+    const currentDue = parseFloat(document.getElementById('upd_due_val').innerText) || 0;
+    
+    if(!mobile || additionalPaid <= 0) { alert("Mobile and Paid amount needed!"); return; }
+    
+    const data = {
+        action: "updatePayment",
+        mobile: mobile,
+        paid: additionalPaid,
+        newBalance: (currentDue - additionalPaid).toFixed(2)
+    };
+
+    try {
+        await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+        alert("✅ Payment Updated! Remaining: ₹" + data.newBalance);
+        showBilling(); // Reset
+    } catch(e) { alert("Error!"); }
+}
+
 async function pickPhone() {
     try { 
         const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: false}); 
@@ -269,9 +287,4 @@ async function pickPhone() {
             document.getElementById('c_mobile').value = contacts[0].tel[0].replace(/\D/g, ''); 
             checkOldBalance(document.getElementById('c_mobile').value); 
         } 
-    } catch (e) { alert("Contact Picker not supported."); }
-}
-
-// Start
-showBilling();
-            
+    } catch (e) { alert("Contact Picker not supported.");
