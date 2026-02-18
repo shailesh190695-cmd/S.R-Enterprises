@@ -103,12 +103,14 @@ function showBilling() {
                 .info-row { border-bottom: none !important; }
                 input, textarea { border: none !important; font-weight: 900 !important; }
                 #old_due_alert { display: none !important; }
+                #bank-details { display: block !important; border: 2px solid black !important; }
                 #signature-area { margin-top: 35px !important; display: flex !important; }
             }
         </style>
 
         <div id="print-area" style="padding: 10px; color: #000; font-family: sans-serif; box-sizing: border-box; display: flex; flex-direction: column; align-items: center;">
             <div id="bill-container" style="width: 100%; max-width: 1050px; border: 2px solid #1e3a8a; border-radius: 12px; padding: 25px; background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 15px;">
                     <div>
                         <h1 style="color: #1e3a8a; margin: 0; font-size: 32px; letter-spacing: 1px; font-weight: 900;">S.R ENTERPRISES</h1>
@@ -173,7 +175,7 @@ function showBilling() {
                     <div style="width: 100%; max-width: 380px; border: 2.5px solid #000; padding: 15px; border-radius: 10px; background: #fff;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 800;"><span>SUB-TOTAL:</span><span id="tax_amt">₹0.00</span></div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; color: #dc2626; font-weight: 800;">
-                            <span>OLD DUE:</span><span id="display_old_due">₹0.00</span>
+                            <span>OLD PENDING BALANCE:</span><span id="display_old_due">₹0.00</span>
                         </div>
                         <hr style="border: 1px solid #1e3a8a; margin: 8px 0;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 900;"><span>GRAND TOTAL:</span><span id="grand_total" style="font-size: 24px; color: #1e3a8a;">₹0.00</span></div>
@@ -244,7 +246,7 @@ async function fetchForUpdate(mobile) {
         const response = await fetch(`${scriptURL}?mobile=${mobile}`);
         const res = await response.json();
         document.getElementById('upd_due_val').innerText = (parseFloat(res.oldBalance) || 0).toFixed(2);
-    } catch(e) { alert("Error fetching balance!"); }
+    } catch(e) { console.log("Error"); }
 }
 
 async function updatePaymentOnly() {
@@ -264,7 +266,7 @@ async function updatePaymentOnly() {
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
         alert("✅ Payment Updated! Remaining: ₹" + data.newBalance);
-        showBilling(); // Page reset
+        showBilling(); 
     } catch(e) { alert("Error!"); }
 }
 
@@ -285,6 +287,4 @@ async function saveAndWhatsApp() {
         pending: (parseFloat(document.getElementById('grand_total').innerText.replace('₹','')) - parseFloat(document.getElementById('paid_amt').value)).toFixed(2)
     };
     try {
-        await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Bill Saved!");
-        cons
+        await fetch(scriptURL, { method:
