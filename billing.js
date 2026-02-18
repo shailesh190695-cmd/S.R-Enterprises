@@ -1,4 +1,4 @@
-// PART 1: Master Logic & Calculations
+// PART 1: Master Logic & Calculations (Discount & GST Fixed)
 const scriptURL = 'https://script.google.com/macros/s/AKfycbxPOez8uPSHlxo2t4nWNNwOU6OD6DzxMB9lsRPhsgQl4qwFT48i-xp5KLDDxhkkMLlwlw/exec';
 let fetchedOldBalance = 0;
 
@@ -32,22 +32,32 @@ function calculateTotal() {
     document.querySelectorAll('.item-row').forEach(row => {
         const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
         const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
-        row.querySelector('.item-total').innerText = "₹" + (rate * qty).toFixed(2);
-        subtotal += (rate * qty);
+        const total = rate * qty;
+        row.querySelector('.item-total').innerText = "₹" + total.toFixed(2);
+        subtotal += total;
     });
+
+    const disc = parseFloat(document.getElementById('w_disc').value) || 0;
+    const isGst = document.getElementById('gst_check').checked;
     const addOldDues = document.getElementById('add_old_dues')?.checked;
-    const currentBillTotal = subtotal;
+    
+    const taxableTotal = subtotal - disc;
+    const gstAmt = isGst ? (taxableTotal * 0.18) : 0;
+    const currentBillTotal = taxableTotal + gstAmt;
+    
     const oldDueToAdd = addOldDues ? fetchedOldBalance : 0;
     const finalGrandTotal = Math.round(currentBillTotal + oldDueToAdd);
-    const paid = parseFloat(document.getElementById('paid_amt')?.value || 0);
+    
+    const paid = parseFloat(document.getElementById('paid_amt').value) || 0;
     const balance = finalGrandTotal - paid;
+
     document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2);
     document.getElementById('display_old_due').innerText = "₹" + oldDueToAdd.toFixed(2);
-    document.getElementById('grand_total').innerText = "₹" + finalGrandTotal.toFixed(2);
+    document.getElementById('grand_total').innerText = "₹" + (finalGrandTotal > 0 ? finalGrandTotal : 0).toFixed(2);
     document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
 }
-// PART 2: Layout UI (Fixing Images & QR Code)
+// PART 2: Original Layout UI (Discount Back + Images Fixed)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -62,9 +72,9 @@ function showBilling() {
             .grid-system { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
             .due-msg { color: #dc2626; font-weight: 900; font-size: 14px; margin-bottom: 10px; display: none; background: #fee2e2; padding: 10px; border-radius: 8px; border: 1px solid #ef4444; align-items: center; justify-content: space-between; }
             .update-box { border: 2px solid #16a34a; background: #f0fdf4; padding: 15px; border-radius: 10px; margin-top: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-            .qr-area { display: flex; flex-direction: column; align-items: center; border: 1px solid #000; padding: 5px; border-radius: 8px; background: #fff; }
+            .qr-area { display: flex; flex-direction: column; align-items: center; padding: 5px; background: transparent; }
             .payment-icons { display: flex; gap: 8px; margin-top: 5px; align-items: center; }
-            .payment-icons img { height: 15px; }
+            .payment-icons img { height: 14px; }
             @media print {
                 @page { size: A4; margin: 10mm; }
                 .no-print, button, .update-box, #back-btn-area { display: none !important; }
@@ -102,7 +112,7 @@ function showBilling() {
                 </div>
                 <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f8fafc; border: 2px dashed #1e3a8a; color: #1e3a8a; padding: 12px; font-weight: 900; margin-top: 10px;">+ ADD ITEM</button>
                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; gap: 15px;">
-                    <div style="width: 280px;">
+                    <div style="width: 250px;">
                         <div class="qr-area">
                             <span style="font-size: 10px; font-weight: 900; color: #1e3a8a;">UPI ID: 7021733860@sbi</span>
                             <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=7021733860@sbi&pn=Hariram Rajbhar" style="height: 110px; width: 110px; margin: 5px 0;">
@@ -119,7 +129,14 @@ function showBilling() {
                     </div>
                     <div style="width: 380px; border: 2.5px solid #000; padding: 15px; border-radius: 10px; background: #fff;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 800;"><span>SUB-TOTAL:</span><span id="tax_amt">₹0.00</span></div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800;">
+                            <div style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" id="gst_check" onchange="calculateTotal()" style="width:16px; height:16px;"><span>GST (18%):</span></div>
+                            <span id="gst_amt">₹0.00</span>
+                        </div>
                         <div style="display: flex; justify-content: space-between; color: #dc2626; font-weight: 800;"><span>OLD DUE:</span><span id="display_old_due">₹0.00</span></div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800;">
+                            <span>DISCOUNT:</span><input type="number" id="w_disc" value="0" oninput="calculateTotal()" style="width: 70px; border: 1px solid #000; text-align: right; font-weight: 900;">
+                        </div>
                         <hr style="border: 1px solid #1e3a8a; margin: 8px 0;">
                         <div style="display: flex; justify-content: space-between; font-weight: 900;"><span>GRAND TOTAL:</span><span id="grand_total" style="font-size: 24px; color: #1e3a8a;">₹0.00</span></div>
                         <div style="text-align: right;"><p id="amount_in_words" style="font-size: 12px; font-style: italic; font-weight: 900;">Zero Only</p></div>
@@ -145,7 +162,7 @@ function showBilling() {
                     <button onclick="updatePaymentOnly()" style="background: #16a34a; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: 900;">UPDATE NOW</button>
                 </div>
             </div>
-            <div id="back-btn-area" class="no-print" style="margin-top: 15px; text-align: center;"><button onclick="showDashboard()" style="background: #475569; color: #fff; padding: 10px 30px; border-radius: 8px; font-weight: 900; border: none;">🔙 BACK TO MENU</button></div>
+            <div id="back-btn-area" class="no-print" style="margin-top: 15px; text-align: center;"><button onclick="showDashboard()" style="background: #475569; color: #fff; padding: 10px 30px; border-radius: 8px; font-weight: 900; border: none; cursor: pointer;">🔙 BACK TO MENU</button></div>
         </div>
     `;
     addNewRow();
@@ -228,4 +245,3 @@ async function pickPhone() {
 }
 
 showBilling();
-        
