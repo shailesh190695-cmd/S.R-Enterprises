@@ -1,4 +1,4 @@
-// PART 1: S.R. Enterprises Master Logic (Fixed Minus)
+// PART 1: S.R. Enterprises Master Logic
 const scriptURL = 'https://script.google.com/macros/s/AKfycbyVCx6eZsxUQn9SnQnsJwh4LBBAAM_qxpewlJs-mEUhqKsxDLKLPXzoszfKKM3NKnwsYQ/exec';
 let fetchedOldBalance = 0;
 
@@ -59,7 +59,7 @@ function calculateTotal() {
     document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
 }
-// PART 2: Original Billing UI
+// PART 2: Original Layout UI (Back Button Fixed Below)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -140,7 +140,7 @@ function showBilling() {
     `;
     addNewRow();
 }
-// PART 3: Integration & Start
+// PART 3: Integration (Correct Minus Logic)
 async function checkOldBalance(mobile) {
     if(!mobile || mobile.length < 10) return;
     try {
@@ -168,17 +168,23 @@ async function updatePaymentOnly() {
     const mobile = document.getElementById('upd_mobile').value;
     const additionalPaid = parseFloat(document.getElementById('upd_paid').value) || 0;
     const currentDue = parseFloat(document.getElementById('upd_due_val').innerText) || 0;
-    if(!mobile || additionalPaid <= 0) { alert("Data bhariye!"); return; }
+    if(!mobile || additionalPaid <= 0) { alert("Mobile No aur Amount bhariye!"); return; }
     
-    // Yahan purane dues mein se naya payment minus ho raha hai
+    // YAHAN MINUS HO RAHA HAI: Purane dues mein se naya payment minus kiya
     const remainingBalance = (currentDue - additionalPaid).toFixed(2);
-    const data = { action: "updatePayment", mobile: mobile, paid: additionalPaid, newBalance: remainingBalance };
+    
+    const data = { 
+        action: "updatePayment", 
+        mobile: mobile, 
+        paid: additionalPaid, 
+        pending: remainingBalance // Isse Sheet ke Column L mein naya (kam wala) balance jayega
+    };
     
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Hisab Updated! Remaining Balance: ₹" + remainingBalance);
+        alert("✅ Hisab Updated! Naya Balance: ₹" + remainingBalance);
         showBilling(); 
-    } catch(e) { alert("Error!"); }
+    } catch(e) { alert("Error updating payment!"); }
 }
 
 async function saveAndWhatsApp() {
@@ -197,8 +203,8 @@ async function saveAndWhatsApp() {
     };
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Saved!");
-        const msg = `*S.R. ENTERPRISES REPORT*%0AInvoice: ${data.invoice}%0A*PENDING BALANCE:* ₹${data.balance}`;
+        alert("✅ Data Saved!");
+        const msg = `*S.R. ENTERPRISES REPORT*%0AInvoice: ${data.invoice}%0A*PENDING BALANCE:* ₹${data.pending}`;
         window.open(`https://wa.me/91${data.mobile}?text=${msg}`, '_blank');
     } catch(e) { alert("Error!"); }
 }
@@ -215,4 +221,3 @@ async function pickPhone() {
 }
 
 showBilling();
-    
