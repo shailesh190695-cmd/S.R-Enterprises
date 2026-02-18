@@ -47,8 +47,8 @@ function calculateTotal() {
     document.getElementById('grand_total').innerText = "₹" + finalGrandTotal.toFixed(2);
     document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
-        }
-// PART 2: Original Layout UI (Back Button Positioned & Sized)
+}
+// PART 2: Original Layout UI (QR Code & Signature Fixed)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -63,15 +63,17 @@ function showBilling() {
             .grid-system { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
             .due-msg { color: #dc2626; font-weight: 900; font-size: 14px; margin-bottom: 10px; display: none; background: #fee2e2; padding: 10px; border-radius: 8px; border: 1px solid #ef4444; align-items: center; justify-content: space-between; }
             .update-box { border: 2px solid #16a34a; background: #f0fdf4; padding: 15px; border-radius: 10px; margin-top: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+            .qr-area { display: flex; flex-direction: column; align-items: center; border: 1px solid #ddd; padding: 5px; border-radius: 8px; margin-bottom: 5px; }
+            .payment-icons { display: flex; gap: 5px; margin-top: 3px; }
+            .payment-icons img { height: 12px; }
             @media print {
                 @page { size: A4; margin: 10mm; }
                 .no-print, button, .update-box, #back-btn-area { display: none !important; }
                 body { background: white !important; }
-                #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; margin: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
-                #signature-area { display: flex !important; }
+                #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; margin: 0 !important; box-shadow: none !important; }
             }
         </style>
-        <div id="print-area" style="padding: 10px; color: #000; font-family: sans-serif; box-sizing: border-box; display: flex; flex-direction: column; align-items: center;">
+        <div id="print-area" style="padding: 10px; color: #000; font-family: sans-serif; display: flex; flex-direction: column; align-items: center;">
             <div id="bill-container" style="width: 100%; max-width: 1050px; border: 2px solid #1e3a8a; border-radius: 12px; padding: 25px; background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
                     <div><h1 style="color: #1e3a8a; margin: 0; font-size: 32px; font-weight: 900;">S.R ENTERPRISES</h1><p style="font-size: 14px; margin: 2px 0; font-weight: 800;">Fusing Machine Specialist</p><p style="font-size: 12px; margin: 0;">Mumbai | 📞 +91 9326113988</p></div>
@@ -101,7 +103,21 @@ function showBilling() {
                 </div>
                 <button onclick="addNewRow()" class="no-print" style="width: 100%; background: #f8fafc; border: 2px dashed #1e3a8a; color: #1e3a8a; padding: 12px; font-weight: 900; margin-top: 10px;">+ ADD ITEM</button>
                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; gap: 15px;">
-                    <div id="bank-details" style="font-size: 11px; border: 1.5px solid #000; padding: 10px; border-radius: 8px;"><p style="margin:0; font-weight: 900;">SBI | MR. HARIRAM SITARAM RAJBHAR</p><p style="margin:2px 0; font-weight: 900;">A/C: 44695199584 | IFSC: SBIN0008373</p></div>
+                    <div style="width: 250px;">
+                        <div class="qr-area">
+                            <span style="font-size: 9px; font-weight: 900;">UPI ID: 7021733860@sbi</span>
+                            <img src="https://i.ibb.co/C5f88p6B/1000026139.jpg" style="height: 100px; width: 100px; margin: 3px 0;">
+                            <div class="payment-icons">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg">
+                                <img src="https://i.ibb.co/jR0Y5vC/Paytm-Logo.png" style="height:8px;">
+                            </div>
+                        </div>
+                        <div id="bank-details" style="font-size: 10px; border: 1.5px solid #000; padding: 8px; border-radius: 8px; background:#fff;">
+                            <p style="margin:0; font-weight: 900;">SBI | MR. HARIRAM SITARAM RAJBHAR</p>
+                            <p style="margin:2px 0; font-weight: 900;">A/C: 44695199584 | IFSC: SBIN0008373</p>
+                        </div>
+                    </div>
                     <div style="width: 380px; border: 2.5px solid #000; padding: 15px; border-radius: 10px; background: #fff;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 800;"><span>SUB-TOTAL:</span><span id="tax_amt">₹0.00</span></div>
                         <div style="display: flex; justify-content: space-between; color: #dc2626; font-weight: 800;"><span>OLD DUE:</span><span id="display_old_due">₹0.00</span></div>
@@ -112,7 +128,13 @@ function showBilling() {
                         <div style="display: flex; justify-content: space-between; color: #dc2626; font-weight: 900;"><span>BALANCE DUE:</span><span id="balance_due" style="font-size: 22px;">₹0.00</span></div>
                     </div>
                 </div>
-                <div id="signature-area" style="margin-top: 35px; display: flex; justify-content: space-between; padding: 0 20px;"><div style="text-align: center;"><p style="border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">Customer Signature</p></div><div style="text-align: center;"><p style="border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">For S.R. ENTERPRISES</p></div></div>
+                <div id="signature-area" style="margin-top: 35px; display: flex; justify-content: space-between; padding: 0 20px; align-items: flex-end;">
+                    <div style="text-align: center;"><p style="border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">Customer Signature</p></div>
+                    <div style="text-align: center; position: relative;">
+                        <img src="https://i.ibb.co/ccL0R6bN/f5a2ea3b-2474-4559-a98d-7c0f3f34e2d1.png" style="height: 60px; margin-bottom: -15px; position: absolute; left: 50%; transform: translateX(-50%) translateY(-40px); mix-blend-mode: multiply;">
+                        <p style="border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">For S.R. ENTERPRISES</p>
+                    </div>
+                </div>
                 <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;"><button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">🖨️ PRINT BILL / PDF</button><button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">📲 SAVE & WHATSAPP</button></div>
             </div>
             <div class="no-print update-box" style="width: 100%; max-width: 1050px; box-sizing: border-box;">
@@ -124,20 +146,17 @@ function showBilling() {
                     <button onclick="updatePaymentOnly()" style="background: #16a34a; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: 900;">UPDATE NOW</button>
                 </div>
             </div>
-            <div id="back-btn-area" class="no-print" style="margin-top: 15px; text-align: center;">
-                <button onclick="showDashboard()" style="background: #475569; color: #fff; padding: 8px 25px; border-radius: 8px; font-weight: 900; border: none; cursor: pointer; font-size: 14px;">🔙 BACK TO MENU</button>
-            </div>
+            <div id="back-btn-area" class="no-print" style="margin-top: 15px; text-align: center;"><button onclick="showDashboard()" style="background: #475569; color: #fff; padding: 10px 30px; border-radius: 8px; font-weight: 900; border: none; cursor: pointer;">🔙 BACK TO MENU</button></div>
         </div>
     `;
     addNewRow();
-        }
+                                                                          }
 // PART 3: Integration & Start
 async function checkOldBalance(mobile) {
     if(!mobile || mobile.toString().length < 10) return;
     try {
         const response = await fetch(`${scriptURL}?mobile=${mobile}`);
         const res = await response.json();
-        // Automatic Fill
         if(res.name) document.getElementById('c_name').value = res.name.toUpperCase();
         if(res.address) document.getElementById('c_addr').value = res.address.toUpperCase();
         fetchedOldBalance = parseFloat(res.oldBalance) || 0;
@@ -207,7 +226,5 @@ async function pickPhone() {
             checkOldBalance(phone); 
         } 
     } catch (e) { alert("Contact Picker not supported."); }
-}
-
-// REMOVED showBilling() FROM HERE TO PREVENT AUTO-START ON REFRESH
-                                
+            }
+    
