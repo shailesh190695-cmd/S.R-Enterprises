@@ -52,12 +52,13 @@ function calculateTotal() {
     const balance = finalGrandTotal - paid;
 
     document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2);
+    document.getElementById('gst_amt').innerText = "₹" + gstAmt.toFixed(2);
     document.getElementById('display_old_due').innerText = "₹" + oldDueToAdd.toFixed(2);
     document.getElementById('grand_total').innerText = "₹" + finalGrandTotal.toFixed(2);
     document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
-                                                 }
-// PART 2: Original Layout UI (Signature Fix & No Boundary)
+        }
+// PART 2: Original Layout UI (Signature & Discount Fixed)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -135,7 +136,7 @@ function showBilling() {
                         </div>
                         <div style="display: flex; justify-content: space-between; color: #dc2626; font-weight: 800;"><span>OLD DUE:</span><span id="display_old_due">₹0.00</span></div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800;">
-                            <span>DISCOUNT:</span><input type="number" id="w_disc" value="0" oninput="calculateTotal()" style="width: 70px; border: 1.5px solid #000; text-align: right; font-weight: 900; border-radius: 5px;">
+                            <span>DISCOUNT (₹):</span><input type="number" id="w_disc" value="0" oninput="calculateTotal()" style="width: 70px; border: 1.5px solid #000; text-align: right; font-weight: 900; border-radius: 5px;">
                         </div>
                         <hr style="border: 1px solid #1e3a8a; margin: 8px 0;">
                         <div style="display: flex; justify-content: space-between; font-weight: 900;"><span>GRAND TOTAL:</span><span id="grand_total" style="font-size: 24px; color: #1e3a8a;">₹0.00</span></div>
@@ -147,7 +148,7 @@ function showBilling() {
                 <div id="signature-area" style="margin-top: 40px; display: flex; justify-content: space-between; padding: 0 20px; align-items: flex-end;">
                     <div style="text-align: center;"><p style="border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">Customer Signature</p></div>
                     <div style="text-align: center; position: relative; width: 180px;">
-                        <img src="https://i.ibb.co/3mN9hFvB/1000029939.png" style="height: 70px; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); mix-blend-mode: multiply; filter: contrast(110%);" alt="Signature">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=1x1&data=SR" style="display:none;" onerror="this.src='https://i.ibb.co/3mN9hFvB/1000029939.png'; this.style.display='block'; this.style.height='70px'; this.style.position='absolute'; this.style.bottom='25px'; this.style.left='50%'; this.style.transform='translateX(-50%)'; this.style.mixBlendMode='multiply';">
                         <p style="border-top: 2px solid #000; width: 100%;"></p><p style="font-size: 12px; font-weight: 900;">For S.R. ENTERPRISES</p>
                     </div>
                 </div>
@@ -245,4 +246,4 @@ async function pickPhone() {
 }
 
 showBilling();
-                    
+        
