@@ -1,4 +1,4 @@
-// PART 1: S.R. Enterprises Logic & Calculations (Fixed Minus Logic)
+// PART 1: S.R. Enterprises Master Logic (Fixed Minus)
 const scriptURL = 'https://script.google.com/macros/s/AKfycbyVCx6eZsxUQn9SnQnsJwh4LBBAAM_qxpewlJs-mEUhqKsxDLKLPXzoszfKKM3NKnwsYQ/exec';
 let fetchedOldBalance = 0;
 
@@ -59,7 +59,7 @@ function calculateTotal() {
     document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
 }
-// PART 2: Original Layout UI (Added Back Button)
+// PART 2: Original Billing UI
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -80,7 +80,7 @@ function showBilling() {
                 @page { size: A4; margin: 10mm; }
                 .no-print, button, .update-box, #back-btn-area { display: none !important; }
                 body { background: white !important; }
-                #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; box-shadow: none !important; margin: 0 !important; }
+                #bill-container { border: 2px solid black !important; width: 100% !important; max-width: 100% !important; padding: 15px !important; margin: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
                 #signature-area { display: flex !important; }
             }
         </style>
@@ -102,10 +102,7 @@ function showBilling() {
                             <div class="info-row"><label>ADDRESS:</label><textarea id="c_addr" rows="2"></textarea></div>
                             <div class="info-row" style="border-bottom: none;"><label>MOBILE NO:</label><div style="display: flex; gap: 8px; flex: 1;"><input type="number" id="c_mobile" onblur="checkOldBalance(this.value)"><button onclick="pickPhone()" class="no-print" style="background: #1e3a8a; color: white; border: none; padding: 5px 12px; border-radius: 5px; font-weight: 900;">PICK</button></div></div>
                         </div>
-                        <div class="col">
-                            <div class="info-row"><label>MACHINE MODEL:</label><input type="text" id="m_model"></div>
-                            <div class="info-row"><label>REMARK:</label><textarea id="m_remark" rows="2"></textarea></div>
-                        </div>
+                        <div class="col"><div class="info-row"><label>MACHINE MODEL:</label><input type="text" id="m_model"></div><div class="info-row"><label>REMARK:</label><textarea id="m_remark" rows="2"></textarea></div></div>
                     </div>
                 </div>
                 <div style="overflow: hidden; border: 2px solid #000; border-radius: 8px;">
@@ -119,7 +116,6 @@ function showBilling() {
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 800;"><span>SUB-TOTAL:</span><span id="tax_amt">₹0.00</span></div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800;"><div><input type="checkbox" id="gst_check" onchange="calculateTotal()"> GST (18%):</div><span id="gst_amt">₹0.00</span></div>
                         <div style="display: flex; justify-content: space-between; color: #dc2626; font-weight: 800;"><span>OLD DUE:</span><span id="display_old_due">₹0.00</span></div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800;"><span>DISCOUNT:</span><input type="number" id="w_disc" value="0" oninput="calculateTotal()" style="width: 70px; border: 1px solid #000; text-align: right; font-weight: 900;"></div>
                         <hr style="border: 1px solid #1e3a8a; margin: 8px 0;">
                         <div style="display: flex; justify-content: space-between; font-weight: 900;"><span>GRAND TOTAL:</span><span id="grand_total" style="font-size: 24px; color: #1e3a8a;">₹0.00</span></div>
                         <div style="text-align: right;"><p id="amount_in_words" style="font-size: 12px; font-style: italic; font-weight: 900;">Zero Only</p></div>
@@ -128,15 +124,23 @@ function showBilling() {
                     </div>
                 </div>
                 <div id="signature-area" style="margin-top: 35px; display: flex; justify-content: space-between; padding: 0 20px;"><div style="text-align: center;"><p style="border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">Customer Signature</p></div><div style="text-align: center;"><p style="border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">For S.R. ENTERPRISES</p></div></div>
-                <div id="back-btn-area" class="no-print" style="margin-top: 20px; text-align: center;"><button onclick="location.reload()" style="background: #475569; color: #fff; padding: 10px 30px; border-radius: 8px; font-weight: 900; border: none; cursor: pointer;">🔙 BACK TO MENU</button></div>
-                <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;"><button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">🖨️ PRINT BILL / PDF</button><button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">📲 SAVE & WHATSAPP</button></div>
+                <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;"><button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">🖨️ PRINT BILL / PDF</button><button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">📲 SAVE & WHATSAPP</button></div>
             </div>
-            <div class="no-print update-box" style="width: 100%; max-width: 1050px; box-sizing: border-box;"><h3 style="color: #16a34a; margin: 0 0 10px 0;">💰 UPDATE PENDING PAYMENT (ONLY)</h3><div style="display: flex; gap: 10px; flex-wrap: wrap;"><input type="number" id="upd_mobile" placeholder="MOBILE NO" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;" onblur="fetchForUpdate(this.value)"><div style="padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 5px; font-weight: 900; color: red;">DUE: ₹<span id="upd_due_val">0</span></div><input type="number" id="upd_paid" placeholder="ADD PAYMENT (₹)" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;"><button onclick="updatePaymentOnly()" style="background: #16a34a; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: 900;">UPDATE NOW</button></div></div>
+            <div class="no-print update-box" style="width: 100%; max-width: 1050px; box-sizing: border-box;">
+                <h3 style="color: #16a34a; margin: 0 0 10px 0;">💰 UPDATE PENDING PAYMENT (ONLY)</h3>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="number" id="upd_mobile" placeholder="MOBILE NO" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;" onblur="fetchForUpdate(this.value)">
+                    <div style="padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 5px; font-weight: 900; color: red;">DUE: ₹<span id="upd_due_val">0</span></div>
+                    <input type="number" id="upd_paid" placeholder="PAID NOW (₹)" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;">
+                    <button onclick="updatePaymentOnly()" style="background: #16a34a; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: 900;">UPDATE NOW</button>
+                </div>
+            </div>
+            <div id="back-btn-area" class="no-print" style="margin-top: 20px;"><button onclick="location.reload()" style="background: #475569; color: #fff; padding: 12px 40px; border-radius: 10px; font-weight: 900; border: none; cursor: pointer;">🔙 BACK TO MENU</button></div>
         </div>
     `;
     addNewRow();
-                            }
-// PART 3: Integration Functions & Start (Fixed Minus Logic)
+}
+// PART 3: Integration & Start
 async function checkOldBalance(mobile) {
     if(!mobile || mobile.length < 10) return;
     try {
@@ -164,15 +168,15 @@ async function updatePaymentOnly() {
     const mobile = document.getElementById('upd_mobile').value;
     const additionalPaid = parseFloat(document.getElementById('upd_paid').value) || 0;
     const currentDue = parseFloat(document.getElementById('upd_due_val').innerText) || 0;
-    if(!mobile || additionalPaid <= 0) { alert("Data needed!"); return; }
+    if(!mobile || additionalPaid <= 0) { alert("Data bhariye!"); return; }
     
-    // Yahan minus ho raha hai taaki sheet mein sahi balance jaye
+    // Yahan purane dues mein se naya payment minus ho raha hai
     const remainingBalance = (currentDue - additionalPaid).toFixed(2);
     const data = { action: "updatePayment", mobile: mobile, paid: additionalPaid, newBalance: remainingBalance };
     
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-        alert("✅ Updated! Remaining Balance: ₹" + remainingBalance);
+        alert("✅ Hisab Updated! Remaining Balance: ₹" + remainingBalance);
         showBilling(); 
     } catch(e) { alert("Error!"); }
 }
@@ -187,11 +191,9 @@ async function saveAndWhatsApp() {
         address: document.getElementById('c_addr').value.toUpperCase(),
         description: document.querySelector('.item-desc')?.value.toUpperCase() || "SERVICE",
         subtotal: document.getElementById('tax_amt').innerText.replace('₹',''),
-        gst: document.getElementById('gst_amt').innerText.replace('₹',''),
-        total: document.getElementById('grand_total').innerText.replace('₹',''),
         paid: document.getElementById('paid_amt').value,
-        balance: (parseFloat(document.getElementById('grand_total').innerText.replace('₹','')) - parseFloat(document.getElementById('paid_amt').value)).toFixed(2),
-        pending: (parseFloat(document.getElementById('grand_total').innerText.replace('₹','')) - parseFloat(document.getElementById('paid_amt').value)).toFixed(2)
+        balance: document.getElementById('balance_due').innerText.replace('₹',''),
+        pending: document.getElementById('balance_due').innerText.replace('₹','') 
     };
     try {
         await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
@@ -213,4 +215,4 @@ async function pickPhone() {
 }
 
 showBilling();
-            
+    
