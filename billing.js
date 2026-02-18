@@ -36,29 +36,24 @@ function calculateTotal() {
         row.querySelector('.item-total').innerText = "₹" + total.toFixed(2);
         subtotal += total;
     });
-
     const disc = parseFloat(document.getElementById('w_disc').value) || 0;
     const isGst = document.getElementById('gst_check').checked;
     const addOldDues = document.getElementById('add_old_dues')?.checked;
-    
     const taxableTotal = subtotal - disc;
     const gstAmt = isGst ? (taxableTotal * 0.18) : 0;
     const currentBillTotal = taxableTotal + gstAmt;
-    
     const oldDueToAdd = addOldDues ? fetchedOldBalance : 0;
     const finalGrandTotal = Math.round(currentBillTotal + oldDueToAdd);
-    
     const paid = parseFloat(document.getElementById('paid_amt').value) || 0;
     const balance = finalGrandTotal - paid;
-
     document.getElementById('tax_amt').innerText = "₹" + subtotal.toFixed(2);
     document.getElementById('gst_amt').innerText = "₹" + gstAmt.toFixed(2);
     document.getElementById('display_old_due').innerText = "₹" + oldDueToAdd.toFixed(2);
-    document.getElementById('grand_total').innerText = "₹" + (finalGrandTotal > 0 ? finalGrandTotal : 0).toFixed(2);
+    document.getElementById('grand_total').innerText = "₹" + finalGrandTotal.toFixed(2);
     document.getElementById('balance_due').innerText = "₹" + (balance > 0 ? balance : 0).toFixed(2);
     document.getElementById('amount_in_words').innerText = numberToWords(finalGrandTotal > 0 ? finalGrandTotal : 0) + " Only";
 }
-// PART 2: Original Layout UI (Signature Fixed & No Boundary Barcode)
+// PART 2: Layout UI (Stable Design with Manual Sign Space)
 function showBilling() {
     const panel = document.getElementById('main-panel');
     const today = new Date().toISOString().split('T')[0];
@@ -145,11 +140,10 @@ function showBilling() {
                         <div style="display: flex; justify-content: space-between; color: #dc2626; font-weight: 900;"><span>BALANCE DUE:</span><span id="balance_due" style="font-size: 22px;">₹0.00</span></div>
                     </div>
                 </div>
-                <div id="signature-area" style="margin-top: 40px; display: flex; justify-content: space-between; padding: 0 20px; align-items: flex-end;">
+                <div id="signature-area" style="margin-top: 50px; display: flex; justify-content: space-between; padding: 0 20px; align-items: flex-end;">
                     <div style="text-align: center;"><p style="border-top: 2px solid #000; width: 180px;"></p><p style="font-size: 12px; font-weight: 900;">Customer Signature</p></div>
                     <div style="text-align: center; position: relative; width: 180px;">
-                        <img src="https://i.ibb.co/3mN9hFvB/1000029939.png" style="height: 65px; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); mix-blend-mode: multiply;" alt="Signature">
-                        <p style="border-top: 2px solid #000; width: 100%;"></p><p style="font-size: 12px; font-weight: 900;">For S.R. ENTERPRISES</p>
+                        <div style="height: 60px;"></div> <p style="border-top: 2px solid #000; width: 100%;"></p><p style="font-size: 12px; font-weight: 900;">For S.R. ENTERPRISES</p>
                     </div>
                 </div>
                 <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;"><button onclick="window.print()" style="background: #000; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">🖨️ PRINT BILL / PDF</button><button id="saveBtn" onclick="saveAndWhatsApp()" style="background: #16a34a; color: #fff; padding: 15px; border-radius: 10px; font-weight: 900;">📲 SAVE & WHATSAPP</button></div>
@@ -167,7 +161,7 @@ function showBilling() {
         </div>
     `;
     addNewRow();
-                            }
+}
 // PART 3: Integration & Start
 async function checkOldBalance(mobile) {
     if(!mobile || mobile.toString().length < 10) return;
